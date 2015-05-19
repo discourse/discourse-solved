@@ -1,0 +1,4 @@
+uncategorized:
+  categories_with_solved_button:
+    default: ''
+    client: true
