@@ -2,16 +2,31 @@ import PostMenuView from 'discourse/views/post-menu';
 import PostView from 'discourse/views/post';
 import { Button } from 'discourse/views/post-menu';
 import Topic from 'discourse/models/topic';
+import User from 'discourse/models/user';
 
 export default {
   name: 'extend-for-solved-button',
   initialize: function() {
 
     Topic.reopen({
+
       // keeping this here cause there is complex localization
       acceptedAnswerHtml: function(){
-        return I18n.t("")
-      }.property('accepted_answer')
+        var username = this.get('accepted_answer.username');
+        var postNumber = this.get('accepted_answer.post_number');
+
+        if (!username || !postNumber) {
+          return "";
+        }
+
+        return I18n.t("accepted_answer.accepted_html", {
+          username_lower: username.toLowerCase(),
+          username: username,
+          post_path: this.get('url') + "/" + postNumber,
+          post_number: postNumber,
+          user_path: User.create({username: username}).get('path')
+        });
+      }.property('accepted_answer', 'id')
     });
 
     PostView.reopen({
@@ -35,7 +50,8 @@ export default {
       clickUnacceptAnswer: function(){
         this.set('post.can_accept_answer', true);
         this.set('post.can_unaccept_answer', false);
-        this.set('post.topic.has_accepted_answer', false);
+        this.set('post.accepted_answer', false);
+        this.set('post.topic.accepted_answer', undefined);
 
         Discourse.ajax("/solution/unaccept", {
           type: 'POST',

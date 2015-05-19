@@ -1,5 +1,5 @@
 {{#if topic.accepted_answer}}
 <p class="solved">
-<i class='fa-check-square fa accepted'></i> Solved by <a data-user-card="{{topic.accepted_answer.username}}">{{topic.accepted_answer.username}}</a> in <a href="{{acceptedAnswerPath}}">post #{{topic.accepted_answer.post_number}}</a>
+{{{topic.acceptedAnswerHtml}}}
 </p>
 {{/if}}

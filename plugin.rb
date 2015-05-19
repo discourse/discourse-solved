@@ -22,8 +22,8 @@ after_initialize do
 
       post = Post.find(params[:id].to_i)
 
-      accepted_id = post.topic.custom_fields["has_accepted_answer"].to_i
-      if accepted_id
+      accepted_id = post.topic.custom_fields["accepted_answer_post_id"].to_i
+      if accepted_id > 0
         if p2 = Post.find_by(id: accepted_id)
           p2.custom_fields["is_accepted_answer"] = nil
           p2.save!
