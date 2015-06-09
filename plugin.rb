@@ -19,8 +19,9 @@ after_initialize do
   require_dependency "application_controller"
   class DiscourseSolvedButton::AnswerController < ::ApplicationController
     def accept
-
       post = Post.find(params[:id].to_i)
+
+      guardian.ensure_can_accept_answer!(post.topic)
 
       accepted_id = post.topic.custom_fields["accepted_answer_post_id"].to_i
       if accepted_id > 0
@@ -40,6 +41,9 @@ after_initialize do
 
     def unaccept
       post = Post.find(params[:id].to_i)
+
+      guardian.ensure_can_accept_answer!(post.topic)
+
       post.custom_fields["is_accepted_answer"] = nil
       post.topic.custom_fields["accepted_answer_post_id"] = nil
       post.topic.save!
@@ -95,6 +99,44 @@ after_initialize do
 
   end
 
+  class ::Category
+    after_save :reset_accepted_cache
+
+    protected
+    def reset_accepted_cache
+      ::Guardian.reset_accepted_answer_cache
+    end
+  end
+
+  class ::Guardian
+
+    @@allowed_accepted_cache = DistributedCache.new("allowed_accepted")
+
+    def self.reset_accepted_answer_cache
+      @@allowed_accepted_cache["allowed"] =
+        begin
+          Set.new(
+            CategoryCustomField
+              .where(name: "enable_accepted_answers", value: "true")
+              .pluck(:category_id)
+          )
+        end
+    end
+
+    def allow_accepted_answers_on_category?(category_id)
+      self.class.reset_accepted_answer_cache unless @@allowed_accepted_cache["allowed"]
+      @@allowed_accepted_cache["allowed"].include?(category_id)
+    end
+
+    def can_accept_answer?(topic)
+      allow_accepted_answers_on_category?(topic.category_id) && (
+        is_staff? || (
+          authenticated? && !topic.closed? && topic.user_id == current_user.id
+        )
+      )
+    end
+  end
+
   require_dependency 'post_serializer'
   class ::PostSerializer
     attributes :can_accept_answer, :can_unaccept_answer, :accepted_answer
@@ -102,12 +144,16 @@ after_initialize do
     def can_accept_answer
       topic = (topic_view && topic_view.topic) || object.topic
       if topic
+        scope.can_accept_answer?(topic) &&
         object.post_number > 1 && !accepted_answer
       end
     end
 
     def can_unaccept_answer
-      post_custom_fields["is_accepted_answer"]
+      topic = (topic_view && topic_view.topic) || object.topic
+      if topic
+        scope.can_accept_answer?(topic) && post_custom_fields["is_accepted_answer"]
+      end
     end
 
     def accepted_answer

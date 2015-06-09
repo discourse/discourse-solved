@@ -8,6 +8,16 @@ export default {
   name: 'extend-for-solved-button',
   initialize: function() {
 
+    Discourse.Category.reopen({
+      enable_accepted_answers: function(key, value){
+        if (arguments.length > 1) {
+          this.set('custom_fields.enable_accepted_answers', value ? "true" : "false");
+        }
+        var fields = this.get('custom_fields');
+        return fields && (fields.enable_accepted_answers === "true");
+      }.property('custom_fields')
+    }),
+
     Topic.reopen({
 
       // keeping this here cause there is complex localization
