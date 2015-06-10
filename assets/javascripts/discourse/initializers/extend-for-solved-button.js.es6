@@ -49,9 +49,9 @@ export default {
       var canAccept = this.get('post.can_accept_answer');
       var canUnaccept = this.get('post.can_unaccept_answer');
       var accepted = this.get('post.accepted_answer');
-      var isOp = Discourse.User.currentProp("id") !== this.get('post.topic.user_id');
+      var isOp = Discourse.User.currentProp("id") === this.get('post.topic.user_id');
 
-      if  (canAccept && !isOp) {
+      if  (!accepted && canAccept && !isOp) {
         // first hidden position
         if (this.get('collapsed')) { return; }
         position = visibleButtons.length - 2;
