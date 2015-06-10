@@ -44,12 +44,31 @@ export default {
     });
 
     PostMenuView.registerButton(function(visibleButtons){
-      if (this.get('post.can_accept_answer')) {
-        visibleButtons.splice(0,0,new Button('acceptAnswer', 'accepted_answer.accept_answer', 'check-square-o', {className: 'unaccepted'}));
+      var position = 0;
+
+      var canAccept = this.get('post.can_accept_answer');
+      var canUnaccept = this.get('post.can_unaccept_answer');
+      var accepted = this.get('post.accepted_answer');
+      var isOp = Discourse.User.currentProp("id") !== this.get('post.topic.user_id');
+
+      if  (canAccept && !isOp) {
+        // first hidden position
+        if (this.get('collapsed')) { return; }
+        position = visibleButtons.length - 2;
       }
-      if (this.get('post.can_unaccept_answer')) {
-        visibleButtons.splice(0,0,new Button('unacceptAnswer', 'accepted_answer.unaccept_answer', 'check-square', {className: 'accepted'}));
+      if (canAccept) {
+        visibleButtons.splice(position,0,new Button('acceptAnswer', 'accepted_answer.accept_answer', 'check-square-o', {className: 'unaccepted'}));
       }
+      if (canUnaccept || accepted) {
+        var locale = canUnaccept ? 'accepted_answer.unaccept_answer' : 'accepted_answer.accepted_answer';
+        visibleButtons.splice(position,0,new Button(
+            'unacceptAnswer',
+            locale,
+            'check-square',
+            {className: 'accepted'})
+          );
+      }
+
     });
 
     PostMenuView.reopen({
@@ -58,6 +77,8 @@ export default {
       }.observes('post.accepted_answer'),
 
       clickUnacceptAnswer: function(){
+        if (!this.get('post.can_unaccept_answer')) { return; }
+
         this.set('post.can_accept_answer', true);
         this.set('post.can_unaccept_answer', false);
         this.set('post.accepted_answer', false);
