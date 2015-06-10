@@ -1,0 +1,8 @@
+tr_TR:
+  js:
+    accepted_answer:
+      allow_accepted_answers: "Kullanıcılar yanıtları çözüm olarak seçebilsinler mi?"
+      accept_answer: "Çözüm olarak kabul et"
+      unaccept_answer: "Çözüm olmaktan çıkar"
+      accepted_answer: "Kabul edilen çözümler"
+      accepted_html: "<i class='fa-check-square fa accepted'></i> Bu konu <a href data-user-card='{{username_lower}}'>{{username}}</a> tarafından yapılan <a href='{{post_path}}'>şu yanıt #{{post_number}}</a> ile çözülmüştür."
