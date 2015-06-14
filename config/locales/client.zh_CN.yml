@@ -1,0 +1,8 @@
+zh_CN:
+  js:
+    accepted_answer:
+      allow_accepted_answers: "允许用户认可答案"
+      accept_answer: "认可答案"
+      unaccept_answer: "取消认可答案"
+      accepted_answer: "认可答案"
+      accepted_html: "<i class='fa-check-square fa accepted'></i>由<a href data-user-card='{{username_lower}}'>{{username}}</a>在 <a href='{{post_path}}'>#{{post_number}} 楼</a>解决"
