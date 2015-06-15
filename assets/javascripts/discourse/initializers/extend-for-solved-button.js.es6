@@ -73,10 +73,10 @@ export default {
         position = visibleButtons.length - 2;
       }
       if (canAccept) {
-        visibleButtons.splice(position,0,new Button('acceptAnswer', 'accepted_answer.accept_answer', 'check-square-o', {className: 'unaccepted'}));
+        visibleButtons.splice(position,0,new Button('acceptAnswer', 'solved.accept_answer', 'check-square-o', {className: 'unaccepted'}));
       }
       if (canUnaccept || accepted) {
-        var locale = canUnaccept ? 'accepted_answer.unaccept_answer' : 'accepted_answer.accepted_answer';
+        var locale = canUnaccept ? 'solved.unaccept_answer' : 'solved.accepted_answer';
         visibleButtons.splice(position,0,new Button(
             'unacceptAnswer',
             locale,
