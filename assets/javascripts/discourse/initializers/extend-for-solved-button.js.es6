@@ -3,6 +3,7 @@ import PostView from 'discourse/views/post';
 import { Button } from 'discourse/views/post-menu';
 import Topic from 'discourse/models/topic';
 import User from 'discourse/models/user';
+import TopicStatus from 'discourse/views/topic-status'
 
 export default {
   name: 'extend-for-solved-button',
@@ -37,6 +38,21 @@ export default {
           user_path: User.create({username: username}).get('path')
         });
       }.property('accepted_answer', 'id')
+    });
+
+    TopicStatus.reopen({
+      statuses: function(){
+        var results = this._super();
+        if (this.topic.has_accepted_answer) {
+          results.push({
+            openTag: 'span',
+            closeTag: 'span',
+            title: I18n.t('solved.has_accepted_answer'),
+            icon: 'check-square'
+          });
+        }
+        return results;
+      }.property()
     });
 
     PostView.reopen({

@@ -173,6 +173,48 @@ after_initialize do
     def accepted_answer
       post_custom_fields["is_accepted_answer"]
     end
-
   end
+
+  require_dependency 'topic_list_item_serializer'
+
+  class ::TopicListItemSerializer
+    attributes :has_accepted_answer
+
+    def include_has_accepted_answer?
+      object.has_accepted_answer
+    end
+
+    def has_accepted_answer
+      true
+    end
+  end
+
+  class ::Topic
+    attr_accessor :has_accepted_answer
+  end
+
+  module ::DiscourseSolved::ExtendTopics
+    def load_topics
+      topics = super
+      if topics.present?
+      # super efficient for front page
+        with_accepted = Set.new(Topic.exec_sql(
+          'SELECT topic_id FROM topic_custom_fields
+           WHERE topic_id in (:topic_ids) AND
+                 value IS NOT NULL AND
+                 name = \'accepted_answer_post_id\'',
+                 topic_ids: topics.map(&:id)
+        ).values.flatten.map(&:to_i))
+        topics.each do |topic|
+          topic.has_accepted_answer = true if with_accepted.include? topic.id
+        end
+      end
+      topics
+    end
+  end
+
+  class ::TopicList
+    prepend ::DiscourseSolved::ExtendTopics
+  end
+
 end
