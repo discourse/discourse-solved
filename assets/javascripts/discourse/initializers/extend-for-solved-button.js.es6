@@ -48,7 +48,7 @@ export default {
             openTag: 'span',
             closeTag: 'span',
             title: I18n.t('solved.has_accepted_answer'),
-            icon: 'check-square'
+            icon: 'check-square-o'
           });
         }
         return results;

@@ -8,14 +8,15 @@
 }
 
 .mobile-view .cooked .solved {
-  position: static;
+  margin-bottom: 15px;
 }
 
 .cooked .solved {
-  position: absolute;
-  bottom: -10px;
-  z-index: 1000;
-  // margin-top: 20px;
+
+  margin-top: 20px;
+  margin-bottom: 0px;
+  color: scale-color($primary, $lightness: 15%);
+  font-size: 13px;
   // margin-bottom: 0px;
   // padding: 4px 0px;
   //border-top: 1px solid #ddd;
