@@ -7,10 +7,17 @@
 //  background-color: #E9FFE0;
 }
 
+.mobile-view .cooked .solved {
+  position: static;
+}
+
 .cooked .solved {
-  margin-top: 20px;
-  margin-bottom: 0px;
-  padding: 4px 10px;
-  border: 1px solid #ddd;
-  background-color: #E9FFE0;
+  position: absolute;
+  bottom: -10px;
+  z-index: 1000;
+  // margin-top: 20px;
+  // margin-bottom: 0px;
+  // padding: 4px 0px;
+  //border-top: 1px solid #ddd;
+  //background-color: #E9FFE0;
 }

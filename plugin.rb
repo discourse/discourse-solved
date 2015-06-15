@@ -1,23 +1,23 @@
-# name: discourse-solved-button
+# name: discourse-solved
 # about: Add a solved button to answers on Discourse
 # version: 0.1
 # authors: Sam Saffron
 
-PLUGIN_NAME = "discourse_solved_button".freeze
+PLUGIN_NAME = "discourse_solved".freeze
 
 register_asset 'stylesheets/solutions.scss'
 
 after_initialize do
 
-  module ::DiscourseSolvedButton
+  module ::DiscourseSolved
     class Engine < ::Rails::Engine
       engine_name PLUGIN_NAME
-      isolate_namespace DiscourseSolvedButton
+      isolate_namespace DiscourseSolved
     end
   end
 
   require_dependency "application_controller"
-  class DiscourseSolvedButton::AnswerController < ::ApplicationController
+  class DiscourseSolved::AnswerController < ::ApplicationController
     def accept
       post = Post.find(params[:id].to_i)
 
@@ -36,6 +36,20 @@ after_initialize do
       post.topic.save!
       post.save!
 
+      unless current_user.id == post.user_id
+
+        Notification.create!(notification_type: Notification.types[:custom],
+                           user_id: post.user_id,
+                           topic_id: post.topic_id,
+                           post_number: post.post_number,
+                           data: {
+                             message: 'solved.accepted_notification',
+                             display_username: current_user.username,
+                             topic_title: post.topic.title
+                           }.to_json
+                          )
+      end
+
       render json: success_json
     end
 
@@ -53,13 +67,13 @@ after_initialize do
     end
   end
 
-  DiscourseSolvedButton::Engine.routes.draw do
+  DiscourseSolved::Engine.routes.draw do
     post "/accept" => "answer#accept"
     post "/unaccept" => "answer#unaccept"
   end
 
   Discourse::Application.routes.append do
-    mount ::DiscourseSolvedButton::Engine, at: "solution"
+    mount ::DiscourseSolved::Engine, at: "solution"
   end
 
   TopicView.add_post_custom_fields_whitelister do |user|

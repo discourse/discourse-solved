@@ -1,6 +1,6 @@
 zh_CN:
   js:
-    accepted_answer:
+    solved:
       allow_accepted_answers: "允许用户认可答案"
       accept_answer: "认可答案"
       unaccept_answer: "取消认可答案"

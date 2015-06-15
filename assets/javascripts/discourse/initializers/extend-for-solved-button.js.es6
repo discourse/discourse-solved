@@ -29,7 +29,7 @@ export default {
           return "";
         }
 
-        return I18n.t("accepted_answer.accepted_html", {
+        return I18n.t("solved.accepted_html", {
           username_lower: username.toLowerCase(),
           username: username,
           post_path: this.get('url') + "/" + postNumber,
