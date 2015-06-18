@@ -1,0 +1,10 @@
+es:
+  js:
+    solved:
+      allow_accepted_answers: "Permitir a los usuarios aceptar respuestas"
+      accept_answer: "Aceptar respuesta"
+      has_accepted_answer: "Este tema tiene una respuesta aceptada por su autor"
+      unaccept_answer: "Desmarcar respuesta como aceptada"
+      accepted_answer: "Respuesta aceptada"
+      accepted_html: "<i class='fa-check-square fa accepted'></i> Resuelto por <a href data-user-card='{{username_lower}}'>{{username}}</a> en el <a href='{{post_path}}'>post #{{post_number}}</a>"
+      accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"
