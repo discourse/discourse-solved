@@ -1,0 +1,3 @@
+es:
+  site_settings:
+    allow_solved_on_all_topics: "Permitir a los usuarios aceptar respuestas como soluciones en todos los temas (por defecto, esto se configura para cada categoría editando cada una)"
