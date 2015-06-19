@@ -138,6 +138,8 @@ after_initialize do
     end
 
     def allow_accepted_answers_on_category?(category_id)
+      return true if SiteSetting.allow_solved_on_all_topics
+
       self.class.reset_accepted_answer_cache unless @@allowed_accepted_cache["allowed"]
       @@allowed_accepted_cache["allowed"].include?(category_id)
     end
@@ -157,6 +159,7 @@ after_initialize do
 
     def can_accept_answer
       topic = (topic_view && topic_view.topic) || object.topic
+
       if topic
         scope.can_accept_answer?(topic) &&
         object.post_number > 1 && !accepted_answer

@@ -1,0 +1,4 @@
+plugins:
+  allow_solved_on_all_topics:
+    default: false
+    client: true

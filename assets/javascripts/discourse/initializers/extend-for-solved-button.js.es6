@@ -3,7 +3,7 @@ import PostView from 'discourse/views/post';
 import { Button } from 'discourse/views/post-menu';
 import Topic from 'discourse/models/topic';
 import User from 'discourse/models/user';
-import TopicStatus from 'discourse/views/topic-status'
+import TopicStatus from 'discourse/views/topic-status';
 
 export default {
   name: 'extend-for-solved-button',
@@ -17,7 +17,7 @@ export default {
         var fields = this.get('custom_fields');
         return fields && (fields.enable_accepted_answers === "true");
       }.property('custom_fields')
-    }),
+    });
 
     Topic.reopen({
 
