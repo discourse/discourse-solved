@@ -1,0 +1,3 @@
+tr_TR:
+  site_settings:
+    allow_solved_on_all_topics: "Kullanıcılar yanıtları çözüldü olarak seçebilsinler mi? (Varsayılan olarak kategori düzenleme kısmından ayarlayabilirsiniz.)"
