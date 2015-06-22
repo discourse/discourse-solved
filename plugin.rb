@@ -63,6 +63,16 @@ after_initialize do
       post.topic.save!
       post.save!
 
+      # yank notification
+      notification = Notification.find_by(
+         notification_type: Notification.types[:custom],
+         user_id: post.user_id,
+         topic_id: post.topic_id,
+         post_number: post.post_number
+      )
+
+      notification.destroy if notification
+
       render json: success_json
     end
   end
