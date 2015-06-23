@@ -201,6 +201,16 @@ after_initialize do
         )")
 
     end
+
+    Search.advanced_filter(/in:unsolved/) do |posts|
+      posts.where("topics.id NOT IN (
+        SELECT tc.topic_id
+        FROM topic_custom_fields tc
+        WHERE tc.name = 'accepted_answer_post_id' AND
+                        tc.value IS NOT NULL
+        )")
+
+    end
   end
 
   require_dependency 'topic_list_item_serializer'
