@@ -1,3 +1,8 @@
 en:
   site_settings:
     allow_solved_on_all_topics: "Allow users to select solutions on all topics (by default you control this by editing categories)"
+  reports:
+    accepted_solutions:
+      title: "Accepted solutions"
+      xaxis: "Day"
+      yaxis: "Total"
