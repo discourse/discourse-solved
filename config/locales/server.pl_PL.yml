@@ -1,0 +1,8 @@
+pl_PL:
+  site_settings:
+    allow_solved_on_all_topics: "Pozwól oznaczać użytkownikom wszystkie tematy jako rozwiązane (domyślnie tylko dla wybranych kategorii w ich ustawieniach)"
+  reports:
+    accepted_solutions:
+      title: "Zaakceptowane rozwiązania"
+      xaxis: "Dzień"
+      yaxis: "Wszystkie"
