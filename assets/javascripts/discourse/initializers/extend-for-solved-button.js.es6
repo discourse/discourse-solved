@@ -1,6 +1,6 @@
-import PostMenuView from 'discourse/views/post-menu';
+import PostMenuComponent from 'discourse/components/post-menu';
 import PostView from 'discourse/views/post';
-import { Button } from 'discourse/views/post-menu';
+import { Button } from 'discourse/components/post-menu';
 import Topic from 'discourse/models/topic';
 import User from 'discourse/models/user';
 import TopicStatus from 'discourse/views/topic-status';
@@ -59,7 +59,7 @@ export default {
       classNameBindings: ['post.accepted_answer:accepted-answer']
     });
 
-    PostMenuView.registerButton(function(visibleButtons){
+    PostMenuComponent.registerButton(function(visibleButtons){
       var position = 0;
 
       var canAccept = this.get('post.can_accept_answer');
@@ -87,7 +87,7 @@ export default {
 
     });
 
-    PostMenuView.reopen({
+    PostMenuComponent.reopen({
       acceptedChanged: function(){
         this.rerender();
       }.observes('post.accepted_answer'),
