@@ -81,7 +81,7 @@ export default {
             'unacceptAnswer',
             locale,
             'check-square',
-            {className: 'accepted'})
+            {className: 'accepted fade-out', prefixHTML: '<span class="accepted-text">' + I18n.t('solved.accepted_answer') + '</span>'})
           );
       }
 

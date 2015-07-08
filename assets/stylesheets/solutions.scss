@@ -1,10 +1,23 @@
-.post-controls .accepted, .fa.accepted {
+.post-controls .accepted, .fa.accepted, .accepted-text {
   color: green;
+}
+
+.post-controls .accepted-text {
+  display: inline-block;
+  font-size: inherit;
+  vertical-align: middle;
+  line-height: 35px;
+  margin-right: -5px;
+  z-index: 999;
 }
 
 // you can style accepted answers however your want
 .topic-post.accepted-answer .topic-body {
 //  background-color: #E9FFE0;
+}
+
+.mobile-view .post-controls .accepted-text {
+  float: left;
 }
 
 .mobile-view .cooked .solved {
