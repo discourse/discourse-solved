@@ -1,0 +1,8 @@
+en:
+  site_settings:
+    allow_solved_on_all_topics: "Разрешить пользователям отмечать ответы в темах (управляется в свойствах раздела)"
+  reports:
+    accepted_solutions:
+      title: "Отмеченные"
+      xaxis: "День"
+      yaxis: "Всего"
