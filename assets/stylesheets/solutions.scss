@@ -1,4 +1,4 @@
-.post-controls .accepted, .fa.accepted, .accepted-text {
+.solved-panel, .post-controls .accepted, .fa.accepted, .accepted-text {
   color: green;
 }
 
@@ -20,15 +20,18 @@
   float: left;
 }
 
-.mobile-view .cooked .solved {
+.mobile-view .solved-panel {
   margin-bottom: 15px;
 }
 
-.cooked .solved {
+.solved-panel {
+
+  .by {
+    display: none;
+  }
 
   margin-top: 20px;
   margin-bottom: 0px;
-  color: scale-color($primary, $lightness: 15%);
   font-size: 13px;
   // margin-bottom: 0px;
   // padding: 4px 0px;
