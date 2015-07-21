@@ -1,0 +1,10 @@
+en:
+  js:
+    solved:
+      allow_accepted_answers: "Разрешить ответы"
+      accept_answer: "Пометить как ответ"
+      has_accepted_answer: "В этой теме есть ответ"
+      unaccept_answer: "Убрать ответ"
+      accepted_answer: "Подтвержденный ответ"
+      accepted_html: "<i class='fa-check-square fa accepted'></i><a href data-user-card='{{username_lower}}'>{{username}}</a> ответил в <a href='{{post_path}}'>post #{{post_number}}</a>"
+      accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"
