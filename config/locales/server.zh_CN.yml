@@ -1,8 +1,8 @@
 zh_CN:
   site_settings:
-    allow_solved_on_all_topics: "允许用户在所有主题选择答案（默认情况下在分类设置中更改）"
+    allow_solved_on_all_topics: "允许用户在所有主题选择解决方案（默认情况下在各个分类设置中更设置）"
   reports:
     accepted_solutions:
-      title: "接受的答案"
+      title: "接受的解决方案"
       xaxis: "天"
       yaxis: "总计"
