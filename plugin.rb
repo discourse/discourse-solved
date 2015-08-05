@@ -19,6 +19,9 @@ after_initialize do
   require_dependency "application_controller"
   class DiscourseSolved::AnswerController < ::ApplicationController
     def accept
+
+      limit_accepts
+
       post = Post.find(params[:id].to_i)
 
       guardian.ensure_can_accept_answer!(post.topic)
@@ -54,6 +57,9 @@ after_initialize do
     end
 
     def unaccept
+
+      limit_accepts
+
       post = Post.find(params[:id].to_i)
 
       guardian.ensure_can_accept_answer!(post.topic)
@@ -74,6 +80,13 @@ after_initialize do
       notification.destroy if notification
 
       render json: success_json
+    end
+
+    def limit_accepts
+      unless current_user.staff?
+        RateLimiter.new(nil, "accept-hr-#{current_user.id}", 20, 1.hour).performed!
+        RateLimiter.new(nil, "accept-min-#{current_user.id}", 4, 30.seconds).performed!
+      end
     end
   end
 
@@ -140,7 +153,8 @@ after_initialize do
 
     def accepted_answer_post_id
       id = object.topic.custom_fields["accepted_answer_post_id"]
-      id && id.to_i
+      # a bit messy but race conditions can give us an array here, avoid
+      id && id.to_i rescue nil
     end
 
   end
@@ -241,7 +255,7 @@ after_initialize do
     attributes :has_accepted_answer
 
     def include_has_accepted_answer?
-      object.has_accepted_answer
+      object.custom_fields["accepted_answer_post_id"]
     end
 
     def has_accepted_answer
@@ -249,32 +263,6 @@ after_initialize do
     end
   end
 
-  class ::Topic
-    attr_accessor :has_accepted_answer
-  end
-
-  module ::DiscourseSolved::ExtendTopics
-    def load_topics
-      topics = super
-      if topics.present?
-      # super efficient for front page
-        with_accepted = Set.new(Topic.exec_sql(
-          'SELECT topic_id FROM topic_custom_fields
-           WHERE topic_id in (:topic_ids) AND
-                 value IS NOT NULL AND
-                 name = \'accepted_answer_post_id\'',
-                 topic_ids: topics.map(&:id)
-        ).values.flatten.map(&:to_i))
-        topics.each do |topic|
-          topic.has_accepted_answer = true if with_accepted.include? topic.id
-        end
-      end
-      topics
-    end
-  end
-
-  class ::TopicList
-    prepend ::DiscourseSolved::ExtendTopics
-  end
+  TopicList.preloaded_custom_fields << "accepted_answer_post_id" if TopicList.respond_to? :preloaded_custom_fields
 
 end
