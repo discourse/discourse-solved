@@ -4,26 +4,32 @@ import { Button } from 'discourse/components/post-menu';
 import Topic from 'discourse/models/topic';
 import User from 'discourse/models/user';
 import TopicStatus from 'discourse/views/topic-status';
+import computed from 'ember-addons/ember-computed-decorators';
 
 export default {
   name: 'extend-for-solved-button',
   initialize: function() {
 
     Discourse.Category.reopen({
-      enable_accepted_answers: function(key, value){
-        if (arguments.length > 1) {
-          this.set('custom_fields.enable_accepted_answers', value ? "true" : "false");
+
+      @computed("custom_fields")
+      enable_accepted_answers: {
+        get() {
+          const fields = this.get("custom_fields");
+          return fields && fields.enable_accepted_answers === "true";
+        },
+        set(value) {
+          this.set("custom_fields.enable_accepted_answers", value ? "true" : "false");
         }
-        var fields = this.get('custom_fields');
-        return fields && (fields.enable_accepted_answers === "true");
-      }.property('custom_fields')
+      }
+
     });
 
     Topic.reopen({
 
       // keeping this here cause there is complex localization
       acceptedAnswerHtml: function(){
-        var username = this.get('accepted_answer.username');
+        const username = this.get('accepted_answer.username');
         var postNumber = this.get('accepted_answer.post_number');
 
         if (!username || !postNumber) {
@@ -32,7 +38,7 @@ export default {
 
         return I18n.t("solved.accepted_html", {
           username_lower: username.toLowerCase(),
-          username: username,
+          username,
           post_path: this.get('url') + "/" + postNumber,
           post_number: postNumber,
           user_path: User.create({username: username}).get('path')
