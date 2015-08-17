@@ -19,7 +19,9 @@ export default {
           return fields && fields.enable_accepted_answers === "true";
         },
         set(value) {
-          this.set("custom_fields.enable_accepted_answers", value ? "true" : "false");
+          value = value ? "true" : "false";
+          this.set("custom_fields.enable_accepted_answers", value);
+          return value;
         }
       }
 
