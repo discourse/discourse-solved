@@ -5,6 +5,7 @@ import Topic from 'discourse/models/topic';
 import User from 'discourse/models/user';
 import TopicStatus from 'discourse/views/topic-status';
 import computed from 'ember-addons/ember-computed-decorators';
+import { popupAjaxError } from 'discourse/lib/ajax-error';
 
 export default {
   name: 'extend-for-solved-button',
@@ -113,17 +114,7 @@ export default {
           data: {
             id: this.get('post.id')
           }
-        }).then(function(){
-          //
-        }).catch(function(error){
-          var message = I18n.t("generic_error");
-          try {
-            message = $.parseJSON(error.responseText).errors;
-          } catch (e) {
-            // nothing we can do
-          }
-          bootbox.alert(message);
-        });
+        }).catch(popupAjaxError);
       },
 
       clearAcceptedAnswer: function(){
@@ -155,17 +146,7 @@ export default {
           data: {
             id: this.get('post.id')
           }
-        }).then(function(){
-          //
-        }).catch(function(error){
-          var message = I18n.t("generic_error");
-          try {
-            message = $.parseJSON(error.responseText).errors;
-          } catch (e) {
-            // nothing we can do
-          }
-          bootbox.alert(message);
-        });
+        }).catch(popupAjaxError);
       }
     });
   }
