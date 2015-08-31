@@ -1,0 +1,8 @@
+de:
+  site_settings:
+    allow_solved_on_all_topics: "Erlaube Nutzern für Themen in allen Kategorien Lösungen als Antworten zu markieren (normalerweise wird dies für jede Kategorie individuell eingestellt)"
+  reports:
+    accepted_solutions:
+      title: "Akzeptierte Lösungen"
+      xaxis: "Tag"
+      yaxis: "Gesamt"
