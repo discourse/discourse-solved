@@ -1,11 +1,11 @@
 zh_CN:
   js:
     solved:
-      allow_accepted_answers: "允许用户选择解决问题的答案"
-      accept_answer: "这个答案解决了我的问题"
-      has_accepted_answer: "这个主题已经有了正确的答案"
-      unaccept_answer: "取消认可答案"
-      accepted_answer: "认可答案"
-      solution: "答案"
-      accepted_html: "<i class='fa-check-square fa accepted'></i>由<a href data-user-card='{{username_lower}}'>{{username}}</a>在 <a href='{{post_path}}'>#{{post_number}} 楼</a>解决"
+      allow_accepted_answers: "允许楼主和职员选择解决方案"
+      accept_answer: "这个回复解决了问题"
+      has_accepted_answer: "这个主题已经有了解决方案"
+      unaccept_answer: "这个回复没有解决问题"
+      accepted_answer: "解决方案"
+      solution: "解决方案"
+      accepted_html: "<i class='fa-check-square fa accepted'></i> 由<span class='by'><a href data-user-card='{{username_lower}}'>{{username}}</a></span>在 <a href='{{post_path}}'>#{{post_number}} 楼</a>解决"
       accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"
