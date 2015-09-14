@@ -1,0 +1,11 @@
+fa:
+  js:
+    solved:
+      allow_accepted_answers: "به صاحب عنوان و مدیران اجازه انتخاب یک پاسخ را به عنوان راه حل بده."
+      accept_answer: "این پاسخ راه حل مشکل است."
+      has_accepted_answer: "این عنوان راه حلی دارد"
+      unaccept_answer: "این پاسخ دیگر راه حل این عنوان نیست."
+      accepted_answer: "راه حل مورد قبول"
+      solution: "راه حل"
+      accepted_html: "<i class='fa-check-square fa accepted'></i> حل شده <span class='by'>توسط <a href data-user-card='{{username_lower}}'>{{username}}</a></span> در <a href='{{post_path}}'>پاسخ #{{post_number}}</a>"
+      accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

@@ -1,0 +1,8 @@
+fa:
+  site_settings:
+    allow_solved_on_all_topics: "به کاربر اجازه انتخاب راه حل را بده."
+  reports:
+    accepted_solutions:
+      title: "راه حل مورد قبول"
+      xaxis: "روز"
+      yaxis: "مجموع"
