@@ -11,25 +11,7 @@ export default {
   name: 'extend-for-solved-button',
   initialize: function() {
 
-    Discourse.Category.reopen({
-
-      @computed("custom_fields")
-      enable_accepted_answers: {
-        get() {
-          const fields = this.get("custom_fields");
-          return fields && fields.enable_accepted_answers === "true";
-        },
-        set(value) {
-          value = value ? "true" : "false";
-          this.set("custom_fields.enable_accepted_answers", value);
-          return value;
-        }
-      }
-
-    });
-
     Topic.reopen({
-
       // keeping this here cause there is complex localization
       acceptedAnswerHtml: function(){
         const username = this.get('accepted_answer.username');
