@@ -1,0 +1,11 @@
+da:
+  js:
+    solved:
+      allow_accepted_answers: "Tillad ejer af emne og stab at markere svar som en løsning"
+      accept_answer: "Dette svar løser problemr"
+      has_accepted_answer: "Dette svar har en løsning"
+      unaccept_answer: "Dette svar løser ikke længere problemet"
+      accepted_answer: "Løsning"
+      solution: "Løsning"
+      accepted_html: "<i class='fa-check-square fa accepted'></i> Løst <span class='by'>af <a href data-user-card='{{username_lower}}'>{{username}}</a></span> i <a href='{{post_path}}'>indlæg #{{post_number}}</a>"
+      accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"
