@@ -1,5 +1,5 @@
-import PostMenuComponent from 'discourse/components/post-menu';
 import PostView from 'discourse/views/post';
+import PostMenuComponent from 'discourse/components/post-menu';
 import { Button } from 'discourse/components/post-menu';
 import Topic from 'discourse/models/topic';
 import User from 'discourse/models/user';
@@ -56,7 +56,7 @@ export default {
       var canAccept = this.get('post.can_accept_answer');
       var canUnaccept = this.get('post.can_unaccept_answer');
       var accepted = this.get('post.accepted_answer');
-      var isOp = Discourse.User.currentProp("id") === this.get('post.topic.user_id');
+      var isOp = User.currentProp("id") === this.get('post.topic.user_id');
 
       if  (!accepted && canAccept && !isOp) {
         // first hidden position
