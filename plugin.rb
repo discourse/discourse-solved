@@ -207,20 +207,21 @@ after_initialize do
       topic = (topic_view && topic_view.topic) || object.topic
 
       if topic
-        scope.can_accept_answer?(topic) &&
-        object.post_number > 1 && !accepted_answer
+        return scope.can_accept_answer?(topic) && object.post_number > 1 && !accepted_answer
       end
+
+      false
     end
 
     def can_unaccept_answer
       topic = (topic_view && topic_view.topic) || object.topic
       if topic
-        scope.can_accept_answer?(topic) && post_custom_fields["is_accepted_answer"]
+        return scope.can_accept_answer?(topic) && (post_custom_fields["is_accepted_answer"] == 'true')
       end
     end
 
     def accepted_answer
-      post_custom_fields["is_accepted_answer"]
+      post_custom_fields["is_accepted_answer"] == 'true'
     end
   end
 
