@@ -46,7 +46,7 @@ function acceptPost(post) {
     accepted_answer: true
   });
 
-  topic.setProperties({
+  topic.set('accepted_answer', {
     username: post.get('username'),
     post_number: post.get('post_number')
   });
@@ -141,16 +141,30 @@ function initializeWithApi(api) {
     }
   });
 
+  api.decorateWidget('post-contents:after-cooked', dec => {
+    if (dec.attrs.post_number === 1) {
+      const topic = dec.getModel().get('topic');
+      if (topic.get('accepted_answer')) {
+        return dec.rawHtml(`<p class="solved">${topic.get('acceptedAnswerHtml')}</p>`);
+      }
+    }
+  });
+
   api.attachWidgetAction('post', 'acceptAnswer', function() {
     const post = this.model;
-    const current = post.get('topic.postStream.posts').filterProperty('accepted_answer');
+    const current = post.get('topic.postStream.posts').filter(p => {
+      return p.get('post_number') === 1 || p.get('accepted_answer');
+    });
     acceptPost(post);
 
     current.forEach(p => this.appEvents.trigger('post-stream:refresh', { id: p.id }));
   });
 
   api.attachWidgetAction('post', 'unacceptAnswer', function() {
-    unacceptPost(this.model);
+    const post = this.model;
+    const op = post.get('topic.postStream.posts').find(p => p.get('post_number') === 1);
+    unacceptPost(post);
+    this.appEvents.trigger('post-stream:refresh', { id: op.get('id') });
   });
 }
 
