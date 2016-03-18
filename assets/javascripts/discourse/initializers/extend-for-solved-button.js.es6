@@ -115,7 +115,7 @@ function initializeWithApi(api) {
     const canAccept = attrs.can_accept_answer;
     const canUnaccept = attrs.can_unaccept_answer;
     const accepted = attrs.accepted_answer;
-    const isOp = currentUser && currentUser.id === attrs.user_id;
+    const isOp = currentUser && currentUser.id === attrs.topicCreatedById;
     const position = (!accepted && canAccept && !isOp) ? 'second-last-hidden' : 'first';
 
     if (canAccept) {
