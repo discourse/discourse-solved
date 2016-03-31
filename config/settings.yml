@@ -2,3 +2,6 @@ plugins:
   allow_solved_on_all_topics:
     default: false
     client: true
+  accept_all_solutions_trust_level:
+    default: 4
+    client: true

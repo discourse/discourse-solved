@@ -193,7 +193,8 @@ after_initialize do
     def can_accept_answer?(topic)
       allow_accepted_answers_on_category?(topic.category_id) && (
         is_staff? || (
-          authenticated? && !topic.closed? && topic.user_id == current_user.id
+          authenticated? && ((!topic.closed? && topic.user_id == current_user.id) ||
+                            (current_user.trust_level >= SiteSetting.accept_all_solutions_trust_level))
         )
       )
     end
