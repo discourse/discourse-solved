@@ -256,12 +256,8 @@ after_initialize do
   class ::TopicListItemSerializer
     attributes :has_accepted_answer
 
-    def include_has_accepted_answer?
-      object.custom_fields["accepted_answer_post_id"]
-    end
-
     def has_accepted_answer
-      true
+      object.custom_fields["accepted_answer_post_id"] ? true : false
     end
   end
 
