@@ -1,11 +1,11 @@
 pt:
   js:
     solved:
-      allow_accepted_answers: "Permitir que o autor do tÛpico e a equipa marquem uma resposta como soluÁ„o"
+      allow_accepted_answers: "Permitir que o autor do t√≥pico e a equipa marquem uma resposta como solu√ß√£o"
       accept_answer: "Esta resposta resolve o problema"
-      has_accepted_answer: "Este tÛpico tem uma soluÁ„o"
-      unaccept_answer: "Esta resposta j· n„o resolve o problema"
-      accepted_answer: "SoluÁ„o"
-      solution: "SoluÁ„o"
+      has_accepted_answer: "Este t√≥pico tem uma solu√ß√£o"
+      unaccept_answer: "Esta resposta j√° n√£o resolve o problema"
+      accepted_answer: "Solu√ß√£o"
+      solution: "Solu√ß√£o"
       accepted_html: "<i class='fa-check-square fa accepted'></i> Resolvido <span class='by'>por <a href data-user-card='{{username_lower}}'>{{username}}</a></span> na <a href='{{post_path}}'>mensagem #{{post_number}}</a>"
       accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

@@ -1,9 +1,9 @@
 pt:
   site_settings:
-    allow_solved_on_all_topics: "Permitir que os utilizadores escolham soluÁıes em todos os tÛpicos (por omiss„o essa gest„o È feita pela ediÁ„o de categorias)"
-    accept_all_solutions_trust_level: "NÌvel de confianÁa mÌnimo necess·rio para aceitar soluÁıes em qualquer tÛpico (mesmo quando n„o È o autor do tÛpico)"
+    allow_solved_on_all_topics: "Permitir que os utilizadores escolham solu√ß√µes em todos os t√≥picos (por omiss√£o essa gest√£o √© feita pela edi√ß√£o de categorias)"
+    accept_all_solutions_trust_level: "N√≠vel de confian√ßa m√≠nimo necess√°rio para aceitar solu√ß√µes em qualquer t√≥pico (mesmo quando n√£o √© o autor do t√≥pico)"
   reports:
     accepted_solutions:
-      title: "SoluÁıes aceites"
+      title: "Solu√ß√µes aceites"
       xaxis: "Dia"
       yaxis: "Total"
