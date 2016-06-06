@@ -2,6 +2,6 @@
 
 Provides a solved button on designated categories
 
-License
-=======
+## License
+
 MIT
