@@ -251,9 +251,9 @@ after_initialize do
     end
   end
 
-  require_dependency 'topic_list_item_serializer'
+  require_dependency 'listable_topic_serializer'
 
-  class ::TopicListItemSerializer
+  class ::ListableTopicSerializer
     attributes :has_accepted_answer
 
     def has_accepted_answer

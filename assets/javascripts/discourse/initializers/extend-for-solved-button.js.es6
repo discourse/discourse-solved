@@ -3,7 +3,8 @@ import PostMenuComponent from 'discourse/components/post-menu';
 import { Button } from 'discourse/components/post-menu';
 import Topic from 'discourse/models/topic';
 import User from 'discourse/models/user';
-import TopicStatus from 'discourse/views/topic-status';
+import TopicStatusView from 'discourse/views/topic-status';
+import TopicStatusComponent from 'discourse/components/topic-status';
 import { popupAjaxError } from 'discourse/lib/ajax-error';
 import { withPluginApi } from 'discourse/lib/plugin-api';
 
@@ -192,7 +193,8 @@ export default {
       }.property('accepted_answer', 'id')
     });
 
-    TopicStatus.reopen({
+    // Regular topic lists.
+    TopicStatusView.reopen({
       statuses: function(){
         const results = this._super();
         if (this.topic.has_accepted_answer) {
@@ -201,6 +203,20 @@ export default {
             closeTag: 'span',
             title: I18n.t('solved.has_accepted_answer'),
             icon: 'check-square-o'
+          });
+        }
+        return results;
+      }.property()
+    });
+
+    // Topic lists in category overview.
+    TopicStatusComponent.reopen({
+      statuses: function() {
+        const results = this._super();
+        if (this.topic.has_accepted_answer) {
+          results.push({
+            name: 'check-square-o',
+            key: 'solved.has_accepted_answer',
           });
         }
         return results;
