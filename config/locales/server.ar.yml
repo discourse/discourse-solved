@@ -1,0 +1,9 @@
+en:
+  site_settings:
+    allow_solved_on_all_topics: " السماح للأعضاء باختيار الحل على جميع المواضيع افتراضيا يمكنك التحكم هذا عن طريق تحرير الفئات أو الاقسام"
+    accept_all_solutions_trust_level: "OP الحد الأدنى المطلوب لمستوى الثقة لقبول الحلول على اي موضوع حتى عندما لا يكون  "
+  reports:
+    accepted_solutions:
+      title: "الحلول المقبولة"
+      xaxis: "يوم / اليوم"
+      yaxis: "المجموع"
