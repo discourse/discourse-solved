@@ -1,0 +1,11 @@
+en:
+  js:
+    solved:
+      allow_accepted_answers: "السماح لصاحب الموضوع وفريق العمل الرد كـحل للموضوع"
+      accept_answer: "هذا الرد حل المشكلة"
+      has_accepted_answer: "هذا الموضوع فيه الحل"
+      unaccept_answer: "هذا الرد لم يعد يحل المشكلة"
+      accepted_answer: "الحل"
+      solution: "الحل"
+      accepted_html: "<i class='fa-check-square fa accepted'></i> تم حلها <span class='by'>بواسطة <a href data-user-card='{{username_lower}}'>{{username}}</a></span> in <a href='{{post_path}}'> رقم المشاركة#{{post_number}}</a>"
+      accepted_notification: "<i title='حل مقبول' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"
