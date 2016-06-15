@@ -1,0 +1,21 @@
+ar:
+  js:
+    solved:
+      allow_accepted_answers: "اسمح لمالك الموضوع والفريق بوضع علامة \"حل\" على الرد"
+      accept_answer: "هذا الرد حل المشكلة"
+      has_accepted_answer: "لهذا الموضوع حل"
+      unaccept_answer: "لم يعد هذا الرد يحل المشكلة"
+      accepted_answer: "الحل"
+      solution: "الحل"
+      accepted_html: "<i class='fa-check-square fa accepted'></i> حُلّت المشكلة <span class='by'>بردّ <a href data-user-card='{{username_lower}}'>{{username}}</a></span> والحل في <a href='{{post_path}}'>المنشور #{{post_number}}</a>"
+      accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"
+AND:
+ar:
+  site_settings:
+    allow_solved_on_all_topics: "اسمح للمستخدمين باختيار الحلول في كل المواضيع (إذ أنك تتحكم في هذا افتراضيا بتحرير الفئات)"
+    accept_all_solutions_trust_level: "أدنى حد مطلوب للثقة وذلك لقبول الحلول في أي موضوع (حتى لو لم يكن OP)"
+  reports:
+    accepted_solutions:
+      title: "الحلول المقبولة"
+      xaxis: "اليوم"
+      yaxis: "المجموع"
