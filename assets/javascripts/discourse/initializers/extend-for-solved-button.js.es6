@@ -1,6 +1,3 @@
-import PostView from 'discourse/views/post';
-import PostMenuComponent from 'discourse/components/post-menu';
-import { Button } from 'discourse/components/post-menu';
 import Topic from 'discourse/models/topic';
 import User from 'discourse/models/user';
 import TopicStatus from 'discourse/views/topic-status';
@@ -59,10 +56,14 @@ function acceptPost(post) {
 
 // Code for older discourse installs for backwards compatibility
 function oldPluginCode() {
+  const PostView = require('discourse/views/post').default;
   PostView.reopen({
     classNameBindings: ['post.accepted_answer:accepted-answer']
   });
 
+  const module = require( 'discourse/components/post-menu');
+  const PostMenuComponent = module.default;
+  const Button = module.Button;
   PostMenuComponent.registerButton(function(visibleButtons){
     var position = 0;
 
