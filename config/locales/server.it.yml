@@ -1,0 +1,9 @@
+it:
+  site_settings:
+    allow_solved_on_all_topics: "Consentire agli utenti di selezionare le soluzioni su tutti gli argomenti (per difetto puoi controllare il settaggio modificando le categorie)"
+    accept_all_solutions_trust_level: "Livello di attendibilità minimo richiesto per accettare soluzioni su ogni argomento (anche quando non OP)"
+  reports:
+    accepted_solutions:
+      title: "Soluzioni accettate"
+      xaxis: "Giorno"
+      yaxis: "Totale"
