@@ -1,0 +1,11 @@
+fi:
+  js:
+    solved:
+      allow_accepted_answers: "Salli aiheen omistajan ja henkökunnan merkitä viesti ratkaisuksi"
+      accept_answer: "Tämä viesti on ratkaisu"
+      has_accepted_answer: "Tämä aihe on ratkaistu"
+      unaccept_answer: "Tämä viesti ei enää ratkaise ongelmaa"
+      accepted_answer: "Ratkaisu"
+      solution: "Ratkaisu"
+      accepted_html: "<i class='fa-check-square fa accepted'></i> <span class='by'><a href data-user-card='{{username_lower}}'>{{username}}</a></span> ratkaisi <a href='{{post_path}}'>viestissä #{{post_number}}</a>"
+      accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"
