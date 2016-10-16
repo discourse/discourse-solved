@@ -1,6 +1,7 @@
 es:
   site_settings:
     allow_solved_on_all_topics: "Permitir a los usuarios aceptar respuestas como soluciones en todos los temas (por defecto, esto se configura para cada categoría editando cada una)"
+    accept_all_solutions_trust_level: "Nivel de confianza mínimo para aceptar soluciones en cualquier tema (incluso cuando no es el autor del tema)"
   reports:
     accepted_solutions:
       title: "Soluciones aceptadas"
