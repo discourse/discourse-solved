@@ -1,0 +1,9 @@
+fi:
+  site_settings:
+    allow_solved_on_all_topics: "Salli käyttäjien valita ratkaisut kaikissa aiheissa (normaalisti muutetaan kategoria kerrallaan)."
+    accept_all_solutions_trust_level: "Luottamustason minimi, kun käyttäjä hyväksyy ratkaisun (ja ei ole alkuperäinen kysyjä)"
+  reports:
+    accepted_solutions:
+      title: "Hyväksytyt ratkaisut"
+      xaxis: "Päivä"
+      yaxis: "Yhteensä"
