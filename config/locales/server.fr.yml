@@ -1,4 +1,4 @@
-en:
+fr:
   site_settings:
     allow_solved_on_all_topics: "Autoriser les utilisateurs à sélectionner une solution sur tous les sujets (par défaut, vous devez modifier les catégories concernées)"
     accept_all_solutions_trust_level: "Niveau de confiance minimum requis pour accepter des solutions sur n'importe quel sujet (même sans en être l'auteur)"
