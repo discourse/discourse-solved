@@ -1,0 +1,11 @@
+fr:
+  js:
+    solved:
+      allow_accepted_answers: "Autoriser l'auteur du sujet et les responsables à marquer une réponse comme solution"
+      accept_answer: "Cette réponse résout le problème"
+      has_accepted_answer: "Ce sujet a une solution"
+      unaccept_answer: "Cette réponse ne résout plus le problème"
+      accepted_answer: "Solution"
+      solution: "Solution"
+      accepted_html: "<i class='fa-check-square fa accepted'></i> Résolu <span class='by'>par <a href data-user-card='{{username_lower}}'>{{username}}</a></span> dans le <a href='{{post_path}}'>message #{{post_number}}</a>"
+      accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"
