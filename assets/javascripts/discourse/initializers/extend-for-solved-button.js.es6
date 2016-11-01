@@ -3,6 +3,7 @@ import User from 'discourse/models/user';
 import TopicStatus from 'discourse/views/topic-status';
 import { popupAjaxError } from 'discourse/lib/ajax-error';
 import { withPluginApi } from 'discourse/lib/plugin-api';
+import { ajax } from 'discourse/lib/ajax';
 
 function clearAccepted(topic) {
   const posts = topic.get('postStream.posts');
@@ -26,7 +27,7 @@ function unacceptPost(post) {
   });
   topic.set('accepted_answer', undefined);
 
-  Discourse.ajax("/solution/unaccept", {
+  ajax("/solution/unaccept", {
     type: 'POST',
     data: { id: post.get('id') }
   }).catch(popupAjaxError);
@@ -48,7 +49,7 @@ function acceptPost(post) {
     post_number: post.get('post_number')
   });
 
-  Discourse.ajax("/solution/accept", {
+  ajax("/solution/accept", {
     type: 'POST',
     data: { id: post.get('.id') }
   }).catch(popupAjaxError);
