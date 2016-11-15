@@ -1,6 +1,6 @@
 import Topic from 'discourse/models/topic';
 import User from 'discourse/models/user';
-import TopicStatus from 'discourse/views/topic-status';
+import TopicStatus from 'discourse/raw-views/topic-status';
 import { popupAjaxError } from 'discourse/lib/ajax-error';
 import { withPluginApi } from 'discourse/lib/plugin-api';
 import { ajax } from 'discourse/lib/ajax';
