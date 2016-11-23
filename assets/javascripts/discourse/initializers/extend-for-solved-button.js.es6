@@ -145,9 +145,12 @@ function initializeWithApi(api) {
 
   api.decorateWidget('post-contents:after-cooked', dec => {
     if (dec.attrs.post_number === 1) {
-      const topic = dec.getModel().get('topic');
-      if (topic.get('accepted_answer')) {
-        return dec.rawHtml(`<p class="solved">${topic.get('acceptedAnswerHtml')}</p>`);
+      const postModel = dec.getModel();
+      if (postModel) {
+        const topic = postModel.get('topic');
+        if (topic.get('accepted_answer')) {
+          return dec.rawHtml(`<p class="solved">${topic.get('acceptedAnswerHtml')}</p>`);
+        }
       }
     }
   });
