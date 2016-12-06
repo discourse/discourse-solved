@@ -9,6 +9,44 @@ register_asset 'stylesheets/solutions.scss'
 
 after_initialize do
 
+  # we got to do a one time upgrade
+  if defined?(UserAction::SOLVED)
+    unless $redis.get('solved_already_upgraded')
+      unless UserAction.where(action_type: UserAction::SOLVED).exists?
+        Rails.logger.info("Upgrading storage for solved")
+        sql =<<SQL
+        INSERT INTO user_actions(action_type,
+                                 user_id,
+                                 target_topic_id,
+                                 target_post_id,
+                                 acting_user_id,
+                                 created_at,
+                                 updated_at)
+        SELECT :solved,
+               p.user_id,
+               p.topic_id,
+               p.id,
+               t.user_id,
+               pc.created_at,
+               pc.updated_at
+        FROM
+          post_custom_fields pc
+        JOIN
+          posts p ON p.id = pc.post_id
+        JOIN
+          topics t ON t.id = p.topic_id
+        WHERE
+          pc.name = 'is_accepted_answer' AND
+          pc.value = 'true' AND
+          p.user_id IS NOT NULL
+SQL
+
+        UserAction.exec_sql(sql, solved: UserAction::SOLVED)
+      end
+      $redis.set("solved_already_upgraded", "true")
+    end
+  end
+
   module ::DiscourseSolved
     class Engine < ::Rails::Engine
       engine_name PLUGIN_NAME
@@ -18,6 +56,7 @@ after_initialize do
 
   require_dependency "application_controller"
   class DiscourseSolved::AnswerController < ::ApplicationController
+
     def accept
 
       limit_accepts
@@ -31,6 +70,10 @@ after_initialize do
         if p2 = Post.find_by(id: accepted_id)
           p2.custom_fields["is_accepted_answer"] = nil
           p2.save!
+
+          if defined?(UserAction::SOLVED)
+            UserAction.where(action_type: UserAction::SOLVED, target_post_id: p2.id).destroy_all
+          end
         end
       end
 
@@ -38,6 +81,14 @@ after_initialize do
       post.topic.custom_fields["accepted_answer_post_id"] = post.id
       post.topic.save!
       post.save!
+
+      if defined?(UserAction::SOLVED)
+        UserAction.log_action!(action_type: UserAction::SOLVED,
+                              user_id: post.user_id,
+                              acting_user_id: guardian.user.id,
+                              target_post_id: post.id,
+                              target_topic_id: post.topic_id)
+      end
 
       unless current_user.id == post.user_id
 
@@ -70,6 +121,14 @@ after_initialize do
       post.topic.custom_fields["accepted_answer_post_id"] = nil
       post.topic.save!
       post.save!
+
+      # TODO remove_action! does not allow for this type of interface
+      if defined? UserAction::SOLVED
+        UserAction.where(
+          action_type: UserAction::SOLVED,
+          target_post_id: post.id
+        ).destroy_all
+      end
 
       # yank notification
       notification = Notification.find_by(
@@ -126,6 +185,27 @@ after_initialize do
       report.prev30Days = accepted_solutions.where("topic_custom_fields.created_at >= ?", report.start_date - 30.days)
                                             .where("topic_custom_fields.created_at <= ?", report.start_date)
                                             .count
+    end
+  end
+
+  if defined?(UserAction::SOLVED)
+    require_dependency 'user_summary'
+    class ::UserSummary
+      def solved_count
+        UserAction
+          .where(user: @user)
+          .where(action_type: UserAction::SOLVED)
+          .count
+      end
+    end
+
+    require_dependency 'user_summary_serializer'
+    class ::UserSummarySerializer
+      attributes :solved_count
+
+      def solved_count
+        object.solved_count
+      end
     end
   end
 

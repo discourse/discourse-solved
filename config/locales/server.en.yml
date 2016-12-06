@@ -7,3 +7,7 @@ en:
       title: "Accepted solutions"
       xaxis: "Day"
       yaxis: "Total"
+  solved:
+    no_solutions:
+      self: "You have no accepted solutions yet."
+      others: "No accepted solutions."
