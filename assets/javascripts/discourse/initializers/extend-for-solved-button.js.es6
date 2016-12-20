@@ -171,6 +171,17 @@ function initializeWithApi(api) {
     unacceptPost(post);
     this.appEvents.trigger('post-stream:refresh', { id: op.get('id') });
   });
+
+  if (api.registerConnectorClass) {
+    api.registerConnectorClass('user-summary-stat', 'solved-count', {
+      shouldRender(args) {
+        return args.model.solved_count > 0;
+      },
+      setupComponent() {
+        this.set('classNames', ['linked-stat']);
+      }
+    });
+  }
 }
 
 export default {
