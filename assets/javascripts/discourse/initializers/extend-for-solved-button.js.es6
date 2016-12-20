@@ -51,7 +51,7 @@ function acceptPost(post) {
 
   ajax("/solution/accept", {
     type: 'POST',
-    data: { id: post.get('.id') }
+    data: { id: post.get('id') }
   }).catch(popupAjaxError);
 }
 
