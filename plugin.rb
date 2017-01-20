@@ -53,6 +53,8 @@ after_initialize do
                           )
       end
 
+      DiscourseEvent.trigger(:accepted_solution, post)
+
       render json: success_json
     end
 
@@ -78,6 +80,8 @@ after_initialize do
       )
 
       notification.destroy if notification
+
+      DiscourseEvent.trigger(:unaccepted_solution, post)
 
       render json: success_json
     end
