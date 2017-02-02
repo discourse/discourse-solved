@@ -1,4 +1,7 @@
 plugins:
+  solved_enabled:
+    default: true
+    client: true
   allow_solved_on_all_topics:
     default: false
     client: true

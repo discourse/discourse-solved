@@ -3,6 +3,8 @@
 # version: 0.1
 # authors: Sam Saffron
 
+enabled_site_setting :solved_enabled
+
 PLUGIN_NAME = "discourse_solved".freeze
 
 register_asset 'stylesheets/solutions.scss'
