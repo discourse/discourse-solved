@@ -1,7 +1,7 @@
 es:
   js:
     solved:
-      title: "Resuelto"
+      title: "Solucionado"
       allow_accepted_answers: "Permitir al creador del tema y al staff marcar una respuesta como la solución"
       accept_answer: "Esta respuesta resuelve el problema"
       has_accepted_answer: "Este tema tiene una solución"
