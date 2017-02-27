@@ -227,7 +227,7 @@ export default {
           results.push({
             openTag: 'span',
             closeTag: 'span',
-            title: I18n.t('solved.no_accepted_answer'),
+            title: I18n.t('solved.has_no_accepted_answer'),
             icon: 'square-o'
           });
         }
