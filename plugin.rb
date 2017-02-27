@@ -341,14 +341,14 @@ SQL
     require_dependency 'topic_query'
 
     TopicQuery.add_custom_filter(:solved) do |results, topic_query|
-      if topic_query.options[:solved] == 'true'
+      if topic_query.options[:solved] == 'solved'
         results = results.where("topics.id IN (
           SELECT tc.topic_id
           FROM topic_custom_fields tc
           WHERE tc.name = 'accepted_answer_post_id' AND
                           tc.value IS NOT NULL
           )")
-      elsif topic_query.options[:solved] == 'false'
+      elsif topic_query.options[:solved] == 'unsolved'
         results = results.where("topics.id NOT IN (
           SELECT tc.topic_id
           FROM topic_custom_fields tc
