@@ -1,9 +1,15 @@
 fi:
   site_settings:
-    allow_solved_on_all_topics: "Salli käyttäjien valita ratkaisut kaikissa aiheissa (normaalisti muutetaan kategoria kerrallaan)."
-    accept_all_solutions_trust_level: "Luottamustason minimi, kun käyttäjä hyväksyy ratkaisun (ja ei ole alkuperäinen kysyjä)"
+    solved_enabled: "Ota käyttöön Solved-lisäosa, salii käyttäjän merkitä ratkaisuja ketjuille"
+    allow_solved_on_all_topics: "Salli käyttäjien valita ratkaisut kaikissa aiheissa (normaalisti säädetään aluekohtaisesti)."
+    accept_all_solutions_trust_level: "Luottamustaso joka vaaditaan, jotta voi merkitä ratkaisuksi (vaikkei olisikaan itse kysyjä)"
+    empty_box_on_unsolved: "Näytä tyhjä laatikko ratkaisemattomien ketjujen yhteydessä"
   reports:
     accepted_solutions:
       title: "Hyväksytyt ratkaisut"
       xaxis: "Päivä"
       yaxis: "Yhteensä"
+  solved:
+    no_solutions:
+      self: "Viestejäsi ei ole hyväksytty ratkaisuiksi."
+      others: "Ei hyväksyttyjä ratkaisuja."
