@@ -340,16 +340,20 @@ SQL
   require_dependency 'topic_list_item_serializer'
 
   class ::TopicListItemSerializer
-    attributes :has_accepted_answer, :can_have_answer
+    attributes :has_accepted_answer
 
     def has_accepted_answer
       object.custom_fields["accepted_answer_post_id"] ? true : false
     end
 
-    def can_have_answer
-      return true if SiteSetting.allow_solved_on_all_topics
+    if SiteSetting.empty_box_on_unsolved
+      attributes :can_have_answer
 
-      return scope.allow_accepted_answers_on_category?(object.category_id)
+      def can_have_answer
+        return true if SiteSetting.allow_solved_on_all_topics
+
+        return scope.allow_accepted_answers_on_category?(object.category_id)
+      end
     end
   end
 
