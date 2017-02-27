@@ -5,6 +5,7 @@ en:
       allow_accepted_answers: "Allow topic owner and staff to mark a reply as the solution"
       accept_answer: "This reply solves the problem"
       has_accepted_answer: "This topic has a solution"
+      has_no_accepted_answer: "This topic has no solution"
       unaccept_answer: "This reply no longer solves the problem"
       accepted_answer: "Solution"
       solution: "Solution"
