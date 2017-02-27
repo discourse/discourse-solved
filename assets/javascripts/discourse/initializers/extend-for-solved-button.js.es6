@@ -223,6 +223,13 @@ export default {
             title: I18n.t('solved.has_accepted_answer'),
             icon: 'check-square-o'
           });
+        }else if(this.topic.can_have_answer && this.siteSettings.solved_enabled && this.siteSettings.empty_box_on_unsolved){
+          results.push({
+            openTag: 'span',
+            closeTag: 'span',
+            title: I18n.t('solved.no_accepted_answer'),
+            icon: 'square-o'
+          });
         }
         return results;
       }.property()
