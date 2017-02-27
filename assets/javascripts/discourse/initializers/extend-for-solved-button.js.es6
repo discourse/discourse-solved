@@ -113,7 +113,9 @@ function initializeWithApi(api) {
 
   api.includePostAttributes('can_accept_answer', 'can_unaccept_answer', 'accepted_answer');
 
-  api.addDiscoveryQueryParam('solved', {replace: true, refreshModel: true});
+  if (api.addDiscoveryQueryParam) {
+    api.addDiscoveryQueryParam('solved', {replace: true, refreshModel: true});
+  }
 
   api.addPostMenuButton('solved', attrs => {
     const canAccept = attrs.can_accept_answer;
