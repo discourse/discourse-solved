@@ -351,6 +351,10 @@ SQL
 
       return scope.allow_accepted_answers_on_category?(object.category_id)
     end
+
+    def include_can_have_answer?
+      SiteSetting.empty_box_on_unsolved
+    end
   end
 
   TopicList.preloaded_custom_fields << "accepted_answer_post_id" if TopicList.respond_to? :preloaded_custom_fields
