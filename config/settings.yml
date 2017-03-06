@@ -11,3 +11,9 @@ plugins:
   empty_box_on_unsolved:
     default: false
     client: true
+  hide_posts_before_solution:
+    default: false
+    client: false
+  hide_posts_after_solution:
+    default: false
+    client: false
