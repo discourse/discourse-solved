@@ -4,6 +4,8 @@ en:
     allow_solved_on_all_topics: "Allow users to select solutions on all topics (by default you control this by editing categories)"
     accept_all_solutions_trust_level: "Minimum trust level required to accept solutions on any topic (even when not OP)"
     empty_box_on_unsolved: "Display an empty box next to unsolved topics"
+    hide_posts_before_solution: "Once a topic is solved, hide posts between the first post and the solution"
+    hide_posts_after_solution: "Once a topic is solved, hide posts after the solution"
   reports:
     accepted_solutions:
       title: "Accepted solutions"

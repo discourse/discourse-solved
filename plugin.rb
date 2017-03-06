@@ -358,6 +358,33 @@ SQL
       end
       results
     end
+
+    require_dependency 'topic_view'
+    TopicView.add_custom_filter(:solved) do |results, topic_view|
+      
+      if SiteSetting.hide_posts_before_solution || SiteSetting.hide_posts_after_solution
+        
+        # Determine if the topic has an accepted answer
+        solution_post_id = topic_view.topic.custom_fields['accepted_answer_post_id']
+        has_accepted_answer = solution_post_id ? true : false
+
+        if has_accepted_answer
+          if SiteSetting.hide_posts_before_solution
+            results = results.where("post_number = 1 
+              OR post_number >= (SELECT post_number FROM posts WHERE id = ?)", solution_post_id)
+          end
+
+          if SiteSetting.hide_posts_after_solution
+            results = results.where("post_number = 1 
+              OR post_number <= (SELECT post_number FROM posts WHERE id = ?)", solution_post_id)
+          end
+        end
+
+      end
+
+      results
+    end
+
   end
 
   require_dependency 'topic_list_item_serializer'
