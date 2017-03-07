@@ -4,6 +4,7 @@ import TopicStatus from 'discourse/views/topic-status';
 import { popupAjaxError } from 'discourse/lib/ajax-error';
 import { withPluginApi } from 'discourse/lib/plugin-api';
 import { ajax } from 'discourse/lib/ajax';
+import PostCooked from 'discourse/widgets/post-cooked'
 
 function clearAccepted(topic) {
   const posts = topic.get('postStream.posts');
@@ -46,7 +47,8 @@ function acceptPost(post) {
 
   topic.set('accepted_answer', {
     username: post.get('username'),
-    post_number: post.get('post_number')
+    post_number: post.get('post_number'),
+    excerpt: post.get('cooked')
   });
 
   ajax("/solution/accept", {
@@ -153,7 +155,24 @@ function initializeWithApi(api) {
       if (postModel) {
         const topic = postModel.get('topic');
         if (topic.get('accepted_answer')) {
-          return dec.rawHtml(`<p class="solved">${topic.get('acceptedAnswerHtml')}</p>`);
+          var rawhtml = `
+            <aside class='quote' data-post="${topic.get('accepted_answer').post_number}" data-topic="${topic.id}"><div class='title'>
+                ${topic.get('acceptedAnswerHtml')} <div class="quote-controls"><\/div>
+              </div>
+              <blockquote>
+                ${topic.get('accepted_answer').excerpt}
+              </blockquote>
+            </aside>`
+
+          console.log(topic.id);
+          var cooked = new PostCooked({cooked:rawhtml, topicId: topic.id});
+
+          var html = cooked.init();
+
+          return dec.rawHtml(html);
+
+          // html = postModel._insertQuoteControls(html);
+          // return html;
         }
       }
     }
