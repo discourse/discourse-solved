@@ -4,6 +4,7 @@ import TopicStatus from 'discourse/views/topic-status';
 import { popupAjaxError } from 'discourse/lib/ajax-error';
 import { withPluginApi } from 'discourse/lib/plugin-api';
 import { ajax } from 'discourse/lib/ajax';
+import PostCooked from 'discourse/widgets/post-cooked'
 
 function clearAccepted(topic) {
   const posts = topic.get('postStream.posts');
@@ -153,7 +154,20 @@ function initializeWithApi(api) {
       if (postModel) {
         const topic = postModel.get('topic');
         if (topic.get('accepted_answer')) {
-          return dec.rawHtml(`<p class="solved">${topic.get('acceptedAnswerHtml')}</p>`);
+
+          var rawhtml = `
+            <aside class='quote' data-post="${topic.get('accepted_answer').post_number}" data-topic="${topic.get('id')}">
+              <div class='title'>
+                ${topic.get('acceptedAnswerHtml')} <div class="quote-controls"><\/div>
+              </div>
+              <blockquote></blockquote>
+            </aside>`
+
+          var cooked = new PostCooked({cooked:rawhtml});
+
+          var html = cooked.init();
+
+          return dec.rawHtml(html);
         }
       }
     }
