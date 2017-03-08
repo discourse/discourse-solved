@@ -12,6 +12,6 @@ plugins:
     default: false
     client: true
   solved_quote_length:
-    default: 100
+    default: 300
     client: false
 
