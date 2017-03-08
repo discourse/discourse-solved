@@ -11,3 +11,7 @@ plugins:
   empty_box_on_unsolved:
     default: false
     client: true
+  solved_quote_length:
+    default: 100
+    client: false
+
