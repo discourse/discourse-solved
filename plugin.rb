@@ -224,19 +224,17 @@ SQL
         {
           post_number: info[0],
           username: info[1],
-          excerpt: info[2]
         }
       end
     end
 
     def accepted_answer_post_info
       # TODO: we may already have it in the stream ... so bypass query here
-      post = Post.where(id: accepted_answer_post_id, topic_id: object.topic.id).joins(:user).first
-      excerpt = post.excerpt
 
-      return [post.post_number, post.username, post.excerpt(100)]
-      
-
+      Post.where(id: accepted_answer_post_id, topic_id: object.topic.id)
+          .joins(:user)
+          .pluck('post_number, username')
+          .first
     end
 
     def accepted_answer_post_id

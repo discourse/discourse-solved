@@ -47,8 +47,7 @@ function acceptPost(post) {
 
   topic.set('accepted_answer', {
     username: post.get('username'),
-    post_number: post.get('post_number'),
-    excerpt: post.get('cooked')
+    post_number: post.get('post_number')
   });
 
   ajax("/solution/accept", {
@@ -155,24 +154,20 @@ function initializeWithApi(api) {
       if (postModel) {
         const topic = postModel.get('topic');
         if (topic.get('accepted_answer')) {
+
           var rawhtml = `
-            <aside class='quote' data-post="${topic.get('accepted_answer').post_number}" data-topic="${topic.id}"><div class='title'>
+            <aside class='quote' data-post="${topic.get('accepted_answer').post_number}" data-topic="${topic.get('id')}">
+              <div class='title'>
                 ${topic.get('acceptedAnswerHtml')} <div class="quote-controls"><\/div>
               </div>
-              <blockquote>
-                ${topic.get('accepted_answer').excerpt}
-              </blockquote>
+              <blockquote></blockquote>
             </aside>`
 
-          console.log(topic.id);
-          var cooked = new PostCooked({cooked:rawhtml, topicId: topic.id});
+          var cooked = new PostCooked({cooked:rawhtml});
 
           var html = cooked.init();
 
           return dec.rawHtml(html);
-
-          // html = postModel._insertQuoteControls(html);
-          // return html;
         }
       }
     }
