@@ -224,17 +224,22 @@ SQL
         {
           post_number: info[0],
           username: info[1],
+          excerpt: info[2]
         }
       end
     end
 
     def accepted_answer_post_info
       # TODO: we may already have it in the stream ... so bypass query here
-
-      Post.where(id: accepted_answer_post_id, topic_id: object.topic.id)
-          .joins(:user)
-          .pluck('post_number, username')
-          .first
+      postInfo = Post.where(id: accepted_answer_post_id, topic_id: object.topic.id)
+                 .joins(:user)
+                 .pluck('post_number', 'username', 'cooked')
+                 .first
+      
+      if postInfo
+        postInfo[2] = PrettyText.excerpt(postInfo[2], SiteSetting.solved_quote_length)
+        return postInfo
+      end
     end
 
     def accepted_answer_post_id

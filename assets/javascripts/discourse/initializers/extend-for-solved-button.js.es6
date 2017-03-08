@@ -47,7 +47,8 @@ function acceptPost(post) {
 
   topic.set('accepted_answer', {
     username: post.get('username'),
-    post_number: post.get('post_number')
+    post_number: post.get('post_number'),
+    excerpt: post.get('cooked'),
   });
 
   ajax("/solution/accept", {
@@ -160,7 +161,9 @@ function initializeWithApi(api) {
               <div class='title'>
                 ${topic.get('acceptedAnswerHtml')} <div class="quote-controls"><\/div>
               </div>
-              <blockquote></blockquote>
+              <blockquote>
+                ${topic.get('accepted_answer').excerpt}
+              </blockquote>
             </aside>`
 
           var cooked = new PostCooked({cooked:rawhtml});
