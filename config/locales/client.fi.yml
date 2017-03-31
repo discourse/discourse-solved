@@ -2,7 +2,7 @@ fi:
   js:
     solved:
       title: "Ratkaisemat"
-      allow_accepted_answers: "Salli aiheen omistajan ja henkökunnan merkitä viesti ratkaisuksi"
+      allow_accepted_answers: "Salli aiheen omistajan ja henkilökunnan merkitä viesti ratkaisuksi"
       accept_answer: "Tämä viesti on ratkaisu"
       has_accepted_answer: "Tämä aihe on ratkaistu"
       has_no_accepted_answer: "Tähän aiheeseen ei ole ratkaisua"
