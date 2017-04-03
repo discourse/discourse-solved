@@ -4,6 +4,7 @@ fi:
     allow_solved_on_all_topics: "Salli käyttäjien valita ratkaisut kaikissa aiheissa (normaalisti säädetään aluekohtaisesti)."
     accept_all_solutions_trust_level: "Luottamustaso joka vaaditaan, jotta voi merkitä ratkaisuksi (vaikkei olisikaan itse kysyjä)"
     empty_box_on_unsolved: "Näytä tyhjä laatikko ratkaisemattomien ketjujen yhteydessä"
+    solved_quote_length: "Kuinka monta merkkiä näytetään, kun lainataan ratkaisua ketjun avausviestin alapuolella"
   reports:
     accepted_solutions:
       title: "Hyväksytyt ratkaisut"
