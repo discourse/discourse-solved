@@ -385,6 +385,24 @@ SQL
     end
   end
 
+  class ::ListableTopicSerializer
+    attributes :has_accepted_answer, :can_have_answer
+
+    def has_accepted_answer
+      object.custom_fields["accepted_answer_post_id"] ? true : false
+    end
+
+    def can_have_answer
+      return true if SiteSetting.allow_solved_on_all_topics
+      return false if object.closed || object.archived
+      return scope.allow_accepted_answers_on_category?(object.category_id)
+    end
+
+    def include_can_have_answer?
+      SiteSetting.empty_box_on_unsolved
+    end
+  end
+
   TopicList.preloaded_custom_fields << "accepted_answer_post_id" if TopicList.respond_to? :preloaded_custom_fields
 
 end
