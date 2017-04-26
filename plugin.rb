@@ -2,6 +2,7 @@
 # about: Add a solved button to answers on Discourse
 # version: 0.1
 # authors: Sam Saffron
+# url: https://github.com/discourse/discourse-solved
 
 enabled_site_setting :solved_enabled
 
