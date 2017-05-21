@@ -1,9 +1,16 @@
 fr:
   site_settings:
+    solved_enabled: "Activer le plugin Solutions, autoriser les utilisateurs à sélectionner des solutions aux sujets"  
     allow_solved_on_all_topics: "Autoriser les utilisateurs à sélectionner une solution sur tous les sujets (par défaut, vous devez modifier les catégories concernées)"
     accept_all_solutions_trust_level: "Niveau de confiance minimum requis pour accepter des solutions sur n'importe quel sujet (même sans en être l'auteur)"
+    empty_box_on_unsolved: "Afficher une coche vide à côté des sujets non-résolu"
+    solved_quote_length: "Nombre de caractères à citer lors de l'affichage de la solutions sous le premier post"	
   reports:
     accepted_solutions:
       title: "Solutions acceptées"
       xaxis: "Jour"
       yaxis: "Total"
+  solved:
+    no_solutions:
+      self: "Vous n'avez pas encore de solutions acceptés."
+      others: "Aucune solutions accepté."
