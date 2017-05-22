@@ -5,6 +5,7 @@ es:
       allow_accepted_answers: "Permitir al creador del tema y al staff marcar una respuesta como la solución"
       accept_answer: "Esta respuesta resuelve el problema"
       has_accepted_answer: "Este tema tiene una solución"
+      has_no_accepted_answer: "Este tema no tiene una solución"
       unaccept_answer: "Esta respuesta ya no resuelve el problema"
       accepted_answer: "Solución"
       solution: "Solución"
