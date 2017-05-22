@@ -65,10 +65,11 @@ SQL
       limit_accepts
 
       post = Post.find(params[:id].to_i)
+      topic = post.topic
 
-      guardian.ensure_can_accept_answer!(post.topic)
+      guardian.ensure_can_accept_answer!(topic)
 
-      accepted_id = post.topic.custom_fields["accepted_answer_post_id"].to_i
+      accepted_id = topic.custom_fields["accepted_answer_post_id"].to_i
       if accepted_id > 0
         if p2 = Post.find_by(id: accepted_id)
           p2.custom_fields["is_accepted_answer"] = nil
@@ -81,8 +82,8 @@ SQL
       end
 
       post.custom_fields["is_accepted_answer"] = "true"
-      post.topic.custom_fields["accepted_answer_post_id"] = post.id
-      post.topic.save!
+      topic.custom_fields["accepted_answer_post_id"] = post.id
+      topic.save!
       post.save!
 
       if defined?(UserAction::SOLVED)
@@ -102,13 +103,22 @@ SQL
                            data: {
                              message: 'solved.accepted_notification',
                              display_username: current_user.username,
-                             topic_title: post.topic.title
+                             topic_title: topic.title
                            }.to_json
                           )
       end
 
-      DiscourseEvent.trigger(:accepted_solution, post)
+      if (auto_close_hours = SiteSetting.solved_topics_auto_close_hours) > 0
+        topic.set_or_create_timer(
+          TopicTimer.types[:close],
+          auto_close_hours,
+          based_on_last_post: true
+        )
 
+        MessageBus.publish("/topic/#{topic.id}", reload_topic: true)
+      end
+
+      DiscourseEvent.trigger(:accepted_solution, post)
       render json: success_json
     end
 
@@ -236,7 +246,7 @@ SQL
                  .joins(:user)
                  .pluck('post_number', 'username', 'cooked')
                  .first
-      
+
       if postInfo
         postInfo[2] = PrettyText.excerpt(postInfo[2], SiteSetting.solved_quote_length)
         return postInfo
