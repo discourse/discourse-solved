@@ -5,6 +5,7 @@ es:
     accept_all_solutions_trust_level: "Nivel de confianza mínimo requerido para aceptar soluciones en cualquier tema (aún cuando no sea el creador del mismo)"
     empty_box_on_unsolved: "Mostrar una caja vacía cerca de los temas sin solución"
     solved_quote_length: "Número de caracteres a citar cuando muestra la solución debajo del primer post"
+    solved_topics_auto_close_hours: "Cerrar automáticamente el tema (n) horas después de la última respuesta, y que el tema haya sido marcado como solucionado"
   reports:
     accepted_solutions:
       title: "Soluciones aceptadas"
