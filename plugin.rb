@@ -108,7 +108,7 @@ SQL
                           )
       end
 
-      if (auto_close_hours = SiteSetting.solved_topics_auto_close_hours) > 0
+      if (auto_close_hours = SiteSetting.solved_topics_auto_close_hours) > 0 and !topic.closed
         topic.set_or_create_timer(
           TopicTimer.types[:close],
           auto_close_hours,
