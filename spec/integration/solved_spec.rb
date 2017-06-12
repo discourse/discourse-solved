@@ -30,12 +30,15 @@ RSpec.describe "Managing Posts solved status" do
     it 'does not set a timer when the topic is closed' do
       topic2.update!(closed: true)
       xhr :post, "/solution/accept", id: p2.id 
-
-      expect(p2.reload.custom_fields["is_accepted_answer"]).to eq("true")
-
-      expect(topic2.reload.public_topic_timer).to eq(nil)
       
-      expect(topic2.reload.closed).to eq(true)
+      p2.reload
+      topic2.reload
+
+      expect(p2.custom_fields["is_accepted_answer"]).to eq("true")
+
+      expect(topic2.public_topic_timer).to eq(nil)
+      
+      expect(topic2.closed).to eq(true)
     end
   end
 end
