@@ -4,7 +4,7 @@ import TopicStatus from 'discourse/raw-views/topic-status';
 import { popupAjaxError } from 'discourse/lib/ajax-error';
 import { withPluginApi } from 'discourse/lib/plugin-api';
 import { ajax } from 'discourse/lib/ajax';
-import PostCooked from 'discourse/widgets/post-cooked'
+import PostCooked from 'discourse/widgets/post-cooked';
 
 function clearAccepted(topic) {
   const posts = topic.get('postStream.posts');
@@ -55,59 +55,6 @@ function acceptPost(post) {
     type: 'POST',
     data: { id: post.get('id') }
   }).catch(popupAjaxError);
-}
-
-// Code for older discourse installs for backwards compatibility
-function oldPluginCode() {
-  const PostView = require('discourse/views/post').default;
-  PostView.reopen({
-    classNameBindings: ['post.accepted_answer:accepted-answer']
-  });
-
-  const module = require( 'discourse/components/post-menu');
-  const PostMenuComponent = module.default;
-  const Button = module.Button;
-  PostMenuComponent.registerButton(function(visibleButtons){
-    var position = 0;
-
-    var canAccept = this.get('post.can_accept_answer');
-    var canUnaccept = this.get('post.can_unaccept_answer');
-    var accepted = this.get('post.accepted_answer');
-    var isOp = Discourse.User.currentProp("id") === this.get('post.topic.user_id');
-
-    if  (!accepted && canAccept && !isOp) {
-      // first hidden position
-      if (this.get('collapsed')) { return; }
-      position = visibleButtons.length - 2;
-    }
-    if (canAccept) {
-      visibleButtons.splice(position,0,new Button('acceptAnswer', 'solved.accept_answer', 'check-square-o', {className: 'unaccepted'}));
-    }
-    if (canUnaccept || accepted) {
-      var locale = canUnaccept ? 'solved.unaccept_answer' : 'solved.accepted_answer';
-      visibleButtons.splice(position,0,new Button(
-          'unacceptAnswer',
-          locale,
-          'check-square',
-          {className: 'accepted fade-out', prefixHTML: '<span class="accepted-text">' + I18n.t('solved.solution') + '</span>'})
-        );
-    }
-
-  });
-
-  PostMenuComponent.reopen({
-    acceptedChanged: function() {
-      this.rerender();
-    }.observes('post.accepted_answer'),
-
-    clickUnacceptAnswer() {
-      unacceptPost(this.get('post'));
-    },
-
-    clickAcceptAnswer() {
-      acceptPost(this.get('post'));
-    }
-  });
 }
 
 function initializeWithApi(api) {
@@ -164,7 +111,7 @@ function initializeWithApi(api) {
               <blockquote>
                 ${topic.get('accepted_answer').excerpt}
               </blockquote>
-            </aside>`
+            </aside>`;
 
           var cooked = new PostCooked({cooked:rawhtml});
 
@@ -256,6 +203,6 @@ export default {
       }.property()
     });
 
-    withPluginApi('0.1', initializeWithApi, { noApi: oldPluginCode });
+    withPluginApi('0.1', initializeWithApi);
   }
 };
