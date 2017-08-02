@@ -6,7 +6,10 @@
     "browser": true,
     "builtin": true
   },
-  ecmaVersion: 7,
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "sourceType": "module"
+  },
   "globals":
     {"Ember":true,
     "jQuery":true,
