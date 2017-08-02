@@ -17,7 +17,7 @@ after_initialize do
     unless $redis.get('solved_already_upgraded')
       unless UserAction.where(action_type: UserAction::SOLVED).exists?
         Rails.logger.info("Upgrading storage for solved")
-        sql =<<SQL
+        sql = <<SQL
         INSERT INTO user_actions(action_type,
                                  user_id,
                                  target_topic_id,
@@ -87,28 +87,30 @@ SQL
       post.save!
 
       if defined?(UserAction::SOLVED)
-        UserAction.log_action!(action_type: UserAction::SOLVED,
-                              user_id: post.user_id,
-                              acting_user_id: guardian.user.id,
-                              target_post_id: post.id,
-                              target_topic_id: post.topic_id)
+        UserAction.log_action!(
+          action_type: UserAction::SOLVED,
+          user_id: post.user_id,
+          acting_user_id: guardian.user.id,
+          target_post_id: post.id,
+          target_topic_id: post.topic_id
+        )
       end
 
       unless current_user.id == post.user_id
-
-        Notification.create!(notification_type: Notification.types[:custom],
-                           user_id: post.user_id,
-                           topic_id: post.topic_id,
-                           post_number: post.post_number,
-                           data: {
-                             message: 'solved.accepted_notification',
-                             display_username: current_user.username,
-                             topic_title: topic.title
-                           }.to_json
-                          )
+        Notification.create!(
+          notification_type: Notification.types[:custom],
+          user_id: post.user_id,
+          topic_id: post.topic_id,
+          post_number: post.post_number,
+          data: {
+            message: 'solved.accepted_notification',
+            display_username: current_user.username,
+            topic_title: topic.title
+          }.to_json
+        )
       end
 
-      if (auto_close_hours = SiteSetting.solved_topics_auto_close_hours) > 0 and !topic.closed
+      if (auto_close_hours = SiteSetting.solved_topics_auto_close_hours) > (0) && !topic.closed
         topic.set_or_create_timer(
           TopicTimer.types[:close],
           auto_close_hours,
@@ -187,17 +189,17 @@ SQL
       accepted_solutions = TopicCustomField.where(name: "accepted_answer_post_id")
       accepted_solutions = accepted_solutions.joins(:topic).where("topics.category_id = ?", report.category_id) if report.category_id
       accepted_solutions.where("topic_custom_fields.created_at >= ?", report.start_date)
-                        .where("topic_custom_fields.created_at <= ?", report.end_date)
-                        .group("DATE(topic_custom_fields.created_at)")
-                        .order("DATE(topic_custom_fields.created_at)")
-                        .count
-                        .each do |date, count|
+        .where("topic_custom_fields.created_at <= ?", report.end_date)
+        .group("DATE(topic_custom_fields.created_at)")
+        .order("DATE(topic_custom_fields.created_at)")
+        .count
+        .each do |date, count|
         report.data << { x: date, y: count }
       end
       report.total = accepted_solutions.count
       report.prev30Days = accepted_solutions.where("topic_custom_fields.created_at >= ?", report.start_date - 30.days)
-                                            .where("topic_custom_fields.created_at <= ?", report.start_date)
-                                            .count
+        .where("topic_custom_fields.created_at <= ?", report.start_date)
+        .count
     end
   end
 
@@ -243,9 +245,9 @@ SQL
     def accepted_answer_post_info
       # TODO: we may already have it in the stream ... so bypass query here
       postInfo = Post.where(id: accepted_answer_post_id, topic_id: object.topic.id)
-                 .joins(:user)
-                 .pluck('post_number', 'username', 'cooked')
-                 .first
+        .joins(:user)
+        .pluck('post_number', 'username', 'cooked')
+        .first
 
       if postInfo
         postInfo[2] = PrettyText.excerpt(postInfo[2], SiteSetting.solved_quote_length)
