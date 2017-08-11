@@ -251,10 +251,10 @@ SQL
 
       if postInfo
         postInfo[2] = if SiteSetting.solved_quote_length > 0
-                        PrettyText.excerpt(postInfo[2], SiteSetting.solved_quote_length)
-                      else
-                        nil
-                      end
+          PrettyText.excerpt(postInfo[2], SiteSetting.solved_quote_length)
+        else
+          nil
+        end
         return postInfo
       end
     end
