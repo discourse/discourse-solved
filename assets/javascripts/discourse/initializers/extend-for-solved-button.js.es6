@@ -102,8 +102,9 @@ function initializeWithApi(api) {
       if (postModel) {
         const topic = postModel.get('topic');
         if (topic.get('accepted_answer')) {
+          const hasExcerpt = !!topic.get('accepted_answer').excerpt;
 
-          var rawhtml = `
+          const withExcerpt = `
             <aside class='quote' data-post="${topic.get('accepted_answer').post_number}" data-topic="${topic.get('id')}">
               <div class='title'>
                 ${topic.get('acceptedAnswerHtml')} <div class="quote-controls"><\/div>
@@ -113,7 +114,14 @@ function initializeWithApi(api) {
               </blockquote>
             </aside>`;
 
-          var cooked = new PostCooked({cooked:rawhtml});
+          const withoutExcerpt = `
+            <aside class='quote'>
+              <div class='title title-only'>
+                ${topic.get('acceptedAnswerHtml')}
+              </div>
+            </aside>`;
+
+          var cooked = new PostCooked({ cooked: hasExcerpt ? withExcerpt : withoutExcerpt });
 
           var html = cooked.init();
 
