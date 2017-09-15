@@ -163,6 +163,7 @@ function initializeWithApi(api) {
       }
     });
   }
+
 }
 
 export default {
@@ -212,5 +213,9 @@ export default {
     });
 
     withPluginApi('0.1', initializeWithApi);
+
+    withPluginApi('0.8.10', api => {
+      api.replaceIcon('notification.solved.accepted_notification', 'check-square');
+    });
   }
 };

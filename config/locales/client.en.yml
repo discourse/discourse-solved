@@ -1,5 +1,10 @@
 en:
   js:
+    notifications:
+      alt:
+        solved:
+          accepted_notification: "accepted"
+
     solved:
       title: "Solved"
       allow_accepted_answers: "Allow topic owner and staff to mark a reply as the solution"
