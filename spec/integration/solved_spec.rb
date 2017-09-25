@@ -16,7 +16,7 @@ RSpec.describe "Managing Posts solved status" do
     end
 
     it 'can mark a post as the accepted answer correctly' do
-      xhr :post, "/solution/accept", id: p1.id
+      post "/solution/accept.json", params: { id: p1.id }
 
       expect(p1.reload.custom_fields["is_accepted_answer"]).to eq("true")
 
@@ -29,7 +29,7 @@ RSpec.describe "Managing Posts solved status" do
     end
     it 'does not set a timer when the topic is closed' do
       topic.update!(closed: true)
-      xhr :post, "/solution/accept", id: p1.id
+      post "/solution/accept.json", params: { id: p1.id }
       p1.reload
       topic.reload
 
