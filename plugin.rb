@@ -11,6 +11,7 @@ PLUGIN_NAME = "discourse_solved".freeze
 register_asset 'stylesheets/solutions.scss'
 
 after_initialize do
+  load File.expand_path("../app/jobs/unresolved_topic_email_notification.rb", __FILE__)
 
   # we got to do a one time upgrade
   if defined?(UserAction::SOLVED)

@@ -16,3 +16,6 @@ plugins:
     client: false
   solved_topics_auto_close_hours:
     default: 0
+  solved_email_notification_delay:
+    default: 0
+    client: true
