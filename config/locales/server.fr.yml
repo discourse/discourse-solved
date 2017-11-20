@@ -1,10 +1,17 @@
+# encoding: utf-8
+#
+# Never edit this file. It will be overwritten when translations are pulled from Transifex.
+#
+# To work with us on translations, join this project:
+# https://www.transifex.com/projects/p/discourse-org/
+
 fr:
   site_settings:
-    solved_enabled: "Activer le plugin Solutions, autoriser les utilisateurs à sélectionner des solutions aux sujets"  
+    solved_enabled: "Activer le plugin Solutions, autoriser les utilisateurs à sélectionner des solutions aux sujets"
     allow_solved_on_all_topics: "Autoriser les utilisateurs à sélectionner une solution sur tous les sujets (par défaut, vous devez modifier les catégories concernées)"
     accept_all_solutions_trust_level: "Niveau de confiance minimum requis pour accepter des solutions sur n'importe quel sujet (même sans en être l'auteur)"
     empty_box_on_unsolved: "Afficher une coche vide à côté des sujets non résolus"
-    solved_quote_length: "Nombre de caractères à citer lors de l'affichage de la solution sous le premier post"	
+    solved_quote_length: "Nombre de caractères à citer lors de l'affichage de la solution sous le premier post"
   reports:
     accepted_solutions:
       title: "Solutions acceptées"

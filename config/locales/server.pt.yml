@@ -1,3 +1,10 @@
+# encoding: utf-8
+#
+# Never edit this file. It will be overwritten when translations are pulled from Transifex.
+#
+# To work with us on translations, join this project:
+# https://www.transifex.com/projects/p/discourse-org/
+
 pt:
   site_settings:
     allow_solved_on_all_topics: "Permitir que os utilizadores escolham soluções em todos os tópicos (por omissão essa gestão é feita pela edição de categorias)"

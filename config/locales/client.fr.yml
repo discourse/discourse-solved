@@ -1,3 +1,10 @@
+# encoding: utf-8
+#
+# Never edit this file. It will be overwritten when translations are pulled from Transifex.
+#
+# To work with us on translations, join this project:
+# https://www.transifex.com/projects/p/discourse-org/
+
 fr:
   js:
     solved:
@@ -11,6 +18,6 @@ fr:
       solution: "Solution"
       solution_summary:
         one: "solution <i class='fa fa-check-square'></i>"
-        other: "solutions <i class='fa fa-check-square'></i>"	  
+        other: "solutions <i class='fa fa-check-square'></i>"
       accepted_html: "<i class='fa-check-square fa accepted'></i> Résolu <span class='by'>par <a href data-user-card='{{username_lower}}'>{{username}}</a></span> dans le <a href='{{post_path}}'>message #{{post_number}}</a>"
       accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"
