@@ -212,6 +212,65 @@ SQL
     ["is_accepted_answer"]
   end
 
+  register_html_builder('server:head-metadata') do |controller|
+    next "" if not controller.instance_of? TopicsController
+    topic = Topic.with_deleted.where(id: controller.params[:topic_id]).first
+    next "" if not controller.guardian.allow_accepted_answers_on_category?(topic.category_id)
+    first_post = topic.first_post
+    question_json =  {
+      '@type' => 'Question',
+      'name' => topic.title,
+      'text' => first_post.raw,
+      'upvoteCount' => first_post.like_count,
+      'answerCount' => topic.reply_count,
+      'dateCreated' => first_post.created_at,
+      'author' => {
+        '@type' => 'Person',
+        'name' => first_post.user.username
+      }
+    }
+    page_json = {
+      '@type' => 'QAPage',
+      'name' => topic.title,
+    }
+    accepted_answer_post_id = topic.custom_fields["accepted_answer_post_id"]
+    if accepted_answer_post_id
+      accepted_answer = Post.where(id: accepted_answer_post_id).first
+      question_json[:acceptedAnswer] = {
+        '@type' => 'Answer',
+        'text' => accepted_answer.raw,
+        'upvoteCount' => accepted_answer.like_count,
+        'dateCreated' => accepted_answer.created_at,
+        'url' => accepted_answer.full_url,
+        'author' => {
+          '@type' => 'Person',
+          'name' => accepted_answer.user.username
+        }
+      }
+    end
+    suggested_answer = Post.where(topic_id: topic.id, post_number: controller.params[:post_number]).first
+    if suggested_answer and suggested_answer.post_number != 1
+      question_json[:suggestedAnswer] = {
+        '@type' => 'Answer',
+        'text' => suggested_answer.raw,
+        'upvoteCount' => suggested_answer.like_count,
+        'dateCreated' => suggested_answer.created_at,
+        'url' => suggested_answer.full_url,
+        'author' => {
+          '@type' => 'Person',
+          'name' => suggested_answer.user.username
+        }
+      }
+    end
+    ['<script type="application/ld+json">', MultiJson.dump({
+      '@context' => 'http://schema.org',
+      '@graph' => [
+        page_json,
+        question_json,
+      ]
+    }).html_safe, '</script>'].join("")
+  end
+
   if Report.respond_to?(:add_report)
     AdminDashboardData::GLOBAL_REPORTS << "accepted_solutions"
 
