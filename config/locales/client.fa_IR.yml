@@ -16,8 +16,5 @@ fa_IR:
       unaccept_answer: "این پاسخ دیگر راه حل این عنوان نیست."
       accepted_answer: "راه حل مورد قبول"
       solution: "راه حل"
-      solution_summary:
-        one: "راه حل <i class='fa fa-check-square'></i>"
-        other: "راه حل ها <i class='fa fa-check-square'></i>"
       accepted_html: "<i class='fa-check-square fa accepted'></i> حل شده <span class='by'>توسط <a href data-user-card='{{username_lower}}'>{{username}}</a></span> در <a href='{{post_path}}'>پاسخ #{{post_number}}</a>"
       accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

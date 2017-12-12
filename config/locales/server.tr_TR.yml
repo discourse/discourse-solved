@@ -7,9 +7,15 @@
 
 tr_TR:
   site_settings:
+    solved_enabled: "Solved eklentiyi etkinleştirin, kullanıcıların konularda çözüm seçmesine izin verin"
     allow_solved_on_all_topics: "Kullanıcılar yanıtları çözüldü olarak seçebilsinler mi? (Varsayılan olarak kategori düzenleme kısmından ayarlayabilirsiniz.)"
+    empty_box_on_unsolved: "Çözülmemiş konuların yanında boş bir kutu görüntüle"
   reports:
     accepted_solutions:
       title: "Kabul edilen çözümleri"
       xaxis: "Gün"
       yaxis: "Toplam"
+  solved:
+    no_solutions:
+      self: "Henüz kabul edilmiş bir çözümün yok."
+      others: "Kabul edilen çözüm yok."

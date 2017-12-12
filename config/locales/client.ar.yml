@@ -7,10 +7,16 @@
 
 ar:
   js:
+    notifications:
+      alt:
+        solved:
+          accepted_notification: "مقبول"
     solved:
+      title: "تم الحل"
       allow_accepted_answers: "السماح لصاحب الموضوع وفريق العمل الرد كـحل للموضوع"
       accept_answer: "هذا الرد حل المشكلة"
       has_accepted_answer: "هذا الموضوع فيه الحل"
+      has_no_accepted_answer: "لا يوجد حل بخصوص هذا الموضوع"
       unaccept_answer: "هذا الرد لم يعد يحل المشكلة"
       accepted_answer: "الحل"
       solution: "الحل"

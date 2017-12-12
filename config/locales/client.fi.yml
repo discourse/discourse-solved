@@ -7,6 +7,10 @@
 
 fi:
   js:
+    notifications:
+      alt:
+        solved:
+          accepted_notification: "hyväksyi"
     solved:
       title: "Ratkaisemat"
       allow_accepted_answers: "Salli aiheen omistajan ja henkilökunnan merkitä viesti ratkaisuksi"

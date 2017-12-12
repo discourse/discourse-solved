@@ -7,11 +7,21 @@
 
 he:
   js:
+    notifications:
+      alt:
+        solved:
+          accepted_notification: "התקבל"
     solved:
+      title: "נפתר"
       allow_accepted_answers: "אפשר למשתמשים לאשר תשובות"
       accept_answer: "קבל תשובה"
       has_accepted_answer: "נושא זה נפתר"
+      has_no_accepted_answer: "לנושא הזה אין פתרון"
       unaccept_answer: "בטל קבלת תשובה"
       accepted_answer: "קבל תשובה"
+      solution: "פתרון"
+      solution_summary:
+        one: "פתרון <i class='fa fa-check-square'></i>"
+        other: "פתרונות <i class='fa fa-check-square'></i>"
       accepted_html: "<i class='fa-check-square fa accepted'></i> נפתר על ידי <a href data-user-card='{{username_lower}}'>{{username}}</a><a href='{{post_path}}'>בתגובה  #{{post_number}}</a>"
       accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

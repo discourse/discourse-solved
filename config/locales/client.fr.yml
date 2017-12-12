@@ -7,6 +7,10 @@
 
 fr:
   js:
+    notifications:
+      alt:
+        solved:
+          accepted_notification: "accepté"
     solved:
       title: "Solutions"
       allow_accepted_answers: "Autoriser l'auteur du sujet et les responsables à marquer une réponse comme solution"

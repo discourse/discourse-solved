@@ -7,17 +7,21 @@
 
 es:
   js:
+    notifications:
+      alt:
+        solved:
+          accepted_notification: "aceptado"
     solved:
       title: "Solucionado"
-      allow_accepted_answers: "Permitir al creador del tema y al staff marcar una respuesta como la solución"
-      accept_answer: "Esta respuesta resuelve el problema"
+      allow_accepted_answers: "Permitir que el autor del tema y el staff marquen una respuesta como solución"
+      accept_answer: "Esta respuesta soluciona el problema"
       has_accepted_answer: "Este tema tiene una solución"
       has_no_accepted_answer: "Este tema no tiene una solución"
       unaccept_answer: "Esta respuesta ya no resuelve el problema"
       accepted_answer: "Solución"
       solution: "Solución"
       solution_summary:
-        one: "solución <i class='fa fa-check-square'></i>"
-        other: "soluciones <i class='fa fa-check-square'></i>"
-      accepted_html: "<i class='fa-check-square fa accepted'></i> Resuelto <span class='by'>por <a href data-user-card='{{username_lower}}'>{{username}}</a></span> en el <a href='{{post_path}}'>post #{{post_number}}</a>"
+        one: "solución"
+        other: "soluciones"
+      accepted_html: "<i class='fa-check-square fa accepted'></i> Solucionado <span class='by'>por <a href data-user-card='{{username_lower}}'>{{username}}</a></span> en <a href='{{post_path}}'>post #{{post_number}}</a>"
       accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"
