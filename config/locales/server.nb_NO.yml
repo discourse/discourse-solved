@@ -1,0 +1,24 @@
+# encoding: utf-8
+#
+# Never edit this file. It will be overwritten when translations are pulled from Transifex.
+#
+# To work with us on translations, join this project:
+# https://www.transifex.com/projects/p/discourse-org/
+
+nb_NO:
+  site_settings:
+    solved_enabled: "Skru på løsnings-programtillegg, tillater brukere å velge løsninger på emner"
+    allow_solved_on_all_topics: "Tillat brukere å velge løsninger på alle emner (som forvalg kontrollerer du dette ved å endre kategorier)"
+    accept_all_solutions_trust_level: "Minimums tilltisnivå som kreves for å godta løsninger for ehvert emne (selv når du ikke er OP)"
+    empty_box_on_unsolved: "Vis en tom tekstboks ved siden av uløste emner"
+    solved_quote_length: "Antall tegn som skal siteres når løsning vises under første innlegg"
+    solved_topics_auto_close_hours: "Lukk emne automatisk (n) timer etter første svar når det har blitt merket som løst"
+  reports:
+    accepted_solutions:
+      title: "Godtatte løsninger"
+      xaxis: "Dag"
+      yaxis: "Totalt"
+  solved:
+    no_solutions:
+      self: "Du har ingen godtatte løsninger enda."
+      others: "Ingen godtatte løsninger."

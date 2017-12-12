@@ -1,0 +1,27 @@
+# encoding: utf-8
+#
+# Never edit this file. It will be overwritten when translations are pulled from Transifex.
+#
+# To work with us on translations, join this project:
+# https://www.transifex.com/projects/p/discourse-org/
+
+nb_NO:
+  js:
+    notifications:
+      alt:
+        solved:
+          accepted_notification: "godtatt"
+    solved:
+      title: "Løst"
+      allow_accepted_answers: "Tillat enmeeier og personale å markere et svar som løsning"
+      accept_answer: "Dette svaret løser problemet"
+      has_accepted_answer: "Dette emnet har en løsning"
+      has_no_accepted_answer: "Dette emnet har ingen løsning"
+      unaccept_answer: "Dette svaret løser ikke lenger problemet"
+      accepted_answer: "Løsning"
+      solution: "Løsning"
+      solution_summary:
+        one: "løsning <i class='fa fa-check-square'></i>"
+        other: "løsninger <i class='fa fa-check-square'></i>"
+      accepted_html: "<i class='fa-check-square fa accepted'></i> Løst <span class='by'>av <a href data-user-card='{{username_lower}}'>{{username}}</a></span> i <a href='{{post_path}}'>innlegg #{{post_number}}</a>"
+      accepted_notification: "<i title='godtatt' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

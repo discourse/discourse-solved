@@ -1,0 +1,26 @@
+# encoding: utf-8
+#
+# Never edit this file. It will be overwritten when translations are pulled from Transifex.
+#
+# To work with us on translations, join this project:
+# https://www.transifex.com/projects/p/discourse-org/
+
+zh_TW:
+  js:
+    notifications:
+      alt:
+        solved:
+          accepted_notification: "已接受"
+    solved:
+      title: "已解決"
+      allow_accepted_answers: "允許主題擁有者與管理員標示回覆為解決方式"
+      accept_answer: "這個回覆解決了問題"
+      has_accepted_answer: "這個主題有解決方式"
+      has_no_accepted_answer: "這個主題沒有解決方式"
+      unaccept_answer: "這個回覆無法解決問題"
+      accepted_answer: "解決方式"
+      solution: "解決方式"
+      solution_summary:
+        other: "解決方式<i class='fa fa-check-square'></i>"
+      accepted_html: "<i class='fa-check-square fa accepted'></i>在<a href='{{post_path}}'>文章 #{{post_number}}</a> 中<span class='by'>由 <a href data-user-card='{{username_lower}}'>{{username}}</a></span> 解決"
+      accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

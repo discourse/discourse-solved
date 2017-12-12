@@ -1,0 +1,24 @@
+# encoding: utf-8
+#
+# Never edit this file. It will be overwritten when translations are pulled from Transifex.
+#
+# To work with us on translations, join this project:
+# https://www.transifex.com/projects/p/discourse-org/
+
+cs:
+  site_settings:
+    solved_enabled: "Zapnout plugin \"vyřešeno\", povolit uživatelům zvolit řešení témat"
+    allow_solved_on_all_topics: "Povolit uživatelům zvolit řešení všech témat (ve výchozím nastavení toto kontrolujete úpravou kategorií)"
+    accept_all_solutions_trust_level: "Minimální důvěryhodnost požadovaná pro schválení řešení jakéhokoliv tématu (i když není OP)"
+    empty_box_on_unsolved: "Zobrazit prázdný box vedle nevyřešených témat"
+    solved_quote_length: "Počet citovaných znaků daného řešení tématu pod prvním příspěvkem"
+    solved_topics_auto_close_hours: "Automaticky uzavřít téma po (n) hodinách od poslední odpovědi, jakmile téma bylo označeno za vyřešené"
+  reports:
+    accepted_solutions:
+      title: "Přijatá řešení"
+      xaxis: "Den"
+      yaxis: "Celkem"
+  solved:
+    no_solutions:
+      self: "Nemáte zatím žádná akceptovaná řešení."
+      others: "Žádná akceptovaná řešení."
