@@ -4,7 +4,7 @@ Provides a solved button on designated categories
 
 ## How to Install this Plugin
 
-1. Install Discourse Plugin - https://meta.discourse.org/t/install-a-plugin/19157
+To install Discourse Plugin - https://meta.discourse.org/t/install-a-plugin/19157
 
 ## How to Check if Plugin is installed
 
