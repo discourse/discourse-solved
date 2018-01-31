@@ -5,4 +5,21 @@
 # To work with us on translations, join this project:
 # https://www.transifex.com/projects/p/discourse-org/
 
-ur: {}
+ur:
+  js:
+    notifications:
+      alt:
+        solved:
+          accepted_notification: "منظور"
+    solved:
+      title: "حل شدہ"
+      allow_accepted_answers: "ٹاپک کے مالک اور اسٹاف کو حل کے طور پر ایک جواب کو نشان زد کرنے کی اجازت دیں"
+      has_accepted_answer: "اِس ٹاپک کا حل ہے"
+      has_no_accepted_answer: "اِس ٹاپک کا کوئی حل نہیں ہے"
+      accepted_answer: "حل"
+      solution: "حل"
+      solution_summary:
+        one: "حل <i class='fa fa-check-square'></i>"
+        other: "حل <i class='fa fa-check-square'></i>"
+      accepted_html: "<i class='fa-check-square fa accepted'></i>حل کر دیا گیا <span class='by'><a href data-user-card='{{username_lower}}'>{{صارف نام}}</a>کی طرف سے</span> <a href='{{post_path}}'>پوسٹ # {{post_number}}</a>میں "
+      accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{صارف کا نام}}</span>{{تفصیل}}</p>"

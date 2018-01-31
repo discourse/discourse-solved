@@ -14,10 +14,8 @@ he:
     solved:
       title: "נפתר"
       allow_accepted_answers: "אפשר למשתמשים לאשר תשובות"
-      accept_answer: "קבל תשובה"
       has_accepted_answer: "נושא זה נפתר"
       has_no_accepted_answer: "לנושא הזה אין פתרון"
-      unaccept_answer: "בטל קבלת תשובה"
       accepted_answer: "קבל תשובה"
       solution: "פתרון"
       solution_summary:

@@ -10,7 +10,7 @@ es:
     solved_enabled: "Activar plugin de temas solucionados, permitir a los usuarios seleccionar soluciones a temas"
     allow_solved_on_all_topics: "Permitir a los usuarios seleccionar soluciones en todos los temas (puedes controlar esto editando categorías)"
     accept_all_solutions_trust_level: "Nivel de confianza mínimo requerido para aceptar soluciones en cualquier tema (aún cuando no sea el creador del mismo)"
-    empty_box_on_unsolved: "Mostrar una caja vacía cerca de los temas sin solución"
+    empty_box_on_unsolved: "Mostrar una caja vacía al lado de los temas sin solución"
     solved_quote_length: "Número de caracteres a citar cuando muestra la solución debajo del primer post"
     solved_topics_auto_close_hours: "Cerrar automáticamente el tema (n) horas después de la última respuesta, y que el tema haya sido marcado como solucionado"
   reports:

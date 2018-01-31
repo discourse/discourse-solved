@@ -7,12 +7,12 @@
 
 nb_NO:
   site_settings:
-    solved_enabled: "Skru på løsnings-programtillegg, tillater brukere å velge løsninger på emner"
-    allow_solved_on_all_topics: "Tillat brukere å velge løsninger på alle emner (som forvalg kontrollerer du dette ved å endre kategorier)"
-    accept_all_solutions_trust_level: "Minimums tilltisnivå som kreves for å godta løsninger for ehvert emne (selv når du ikke er OP)"
-    empty_box_on_unsolved: "Vis en tom tekstboks ved siden av uløste emner"
+    solved_enabled: "Skru på løsnings-programtillegg, tillater brukere å velge løsninger på tråder"
+    allow_solved_on_all_topics: "Tillat brukere å velge løsninger på alle tråder (som forvalg kontrollerer du dette ved å endre kategorier)"
+    accept_all_solutions_trust_level: "Minimums tilltisnivå som kreves for å godta løsninger for ehvert tråd (selv når du ikke er OP)"
+    empty_box_on_unsolved: "Vis en tom tekstboks ved siden av uløste tråder"
     solved_quote_length: "Antall tegn som skal siteres når løsning vises under første innlegg"
-    solved_topics_auto_close_hours: "Lukk emne automatisk (n) timer etter første svar når det har blitt merket som løst"
+    solved_topics_auto_close_hours: "Lukk tråd automatisk (n) timer etter første svar når det har blitt merket som løst"
   reports:
     accepted_solutions:
       title: "Godtatte løsninger"

@@ -14,10 +14,10 @@ nb_NO:
     solved:
       title: "Løst"
       allow_accepted_answers: "Tillat enmeeier og personale å markere et svar som løsning"
-      accept_answer: "Dette svaret løser problemet"
-      has_accepted_answer: "Dette emnet har en løsning"
-      has_no_accepted_answer: "Dette emnet har ingen løsning"
-      unaccept_answer: "Dette svaret løser ikke lenger problemet"
+      accept_answer: "Velg hvis dette svaret løser problemet"
+      has_accepted_answer: "Denne tråden har en løsning"
+      has_no_accepted_answer: "Denne tråden har ingen løsning"
+      unaccept_answer: "Fravelg dette hvis svaret ikke lenger løser problemet"
       accepted_answer: "Løsning"
       solution: "Løsning"
       solution_summary:

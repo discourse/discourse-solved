@@ -14,10 +14,10 @@ de:
     solved:
       title: "Gelöst"
       allow_accepted_answers: "Erlaube dem Ersteller des Themas und Mitarbeitern eine Antwort als Lösung zu markieren"
-      accept_answer: "Diese Antwort löst das Problem"
+      accept_answer: "Auswählen, wenn diese Antwort das Problem löst"
       has_accepted_answer: "Dieses Thema hat eine Lösung"
       has_no_accepted_answer: "Dieses Thema hat keine Lösung"
-      unaccept_answer: "Diese Antwort löst das Problem doch nicht"
+      unaccept_answer: "Abwählen, wenn diese Antwort das Problem nicht mehr löst"
       accepted_answer: "Lösung"
       solution: "Lösung"
       solution_summary:

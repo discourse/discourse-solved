@@ -14,10 +14,8 @@ zh_CN:
     solved:
       title: "已解决"
       allow_accepted_answers: "允许楼主和职员选择解决方案"
-      accept_answer: "这个回复解决了问题"
       has_accepted_answer: "这个主题已经有了解决方案"
       has_no_accepted_answer: "这一主题尚无解方案"
-      unaccept_answer: "这个回复没有解决问题"
       accepted_answer: "解决方案"
       solution: "解决方案"
       solution_summary:

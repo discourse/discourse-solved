@@ -14,10 +14,8 @@ tr_TR:
     solved:
       title: "Çözülmüş"
       allow_accepted_answers: "Kullanıcılar gönderileri çözüm olarak seçebilsinler mi?"
-      accept_answer: "Çözüm olarak kabul et"
       has_accepted_answer: "Bu gönderi çözüm olarak kabul edildi."
       has_no_accepted_answer: "Bu konu çözüme sahip değil"
-      unaccept_answer: "Çözüm olmaktan çıkar"
       accepted_answer: "Kabul edilen çözümler"
       solution: "Çözüm"
       solution_summary:

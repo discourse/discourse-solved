@@ -14,10 +14,8 @@ es:
     solved:
       title: "Solucionado"
       allow_accepted_answers: "Permitir que el autor del tema y el staff marquen una respuesta como solución"
-      accept_answer: "Esta respuesta soluciona el problema"
       has_accepted_answer: "Este tema tiene una solución"
       has_no_accepted_answer: "Este tema no tiene una solución"
-      unaccept_answer: "Esta respuesta ya no resuelve el problema"
       accepted_answer: "Solución"
       solution: "Solución"
       solution_summary:
