@@ -19,6 +19,6 @@ tr_TR:
       accepted_answer: "Kabul edilen çözümler"
       solution: "Çözüm"
       solution_summary:
+        one: "çözümler <i class='fa fa-check-square'></i>"
         other: "çözümler <i class='fa fa-check-square'></i>"
-      accepted_html: "<i class='fa-check-square fa accepted'></i> Bu konu <a href data-user-card='{{username_lower}}'>{{username}}</a> tarafından <a href='{{post_path}}'>şu gönderide #{{post_number}}</a> çözülmüştür."
       accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

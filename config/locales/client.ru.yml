@@ -7,10 +7,22 @@
 
 ru:
   js:
+    notifications:
+      alt:
+        solved:
+          accepted_notification: "принято"
     solved:
+      title: "Решение"
       allow_accepted_answers: "Разрешить ответы"
+      accept_answer: "Выберите, если этот ответ решает проблему"
       has_accepted_answer: "В этой теме есть ответ"
+      has_no_accepted_answer: "Эта тема не имеет решения"
+      unaccept_answer: "Отмените выбор, если этот ответ больше не решает проблему"
       accepted_answer: "Подтвержденный ответ"
       solution: "Ответ"
-      accepted_html: "<i class='fa-check-square fa accepted'></i><a href data-user-card='{{username_lower}}'>{{username}}</a> ответил в <a href='{{post_path}}'>посте #{{post_number}}</a>"
+      solution_summary:
+        one: "решение <i class='fa fa-check-square'></i>"
+        few: "решений <i class='fa fa-check-square'></i>"
+        many: "решений <i class='fa fa-check-square'></i>"
+        other: "решений <i class='fa fa-check-square'></i>"
       accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

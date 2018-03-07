@@ -7,7 +7,7 @@
 
 pt:
   site_settings:
-    allow_solved_on_all_topics: "Permitir que os utilizadores escolham soluções em todos os tópicos (por omissão essa gestão é feita pela edição de categorias)"
+    allow_solved_on_all_topics: "Permitir que os utilizadores selecionem soluções em todos os tópicos (por predefinição, você controla esta edição de categorias)"
     accept_all_solutions_trust_level: "Nível de confiança mínimo necessário para aceitar soluções em qualquer tópico (mesmo quando não é o autor do tópico)"
   reports:
     accepted_solutions:

@@ -20,5 +20,4 @@ zh_CN:
       solution: "解决方案"
       solution_summary:
         other: "解决方案 <i class='fa fa-check-square'></i>"
-      accepted_html: "<i class='fa-check-square fa accepted'></i> 由<span class='by'><a href data-user-card='{{username_lower}}'>{{username}}</a></span>在 <a href='{{post_path}}'>#{{post_number}} 楼</a>解决"
       accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

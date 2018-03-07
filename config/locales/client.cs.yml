@@ -22,5 +22,4 @@ cs:
         one: "řešení <i class='fa fa-check-square'></i>"
         few: "řešení <i class='fa fa-check-square'></i>"
         other: "řešení <i class='fa fa-check-square'></i>"
-      accepted_html: "<i class='fa-check-square fa accepted'></i> Vyřešeno <span class='by'>uživatelem <a href data-user-card='{{username_lower}}'>{{username}}</a></span> v <a href='{{post_path}}'>příspěvku #{{post_number}}</a>"
       accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"
