@@ -5,4 +5,15 @@
 # To work with us on translations, join this project:
 # https://www.transifex.com/projects/p/discourse-org/
 
-nl: {}
+nl:
+  site_settings:
+    solved_enabled: "Schakel solved plugin in, stelt gebruikers in staat om oplossing voor hun topics te selecteren"
+  reports:
+    accepted_solutions:
+      title: "Geaccepteerde oplossingen"
+      xaxis: "Dag"
+      yaxis: "Totaal"
+  solved:
+    no_solutions:
+      self: "Je hebt nog geen geaccepteerde oplossingen."
+      others: "Geen geaccepteerde oplossingen."

@@ -14,11 +14,14 @@ es:
     solved:
       title: "Solucionado"
       allow_accepted_answers: "Permitir que el autor del tema y el staff marquen una respuesta como solución"
+      accept_answer: "Seleccionar si esta respuesta soluciona el problema"
       has_accepted_answer: "Este tema tiene una solución"
       has_no_accepted_answer: "Este tema no tiene una solución"
+      unaccept_answer: "Deseleccionar si esta respuesta ya no resuelve el problema"
       accepted_answer: "Solución"
       solution: "Solución"
       solution_summary:
         one: "solución"
         other: "soluciones"
+      accepted_html: "<i class='fa-check-square fa accepted'></i> Solucionado <span class='by'>por <a href data-user-card='{{username_lower}}'>{{username}}</a></span> en el <a href='{{post_path}}' class='back'>mensaje nº {{post_number}}</a>"
       accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

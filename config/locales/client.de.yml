@@ -23,4 +23,5 @@ de:
       solution_summary:
         one: "Lösung <i class='fa fa-check-square'></i>"
         other: "Lösungen <i class='fa fa-check-square'></i>"
+      accepted_html: "<i class='fa-check-square fa accepted'></i> Gelöst <span class='by'>durch <a href data-user-card='{{username_lower}}'>{{username}}</a></span> in <a href='{{post_path}}' class='back'>Beitrag #{{post_number}}</a>"
       accepted_notification: "<i title='Lösung akzeptiert' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

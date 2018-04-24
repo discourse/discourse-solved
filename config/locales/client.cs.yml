@@ -14,12 +14,15 @@ cs:
     solved:
       title: "Vyřešeno"
       allow_accepted_answers: "Povolit vlastníkovi tématu a správcům označit odpověď jako řešení"
+      accept_answer: "Tato odpověď je řešením problému"
       has_accepted_answer: "Toto téma má řešení"
       has_no_accepted_answer: "Toto téma nemá žádné řešení"
+      unaccept_answer: "Tato odpověď již neřeší tento problém"
       accepted_answer: "Řešení"
       solution: "Řešení"
       solution_summary:
         one: "řešení <i class='fa fa-check-square'></i>"
         few: "řešení <i class='fa fa-check-square'></i>"
         other: "řešení <i class='fa fa-check-square'></i>"
+      accepted_html: "<i class='fa-check-square fa accepted'></i> Vyřešeno <span class='by'>uživatelem <a href data-user-card='{{username_lower}}'>{{username}}</a></span> v <a href='{{post_path}}' class='back'>příspěvku #{{post_number}}</a>"
       accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"
