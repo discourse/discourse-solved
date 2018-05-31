@@ -13,12 +13,15 @@ tr_TR:
           accepted_notification: "onaylanmış"
     solved:
       title: "Çözülmüş"
-      allow_accepted_answers: "Kullanıcılar gönderileri çözüm olarak seçebilsinler mi?"
-      has_accepted_answer: "Bu gönderi çözüm olarak kabul edildi."
+      allow_accepted_answers: "Konu sahibi kullanıcılar ve yöneticiler gönderileri çözüm olarak seçebilsinler mi?"
+      accept_answer: "Bu cevabın sorunu çözüp çözmediğini seçin"
+      has_accepted_answer: "Bu konunun bir çözümü var"
       has_no_accepted_answer: "Bu konu çözüme sahip değil"
-      accepted_answer: "Kabul edilen çözümler"
+      unaccept_answer: "Bu cevab eğer sorunu çözmediyse seçimini kaldırın"
+      accepted_answer: "Çözüm"
       solution: "Çözüm"
       solution_summary:
         one: "çözümler <i class='fa fa-check-square'></i>"
         other: "çözümler <i class='fa fa-check-square'></i>"
+      accepted_html: "<i class='fa-check-square fa accepted'></i> Bu konu <a href data-user-card='{{username_lower}}'>{{username}}</a> tarafından <a href='{{post_path}}'>şu gönderide #{{post_number}}</a> çözülmüştür."
       accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

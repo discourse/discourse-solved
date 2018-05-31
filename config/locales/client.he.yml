@@ -20,5 +20,7 @@ he:
       solution: "פתרון"
       solution_summary:
         one: "פתרון <i class='fa fa-check-square'></i>"
+        two: "פתרונות <i class='fa fa-check-square'></i>"
+        many: "פתרונות <i class='fa fa-check-square'></i>"
         other: "פתרונות <i class='fa fa-check-square'></i>"
       accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"
