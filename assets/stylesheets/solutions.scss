@@ -2,10 +2,14 @@
   color: green;
 }
 
+.post-controls span:not(.d-button-label) {
+  display: inline-flex;
+  align-items: baseline;
+}
+
 .post-controls .accepted-text {
   display: inline-block;
   font-size: inherit;
-  line-height: 1;
   margin-right: -3px;
   z-index: 999;
 }
@@ -13,11 +17,6 @@
 // you can style accepted answers however your want
 .topic-post.accepted-answer .topic-body {
 //  background-color: #E9FFE0;
-}
-
-.mobile-view .post-controls .accepted-text {
-  float: left;
-  padding: .7em 0;
 }
 
 .mobile-view .solved-panel {
