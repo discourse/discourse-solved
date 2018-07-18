@@ -60,19 +60,9 @@ SQL
       engine_name PLUGIN_NAME
       isolate_namespace DiscourseSolved
     end
-  end
 
-  require_dependency "application_controller"
-  class DiscourseSolved::AnswerController < ::ApplicationController
-
-    def accept
-
-      limit_accepts
-
-      post = Post.find(params[:id].to_i)
+    def self.accept_answer!(post, acting_user)
       topic = post.topic
-
-      guardian.ensure_can_accept_answer!(topic)
 
       accepted_id = topic.custom_fields["accepted_answer_post_id"].to_i
       if accepted_id > 0
@@ -95,13 +85,13 @@ SQL
         UserAction.log_action!(
           action_type: UserAction::SOLVED,
           user_id: post.user_id,
-          acting_user_id: guardian.user.id,
+          acting_user_id: acting_user.id,
           target_post_id: post.id,
           target_topic_id: post.topic_id
         )
       end
 
-      unless current_user.id == post.user_id
+      unless acting_user.id == post.user_id
         Notification.create!(
           notification_type: Notification.types[:custom],
           user_id: post.user_id,
@@ -109,7 +99,7 @@ SQL
           post_number: post.post_number,
           data: {
             message: 'solved.accepted_notification',
-            display_username: current_user.username,
+            display_username: acting_user.username,
             topic_title: topic.title
           }.to_json
         )
@@ -126,17 +116,9 @@ SQL
       end
 
       DiscourseEvent.trigger(:accepted_solution, post)
-      render json: success_json
     end
 
-    def unaccept
-
-      limit_accepts
-
-      post = Post.find(params[:id].to_i)
-
-      guardian.ensure_can_accept_answer!(post.topic)
-
+    def self.unaccept_answer!(post)
       post.custom_fields["is_accepted_answer"] = nil
       post.topic.custom_fields["accepted_answer_post_id"] = nil
       post.topic.save!
@@ -161,7 +143,32 @@ SQL
       notification.destroy if notification
 
       DiscourseEvent.trigger(:unaccepted_solution, post)
+    end
+  end
 
+  require_dependency "application_controller"
+  class DiscourseSolved::AnswerController < ::ApplicationController
+
+    def accept
+
+      limit_accepts
+
+      post = Post.find(params[:id].to_i)
+      guardian.ensure_can_accept_answer!(post.topic)
+
+      DiscourseSolved.accept_answer!(post, current_user)
+
+      render json: success_json
+    end
+
+    def unaccept
+
+      limit_accepts
+
+      post = Post.find(params[:id].to_i)
+      guardian.ensure_can_accept_answer!(post.topic)
+
+      DiscourseSolved.unaccept_answer!(post)
       render json: success_json
     end
 
@@ -432,4 +439,14 @@ SQL
     CategoryList.preloaded_topic_custom_fields << "accepted_answer_post_id"
   end
 
+  on(:filter_auto_bump_topics) do |_category, filters|
+    filters.push(->(r) { r.where(<<~SQL)
+        NOT EXISTS(
+          SELECT 1 FROM topic_custom_fields
+          WHERE topic_id = topics.id
+          AND name = 'accepted_answer_post_id'
+        )
+      SQL
+    })
+  end
 end
