@@ -7,9 +7,18 @@
 
 pt_BR:
   site_settings:
+    solved_enabled: "Habilitar plugin resolvido, permite aos usuários selecionar soluções para tópicos"
     allow_solved_on_all_topics: "Permitir usuários selecionarem soluções em todos tópicos (por padrão você controla isso editando categorias)"
+    accept_all_solutions_trust_level: "Nível mínimo de confiança requerido para aceitar soluções em qualquer tópico (mesmo quando não é OP)"
+    empty_box_on_unsolved: "Apresentar uma caixa vazia junto a tópicos não resolvidos"
+    solved_quote_length: "Número de caracteres para citar ao exibir a solução na primeira publicação"
+    solved_topics_auto_close_hours: "Tópico de fechamento automático (n) horas após a última resposta, uma vez que o tópico foi marcado como resolvido"
   reports:
     accepted_solutions:
       title: "Soluções aceitas"
       xaxis: "Dia"
       yaxis: "Total"
+  solved:
+    no_solutions:
+      self: "Você ainda não tem soluções aceitas."
+      others: "Nenhuma solução aceita."

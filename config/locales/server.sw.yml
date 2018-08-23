@@ -1,0 +1,24 @@
+# encoding: utf-8
+#
+# Never edit this file. It will be overwritten when translations are pulled from Transifex.
+#
+# To work with us on translations, join this project:
+# https://www.transifex.com/projects/p/discourse-org/
+
+sw:
+  site_settings:
+    solved_enabled: "Ruhusu plugin ya suluhisho, waruhusu watumiaji wachague suluhisho ya mada"
+    allow_solved_on_all_topics: "Ruhusu watumiaji waweze kuchagua suluhisho kwenye mada zote (unaweza kudhibiti kwa kuhariri makundi)"
+    accept_all_solutions_trust_level: "Kiwango cha chini cha uaminifu kinachohitajika kukubali suluhisho kwenye mada zozote (hata kama sio OP)"
+    empty_box_on_unsolved: "Onyesha boxi lililowazi pembeni ya mada ambazo hazijatatuliwa"
+    solved_quote_length: "Namba za herufi kunuku wakati wa kuonyesha suluhisho chini ya taarifa za kwanza."
+    solved_topics_auto_close_hours: "Mada iliyopita (n) hours itajifunga yenyewe baada ya jibu la mwisho pale kipindi mada ikipata ufumbuzi au suluhisho "
+  reports:
+    accepted_solutions:
+      title: "Majibu yaliyokubaliwa"
+      xaxis: "Siku"
+      yaxis: "Jumla"
+  solved:
+    no_solutions:
+      self: "Bado hauna majibu yaliyokubaliwa."
+      others: "Hakuna majibu yaliyokubaliwa."

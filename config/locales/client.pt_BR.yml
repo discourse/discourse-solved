@@ -7,9 +7,21 @@
 
 pt_BR:
   js:
+    notifications:
+      alt:
+        solved:
+          accepted_notification: "aceito"
     solved:
+      title: "Resolvido"
       allow_accepted_answers: "Permitir que o criador do tópico e a equipe marquem uma resposta como a solução"
+      accept_answer: "Selecione se esta resposta resolve o problema"
       has_accepted_answer: "Este tópico tem uma solução"
+      has_no_accepted_answer: "Este tópico não tem solução"
+      unaccept_answer: "Desmarque se esta resposta não resolver mais o problema"
       accepted_answer: "Solução"
       solution: "Solução"
+      solution_summary:
+        one: "solução <i class='fa fa-check-square'></i>"
+        other: "soluções <i class='fa fa-check-square'></i>"
+      accepted_html: "<i class='fa-check-square fa accepted'></i> Resolvido <span class='by'>por <a href data-user-card='{{username_lower}}'>{{nome de usuário}}</a></span> no <a href='{{post_path}}' class='back'>post #{{post_number}}</a>"
       accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

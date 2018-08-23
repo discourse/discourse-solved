@@ -13,3 +13,5 @@ ca:
           accepted_notification: "Acceptat"
     solved:
       title: "Solucionat"
+      accepted_answer: "Solució"
+      solution: "Solució"
