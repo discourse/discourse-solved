@@ -1,22 +1,21 @@
-# encoding: utf-8
-#
-# Never edit this file. It will be overwritten when translations are pulled from Transifex.
-#
-# To work with us on translations, join this project:
-# https://www.transifex.com/projects/p/discourse-org/
-
-pl_PL:
+en:
   js:
     notifications:
       alt:
         solved:
           accepted_notification: "przyjęty"
+
     solved:
       title: "Rozwiązany"
       allow_accepted_answers: "Pozwól użytkownikom na akceptowanie rozwiązań"
-      has_accepted_answer: "Ten temat ma zaakceptowane rozwiązanie"
-      has_no_accepted_answer: "Ten temat nie ma rozwiązania"
-      unaccept_answer: "Odznacz jeśli ta odpowiedź nie rozwiązuje już problemu"
-      accepted_answer: "Zaakceptowana odpowiedź"
+      accept_answer: "Wybierz, jeśli problem został rozwiązany"
+      has_accepted_answer: "Ten temat ma rozwiązanie"
+      has_no_accepted_answer: "Temat nie ma rozwiązania"
+      unaccept_answer: "Odznacz, jeśli wciąż problem nie jest rozwiązany"
+      accepted_answer: "Rozwiązanie"
       solution: "Rozwiązanie"
+      solution_summary:
+        one: "solution <i class='fa fa-check-square'></i>"
+        other: "solutions <i class='fa fa-check-square'></i>"
+      accepted_html: "<i class='fa-check-square fa accepted'></i> Rozwiązane <span class='by'>przez <a href data-user-card='{{username_lower}}'>{{username}}</a></span> w <a href='{{post_path}}' class='back'>poście #{{post_number}}</a>"
       accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"
