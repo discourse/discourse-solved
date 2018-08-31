@@ -61,25 +61,28 @@ SQL
       isolate_namespace DiscourseSolved
     end
 
+    AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD = "solved_auto_close_topic_timer_id".freeze
+
     def self.accept_answer!(post, acting_user)
       topic = post.topic
-
       accepted_id = topic.custom_fields["accepted_answer_post_id"].to_i
+
       if accepted_id > 0
         if p2 = Post.find_by(id: accepted_id)
           p2.custom_fields["is_accepted_answer"] = nil
           p2.save!
 
           if defined?(UserAction::SOLVED)
-            UserAction.where(action_type: UserAction::SOLVED, target_post_id: p2.id).destroy_all
+            UserAction.where(
+              action_type: UserAction::SOLVED,
+              target_post_id: p2.id
+            ).destroy_all
           end
         end
       end
 
       post.custom_fields["is_accepted_answer"] = "true"
       topic.custom_fields["accepted_answer_post_id"] = post.id
-      topic.save!
-      post.save!
 
       if defined?(UserAction::SOLVED)
         UserAction.log_action!(
@@ -105,15 +108,24 @@ SQL
         )
       end
 
-      if (auto_close_hours = SiteSetting.solved_topics_auto_close_hours) > (0) && !topic.closed
-        topic.set_or_create_timer(
+      auto_close_hours = SiteSetting.solved_topics_auto_close_hours
+
+      if (auto_close_hours > 0) && !topic.closed
+        topic_timer = topic.set_or_create_timer(
           TopicTimer.types[:close],
           auto_close_hours,
           based_on_last_post: true
         )
 
+        topic.custom_fields[
+          AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD
+        ] = topic_timer.id
+
         MessageBus.publish("/topic/#{topic.id}", reload_topic: true)
       end
+
+      topic.save!
+      post.save!
 
       DiscourseEvent.trigger(:accepted_solution, post)
     end
@@ -121,7 +133,15 @@ SQL
     def self.unaccept_answer!(post)
       post.custom_fields["is_accepted_answer"] = nil
       post.topic.custom_fields["accepted_answer_post_id"] = nil
-      post.topic.save!
+      topic = post.topic
+
+      if timer_id = topic.custom_fields[AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD]
+        topic_timer = TopicTimer.find_by(id: timer_id)
+        topic_timer.destroy! if topic_timer
+        topic.custom_fields[AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD] = nil
+      end
+
+      topic.save!
       post.save!
 
       # TODO remove_action! does not allow for this type of interface
@@ -134,14 +154,13 @@ SQL
 
       # yank notification
       notification = Notification.find_by(
-         notification_type: Notification.types[:custom],
-         user_id: post.user_id,
-         topic_id: post.topic_id,
-         post_number: post.post_number
+        notification_type: Notification.types[:custom],
+        user_id: post.user_id,
+        topic_id: post.topic_id,
+        post_number: post.post_number
       )
 
       notification.destroy! if notification
-
       DiscourseEvent.trigger(:unaccepted_solution, post)
     end
   end

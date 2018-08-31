@@ -41,26 +41,63 @@ RSpec.describe "Managing Posts solved status" do
     end
 
     it 'can mark a post as the accepted answer correctly' do
+      freeze_time
+
       post "/solution/accept.json", params: { id: p1.id }
 
+      expect(response.status).to eq(200)
       expect(p1.reload.custom_fields["is_accepted_answer"]).to eq("true")
 
-      expect(topic.public_topic_timer.status_type).to eq(TopicTimer.types[:close])
+      expect(topic.public_topic_timer.status_type)
+        .to eq(TopicTimer.types[:close])
+
+      expect(topic.custom_fields[
+        DiscourseSolved::AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD
+      ].to_i).to eq(topic.public_topic_timer.id)
 
       expect(topic.public_topic_timer.execute_at)
-        .to be_within(1.second).of(Time.zone.now + 2.hours)
+        .to eq(Time.zone.now + 2.hours)
 
       expect(topic.public_topic_timer.based_on_last_post).to eq(true)
     end
+
     it 'does not set a timer when the topic is closed' do
       topic.update!(closed: true)
       post "/solution/accept.json", params: { id: p1.id }
+
+      expect(response.status).to eq(200)
+
       p1.reload
       topic.reload
 
       expect(p1.custom_fields["is_accepted_answer"]).to eq("true")
       expect(topic.public_topic_timer).to eq(nil)
       expect(topic.closed).to eq(true)
+    end
+  end
+
+  describe '#unaccept' do
+    before do
+      sign_in(user)
+    end
+
+    describe 'when solved_topics_auto_close_hours is enabled' do
+      before do
+        SiteSetting.solved_topics_auto_close_hours = 2
+        DiscourseSolved.accept_answer!(p1, user)
+      end
+
+      it 'should unmark the post as solved' do
+        expect do
+          post "/solution/unaccept.json", params: { id: p1.id }
+        end.to change { topic.reload.public_topic_timer }.to(nil)
+
+        expect(response.status).to eq(200)
+        p1.reload
+
+        expect(p1.custom_fields["is_accepted_answer"]).to eq(nil)
+        expect(p1.topic.custom_fields["accepted_answer_post_id"]).to eq(nil)
+      end
     end
   end
 end
