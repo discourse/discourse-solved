@@ -140,7 +140,7 @@ SQL
          post_number: post.post_number
       )
 
-      notification.destroy if notification
+      notification.destroy! if notification
 
       DiscourseEvent.trigger(:unaccepted_solution, post)
     end
