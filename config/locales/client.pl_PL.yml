@@ -14,9 +14,11 @@ pl_PL:
     solved:
       title: "Rozwiązany"
       allow_accepted_answers: "Pozwól użytkownikom na akceptowanie rozwiązań"
+      accept_answer: "Zaznacz, jeśli ta odpowiedź rozwiązuje Twój problem"
       has_accepted_answer: "Ten temat ma zaakceptowane rozwiązanie"
       has_no_accepted_answer: "Ten temat nie ma rozwiązania"
       unaccept_answer: "Odznacz jeśli ta odpowiedź nie rozwiązuje już problemu"
       accepted_answer: "Zaakceptowana odpowiedź"
       solution: "Rozwiązanie"
+      accepted_html: "<i class='fa-check-square fa accepted'></i>Rozwiązane<span class='by'>przez<a href data-user-card='{{username_lower}}'>{{username}}</a></span>w<a href='{{post_path}}' class='back'>w poście #{{post_number}}</a>"
       accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

@@ -8,3 +8,7 @@
 he:
   site_settings:
     allow_solved_on_all_topics: "אפשר למשתמשים לקבל תשובות לכל הנושאים(כברירת מחדל שולט בזה על ידי עריכת הקטגוריה"
+  reports:
+    accepted_solutions:
+      xaxis: "יום"
+      yaxis: "סך הכל"
