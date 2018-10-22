@@ -1,4 +1,7 @@
-.solved-panel, .post-controls .accepted, .fa.accepted, .accepted-text {
+.solved-panel,
+.post-controls .accepted,
+.fa.accepted,
+.accepted-text {
   color: green;
 }
 
@@ -16,7 +19,7 @@
 
 // you can style accepted answers however your want
 .topic-post.accepted-answer .topic-body {
-//  background-color: #E9FFE0;
+  //  background-color: #E9FFE0;
 }
 
 .mobile-view .solved-panel {
@@ -24,7 +27,6 @@
 }
 
 .solved-panel {
-
   .by {
     display: none;
   }

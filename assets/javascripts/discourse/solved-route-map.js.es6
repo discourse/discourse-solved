@@ -1,6 +1,6 @@
 export default {
-  resource: 'user.userActivity',
+  resource: "user.userActivity",
   map() {
-     this.route('solved');
+    this.route("solved");
   }
 };
