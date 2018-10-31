@@ -211,11 +211,11 @@ SQL
   TopicView.add_post_custom_fields_whitelister do |user|
     ["is_accepted_answer"]
   end
-
-  register_html_builder('server:head-metadata') do |controller|
-    next "" if not controller.instance_of? TopicsController
+  
+  def before_head_close_meta(controller)
+    return "" if not controller.instance_of? TopicsController
     topic = Topic.with_deleted.where(id: controller.params[:topic_id]).first
-    next "" if not controller.guardian.allow_accepted_answers_on_category?(topic.category_id)
+    return "" if not controller.guardian.allow_accepted_answers_on_category?(topic.category_id)
     first_post = topic.first_post
     question_json =  {
       '@type' => 'Question',
@@ -269,6 +269,14 @@ SQL
         question_json,
       ]
     }).html_safe, '</script>'].join("")
+  end
+
+  register_html_builder('server:before-head-close-crawler') do |controller|
+    before_head_close_meta(controller)
+  end
+
+  register_html_builder('server:before-head-close') do |controller|
+    before_head_close_meta(controller)
   end
 
   if Report.respond_to?(:add_report)
