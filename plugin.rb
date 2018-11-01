@@ -212,6 +212,71 @@ SQL
     ["is_accepted_answer"]
   end
 
+  def before_head_close_meta(controller)
+    return "" if not controller.instance_of? TopicsController
+    topic = Topic.with_deleted.where(id: controller.params[:topic_id]).first
+    return "" if not controller.guardian.allow_accepted_answers_on_category?(topic.category_id)
+    first_post = topic.first_post
+    question_json = {
+      '@type' => 'Question',
+      'name' => topic&.title,
+      'text' => first_post&.raw,
+      'upvoteCount' => first_post&.like_count,
+      'answerCount' => topic&.reply_count,
+      'dateCreated' => first_post&.created_at,
+      'author' => {
+        '@type' => 'Person',
+        'name' => first_post&.user&.username
+      }
+    }
+    page_json = {
+      '@type' => 'QAPage',
+      'name' => topic&.title,
+    }
+    if accepted_answer = Post.find_by(id: topic.custom_fields["accepted_answer_post_id"])
+      question_json[:acceptedAnswer] = {
+        '@type' => 'Answer',
+        'text' => accepted_answer&.raw,
+        'upvoteCount' => accepted_answer&.like_count,
+        'dateCreated' => accepted_answer&.created_at,
+        'url' => accepted_answer&.full_url,
+        'author' => {
+          '@type' => 'Person',
+          'name' => accepted_answer&.user&.username
+        }
+      }
+    end
+    suggested_answer = Post.find_by(topic_id: topic.id, post_number: controller.params[:post_number])
+    if suggested_answer && suggested_answer.post_number != 1
+      question_json[:suggestedAnswer] = {
+        '@type' => 'Answer',
+        'text' => suggested_answer&.raw,
+        'upvoteCount' => suggested_answer&.like_count,
+        'dateCreated' => suggested_answer&.created_at,
+        'url' => suggested_answer&.full_url,
+        'author' => {
+          '@type' => 'Person',
+          'name' => suggested_answer&.user&.username
+        }
+      }
+    end
+    ['<script type="application/ld+json">', MultiJson.dump(
+      '@context' => 'http://schema.org',
+      '@graph' => [
+        page_json,
+        question_json,
+      ]
+    ).html_safe, '</script>'].join("")
+  end
+
+  register_html_builder('server:before-head-close-crawler') do |controller|
+    before_head_close_meta(controller)
+  end
+
+  register_html_builder('server:before-head-close') do |controller|
+    before_head_close_meta(controller)
+  end
+
   if Report.respond_to?(:add_report)
     AdminDashboardData::GLOBAL_REPORTS << "accepted_solutions"
 
