@@ -213,22 +213,32 @@ SQL
   end
 
   def before_head_close_meta(controller)
-    return "" if not controller.instance_of? TopicsController
-    topic = Topic.with_deleted.where(id: controller.params[:topic_id]).first
-    return "" if not controller.guardian.allow_accepted_answers_on_category?(topic.category_id)
-    first_post = topic.first_post
-    question_json = {
-      '@type' => 'Question',
-      'name' => topic&.title,
-      'text' => first_post&.raw,
-      'upvoteCount' => first_post&.like_count,
-      'answerCount' => topic&.reply_count,
-      'dateCreated' => first_post&.created_at,
-      'author' => {
-        '@type' => 'Person',
-        'name' => first_post&.user&.username
+    return "" if !controller.instance_of? TopicsController
+
+    topic_view = controller.instance_variable_get(:@topic_view)
+    topic = topic_view&.topic
+    return "" if !topic
+    # note, we have canonicals so we only do this for page 1 at the moment
+    # it can get confusing to have this on every page and it should make page 1
+    # a bit more prominent + cut down on pointless work
+    return "" if topic_view.post_number != 1
+    return "" if !controller.guardian.allow_accepted_answers_on_category?(topic.category_id)
+
+    if first_post = topic_view.posts&.first
+      question_json = {
+        '@type' => 'Question',
+        'name' => topic.title,
+        'text' => first_post.excerpt,
+        'upvoteCount' => first_post.like_count,
+        'answerCount' => topic.reply_count,
+        'dateCreated' => topic.created_at,
+        'author' => {
+          '@type' => 'Person',
+          'name' => topic.user&.name
+        }
       }
-    }
+    end
+
     page_json = {
       '@type' => 'QAPage',
       'name' => topic&.title,
@@ -236,37 +246,24 @@ SQL
     if accepted_answer = Post.find_by(id: topic.custom_fields["accepted_answer_post_id"])
       question_json[:acceptedAnswer] = {
         '@type' => 'Answer',
-        'text' => accepted_answer&.raw,
-        'upvoteCount' => accepted_answer&.like_count,
-        'dateCreated' => accepted_answer&.created_at,
-        'url' => accepted_answer&.full_url,
+        'text' => accepted_answer.excerpt,
+        'upvoteCount' => accepted_answer.like_count,
+        'dateCreated' => accepted_answer.created_at,
+        'url' => accepted_answer.full_url,
         'author' => {
           '@type' => 'Person',
-          'name' => accepted_answer&.user&.username
+          'name' => accepted_answer.user&.username
         }
       }
     end
-    suggested_answer = Post.find_by(topic_id: topic.id, post_number: controller.params[:post_number])
-    if suggested_answer && suggested_answer.post_number != 1
-      question_json[:suggestedAnswer] = {
-        '@type' => 'Answer',
-        'text' => suggested_answer&.raw,
-        'upvoteCount' => suggested_answer&.like_count,
-        'dateCreated' => suggested_answer&.created_at,
-        'url' => suggested_answer&.full_url,
-        'author' => {
-          '@type' => 'Person',
-          'name' => suggested_answer&.user&.username
-        }
-      }
-    end
+
     ['<script type="application/ld+json">', MultiJson.dump(
       '@context' => 'http://schema.org',
       '@graph' => [
         page_json,
         question_json,
       ]
-    ).html_safe, '</script>'].join("")
+    ).gsub("</", "<\\/").html_safe, '</script>'].join("")
   end
 
   register_html_builder('server:before-head-close-crawler') do |controller|
