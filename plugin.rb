@@ -221,23 +221,24 @@ SQL
     # note, we have canonicals so we only do this for page 1 at the moment
     # it can get confusing to have this on every page and it should make page 1
     # a bit more prominent + cut down on pointless work
-    return "" if topic_view.post_number != 1
+
     return "" if !controller.guardian.allow_accepted_answers_on_category?(topic.category_id)
 
-    if first_post = topic_view.posts&.first
-      question_json = {
-        '@type' => 'Question',
-        'name' => topic.title,
-        'text' => first_post.excerpt,
-        'upvoteCount' => first_post.like_count,
-        'answerCount' => topic.reply_count,
-        'dateCreated' => topic.created_at,
-        'author' => {
-          '@type' => 'Person',
-          'name' => topic.user&.name
-        }
+    first_post = topic_view.posts&.first
+    return "" if first_post&.post_number != 1
+
+    question_json = {
+      '@type' => 'Question',
+      'name' => topic.title,
+      'text' => first_post.excerpt,
+      'upvoteCount' => first_post.like_count,
+      'answerCount' => topic.reply_count,
+      'dateCreated' => topic.created_at,
+      'author' => {
+        '@type' => 'Person',
+        'name' => topic.user&.name
       }
-    end
+    }
 
     page_json = {
       '@type' => 'QAPage',
