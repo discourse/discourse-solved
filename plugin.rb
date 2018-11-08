@@ -6,6 +6,12 @@
 
 enabled_site_setting :solved_enabled
 
+if respond_to?(:register_svg_icon)
+  register_svg_icon "far fa-check-square"
+  register_svg_icon "check-square"
+  register_svg_icon "far fa-square"
+end
+
 PLUGIN_NAME = "discourse_solved".freeze
 
 register_asset 'stylesheets/solutions.scss'
