@@ -6,6 +6,7 @@ import { withPluginApi } from "discourse/lib/plugin-api";
 import { ajax } from "discourse/lib/ajax";
 import PostCooked from "discourse/widgets/post-cooked";
 import { formatUsername } from "discourse/lib/utilities";
+import { iconHTML } from "discourse-common/lib/icon-library";
 
 function clearAccepted(topic) {
   const posts = topic.get("postStream.posts");
@@ -201,6 +202,7 @@ export default {
         }
 
         return I18n.t("solved.accepted_html", {
+          icon: iconHTML('check-square'),
           username_lower: username.toLowerCase(),
           username: formatUsername(username),
           post_path: this.get("url") + "/" + postNumber,
