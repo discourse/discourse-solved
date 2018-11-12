@@ -15,7 +15,7 @@ en:
       accepted_answer: "Solution"
       solution: "Solution"
       solution_summary:
-        one: "solution <i class='fa fa-check-square'></i>"
-        other: "solutions <i class='fa fa-check-square'></i>"
-      accepted_html: "<i class='fa-check-square fa accepted'></i> Solved <span class='by'>by <a href data-user-card='{{username_lower}}'>{{username}}</a></span> in <a href='{{post_path}}' class='back'>post #{{post_number}}</a>"
-      accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"
+        one: "solution <svg class='fa d-icon d-icon-check-square svg-icon' aria-hidden='true'><use xlink:href='#check-square'></use></svg>"
+        other: "solutions <svg class='fa d-icon d-icon-check-square svg-icon' aria-hidden='true'><use xlink:href='#check-square'></use></svg>"
+      accepted_html: "<svg class='fa d-icon d-icon-check-square svg-icon' aria-hidden='true'><use xlink:href='#check-square'></use></svg> Solved <span class='by'>by <a href data-user-card='{{username_lower}}'>{{username}}</a></span> in <a href='{{post_path}}' class='back'>post #{{post_number}}</a>"
+      accepted_notification: "<p><span>{{username}}</span> {{description}}</p>"
