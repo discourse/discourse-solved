@@ -202,7 +202,7 @@ export default {
         }
 
         return I18n.t("solved.accepted_html", {
-          icon: iconHTML("check-square"),
+          icon: iconHTML("check-square", { class: "accepted" }),
           username_lower: username.toLowerCase(),
           username: formatUsername(username),
           post_path: this.get("url") + "/" + postNumber,
