@@ -20,4 +20,3 @@ ar:
       unaccept_answer: "احذف الاختيار إن كان هذا الرد لا يحل المشكلة الآن"
       accepted_answer: "الحل"
       solution: "الحل"
-      accepted_notification: "<i title='حل مقبول' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

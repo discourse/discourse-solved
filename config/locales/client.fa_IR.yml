@@ -18,4 +18,3 @@ fa_IR:
       has_no_accepted_answer: "این موضوع هیچ راه حلی ندارد"
       accepted_answer: "راه حل مورد قبول"
       solution: "راه حل"
-      accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

@@ -20,8 +20,3 @@ nb_NO:
       unaccept_answer: "Fravelg dette hvis svaret ikke lenger løser problemet"
       accepted_answer: "Løsning"
       solution: "Løsning"
-      solution_summary:
-        one: "løsning <i class='fa fa-check-square'></i>"
-        other: "løsninger <i class='fa fa-check-square'></i>"
-      accepted_html: "<i class='fa-check-square fa accepted'></i> Løst <span class='by'>av <a href data-user-card='{{username_lower}}'>{{username}}</a></span> i <a href='{{post_path}}' class='back'>innlegg #{{post_number}}</a>"
-      accepted_notification: "<i title='godtatt' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

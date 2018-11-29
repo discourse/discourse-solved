@@ -5,4 +5,20 @@
 # To work with us on translations, join this project:
 # https://www.transifex.com/projects/p/discourse-org/
 
-ro: {}
+ro:
+  site_settings:
+    solved_enabled: "Activați extensia \"rezolvat\", permiteți utilizatorilor să selecteze soluții pentru subiecte"
+    allow_solved_on_all_topics: "Permiteți utilizatorilor să selecteze soluții la toate subiectele (implicit dv. controlați aceasta prin editarea categoriilor)"
+    accept_all_solutions_trust_level: "Nivelul minim de încredere necesar pentru a accepta soluții la fiecare subiect (chiar dacă nu este OP)."
+    empty_box_on_unsolved: "Afișați o casetă goală lângă subiectele nerezolvate"
+    solved_quote_length: "Numărul de caractere de citat când se afișează soluția sub prima postare"
+    solved_topics_auto_close_hours: "Închide subiectul automat la (n) ore după ultimul răspuns după ce subiectul a fost marcat ca rezolvat"
+  reports:
+    accepted_solutions:
+      title: "Soluții acceptate"
+      xaxis: "Zi"
+      yaxis: "Total"
+  solved:
+    no_solutions:
+      self: "Încă nu ați acceptat soluții"
+      others: "Nu există soluții acceptate"

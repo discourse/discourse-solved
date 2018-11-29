@@ -12,4 +12,3 @@ pt:
       has_accepted_answer: "Este tópico tem uma solução"
       accepted_answer: "Solução"
       solution: "Solução"
-      accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

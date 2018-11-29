@@ -20,8 +20,3 @@ pt_BR:
       unaccept_answer: "Desmarque se esta resposta não resolver mais o problema"
       accepted_answer: "Solução"
       solution: "Solução"
-      solution_summary:
-        one: "solução <i class='fa fa-check-square'></i>"
-        other: "soluções <i class='fa fa-check-square'></i>"
-      accepted_html: "<i class='fa-check-square fa accepted'></i> Resolvido <span class='by'>por <a href data-user-card='{{username_lower}}'>{{nome de usuário}}</a></span> no <a href='{{post_path}}' class='back'>post #{{post_number}}</a>"
-      accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

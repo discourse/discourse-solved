@@ -20,5 +20,3 @@ nl:
       unaccept_answer: "Deselecteer dit als deze reactie je probleem niet langer oplost"
       accepted_answer: "Oplossing"
       solution: "Oplossing"
-      accepted_html: "<i class='fa-check-square fa accepted'></i>Opgelost <span class='by'>door <a href data-user-card='{{username_lower}}'>{{username}}</a></span> in <a href='{{post_path}}' class='back'>bericht#{{post_number}}</a>"
-      accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span>{{description}}</p> "

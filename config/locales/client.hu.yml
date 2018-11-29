@@ -20,8 +20,3 @@ hu:
       unaccept_answer: "Válaszd ki ha ez a válasz már nem oldja meg a problémát"
       accepted_answer: "Megoldás"
       solution: "Megoldás"
-      solution_summary:
-        one: "megoldás <i class='fa fa-check-square'></i>"
-        other: "megoldások <i class='fa fa-check-square'></i>"
-      accepted_html: "<i class='fa-check-square fa accepted'></i> Megoldotta <a href data-user-card='{{username_lower}}'>{{username}}</a> ebben a <a href='{{post_path}}' class='back'>témában #{{post_number}}</a>"
-      accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

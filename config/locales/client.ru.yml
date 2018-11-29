@@ -20,9 +20,3 @@ ru:
       unaccept_answer: "Отмените выбор, если этот ответ больше не решает проблему"
       accepted_answer: "Подтвержденный ответ"
       solution: "Ответ"
-      solution_summary:
-        one: "решение <i class='fa fa-check-square'></i>"
-        few: "решений <i class='fa fa-check-square'></i>"
-        many: "решений <i class='fa fa-check-square'></i>"
-        other: "решений <i class='fa fa-check-square'></i>"
-      accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

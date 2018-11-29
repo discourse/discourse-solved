@@ -18,7 +18,3 @@ fi:
       has_no_accepted_answer: "Tähän aiheeseen ei ole ratkaisua"
       accepted_answer: "Ratkaisu"
       solution: "Ratkaisu"
-      solution_summary:
-        one: "ratkaisu <i class='fa fa-check-square'></i>"
-        other: "ratkaisua <i class='fa fa-check-square'></i>"
-      accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

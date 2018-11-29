@@ -18,6 +18,3 @@ zh_TW:
       has_no_accepted_answer: "這個主題沒有解決方式"
       accepted_answer: "解決方式"
       solution: "解決方式"
-      solution_summary:
-        other: "解決方式<i class='fa fa-check-square'></i>"
-      accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

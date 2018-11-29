@@ -20,5 +20,3 @@ pl_PL:
       unaccept_answer: "Odznacz jeśli ta odpowiedź nie rozwiązuje już problemu"
       accepted_answer: "Zaakceptowana odpowiedź"
       solution: "Rozwiązanie"
-      accepted_html: "<i class='fa-check-square fa accepted'></i>Rozwiązane<span class='by'>przez<a href data-user-card='{{username_lower}}'>{{username}}</a></span>w<a href='{{post_path}}' class='back'>w poście #{{post_number}}</a>"
-      accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{username}}</span> {{description}}</p>"

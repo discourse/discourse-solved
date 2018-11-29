@@ -20,5 +20,3 @@ sw:
       unaccept_answer: "Ondoa chaguo kama jibu halijatatua tatizo"
       accepted_answer: "Jibu"
       solution: "Suluhisho"
-      accepted_html: "<i class='fa-check-square fa accepted'></i>Imesuluhishwa<span class='by'>na <a href data-user-card='{{username_lower}}'>{{username}}</a></span>kwenye taarifa<a href='{{post_path}}' class='back'>#{{post_number}}</a>"
-      accepted_notification: "<i title='accepted' class='fa fa-check-square'></i><p><span>{{jina la mtumiaji}}</span>{{maelezo}}</p>"
