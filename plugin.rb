@@ -246,10 +246,6 @@ SQL
       }
     }
 
-    page_json = {
-      '@type' => 'QAPage',
-      'name' => topic&.title,
-    }
     if accepted_answer = Post.find_by(id: topic.custom_fields["accepted_answer_post_id"])
       question_json[:acceptedAnswer] = {
         '@type' => 'Answer',
@@ -266,10 +262,9 @@ SQL
 
     ['<script type="application/ld+json">', MultiJson.dump(
       '@context' => 'http://schema.org',
-      '@graph' => [
-        page_json,
-        question_json,
-      ]
+      '@type' => 'QAPage',
+      'name' => topic&.title,
+      'mainEntity' => question_json
     ).gsub("</", "<\\/").html_safe, '</script>'].join("")
   end
 
