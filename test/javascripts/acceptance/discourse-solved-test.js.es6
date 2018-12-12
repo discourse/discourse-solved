@@ -217,15 +217,15 @@ acceptance("Discourse Solved Plugin", {
       };
     };
 
+    // eslint-disable-next-line no-undef
     server.get("/t/11.json", () => {
-      // eslint-disable-line no-undef
       return response(
         postStreamWithAcceptedAnswerExcerpt("this is an excerpt")
       );
     });
 
+    // eslint-disable-next-line no-undef
     server.get("/t/12.json", () => {
-      // eslint-disable-line no-undef
       return response(postStreamWithAcceptedAnswerExcerpt(null));
     });
   }
