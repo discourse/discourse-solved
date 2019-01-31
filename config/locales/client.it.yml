@@ -20,3 +20,5 @@ it:
       unaccept_answer: "Deseleziona se questa risposta non risolve più il problema"
       accepted_answer: "Soluzione"
       solution: "Soluzione"
+      accepted_html: "{{icon}} Risolto<span class='by'>da <a href data-user-card='{{username_lower}}'>{{username}}</a></span> nel <a href='{{post_path}}' class='back'>messaggio n°{{post_number}}</a>"
+      accepted_notification: "<p><span>{{username}}</span> {{description}}</p>"

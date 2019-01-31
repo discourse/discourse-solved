@@ -13,10 +13,10 @@ nl:
           accepted_notification: "Geaccepteerd"
     solved:
       title: "Opgelost"
-      allow_accepted_answers: "Sta topic (het) eigenaar en personeel toe om een reactie als oplossing te selecteren"
+      allow_accepted_answers: "Sta topic-eigenaar en personeel toe om een reactie als oplossing te selecteren"
       accept_answer: "Selecteer dit als deze reactie het probleem oplost"
-      has_accepted_answer: "Dit topic (het) heeft een oplossing"
-      has_no_accepted_answer: "Dit topic (het) heeft geen oplossing"
+      has_accepted_answer: "Dit topic heeft een oplossing"
+      has_no_accepted_answer: "Dit topic heeft geen oplossing"
       unaccept_answer: "Deselecteer dit als deze reactie je probleem niet langer oplost"
       accepted_answer: "Oplossing"
       solution: "Oplossing"

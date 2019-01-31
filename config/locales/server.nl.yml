@@ -8,6 +8,8 @@
 nl:
   site_settings:
     solved_enabled: "Schakel solved plugin in, stelt gebruikers in staat om oplossing voor hun topics te selecteren"
+    allow_solved_on_all_topics: "Sta gebruikers toe om oplossen te selecteren voor alle topics (standaard controleer je deze setting bij het opzetten van de categorieën)"
+    empty_box_on_unsolved: "Toon een lege checkbox bij onopgeloste topics"
   reports:
     accepted_solutions:
       title: "Geaccepteerde oplossingen"

@@ -18,3 +18,4 @@ fa_IR:
       has_no_accepted_answer: "این موضوع هیچ راه حلی ندارد"
       accepted_answer: "راه حل مورد قبول"
       solution: "راه حل"
+      accepted_html: "{{icon}}<span class='by'>توسط<a href data-user-card='{{username_lower}}'>{{username}}</a></span> در <a href='{{post_path}}' class='back'>پست {{post_number}}</a>حل شد. "
