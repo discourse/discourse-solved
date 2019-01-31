@@ -3,6 +3,9 @@
 .fa.accepted,
 .accepted-text {
   color: green;
+  .d-icon {
+    color: currentColor;
+  }
 }
 
 .post-controls span:not(.d-button-label) {
