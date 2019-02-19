@@ -238,7 +238,7 @@ SQL
       'name' => topic.title,
       'text' => first_post.excerpt,
       'upvoteCount' => first_post.like_count,
-      'answerCount' => topic.reply_count,
+      'answerCount' => 0,
       'dateCreated' => topic.created_at,
       'author' => {
         '@type' => 'Person',
@@ -247,6 +247,7 @@ SQL
     }
 
     if accepted_answer = Post.find_by(id: topic.custom_fields["accepted_answer_post_id"])
+      question_json['answerCount'] = 1
       question_json[:acceptedAnswer] = {
         '@type' => 'Answer',
         'text' => accepted_answer.excerpt,
