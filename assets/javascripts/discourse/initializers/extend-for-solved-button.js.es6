@@ -1,7 +1,6 @@
 import Topic from "discourse/models/topic";
 import User from "discourse/models/user";
 import TopicStatus from "discourse/raw-views/topic-status";
-import TopicStatusIcons from "discourse/helpers/topic-status-icons";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { ajax } from "discourse/lib/ajax";
@@ -64,12 +63,6 @@ function acceptPost(post) {
 
 function initializeWithApi(api) {
   const currentUser = api.getCurrentUser();
-
-  TopicStatusIcons.addObject([
-    "has_accepted_answer",
-    "check-square-o",
-    "solved"
-  ]);
 
   api.includePostAttributes(
     "can_accept_answer",
@@ -226,7 +219,7 @@ export default {
           results.push({
             openTag: "span",
             closeTag: "span",
-            title: I18n.t("topic_statuses.solved.help"),
+            title: I18n.t("solved.has_accepted_answer"),
             icon: "check-square-o"
           });
         } else if (

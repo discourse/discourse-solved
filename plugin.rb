@@ -18,10 +18,6 @@ register_asset 'stylesheets/solutions.scss'
 
 after_initialize do
 
-  [
-    '../app/serializers/concerns/topic_answer_mixin.rb'
-  ].each { |path| load File.expand_path(path, __FILE__) }
-
   # we got to do a one time upgrade
   if defined?(UserAction::SOLVED)
     unless $redis.get('solved_already_upgraded')
@@ -483,29 +479,42 @@ SQL
   end
 
   require_dependency 'topic_list_item_serializer'
-  require_dependency 'search_topic_list_item_serializer'
-  require_dependency 'suggested_topic_serializer'
-  require_dependency 'category_detailed_serializer'
-  require_dependency 'user_summary_serializer'
+  require_dependency 'listable_topic_serializer'
 
   class ::TopicListItemSerializer
-    include TopicAnswerMixin
+    attributes :has_accepted_answer, :can_have_answer
+
+    def has_accepted_answer
+      object.custom_fields["accepted_answer_post_id"] ? true : false
+    end
+
+    def can_have_answer
+      return true if SiteSetting.allow_solved_on_all_topics
+      return false if object.closed || object.archived
+      return scope.allow_accepted_answers_on_category?(object.category_id)
+    end
+
+    def include_can_have_answer?
+      SiteSetting.empty_box_on_unsolved
+    end
   end
 
-  class ::SearchTopicListItemSerializer
-    include TopicAnswerMixin
-  end
+  class ::ListableTopicSerializer
+    attributes :has_accepted_answer, :can_have_answer
 
-  class ::SuggestedTopicSerializer
-    include TopicAnswerMixin
-  end
+    def has_accepted_answer
+      object.custom_fields["accepted_answer_post_id"] ? true : false
+    end
 
-  class ::CategoryDetailedSerializer
-    include TopicAnswerMixin
-  end
+    def can_have_answer
+      return true if SiteSetting.allow_solved_on_all_topics
+      return false if object.closed || object.archived
+      return scope.allow_accepted_answers_on_category?(object.category_id)
+    end
 
-  class ::UserSummarySerializer::TopicSerializer
-    include TopicAnswerMixin
+    def include_can_have_answer?
+      SiteSetting.empty_box_on_unsolved
+    end
   end
 
   TopicList.preloaded_custom_fields << "accepted_answer_post_id" if TopicList.respond_to? :preloaded_custom_fields
