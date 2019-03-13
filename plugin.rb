@@ -498,7 +498,6 @@ SQL
   require_dependency 'topic_list_item_serializer'
   require_dependency 'search_topic_list_item_serializer'
   require_dependency 'suggested_topic_serializer'
-  require_dependency 'category_detailed_serializer'
   require_dependency 'user_summary_serializer'
 
   class ::TopicListItemSerializer
@@ -510,10 +509,6 @@ SQL
   end
 
   class ::SuggestedTopicSerializer
-    include TopicAnswerMixin
-  end
-
-  class ::CategoryDetailedSerializer
     include TopicAnswerMixin
   end
 
