@@ -324,6 +324,19 @@ SQL
     end
   end
 
+  require_dependency 'basic_category_serializer'
+  class ::BasicCategorySerializer
+    attributes :custom_fields
+
+    def custom_fields
+      object.custom_fields.slice("enable_accepted_answers")
+    end
+
+    def include_custom_fields?
+      custom_fields.present?
+    end
+  end
+
   require_dependency 'topic_view_serializer'
   class ::TopicViewSerializer
     attributes :accepted_answer

@@ -16,3 +16,6 @@ plugins:
     client: false
   solved_topics_auto_close_hours:
     default: 0
+  show_filter_by_solved_status:
+    default: false
+    client: true
