@@ -123,7 +123,7 @@ function initializeWithApi(api) {
           const hasExcerpt = !!topic.get("accepted_answer").excerpt;
 
           const withExcerpt = `
-            <aside class='quote' data-post="${
+            <aside class='quote accepted-answer' data-post="${
               topic.get("accepted_answer").post_number
             }" data-topic="${topic.get("id")}">
               <div class='title'>
@@ -137,7 +137,7 @@ function initializeWithApi(api) {
             </aside>`;
 
           const withoutExcerpt = `
-            <aside class='quote'>
+            <aside class='quote accepted-answer'>
               <div class='title title-only'>
                 ${topic.get("acceptedAnswerHtml")}
               </div>
