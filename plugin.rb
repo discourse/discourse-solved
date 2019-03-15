@@ -329,11 +329,23 @@ SQL
     attributes :custom_fields
 
     def custom_fields
-      object.custom_fields.slice("enable_accepted_answers")
+      object.custom_fields
     end
 
     def include_custom_fields?
-      custom_fields.present?
+      SiteSetting.show_filter_by_solved_status && custom_fields.present?
+    end
+  end
+
+  require_dependency 'site'
+  class ::Site
+    alias_method :discourse_categories, :categories
+
+    def categories
+      @categories ||= begin
+        Category.preload_custom_fields(discourse_categories, ["enable_accepted_answers"]) if SiteSetting.show_filter_by_solved_status
+        discourse_categories
+      end
     end
   end
 
