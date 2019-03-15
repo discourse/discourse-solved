@@ -333,7 +333,7 @@ SQL
     end
 
     def include_custom_fields?
-      SiteSetting.show_filter_by_solved_status && custom_fields.present?
+      object.custom_field_preloaded?("enable_accepted_answers") && SiteSetting.show_filter_by_solved_status && custom_fields.present?
     end
   end
 
