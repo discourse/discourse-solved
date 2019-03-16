@@ -324,31 +324,6 @@ SQL
     end
   end
 
-  require_dependency 'basic_category_serializer'
-  class ::BasicCategorySerializer
-    attributes :custom_fields
-
-    def custom_fields
-      object.custom_fields
-    end
-
-    def include_custom_fields?
-      object.custom_field_preloaded?("enable_accepted_answers") && SiteSetting.show_filter_by_solved_status && custom_fields.present?
-    end
-  end
-
-  require_dependency 'site'
-  class ::Site
-    alias_method :discourse_categories, :categories
-
-    def categories
-      @categories ||= begin
-        Category.preload_custom_fields(discourse_categories, ["enable_accepted_answers"]) if SiteSetting.show_filter_by_solved_status
-        discourse_categories
-      end
-    end
-  end
-
   require_dependency 'topic_view_serializer'
   class ::TopicViewSerializer
     attributes :accepted_answer
@@ -529,6 +504,7 @@ SQL
   end
 
   TopicList.preloaded_custom_fields << "accepted_answer_post_id" if TopicList.respond_to? :preloaded_custom_fields
+  Site.preloaded_category_custom_fields << "enable_accepted_answers" if Site.respond_to? :preloaded_category_custom_fields
 
   if CategoryList.respond_to?(:preloaded_topic_custom_fields)
     CategoryList.preloaded_topic_custom_fields << "accepted_answer_post_id"
