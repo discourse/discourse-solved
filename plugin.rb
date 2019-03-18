@@ -73,8 +73,8 @@ SQL
 
     AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD = "solved_auto_close_topic_timer_id".freeze
 
-    def self.accept_answer!(post, acting_user)
-      topic = post.topic
+    def self.accept_answer!(post, acting_user, topic: nil)
+      topic ||= post.topic
       accepted_id = topic.custom_fields["accepted_answer_post_id"].to_i
 
       if accepted_id > 0
@@ -140,10 +140,10 @@ SQL
       DiscourseEvent.trigger(:accepted_solution, post)
     end
 
-    def self.unaccept_answer!(post)
+    def self.unaccept_answer!(post, topic: nil)
+      topic ||= post.topic
       post.custom_fields["is_accepted_answer"] = nil
-      post.topic.custom_fields["accepted_answer_post_id"] = nil
-      topic = post.topic
+      topic.custom_fields["accepted_answer_post_id"] = nil
 
       if timer_id = topic.custom_fields[AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD]
         topic_timer = TopicTimer.find_by(id: timer_id)
@@ -183,9 +183,13 @@ SQL
       limit_accepts
 
       post = Post.find(params[:id].to_i)
-      guardian.ensure_can_accept_answer!(post.topic)
 
-      DiscourseSolved.accept_answer!(post, current_user)
+      topic = post.topic
+      topic ||= Topic.with_deleted.find(post.topic_id) if guardian.is_staff?
+
+      guardian.ensure_can_accept_answer!(topic)
+
+      DiscourseSolved.accept_answer!(post, current_user, topic: topic)
 
       render json: success_json
     end
@@ -195,9 +199,13 @@ SQL
       limit_accepts
 
       post = Post.find(params[:id].to_i)
-      guardian.ensure_can_accept_answer!(post.topic)
 
-      DiscourseSolved.unaccept_answer!(post)
+      topic = post.topic
+      topic ||= Topic.with_deleted.find(post.topic_id) if guardian.is_staff?
+
+      guardian.ensure_can_accept_answer!(topic)
+
+      DiscourseSolved.unaccept_answer!(post, topic: topic)
       render json: success_json
     end
 
@@ -399,7 +407,7 @@ SQL
     end
 
     def can_accept_answer?(topic)
-      allow_accepted_answers_on_category?(topic.category_id) && (
+      topic && allow_accepted_answers_on_category?(topic.category_id) && (
         is_staff? || (
           authenticated? && ((!topic.closed? && topic.user_id == current_user.id) ||
                             (current_user.trust_level >= SiteSetting.accept_all_solutions_trust_level))

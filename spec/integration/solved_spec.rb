@@ -74,6 +74,20 @@ RSpec.describe "Managing Posts solved status" do
       expect(topic.public_topic_timer).to eq(nil)
       expect(topic.closed).to eq(true)
     end
+
+    it 'works with staff and trashed topics' do
+      topic.trash!(Discourse.system_user)
+
+      post "/solution/accept.json", params: { id: p1.id }
+      expect(response.status).to eq(403)
+
+      sign_in(Fabricate(:admin))
+      post "/solution/accept.json", params: { id: p1.id }
+      expect(response.status).to eq(200)
+
+      p1.reload
+      expect(p1.custom_fields["is_accepted_answer"]).to eq("true")
+    end
   end
 
   describe '#unaccept' do

@@ -20,5 +20,5 @@ describe TopicAnswerMixin do
       json = serializer.new(topic, scope: guardian, root: false).as_json
       expect(json[:has_accepted_answer]).to be_truthy
     end
-  end  
+  end
 end
