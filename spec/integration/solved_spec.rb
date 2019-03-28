@@ -56,7 +56,7 @@ RSpec.describe "Managing Posts solved status" do
       ].to_i).to eq(topic.public_topic_timer.id)
 
       expect(topic.public_topic_timer.execute_at)
-        .to eq(Time.zone.now + 2.hours)
+        .to eq_time(Time.zone.now + 2.hours)
 
       expect(topic.public_topic_timer.based_on_last_post).to eq(true)
     end
