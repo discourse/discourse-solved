@@ -290,8 +290,6 @@ SQL
   end
 
   if Report.respond_to?(:add_report)
-    AdminDashboardData::GLOBAL_REPORTS << "accepted_solutions"
-
     Report.add_report("accepted_solutions") do |report|
       report.data = []
       accepted_solutions = TopicCustomField.where(name: "accepted_answer_post_id")
