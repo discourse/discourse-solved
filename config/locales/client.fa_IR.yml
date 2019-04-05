@@ -14,7 +14,6 @@ fa_IR:
     solved:
       title: "حل شده"
       allow_accepted_answers: "به صاحب عنوان و مدیران اجازه انتخاب یک پاسخ را به عنوان راه حل بده."
-      has_accepted_answer: "این موضوع راه حلی دارد"
       has_no_accepted_answer: "این موضوع هیچ راه حلی ندارد"
       accepted_answer: "راه حل مورد قبول"
       solution: "راه حل"

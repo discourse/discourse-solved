@@ -14,7 +14,6 @@ he:
     solved:
       title: "נפתר"
       allow_accepted_answers: "אפשר למשתמשים לאשר תשובות"
-      has_accepted_answer: "נושא זה נפתר"
       has_no_accepted_answer: "לנושא הזה אין פתרון"
       accepted_answer: "קבל תשובה"
       solution: "פתרון"

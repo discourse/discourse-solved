@@ -14,7 +14,6 @@ zh_TW:
     solved:
       title: "已解決"
       allow_accepted_answers: "允許主題擁有者與管理員標示回覆為解決方式"
-      has_accepted_answer: "這個主題有解決方式"
       has_no_accepted_answer: "這個主題沒有解決方式"
       accepted_answer: "解決方式"
       solution: "解決方式"

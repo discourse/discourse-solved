@@ -15,7 +15,6 @@ fi:
       title: "Ratkaisemat"
       allow_accepted_answers: "Salli aiheen omistajan ja henkilökunnan merkitä viesti ratkaisuksi"
       accept_answer: "Valitse, tämä vastaus ratkaisee ongelman"
-      has_accepted_answer: "Tämä aihe on ratkaistu"
       has_no_accepted_answer: "Tähän aiheeseen ei ole ratkaisua"
       unaccept_answer: "Kumoa valinta, tämä vastaus ei enää ratkaise ongelmaa"
       accepted_answer: "Ratkaisu"

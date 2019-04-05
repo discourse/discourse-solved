@@ -15,7 +15,6 @@ ar:
       title: "تم الحل"
       allow_accepted_answers: "السماح لصاحب الموضوع وفريق العمل الرد كـحل للموضوع"
       accept_answer: "اختر إن كان هذا الرد يحل المشكلة"
-      has_accepted_answer: "هذا الموضوع فيه الحل"
       has_no_accepted_answer: "لا يوجد حل بخصوص هذا الموضوع"
       unaccept_answer: "احذف الاختيار إن كان هذا الرد لا يحل المشكلة الآن"
       accepted_answer: "الحل"

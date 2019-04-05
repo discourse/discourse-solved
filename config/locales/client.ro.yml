@@ -15,7 +15,6 @@ ro:
       title: "Rezolvat"
       allow_accepted_answers: "Permiteți inițiatorului subiectului și personalului să marcheze un răspuns ca soluție"
       accept_answer: "Selectați acest mesaj dacă rezolvă problema"
-      has_accepted_answer: "Acest subiect are o soluție"
       has_no_accepted_answer: "Acest subiect nu are soluție"
       unaccept_answer: "Deselectați dacă nu mai rezolvă problema"
       accepted_answer: "Soluție"

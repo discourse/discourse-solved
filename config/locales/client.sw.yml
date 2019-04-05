@@ -15,7 +15,6 @@ sw:
       title: "Imetatuliwa"
       allow_accepted_answers: "Ruhusu Muanzilishi wa Mada na Wasaidizi kuchagua jibu kama Suluhisho"
       accept_answer: "Chagua kama jibu limetatua tatizo"
-      has_accepted_answer: "Hii mada ina suluhisho"
       has_no_accepted_answer: "Hii mada haina suluhisho"
       unaccept_answer: "Ondoa chaguo kama jibu halijatatua tatizo"
       accepted_answer: "Jibu"

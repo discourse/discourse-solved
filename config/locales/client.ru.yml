@@ -15,7 +15,6 @@ ru:
       title: "Решение"
       allow_accepted_answers: "Разрешить ответы"
       accept_answer: "Выберите, если этот ответ решает проблему"
-      has_accepted_answer: "В этой теме есть ответ"
       has_no_accepted_answer: "Эта тема не имеет решения"
       unaccept_answer: "Отмените выбор, если этот ответ больше не решает проблему"
       accepted_answer: "Подтвержденный ответ"

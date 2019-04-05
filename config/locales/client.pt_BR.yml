@@ -13,10 +13,21 @@ pt_BR:
           accepted_notification: "aceito"
     solved:
       title: "Resolvido"
-      allow_accepted_answers: "Permitir que o criador do tópico e a equipe marquem uma resposta como a solução"
+      allow_accepted_answers: "Permitir que o proprietário do tópico e a staff marquem uma resposta como a solução"
       accept_answer: "Selecione se esta resposta resolve o problema"
-      has_accepted_answer: "Este tópico tem uma solução"
       has_no_accepted_answer: "Este tópico não tem solução"
-      unaccept_answer: "Desmarque se esta resposta não resolver mais o problema"
+      unaccept_answer: "Desmarque se esta resposta não resolve mais o problema"
       accepted_answer: "Solução"
       solution: "Solução"
+      solution_summary:
+        one: "solução"
+        other: "soluções"
+      accepted_html: "{{icon}} Resolvido <span class='by'>por <a href data-user-card='{{username_lower}}'>{{username}}</a></span> na <a href='{{post_path}}' class='back'>postagem #{{post_number}}</a>"
+      accepted_notification: "<p><span>{{username}}</span> {{description}}</p>"
+      topic_status_filter:
+        all: "todos"
+        solved: "resolvidos"
+        unsolved: "não resolvidos"
+    topic_statuses:
+      solved:
+        help: "Este tópico tem uma solução"

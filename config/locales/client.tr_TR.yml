@@ -15,7 +15,6 @@ tr_TR:
       title: "Çözülmüş"
       allow_accepted_answers: "Konu sahibi kullanıcılar ve yöneticiler gönderileri çözüm olarak seçebilsinler mi?"
       accept_answer: "Bu cevabın sorunu çözüp çözmediğini seçin"
-      has_accepted_answer: "Bu konunun bir çözümü var"
       has_no_accepted_answer: "Bu konu çözüme sahip değil"
       unaccept_answer: "Bu cevab eğer sorunu çözmediyse seçimini kaldırın"
       accepted_answer: "Çözüm"

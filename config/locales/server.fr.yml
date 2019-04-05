@@ -13,6 +13,7 @@ fr:
     empty_box_on_unsolved: "Afficher une coche vide à côté des sujets non résolus"
     solved_quote_length: "Nombre de caractères à citer lors de l'affichage de la solution sous le premier post"
     solved_topics_auto_close_hours: "Fermer automatiquement le sujet (n) heures après la dernière réponse, une fois que le sujet a été marqué comme résolu"
+    show_filter_by_solved_status: "Afficher une liste déroulante pour filtrer les sujets par état de résolution."
   reports:
     accepted_solutions:
       title: "Solutions acceptées"

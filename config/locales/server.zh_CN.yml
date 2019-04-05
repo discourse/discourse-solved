@@ -13,6 +13,7 @@ zh_CN:
     empty_box_on_unsolved: "在未解决主题旁显示一个空框"
     solved_quote_length: "在第一个帖子下显示解决方案时引用的字符数目"
     solved_topics_auto_close_hours: "若主题标记为已解决，在最后回复 (n) 小时后自动关闭主题"
+    show_filter_by_solved_status: "按照问题的解决状态来显示下拉列表以筛选主题。"
   reports:
     accepted_solutions:
       title: "接受的解决方案"

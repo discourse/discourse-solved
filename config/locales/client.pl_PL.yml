@@ -15,7 +15,6 @@ pl_PL:
       title: "Rozwiązany"
       allow_accepted_answers: "Pozwól użytkownikom na akceptowanie rozwiązań"
       accept_answer: "Zaznacz, jeśli ta odpowiedź rozwiązuje Twój problem"
-      has_accepted_answer: "Ten temat ma zaakceptowane rozwiązanie"
       has_no_accepted_answer: "Ten temat nie ma rozwiązania"
       unaccept_answer: "Odznacz jeśli ta odpowiedź nie rozwiązuje już problemu"
       accepted_answer: "Zaakceptowana odpowiedź"

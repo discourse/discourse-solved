@@ -15,7 +15,6 @@ cs:
       title: "Vyřešeno"
       allow_accepted_answers: "Povolit vlastníkovi tématu a správcům označit odpověď jako řešení"
       accept_answer: "Tato odpověď je řešením problému"
-      has_accepted_answer: "Toto téma má řešení"
       has_no_accepted_answer: "Toto téma nemá žádné řešení"
       unaccept_answer: "Tato odpověď již neřeší tento problém"
       accepted_answer: "Řešení"

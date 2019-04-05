@@ -15,7 +15,6 @@ sl:
       title: "Rešeno"
       allow_accepted_answers: "Dovolite lastniku teme in osebju, da označi odgovor kot rešitev"
       accept_answer: "Izberite, če ta odgovor reši problem"
-      has_accepted_answer: "Ta tema ima rešitev"
       has_no_accepted_answer: "Ta tema nima rešitve"
       unaccept_answer: "Odstrani izbor, če ta odgovor več ne reši problema"
       accepted_answer: "Rešitev"

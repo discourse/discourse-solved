@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/discourse/translations-manager.git
-  revision: 263dc4b189629c748229b3c2564e1d1fac0a84a7
+  revision: ecddec65f6a45d678b7db45045d712106d7a69d8
   specs:
     translations-manager (0.4)
 

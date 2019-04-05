@@ -13,6 +13,7 @@ es:
     empty_box_on_unsolved: "Mostrar una caja vacía al lado de los temas sin solución"
     solved_quote_length: "Número de caracteres a citar cuando muestra la solución debajo del primer post"
     solved_topics_auto_close_hours: "Cerrar automáticamente el tema (n) horas después de la última respuesta, y que el tema haya sido marcado como solucionado"
+    show_filter_by_solved_status: "Muestra un menú desplegable para filtrar una lista de temas por estado resuelto."
   reports:
     accepted_solutions:
       title: "Soluciones aceptadas"

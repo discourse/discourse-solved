@@ -13,7 +13,6 @@ et:
           accepted_notification: "aktsepteeritud"
     solved:
       title: "Lahendatud"
-      has_accepted_answer: "ellel teemal on lahendus"
       has_no_accepted_answer: "Sellel teemal pole lahendust"
       accepted_answer: "Lahendus"
       solution: "Lahendus"

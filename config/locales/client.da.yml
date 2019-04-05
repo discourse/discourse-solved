@@ -9,6 +9,5 @@ da:
   js:
     solved:
       allow_accepted_answers: "Tillad ejer af emne og stab at markere svar som en løsning"
-      has_accepted_answer: "Dette svar har en løsning"
       accepted_answer: "Løsning"
       solution: "Løsning"

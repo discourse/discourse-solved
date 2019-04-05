@@ -15,7 +15,6 @@ ur:
       title: "حل شدہ"
       allow_accepted_answers: "ٹاپک کے مالک اور اسٹاف کو حل کے طور پر ایک جواب کو نشان زد کرنے کی اجازت دیں"
       accept_answer: "منتخب کریں اگر یہ جواب مسئلہ کو حل کردیتا ہے"
-      has_accepted_answer: "اِس ٹاپک کا حل ہے"
       has_no_accepted_answer: "اِس ٹاپک کا کوئی حل نہیں ہے"
       unaccept_answer: "غیر منتخب کریں اگر یہ جواب اب مسئلہ کو حل نہیں کرتا"
       accepted_answer: "حل"

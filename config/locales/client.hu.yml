@@ -15,7 +15,6 @@ hu:
       title: "Megoldva"
       allow_accepted_answers: "Engedélyezi a téma tulajdonosának és a személyzetnek, hogy megjelöljenek egy bejegyzést mint megoldás"
       accept_answer: "Válaszd ki, ha ez a válasz megoldotta a problémát"
-      has_accepted_answer: "Ez a téma tartalmaz egy megoldást"
       has_no_accepted_answer: "Ez a téma nem tartalmaz megoldást"
       unaccept_answer: "Válaszd ki ha ez a válasz már nem oldja meg a problémát"
       accepted_answer: "Megoldás"
