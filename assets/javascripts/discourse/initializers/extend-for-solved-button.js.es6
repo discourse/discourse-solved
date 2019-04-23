@@ -67,7 +67,7 @@ function initializeWithApi(api) {
 
   TopicStatusIcons.addObject([
     "has_accepted_answer",
-    "check-square-o",
+    "far-check-square",
     "solved"
   ]);
 
@@ -92,7 +92,7 @@ function initializeWithApi(api) {
     if (canAccept) {
       return {
         action: "acceptAnswer",
-        icon: "check-square-o",
+        icon: "far-check-square",
         className: "unaccepted",
         title: "solved.accept_answer",
         position
@@ -227,7 +227,7 @@ export default {
             openTag: "span",
             closeTag: "span",
             title: I18n.t("topic_statuses.solved.help"),
-            icon: "check-square-o"
+            icon: "far-check-square"
           });
         } else if (
           this.topic.can_have_answer &&
