@@ -292,8 +292,21 @@ SQL
   if Report.respond_to?(:add_report)
     Report.add_report("accepted_solutions") do |report|
       report.data = []
+
       accepted_solutions = TopicCustomField.where(name: "accepted_answer_post_id")
-      accepted_solutions = accepted_solutions.joins(:topic).where("topics.category_id = ?", report.category_id) if report.category_id
+
+      if report.respond_to?(:add_filter)
+        category_filter = report.filters.dig(:category)
+        report.add_filter('category', default: category_filter)
+        if category_filter
+          accepted_solutions = accepted_solutions.joins(:topic).where("topics.category_id = ?", category_filter)
+        end
+      else
+        if report.category_id
+          accepted_solutions = accepted_solutions.joins(:topic).where("topics.category_id = ?", report.category_id)
+        end
+      end
+
       accepted_solutions.where("topic_custom_fields.created_at >= ?", report.start_date)
         .where("topic_custom_fields.created_at <= ?", report.end_date)
         .group("DATE(topic_custom_fields.created_at)")
