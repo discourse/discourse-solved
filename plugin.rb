@@ -15,6 +15,7 @@ end
 PLUGIN_NAME = "discourse_solved".freeze
 
 register_asset 'stylesheets/solutions.scss'
+register_asset 'stylesheets/mobile/solutions.scss', :mobile
 
 after_initialize do
 
