@@ -522,6 +522,10 @@ SQL
     include TopicAnswerMixin
   end
 
+  class ::ListableTopicSerializer
+    include TopicAnswerMixin
+  end
+
   TopicList.preloaded_custom_fields << "accepted_answer_post_id" if TopicList.respond_to? :preloaded_custom_fields
   Site.preloaded_category_custom_fields << "enable_accepted_answers" if Site.respond_to? :preloaded_category_custom_fields
   Search.preloaded_topic_custom_fields << "accepted_answer_post_id" if Search.respond_to? :preloaded_topic_custom_fields
