@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # name: discourse-solved
 # about: Add a solved button to answers on Discourse
 # version: 0.1
