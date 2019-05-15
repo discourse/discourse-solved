@@ -1,4 +1,3 @@
-.solved-panel,
 .post-controls .accepted,
 .fa.accepted,
 .accepted-text {
@@ -8,9 +7,61 @@
   }
 }
 
+.topic-body {
+  .solved-container {
+    display: flex;
+
+    .btn {
+      background-color: blend-primary-secondary(5%);
+      padding: 1em;
+    }
+  }
+
+  .solve,
+  .solved {
+    text-align: center;
+
+    .d-icon {
+      margin-right: 0.5em;
+    }
+  }
+
+  .solved {
+    color: green;
+    flex: 1;
+
+    &.btn .d-icon {
+      color: green;
+    }
+  }
+
+  .solve {
+    flex: 2;
+  }
+}
+
+.post-controls button.accepted {
+  &:hover {
+    background: none;
+    cursor: auto;
+  }
+
+  &:active {
+    box-shadow: none;
+  }
+
+  &.btn-flat:hover .d-icon {
+    color: green;
+  }
+}
+
+.post-controls .unaccepted {
+  color: dark-light-choose($primary-low-mid, $secondary-high);
+}
+
 .post-controls span:not(.d-button-label) {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
 }
 
 .post-controls .accepted-text {
@@ -18,29 +69,6 @@
   font-size: inherit;
   margin-right: -3px;
   z-index: 2;
-}
-
-// you can style accepted answers however your want
-.quote.accepted-answer {
-  //  background-color: #E9FFE0;
-}
-
-.mobile-view .solved-panel {
-  margin-bottom: 15px;
-}
-
-.solved-panel {
-  .by {
-    display: none;
-  }
-
-  margin-top: 20px;
-  margin-bottom: 0px;
-  font-size: 13px;
-  // margin-bottom: 0px;
-  // padding: 4px 0px;
-  //border-top: 1px solid #ddd;
-  //background-color: #E9FFE0;
 }
 
 aside.quote .title.title-only {
