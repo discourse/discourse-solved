@@ -11,3 +11,6 @@ id:
       alt:
         solved:
           accepted_notification: "Diterima"
+    solved:
+      topic_status_filter:
+        all: "Semua"

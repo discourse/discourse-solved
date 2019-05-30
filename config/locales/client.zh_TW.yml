@@ -17,3 +17,8 @@ zh_TW:
       has_no_accepted_answer: "這個主題沒有解決方式"
       accepted_answer: "解決方式"
       solution: "解決方式"
+      topic_status_filter:
+        all: "全部"
+    topic_statuses:
+      solved:
+        help: "這個主題有解決方式"

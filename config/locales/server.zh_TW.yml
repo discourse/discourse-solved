@@ -5,4 +5,8 @@
 # To work with us on translations, join this project:
 # https://www.transifex.com/projects/p/discourse-org/
 
-zh_TW: {}
+zh_TW:
+  reports:
+    accepted_solutions:
+      xaxis: "天"
+      yaxis: "總計"

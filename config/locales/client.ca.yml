@@ -15,3 +15,5 @@ ca:
       title: "Solucionat"
       accepted_answer: "Solució"
       solution: "Solució"
+      topic_status_filter:
+        all: "tots"

@@ -13,3 +13,5 @@ lt:
           accepted_notification: "patvirtinta"
     solved:
       title: "Išspresta"
+      topic_status_filter:
+        all: "visi"

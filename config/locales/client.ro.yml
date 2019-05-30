@@ -19,3 +19,8 @@ ro:
       unaccept_answer: "Deselectați dacă nu mai rezolvă problema"
       accepted_answer: "Soluție"
       solution: "Soluție"
+      topic_status_filter:
+        all: "tot"
+    topic_statuses:
+      solved:
+        help: "Acest subiect are o soluție"

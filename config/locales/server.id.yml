@@ -8,3 +8,7 @@
 id:
   site_settings:
     solved_enabled: "Aktifkan plugin yang terpecahkan, inzinkan pengguna memilih solusi untuk topik"
+  reports:
+    accepted_solutions:
+      xaxis: "Hari"
+      yaxis: "Total"

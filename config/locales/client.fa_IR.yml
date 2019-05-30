@@ -18,3 +18,8 @@ fa_IR:
       accepted_answer: "راه حل مورد قبول"
       solution: "راه حل"
       accepted_html: "{{icon}}<span class='by'>توسط<a href data-user-card='{{username_lower}}'>{{username}}</a></span> در <a href='{{post_path}}' class='back'>پست {{post_number}}</a>حل شد. "
+      topic_status_filter:
+        all: "همه"
+    topic_statuses:
+      solved:
+        help: "این موضوع راه حلی دارد"

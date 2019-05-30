@@ -7,9 +7,13 @@
 
 nl:
   site_settings:
-    solved_enabled: "Schakel solved plugin in, stelt gebruikers in staat om oplossing voor hun topics te selecteren"
-    allow_solved_on_all_topics: "Sta gebruikers toe om oplossen te selecteren voor alle topics (standaard controleer je deze setting bij het opzetten van de categorieën)"
-    empty_box_on_unsolved: "Toon een lege checkbox bij onopgeloste topics"
+    solved_enabled: "Solved-plug-in inschakelen, gebruikers kunnen oplossingen voor topics selecteren"
+    allow_solved_on_all_topics: "Gebruikers mogen oplossingen selecteren bij alle topics (standaard bepaalt u dit door categorieën te bewerken)"
+    accept_all_solutions_trust_level: "Minimale vertrouwensniveau dat nodig is om oplossingen bij alle topics te accepteren (zelfs wanneer geen OP)"
+    empty_box_on_unsolved: "Een leeg vakje naast onopgeloste topics weergeven"
+    solved_quote_length: "Aantal te citeren tekens bij weergeven van de oplossing onder het eerste bericht"
+    solved_topics_auto_close_hours: "Topic (n) uur na het laatste antwoord automatisch sluiten zodra het topic als opgelost is gemarkeerd"
+    show_filter_by_solved_status: "Een vervolgkeuzelijst tonen om een topic op oplossingsstatus te filteren."
   reports:
     accepted_solutions:
       title: "Geaccepteerde oplossingen"
@@ -17,5 +21,5 @@ nl:
       yaxis: "Totaal"
   solved:
     no_solutions:
-      self: "Je hebt nog geen geaccepteerde oplossingen."
+      self: "U hebt nog geen geaccepteerde oplossingen."
       others: "Geen geaccepteerde oplossingen."

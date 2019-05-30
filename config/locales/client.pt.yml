@@ -11,3 +11,8 @@ pt:
       allow_accepted_answers: "Permitir que o autor do tópico e a equipa marquem uma resposta como solução"
       accepted_answer: "Solução"
       solution: "Solução"
+      topic_status_filter:
+        all: "todos"
+    topic_statuses:
+      solved:
+        help: "Este tópico tem uma solução"

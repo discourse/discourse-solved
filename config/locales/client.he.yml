@@ -14,6 +14,22 @@ he:
     solved:
       title: "נפתר"
       allow_accepted_answers: "אפשר למשתמשים לאשר תשובות"
+      accept_answer: "יש לבחור בזה אם התגובה הזאת פותרת את הבעיה"
       has_no_accepted_answer: "לנושא הזה אין פתרון"
-      accepted_answer: "קבל תשובה"
+      unaccept_answer: "יש לבטל את הסימון אם התגובה הזו אינה פותרת עוד את הבעיה."
+      accepted_answer: "פתרון"
       solution: "פתרון"
+      solution_summary:
+        one: "פתרון"
+        two: "פתרונות"
+        many: "פתרונות"
+        other: "פתרונות"
+      accepted_html: "{{icon}} נפתר <span class='by'>על ידי <a href data-user-card='{{username_lower}}'>{{username}}</a></span> ב<a href='{{post_path}}' class='back'>פוסט מס׳ {{post_number}}</a>"
+      accepted_notification: "<p><span>{{username}}</span> {{description}}</p>"
+      topic_status_filter:
+        all: "הכול"
+        solved: "נפתר"
+        unsolved: "בלתי פתור"
+    topic_statuses:
+      solved:
+        help: "נושא זה נפתר"

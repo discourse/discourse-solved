@@ -19,3 +19,8 @@ nb_NO:
       unaccept_answer: "Fravelg dette hvis svaret ikke lenger løser problemet"
       accepted_answer: "Løsning"
       solution: "Løsning"
+      topic_status_filter:
+        all: "alle"
+    topic_statuses:
+      solved:
+        help: "Dette emnet har en løsning"

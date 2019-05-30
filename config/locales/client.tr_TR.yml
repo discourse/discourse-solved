@@ -19,3 +19,8 @@ tr_TR:
       unaccept_answer: "Bu cevab eğer sorunu çözmediyse seçimini kaldırın"
       accepted_answer: "Çözüm"
       solution: "Çözüm"
+      topic_status_filter:
+        all: "tüm"
+    topic_statuses:
+      solved:
+        help: "Bu konunun bir çözümü var"

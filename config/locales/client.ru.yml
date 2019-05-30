@@ -24,3 +24,8 @@ ru:
         few: "Подтвержденных ответов"
         many: "Подтвержденных ответов"
         other: "Подтвержденных ответов"
+      topic_status_filter:
+        all: "все"
+    topic_statuses:
+      solved:
+        help: "В этой теме есть ответ"

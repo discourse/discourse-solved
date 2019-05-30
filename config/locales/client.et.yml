@@ -16,3 +16,8 @@ et:
       has_no_accepted_answer: "Sellel teemal pole lahendust"
       accepted_answer: "Lahendus"
       solution: "Lahendus"
+      topic_status_filter:
+        all: "kõik"
+    topic_statuses:
+      solved:
+        help: "ellel teemal on lahendus"

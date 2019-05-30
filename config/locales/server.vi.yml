@@ -5,4 +5,8 @@
 # To work with us on translations, join this project:
 # https://www.transifex.com/projects/p/discourse-org/
 
-vi: {}
+vi:
+  reports:
+    accepted_solutions:
+      xaxis: "Ngày"
+      yaxis: "Tổng số"

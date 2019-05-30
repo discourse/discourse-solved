@@ -13,3 +13,5 @@ vi:
           accepted_notification: "đã chấp nhận"
     solved:
       title: "Đã xử lý"
+      topic_status_filter:
+        all: "Tất cả"

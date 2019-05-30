@@ -13,6 +13,7 @@ it:
     empty_box_on_unsolved: "Mostra una casella vuota accanto agli argomenti non risolti"
     solved_quote_length: "Numero di caratteri da citare quando si visualizza la soluzione sotto il primo messaggio"
     solved_topics_auto_close_hours: "Chiudi automaticamente l'argomento (n) ore dopo l'ultima risposta una volta che l'argomento è stato contrassegnato come risolto"
+    show_filter_by_solved_status: "Mostra una lista a discesa per filtrare una lista di argomenti per stato"
   reports:
     accepted_solutions:
       title: "Soluzioni accettate"

@@ -19,3 +19,8 @@ sw:
       unaccept_answer: "Ondoa chaguo kama jibu halijatatua tatizo"
       accepted_answer: "Jibu"
       solution: "Suluhisho"
+      topic_status_filter:
+        all: "Zote"
+    topic_statuses:
+      solved:
+        help: "Hii mada ina suluhisho"

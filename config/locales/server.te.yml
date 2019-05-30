@@ -5,4 +5,8 @@
 # To work with us on translations, join this project:
 # https://www.transifex.com/projects/p/discourse-org/
 
-te: {}
+te:
+  reports:
+    accepted_solutions:
+      xaxis: "రోజు"
+      yaxis: "మొత్తం"

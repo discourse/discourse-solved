@@ -19,3 +19,8 @@ pl_PL:
       unaccept_answer: "Odznacz jeśli ta odpowiedź nie rozwiązuje już problemu"
       accepted_answer: "Zaakceptowana odpowiedź"
       solution: "Rozwiązanie"
+      topic_status_filter:
+        all: "wszystkie"
+    topic_statuses:
+      solved:
+        help: "Ten temat ma zaakceptowane rozwiązanie"

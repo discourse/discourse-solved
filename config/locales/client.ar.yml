@@ -19,3 +19,8 @@ ar:
       unaccept_answer: "احذف الاختيار إن كان هذا الرد لا يحل المشكلة الآن"
       accepted_answer: "الحل"
       solution: "الحل"
+      topic_status_filter:
+        all: "الكل"
+    topic_statuses:
+      solved:
+        help: "هذا الموضوع فيه الحل"

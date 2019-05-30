@@ -19,3 +19,8 @@ cs:
       unaccept_answer: "Tato odpověď již neřeší tento problém"
       accepted_answer: "Řešení"
       solution: "Řešení"
+      topic_status_filter:
+        all: "vše"
+    topic_statuses:
+      solved:
+        help: "Toto téma má řešení"
