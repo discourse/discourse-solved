@@ -16,6 +16,10 @@ et:
       has_no_accepted_answer: "Sellel teemal pole lahendust"
       accepted_answer: "Lahendus"
       solution: "Lahendus"
+      solution_summary:
+        one: "lahendus"
+        other: "lahendused"
+      accepted_notification: "<p><span>{{username}}</span> {{description}}</p>"
       topic_status_filter:
         all: "kõik"
     topic_statuses:
