@@ -25,8 +25,10 @@ after_initialize do
     '../app/serializers/concerns/topic_answer_mixin.rb'
   ].each { |path| load File.expand_path(path, __FILE__) }
 
+  skip_db = defined?(GlobalSetting.skip_db?) && GlobalSetting.skip_db?
+
   # we got to do a one time upgrade
-  if defined?(UserAction::SOLVED)
+  if !skip_db && defined?(UserAction::SOLVED)
     unless $redis.get('solved_already_upgraded')
       unless UserAction.where(action_type: UserAction::SOLVED).exists?
         Rails.logger.info("Upgrading storage for solved")
