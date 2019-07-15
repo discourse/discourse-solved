@@ -6,7 +6,20 @@
 # https://www.transifex.com/projects/p/discourse-org/
 
 ca:
+  site_settings:
+    solved_enabled: "Activa el connector de resolts. Permet als usuaris seleccionar solucions per als temes."
+    allow_solved_on_all_topics: "Permet als usuaris seleccionar solucions en tots els temes (per defecte, ho controleu editant categories)"
+    accept_all_solutions_trust_level: "Nivell mínim de confiança necessari per a acceptar solucions sobre qualsevol tema (encara que no sigui OP)"
+    empty_box_on_unsolved: "Mostra un quadre buit al costat dels temes no resolts"
+    solved_quote_length: "Nombre de caràcters que se citen quan es mostri la solució sota la primera publicació"
+    solved_topics_auto_close_hours: "Tanca automàticament el tema (n) hores després de la darrera resposta una vegada el tema s'hagi marcat com a resolt."
+    show_filter_by_solved_status: "Mostra un menú desplegable per a filtrar una llista de temes per estat de resolució."
   reports:
     accepted_solutions:
+      title: "Solucions acceptades"
       xaxis: "Dia"
       yaxis: "Total"
+  solved:
+    no_solutions:
+      self: "Encara no teniu solucions acceptades."
+      others: "No hi ha solucions acceptades."

@@ -19,8 +19,17 @@ pl_PL:
       unaccept_answer: "Odznacz jeśli ta odpowiedź nie rozwiązuje już problemu"
       accepted_answer: "Zaakceptowana odpowiedź"
       solution: "Rozwiązanie"
+      solution_summary:
+        one: "rozwiązanie"
+        few: "rozwiązania"
+        many: "rozwiązania"
+        other: "rozwiązania"
+      accepted_html: "{{icon}}rozwiązane <span class='by'> przez <a href data-user-card='{{username_lower}}'>{{username}}</a></span> we <a href='{{post_path}}' class='back'>wpisie #{{post_number}}</a>"
+      accepted_notification: "<p><span>{{username}}</span>{{description}}</p>"
       topic_status_filter:
         all: "wszystkie"
+        solved: "rozwiązano"
+        unsolved: "nierozwiązano"
     topic_statuses:
       solved:
         help: "Ten temat ma zaakceptowane rozwiązanie"
