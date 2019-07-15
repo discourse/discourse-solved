@@ -62,8 +62,9 @@ function acceptPost(post) {
   }).catch(popupAjaxError);
 }
 
-function initializeWithApi(api) {
+function initializeWithApi(api, container) {
   const currentUser = api.getCurrentUser();
+  const { mobileView } = container.lookup("site:main");
 
   TopicStatusIcons.addObject([
     "has_accepted_answer",
@@ -82,33 +83,32 @@ function initializeWithApi(api) {
   }
 
   api.addPostMenuButton("solved", attrs => {
-    const canAccept = attrs.can_accept_answer;
-    const canUnaccept = attrs.can_unaccept_answer;
-    const accepted = attrs.accepted_answer;
     const isOp = currentUser && currentUser.id === attrs.topicCreatedById;
     const position =
-      !accepted && canAccept && !isOp ? "second-last-hidden" : "first";
+      !attrs.accepted_answer && attrs.can_accept_answer && !isOp
+        ? "second-last-hidden"
+        : "first";
 
-    if (canAccept) {
+    if (!mobileView && !attrs.accepted_answer && attrs.can_accept_answer) {
       return {
         action: "acceptAnswer",
         icon: "far-check-square",
-        className: "unaccepted",
         title: "solved.accept_answer",
-        position
-      };
-    } else if (canUnaccept || accepted) {
-      const title = canUnaccept
-        ? "solved.unaccept_answer"
-        : "solved.accepted_answer";
-      return {
-        action: "unacceptAnswer",
-        icon: "check-square",
-        title,
-        className: "accepted fade-out",
+        className: "unaccepted",
         position,
-        beforeButton(h) {
-          return h("span.accepted-text", I18n.t("solved.solution"));
+        afterButton(h) {
+          return h("span.unaccepted", I18n.t("solved.mark_as_solution"));
+        }
+      };
+    } else if (attrs.accepted_answer) {
+      return {
+        action: attrs.can_unaccept_answer ? "unacceptAnswer" : "",
+        icon: "check-square",
+        title: "solved.accept_answer",
+        className: "accepted",
+        position: "first",
+        afterButton(h) {
+          return h("span.accepted", I18n.t("solved.solution"));
         }
       };
     }
@@ -155,6 +155,25 @@ function initializeWithApi(api) {
     }
   });
 
+  if (mobileView) {
+    api.decorateWidget("post-contents:after-cooked", dec => {
+      const model = dec.getModel();
+      const result = [];
+      if (!model.accepted_answer && model.can_accept_answer) {
+        result.push(
+          dec.attach("button", {
+            label: "solved.mark_as_solution",
+            title: "solved.mark_as_solution",
+            icon: "far-check-square",
+            action: "acceptAnswer",
+            className: "solve"
+          })
+        );
+      }
+      return dec.h("div.solved-container", result);
+    });
+  }
+
   api.attachWidgetAction("post", "acceptAnswer", function() {
     const post = this.model;
     const current = post.get("topic.postStream.posts").filter(p => {
@@ -197,7 +216,7 @@ function initializeWithApi(api) {
 
 export default {
   name: "extend-for-solved-button",
-  initialize() {
+  initialize(container) {
     Topic.reopen({
       // keeping this here cause there is complex localization
       acceptedAnswerHtml: function() {
@@ -245,12 +264,12 @@ export default {
       }.property()
     });
 
-    withPluginApi("0.1", initializeWithApi);
+    withPluginApi("0.1", api => initializeWithApi(api, container));
 
     withPluginApi("0.8.10", api => {
       api.replaceIcon(
         "notification.solved.accepted_notification",
-        "check-square"
+        "far-check-square"
       );
     });
   }
