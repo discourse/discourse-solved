@@ -1,3 +1,9 @@
 #topic-title .d-icon-far-check-square {
   margin-top: 0.25em;
 }
+
+.accepted {
+  .d-button-label {
+    display: none;
+  }
+}

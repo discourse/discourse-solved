@@ -96,9 +96,7 @@ function initializeWithApi(api, container) {
         title: "solved.accept_answer",
         className: "unaccepted",
         position,
-        afterButton(h) {
-          return h("span.unaccepted", I18n.t("solved.mark_as_solution"));
-        }
+        label: "solved.mark_as_solution"
       };
     } else if (attrs.accepted_answer) {
       return {
@@ -107,9 +105,7 @@ function initializeWithApi(api, container) {
         title: "solved.accept_answer",
         className: "accepted",
         position: "first",
-        afterButton(h) {
-          return h("span.accepted", I18n.t("solved.solution"));
-        }
+        label: "solved.solution"
       };
     }
   });
