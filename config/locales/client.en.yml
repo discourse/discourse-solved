@@ -13,8 +13,6 @@ en:
       unaccept_answer: "Unselect if this reply no longer solves the problem"
       accepted_answer: "Solution"
       solution: "Solution"
-      mark_as_solution: "Mark as solution"
-      unmark_as_solution: "Remove solution mark"
       solution_summary:
         one: "solution"
         other: "solutions"
