@@ -50,15 +50,13 @@
   }
 }
 
-.post-controls {
-  .unaccepted,
-  .accepted {
-    &.btn-icon-text {
-      .d-icon {
-        margin-right: 0.3em;
-      }
-    }
-  }
+.post-controls .unaccepted {
+  color: dark-light-choose($primary-low-mid, $secondary-high);
+}
+
+.post-controls span:not(.d-button-label) {
+  display: inline-flex;
+  align-items: center;
 }
 
 .post-controls .accepted-text {
