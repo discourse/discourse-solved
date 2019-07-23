@@ -1,3 +1,14 @@
 #topic-title .d-icon-far-check-square {
   margin-top: 0.25em;
 }
+
+.topic-post {
+  nav.post-controls {
+    .extra-buttons {
+      button {
+        max-width: unset;
+        white-space: nowrap;
+      }
+    }
+  }
+}

@@ -9,6 +9,7 @@ en:
       title: "Solved"
       allow_accepted_answers: "Allow topic owner and staff to mark a reply as the solution"
       accept_answer: "Select if this reply solves the problem"
+      accepted_description: "This is the accepted solution to this topic"
       has_no_accepted_answer: "This topic has no solution"
       unaccept_answer: "Unselect if this reply no longer solves the problem"
       accepted_answer: "Solution"
