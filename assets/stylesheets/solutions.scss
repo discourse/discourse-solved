@@ -13,11 +13,15 @@
   align-items: baseline;
 }
 
-.post-controls .accepted-text {
-  display: inline-block;
-  font-size: inherit;
-  margin-right: -3px;
-  z-index: 2;
+.post-controls span.accepted-text {
+  padding: 8px 10px;
+  font-size: $font-up-1;
+  span {
+    display: inline-block;
+  }
+  .accepted-label {
+    margin-left: 7px;
+  }
 }
 
 // you can style accepted answers however your want

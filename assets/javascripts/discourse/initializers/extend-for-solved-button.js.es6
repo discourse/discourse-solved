@@ -8,6 +8,7 @@ import { ajax } from "discourse/lib/ajax";
 import PostCooked from "discourse/widgets/post-cooked";
 import { formatUsername } from "discourse/lib/utilities";
 import { iconHTML } from "discourse-common/lib/icon-library";
+import { iconNode } from "discourse-common/lib/icon-library";
 
 function clearAccepted(topic) {
   const posts = topic.get("postStream.posts");
@@ -95,9 +96,10 @@ function initializeWithApi(api) {
         icon: "far-check-square",
         className: "unaccepted",
         title: "solved.accept_answer",
+        label: "solved.solution",
         position
       };
-    } else if (canUnaccept || accepted) {
+    } else if (canUnaccept && accepted) {
       const title = canUnaccept
         ? "solved.unaccept_answer"
         : "solved.accepted_answer";
@@ -107,8 +109,25 @@ function initializeWithApi(api) {
         title,
         className: "accepted fade-out",
         position,
+        label: "solved.solution"
+      };
+    } else if (!canAccept && accepted) {
+      let solutionText = iconHTML("check");
+      return {
+        className: "hidden",
+        disabled: "true",
+        position,
         beforeButton(h) {
-          return h("span.accepted-text", I18n.t("solved.solution"));
+          return h(
+            "span.accepted-text",
+            {
+              title: I18n.t("solved.accepted_description")
+            },
+            [
+              h("span", iconNode("check")),
+              h("span.accepted-label", I18n.t("solved.solution"))
+            ]
+          );
         }
       };
     }
