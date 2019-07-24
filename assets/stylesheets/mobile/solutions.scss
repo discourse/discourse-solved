@@ -10,5 +10,16 @@
         white-space: nowrap;
       }
     }
+    &.expanded {
+      .accepted,
+      .unaccepted {
+        .d-icon {
+          margin: 0;
+        }
+        .d-button-label {
+          display: none;
+        }
+      }
+    }
   }
 }
