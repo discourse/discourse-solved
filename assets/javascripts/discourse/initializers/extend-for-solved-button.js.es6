@@ -112,7 +112,6 @@ function initializeWithApi(api) {
         label: "solved.solution"
       };
     } else if (!canAccept && accepted) {
-      let solutionText = iconHTML("check");
       return {
         className: "hidden",
         disabled: "true",
