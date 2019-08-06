@@ -545,6 +545,7 @@ SQL
           SELECT 1 FROM topic_custom_fields
           WHERE topic_id = topics.id
           AND name = 'accepted_answer_post_id'
+          AND value IS NOT NULL
         )
       SQL
     })
