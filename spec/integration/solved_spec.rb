@@ -13,7 +13,7 @@ RSpec.describe "Managing Posts solved status" do
 
   describe 'auto bump' do
     it 'does not automatically bump solved topics' do
-      category = Fabricate(:category)
+      category = Fabricate(:category_with_definition)
 
       post = create_post(category: category)
       post2 = create_post(category: category)
