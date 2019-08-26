@@ -256,7 +256,7 @@ export default {
             openTag: "span",
             closeTag: "span",
             title: I18n.t("solved.has_no_accepted_answer"),
-            icon: "square-o"
+            icon: "far-square"
           });
         }
         return results;
