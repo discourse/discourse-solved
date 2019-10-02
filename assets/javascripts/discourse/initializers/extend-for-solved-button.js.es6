@@ -14,15 +14,17 @@ function clearAccepted(topic) {
   const posts = topic.get("postStream.posts");
   posts.forEach(post => {
     if (post.get("post_number") > 1) {
-      post.set("accepted_answer", false);
-      post.set("can_accept_answer", true);
-      post.set("can_unaccept_answer", false);
+      post.setProperties({
+        accepted_answer: false,
+        can_accept_answer: true,
+        can_unaccept_answer: false
+      });
     }
   });
 }
 
 function unacceptPost(post) {
-  if (!post.get("can_unaccept_answer")) {
+  if (!post.can_unaccept_answer) {
     return;
   }
   const topic = post.topic;
@@ -36,7 +38,7 @@ function unacceptPost(post) {
 
   ajax("/solution/unaccept", {
     type: "POST",
-    data: { id: post.get("id") }
+    data: { id: post.id }
   }).catch(popupAjaxError);
 }
 
@@ -52,14 +54,14 @@ function acceptPost(post) {
   });
 
   topic.set("accepted_answer", {
-    username: post.get("username"),
-    post_number: post.get("post_number"),
-    excerpt: post.get("cooked")
+    username: post.username,
+    post_number: post.post_number,
+    excerpt: post.cooked
   });
 
   ajax("/solution/accept", {
     type: "POST",
-    data: { id: post.get("id") }
+    data: { id: post.id }
   }).catch(popupAjaxError);
 }
 
@@ -136,38 +138,34 @@ function initializeWithApi(api) {
     if (dec.attrs.post_number === 1) {
       const postModel = dec.getModel();
       if (postModel) {
-        const topic = postModel.get("topic");
-        if (topic.get("accepted_answer")) {
-          const hasExcerpt = !!topic.get("accepted_answer").excerpt;
+        const topic = postModel.topic;
+        if (topic.accepted_answer) {
+          const hasExcerpt = !!topic.accepted_answer.excerpt;
 
           const withExcerpt = `
             <aside class='quote accepted-answer' data-post="${
               topic.get("accepted_answer").post_number
-            }" data-topic="${topic.get("id")}">
+            }" data-topic="${topic.id}">
               <div class='title'>
-                ${topic.get(
-                  "acceptedAnswerHtml"
-                )} <div class="quote-controls"><\/div>
+                ${topic.acceptedAnswerHtml} <div class="quote-controls"><\/div>
               </div>
               <blockquote>
-                ${topic.get("accepted_answer").excerpt}
+                ${topic.accepted_answer.excerpt}
               </blockquote>
             </aside>`;
 
           const withoutExcerpt = `
             <aside class='quote accepted-answer'>
               <div class='title title-only'>
-                ${topic.get("acceptedAnswerHtml")}
+                ${topic.acceptedAnswerHtml}
               </div>
             </aside>`;
 
-          var cooked = new PostCooked({
+          const cooked = new PostCooked({
             cooked: hasExcerpt ? withExcerpt : withoutExcerpt
           });
 
-          var html = cooked.init();
-
-          return dec.rawHtml(html);
+          return dec.rawHtml(cooked.init());
         }
       }
     }
@@ -176,7 +174,7 @@ function initializeWithApi(api) {
   api.attachWidgetAction("post", "acceptAnswer", function() {
     const post = this.model;
     const current = post.get("topic.postStream.posts").filter(p => {
-      return p.get("post_number") === 1 || p.get("accepted_answer");
+      return p.post_number === 1 || p.accepted_answer;
     });
     acceptPost(post);
 
@@ -189,9 +187,9 @@ function initializeWithApi(api) {
     const post = this.model;
     const op = post
       .get("topic.postStream.posts")
-      .find(p => p.get("post_number") === 1);
+      .find(p => p.post_number === 1);
     unacceptPost(post);
-    this.appEvents.trigger("post-stream:refresh", { id: op.get("id") });
+    this.appEvents.trigger("post-stream:refresh", { id: op.id });
   });
 
   if (api.registerConnectorClass) {
@@ -218,7 +216,7 @@ export default {
   initialize() {
     Topic.reopen({
       // keeping this here cause there is complex localization
-      acceptedAnswerHtml: function() {
+      acceptedAnswerHtml: Ember.computed("accepted_answer", "id", function() {
         const username = this.get("accepted_answer.username");
         const postNumber = this.get("accepted_answer.post_number");
 
@@ -230,16 +228,17 @@ export default {
           icon: iconHTML("check-square", { class: "accepted" }),
           username_lower: username.toLowerCase(),
           username: formatUsername(username),
-          post_path: this.get("url") + "/" + postNumber,
+          post_path: `${this.url}/${postNumber}`,
           post_number: postNumber,
-          user_path: User.create({ username }).get("path")
+          user_path: User.create({ username }).path
         });
-      }.property("accepted_answer", "id")
+      })
     });
 
     TopicStatus.reopen({
-      statuses: function() {
-        const results = this._super();
+      statuses: Ember.computed(function() {
+        const results = this._super(...arguments);
+
         if (this.topic.has_accepted_answer) {
           results.push({
             openTag: "span",
@@ -260,7 +259,7 @@ export default {
           });
         }
         return results;
-      }.property()
+      })
     });
 
     withPluginApi("0.1", initializeWithApi);

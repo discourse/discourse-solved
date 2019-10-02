@@ -42,9 +42,7 @@ export default {
         ? queryStrings.substr(1).split("&")
         : [];
 
-      params = params.filter(param => {
-        return !param.startsWith("solved=");
-      });
+      params = params.filter(param => !param.startsWith("solved="));
 
       if (newStatus && newStatus !== "all") {
         newStatus = newStatus === "solved" ? "yes" : "no";
