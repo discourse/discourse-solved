@@ -59,12 +59,7 @@ after_initialize do
           p.user_id IS NOT NULL
 SQL
 
-        # TODO post discourse 2.1 remove
-        if defined? DB
-          DB.exec(sql, solved: UserAction::SOLVED)
-        else
-          UserAction.exec_sql(sql, solved: UserAction::SOLVED)
-        end
+        DB.exec(sql, solved: UserAction::SOLVED)
       end
       $redis.set("solved_already_upgraded", "true")
     end
