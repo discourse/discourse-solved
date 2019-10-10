@@ -7,6 +7,10 @@
 
 uk:
   js:
+    notifications:
+      alt:
+        solved:
+          accepted_notification: "схвалено"
     solved:
       topic_status_filter:
         all: "всі"

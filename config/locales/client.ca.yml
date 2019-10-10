@@ -15,6 +15,7 @@ ca:
       title: "Solucionat"
       allow_accepted_answers: "Permet que el propietari del tema i l'equip responsable marquin una resposta com a solució"
       accept_answer: "Seleccioneu aquesta resposta si resol el problema"
+      accepted_description: "Aquesta és la solució acceptada per a aquest tema."
       has_no_accepted_answer: "Aquest tema no té cap solució"
       unaccept_answer: "Desseleccioneu aquesta resposta si ja no resol el problema"
       accepted_answer: "Solució"

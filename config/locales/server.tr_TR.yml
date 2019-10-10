@@ -13,6 +13,7 @@ tr_TR:
     empty_box_on_unsolved: "Çözülmemiş konuların yanında boş bir kutu görüntüle"
     solved_quote_length: "İlk gönderinin altındaki çözümü görüntülerken alıntı yapılacak karakter sayısı"
     solved_topics_auto_close_hours: "Konu çözüldü işaretlendikten (n) saat sonra otomatik olarak kapatılsın"
+    show_filter_by_solved_status: "Bir konu listesini çözülmüş duruma göre filtrelemek için bir açılır menü gösterin."
   reports:
     accepted_solutions:
       title: "Kabul edilen çözümler"

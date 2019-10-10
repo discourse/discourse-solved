@@ -10,13 +10,14 @@ fi:
     notifications:
       alt:
         solved:
-          accepted_notification: "hyväksyi"
+          accepted_notification: "hyväksytty"
     solved:
-      title: "Ratkaisemat"
-      allow_accepted_answers: "Salli aiheen omistajan ja henkilökunnan merkitä viesti ratkaisuksi"
-      accept_answer: "Valitse, tämä vastaus ratkaisee ongelman"
+      title: "Ratkaistu"
+      allow_accepted_answers: "Salli ketjun omistajan ja henkilökunnan merkitä viesti ratkaisuksi"
+      accept_answer: "Valitse, jos tämä vastaus ratkaisee ongelman"
+      accepted_description: "Tämä on aiheelle hyväksytty ratkaisu"
       has_no_accepted_answer: "Tähän aiheeseen ei ole ratkaisua"
-      unaccept_answer: "Kumoa valinta, tämä vastaus ei enää ratkaise ongelmaa"
+      unaccept_answer: "Kumoa valinta, jos tämä vastaus ei enää ratkaise ongelmaa"
       accepted_answer: "Ratkaisu"
       solution: "Ratkaisu"
       solution_summary:
@@ -26,6 +27,8 @@ fi:
       accepted_notification: "<p><span>{{username}}</span> {{description}}</p>"
       topic_status_filter:
         all: "kaikki"
+        solved: "ratkaistu"
+        unsolved: "ratkaisematon"
     topic_statuses:
       solved:
         help: "Tämä aihe on ratkaistu"

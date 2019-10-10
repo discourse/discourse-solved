@@ -9,3 +9,4 @@ uk:
   reports:
     accepted_solutions:
       xaxis: "День"
+      yaxis: "Всього"

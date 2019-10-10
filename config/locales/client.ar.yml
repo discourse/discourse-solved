@@ -21,6 +21,8 @@ ar:
       solution: "الحل"
       topic_status_filter:
         all: "الكل"
+        solved: "تم حله"
+        unsolved: "غير محلول"
     topic_statuses:
       solved:
         help: "هذا الموضوع فيه الحل"

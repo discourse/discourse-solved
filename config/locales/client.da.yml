@@ -7,6 +7,10 @@
 
 da:
   js:
+    notifications:
+      alt:
+        solved:
+          accepted_notification: "accepteret"
     solved:
       allow_accepted_answers: "Tillad ejer af emne og stab at markere svar som en løsning"
       accepted_answer: "Løsning"

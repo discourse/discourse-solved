@@ -15,6 +15,7 @@ fr:
       title: "Solutions"
       allow_accepted_answers: "Autoriser l'auteur du sujet et les responsables à marquer une réponse comme solution"
       accept_answer: "Sélectionner si cette réponse résout le problème"
+      accepted_description: "C'est la solution acceptée à ce sujet"
       has_no_accepted_answer: "Ce sujet n'a pas de solution"
       unaccept_answer: "Désélectionner si cette réponse ne résout plus le problème"
       accepted_answer: "Solution"

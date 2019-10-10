@@ -13,8 +13,9 @@ es:
           accepted_notification: "aceptado"
     solved:
       title: "Solucionado"
-      allow_accepted_answers: "Permitir que el autor del tema y el staff marquen una respuesta como solución"
-      accept_answer: "Seleccionar si esta respuesta soluciona el problema"
+      allow_accepted_answers: "Permitir al propietario del tema y al staff marcar una respuesta como la solución"
+      accept_answer: "Seleccionar si esta respuesta resuelve el problema"
+      accepted_description: "Esta es la solución aceptada para este tema"
       has_no_accepted_answer: "Este tema no tiene una solución"
       unaccept_answer: "Deseleccionar si esta respuesta ya no resuelve el problema"
       accepted_answer: "Solución"
@@ -22,10 +23,10 @@ es:
       solution_summary:
         one: "solución"
         other: "soluciones"
-      accepted_html: "{{icon}} Solucionado <span class='by'>por <a href data-user-card='{{username_lower}}'>{{username}}</a></span> en el <a href='{{post_path}}' class='back'>post #{{post_number}}</a>"
+      accepted_html: "{{icon}} Solucionado <span class='by'>por <a href data-user-card='{{username_lower}}'>{{username}}</a></span> en la <a href='{{post_path}}' class='back'>publicación #{{post_number}}</a>"
       accepted_notification: "<p><span>{{username}}</span> {{description}}</p>"
       topic_status_filter:
-        all: "todas"
+        all: "todos"
         solved: "solucionado"
         unsolved: "sin solución"
     topic_statuses:

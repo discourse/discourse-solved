@@ -13,8 +13,9 @@ he:
           accepted_notification: "התקבל"
     solved:
       title: "נפתר"
-      allow_accepted_answers: "אפשר למשתמשים לאשר תשובות"
+      allow_accepted_answers: "לאפשר למשתמשים לאשר תשובות"
       accept_answer: "יש לבחור בזה אם התגובה הזאת פותרת את הבעיה"
+      accepted_description: "זה הפתרון המקובל לנושא זה"
       has_no_accepted_answer: "לנושא הזה אין פתרון"
       unaccept_answer: "יש לבטל את הסימון אם התגובה הזו אינה פותרת עוד את הבעיה."
       accepted_answer: "פתרון"
