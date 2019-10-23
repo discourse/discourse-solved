@@ -10,13 +10,8 @@ export default {
       enable_accepted_answers: Ember.computed(
         "custom_fields.enable_accepted_answers",
         {
-          get(enableField) {
-            return enableField === "true";
-          },
-          set(value) {
-            value = value ? "true" : "false";
-            this.set("custom_fields.enable_accepted_answers", value);
-            return value;
+          get(fieldName) {
+            return Ember.get(this.custom_fields, fieldName) === "true";
           }
         }
       )
