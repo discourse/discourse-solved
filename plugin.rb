@@ -248,7 +248,7 @@ SQL
     question_json = {
       '@type' => 'Question',
       'name' => topic.title,
-      'text' => first_post.excerpt,
+      'text' => first_post.excerpt(nil, keep_onebox_body: true),
       'upvoteCount' => first_post.like_count,
       'answerCount' => 0,
       'dateCreated' => topic.created_at,
@@ -262,7 +262,7 @@ SQL
       question_json['answerCount'] = 1
       question_json[:acceptedAnswer] = {
         '@type' => 'Answer',
-        'text' => accepted_answer.excerpt,
+        'text' => accepted_answer.excerpt(nil, keep_onebox_body: true),
         'upvoteCount' => accepted_answer.like_count,
         'dateCreated' => accepted_answer.created_at,
         'url' => accepted_answer.full_url,
