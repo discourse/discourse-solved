@@ -9,7 +9,6 @@ import PostCooked from "discourse/widgets/post-cooked";
 import { formatUsername } from "discourse/lib/utilities";
 import { iconHTML } from "discourse-common/lib/icon-library";
 import { iconNode } from "discourse-common/lib/icon-library";
-import DecoratorHelper from "discourse/widgets/decorator-helper";
 
 function clearAccepted(topic) {
   const posts = topic.get("postStream.posts");
