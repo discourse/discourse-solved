@@ -12,7 +12,7 @@ ja:
         solved:
           accepted_notification: "受け入れられました"
     solved:
-      title: "解決"
+      title: "解決済み"
       allow_accepted_answers: "トピックオーナーとスタッフにリプライを解決策としてマークすることを許可する"
       accept_answer: "このリプライが問題を解決したか選択してください"
       has_no_accepted_answer: "このトピックは解決策がありません"
