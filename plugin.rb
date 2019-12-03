@@ -29,7 +29,7 @@ after_initialize do
 
   # we got to do a one time upgrade
   if !skip_db && defined?(UserAction::SOLVED)
-    unless $redis.get('solved_already_upgraded')
+    unless Discourse.redis.get('solved_already_upgraded')
       unless UserAction.where(action_type: UserAction::SOLVED).exists?
         Rails.logger.info("Upgrading storage for solved")
         sql = <<SQL
@@ -61,7 +61,7 @@ SQL
 
         DB.exec(sql, solved: UserAction::SOLVED)
       end
-      $redis.set("solved_already_upgraded", "true")
+      Discourse.redis.set("solved_already_upgraded", "true")
     end
   end
 
