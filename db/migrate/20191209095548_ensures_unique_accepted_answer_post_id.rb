@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class EnsuresUniqueAcceptedAnswerPostId < ActiveRecord::Migration[6.0]
+class EnsuresUniqueAcceptedAnswerPostId < ActiveRecord::Migration[5.2]
   def change
     execute <<~SQL
       DELETE FROM topic_custom_fields f
