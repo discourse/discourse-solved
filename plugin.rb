@@ -374,7 +374,7 @@ SQL
         else
           nil
         end
-        return postInfo
+        postInfo
       end
     end
 
@@ -444,7 +444,7 @@ SQL
     def can_unaccept_answer
       topic = (topic_view && topic_view.topic) || object.topic
       if topic
-        return scope.can_accept_answer?(topic) && (post_custom_fields["is_accepted_answer"] == 'true')
+        scope.can_accept_answer?(topic) && (post_custom_fields["is_accepted_answer"] == 'true')
       end
     end
 
