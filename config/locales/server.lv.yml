@@ -9,3 +9,4 @@ lv:
   reports:
     accepted_solutions:
       xaxis: "Diena"
+      yaxis: "Kopā"

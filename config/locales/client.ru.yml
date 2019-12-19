@@ -18,7 +18,7 @@ ru:
       has_no_accepted_answer: "Эта тема не имеет решения"
       unaccept_answer: "Отмените выбор, если этот ответ больше не решает проблему"
       accepted_answer: "Подтвержденный ответ"
-      solution: "Ответ"
+      solution: "Решение"
       solution_summary:
         one: "Подтвержденный ответ"
         few: "Подтвержденных ответов"

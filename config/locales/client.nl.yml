@@ -15,6 +15,7 @@ nl:
       title: "Opgelost"
       allow_accepted_answers: "Topiceigenaar en staf mogen een antwoord als de oplossing markeren"
       accept_answer: "Selecteer als dit antwoord het probleem oplost"
+      accepted_description: "Dit is de geaccepteerde oplossing voor dit topic"
       has_no_accepted_answer: "Dit topic heeft geen oplossing"
       unaccept_answer: "Deselecteer als dit antwoord het probleem niet meer oplost"
       accepted_answer: "Oplossing"
