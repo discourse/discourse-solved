@@ -230,6 +230,10 @@ SQL
     ["is_accepted_answer"]
   end
 
+  def get_schema_text(post)
+    post.excerpt(nil, keep_onebox_body: true).presence || post.excerpt(nil, keep_onebox_body: true, keep_quotes: true)
+  end
+
   def before_head_close_meta(controller)
     return "" if !controller.instance_of? TopicsController
 
@@ -248,7 +252,7 @@ SQL
     question_json = {
       '@type' => 'Question',
       'name' => topic.title,
-      'text' => first_post.excerpt(nil, keep_onebox_body: true),
+      'text' => get_schema_text(first_post),
       'upvoteCount' => first_post.like_count,
       'answerCount' => 0,
       'dateCreated' => topic.created_at,
@@ -262,7 +266,7 @@ SQL
       question_json['answerCount'] = 1
       question_json[:acceptedAnswer] = {
         '@type' => 'Answer',
-        'text' => accepted_answer.excerpt(nil, keep_onebox_body: true),
+        'text' => get_schema_text(accepted_answer),
         'upvoteCount' => accepted_answer.like_count,
         'dateCreated' => accepted_answer.created_at,
         'url' => accepted_answer.full_url,

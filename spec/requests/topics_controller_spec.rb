@@ -49,4 +49,15 @@ RSpec.describe TopicsController do
 
     expect(response.body).to include(schema_json(1))
   end
+
+  it 'should include quoted content in schema information' do
+    post = topic.first_post
+    post.raw = "[quote]This is a quoted text.[/quote]"
+    post.save!
+    post.rebake!
+
+    get "/t/#{topic.slug}/#{topic.id}"
+
+    expect(response.body).to include('"text":"This is a quoted text."')
+  end
 end
