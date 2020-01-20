@@ -15,6 +15,7 @@ pt_BR:
       title: "Resolvido"
       allow_accepted_answers: "Permitir que o proprietário do tópico e a staff marquem uma resposta como a solução"
       accept_answer: "Selecione se esta resposta resolve o problema"
+      accepted_description: "Esta é a solução aceita para este tópico"
       has_no_accepted_answer: "Este tópico não tem solução"
       unaccept_answer: "Desmarque se esta resposta não resolve mais o problema"
       accepted_answer: "Solução"
