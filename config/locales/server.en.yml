@@ -16,3 +16,9 @@ en:
     no_solutions:
       self: "You have no accepted solutions yet."
       others: "No accepted solutions."
+  
+  badges:
+    helpdesk:
+      description: "First Accepted Answer on a Topic"
+    tech_support:
+      description: "10 Accepted answers"
