@@ -25,7 +25,7 @@ WHERE p.post_number > 1 AND
 EOS
 
 Badge.seed(:name) do |badge|
-  badge.name = "Helpdesk"
+  badge.name = I18n.t("badges.helpdesk.name")
   badge.icon = "check-square"
   badge.badge_type_id = 3
   badge.badge_grouping = badge_grouping
@@ -61,7 +61,7 @@ WHERE id  IN (
 EOS
 
 Badge.seed(:name) do |badge|
-  badge.name = "Tech Support"
+  badge.name = I18n.t("badges.tech_support.name")
   badge.icon = "check-square"
   badge.badge_type_id = 2
   badge.badge_grouping = badge_grouping
