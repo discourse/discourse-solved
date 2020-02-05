@@ -20,6 +20,7 @@ register_asset 'stylesheets/solutions.scss'
 register_asset 'stylesheets/mobile/solutions.scss', :mobile
 
 after_initialize do
+  SeedFu.fixture_paths << Rails.root.join("plugins", "discourse-solved", "db", "fixtures").to_s
 
   [
     '../app/serializers/concerns/topic_answer_mixin.rb'

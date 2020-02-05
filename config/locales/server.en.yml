@@ -16,3 +16,11 @@ en:
     no_solutions:
       self: "You have no accepted solutions yet."
       others: "No accepted solutions."
+  
+  badges:
+    helpdesk:
+      name: "Helpdesk"
+      description: "First Accepted Answer on a Topic"
+    tech_support:
+      name: "Tech Support"
+      description: "10 Accepted answers"
