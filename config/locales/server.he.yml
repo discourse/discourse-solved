@@ -23,3 +23,10 @@ he:
     no_solutions:
       self: "אין לך פתרונות מקובלים עדיין."
       others: "אין פתרונות מקובלים."
+  badges:
+    helpdesk:
+      name: "דלפק עזרה"
+      description: "התשובה הראשונה שמאושרת לנושא"
+    tech_support:
+      name: "תמיכה טכנית"
+      description: "10 תשובות שקיבלו אישור"

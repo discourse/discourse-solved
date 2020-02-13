@@ -23,3 +23,10 @@ nl:
     no_solutions:
       self: "U hebt nog geen geaccepteerde oplossingen."
       others: "Geen geaccepteerde oplossingen."
+  badges:
+    helpdesk:
+      name: "Helpdesk"
+      description: "Eerste geaccepteerde antwoord op een topic"
+    tech_support:
+      name: "Technische ondersteuning"
+      description: "10 geaccepteerde antwoorden"
