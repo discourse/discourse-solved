@@ -1,3 +1,9 @@
 {{#if siteSettings.solved_enabled}}
-  {{combo-box content=statuses value=status valueAttribute="value" onSelect=(action "changeStatus")}}
+  {{combo-box
+    class="solved-status-filter"
+    content=statuses
+    value=status
+    valueAttribute="value"
+    onSelect=(action "changeStatus")
+  }}
 {{/if}}

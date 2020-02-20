@@ -1,3 +1,9 @@
+.select-kit {
+  &.solved-status-filter {
+    min-width: auto;
+  }
+}
+
 .solved-panel,
 .post-controls .accepted,
 .fa.accepted,
