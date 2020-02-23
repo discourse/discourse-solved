@@ -90,6 +90,14 @@ RSpec.describe "Managing Posts solved status" do
       p1.reload
       expect(p1.custom_fields["is_accepted_answer"]).to eq("true")
     end
+
+    it 'does not allow you to accept a whisper' do
+      whisper = Fabricate(:post, topic: topic, post_type: Post.types[:whisper])
+      sign_in(Fabricate(:admin))
+
+      post "/solution/accept.json", params: { id: whisper.id }
+      expect(response.status).to eq(403)
+    end
   end
 
   describe '#unaccept' do

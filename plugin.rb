@@ -188,7 +188,7 @@ SQL
       topic = post.topic
       topic ||= Topic.with_deleted.find(post.topic_id) if guardian.is_staff?
 
-      guardian.ensure_can_accept_answer!(topic)
+      guardian.ensure_can_accept_answer!(topic, post)
 
       DiscourseSolved.accept_answer!(post, current_user, topic: topic)
 
@@ -204,7 +204,7 @@ SQL
       topic = post.topic
       topic ||= Topic.with_deleted.find(post.topic_id) if guardian.is_staff?
 
-      guardian.ensure_can_accept_answer!(topic)
+      guardian.ensure_can_accept_answer!(topic, post)
 
       DiscourseSolved.unaccept_answer!(post, topic: topic)
       render json: success_json
@@ -422,13 +422,16 @@ SQL
       @@allowed_accepted_cache["allowed"].include?(category_id)
     end
 
-    def can_accept_answer?(topic)
-      topic && allow_accepted_answers_on_category?(topic.category_id) && (
-        is_staff? || (
-          authenticated? && ((!topic.closed? && topic.user_id == current_user.id) ||
-                            (current_user.trust_level >= SiteSetting.accept_all_solutions_trust_level))
-        )
-      )
+    def can_accept_answer?(topic, post)
+      return false if !authenticated?
+      return false if !topic || !post || post.whisper?
+      return false if !allow_accepted_answers_on_category?(topic.category_id)
+
+      return true if is_staff?
+      return true if current_user.trust_level >= SiteSetting.accept_all_solutions_trust_level
+
+      topic.user_id == current_user.id && !topic.closed
+
     end
   end
 
@@ -440,7 +443,7 @@ SQL
       topic = (topic_view && topic_view.topic) || object.topic
 
       if topic
-        return scope.can_accept_answer?(topic) && object.post_number > 1 && !accepted_answer
+        return scope.can_accept_answer?(topic, object) && object.post_number > 1 && !accepted_answer
       end
 
       false
@@ -449,7 +452,7 @@ SQL
     def can_unaccept_answer
       topic = (topic_view && topic_view.topic) || object.topic
       if topic
-        scope.can_accept_answer?(topic) && (post_custom_fields["is_accepted_answer"] == 'true')
+        scope.can_accept_answer?(topic, object) && (post_custom_fields["is_accepted_answer"] == 'true')
       end
     end
 
