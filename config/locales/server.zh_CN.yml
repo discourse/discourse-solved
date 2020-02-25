@@ -23,3 +23,10 @@ zh_CN:
     no_solutions:
       self: "你尚无接受的解决方案。"
       others: "尚无接受的解决方案。"
+  badges:
+    helpdesk:
+      name: "助人为乐"
+      description: "主题中首个被接受的回答"
+    tech_support:
+      name: "技术支持"
+      description: "10 个已接受的回答"

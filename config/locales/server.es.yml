@@ -23,3 +23,10 @@ es:
     no_solutions:
       self: "Aún no tienes soluciones aceptadas."
       others: "No hay soluciones aceptadas."
+  badges:
+    helpdesk:
+      name: "Asistencia al usuario"
+      description: "Primera respuesta aceptada en un tema"
+    tech_support:
+      name: "Asistencia técnica"
+      description: "10 respuestas aceptadas"
