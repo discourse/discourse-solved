@@ -98,6 +98,17 @@ RSpec.describe "Managing Posts solved status" do
       post "/solution/accept.json", params: { id: whisper.id }
       expect(response.status).to eq(403)
     end
+
+    it 'triggers a webhook' do
+      Fabricate(:web_hook)
+      post "/solution/accept.json", params: { id: p1.id }
+
+      job_args = Jobs::EmitWebHookEvent.jobs[0]["args"].first
+
+      expect(job_args["event_name"]).to eq("post_edited")
+      payload = JSON.parse(job_args["payload"])
+      expect(payload["id"]).to eq(p1.id)
+    end
   end
 
   describe '#unaccept' do
@@ -121,6 +132,17 @@ RSpec.describe "Managing Posts solved status" do
 
         expect(p1.custom_fields["is_accepted_answer"]).to eq(nil)
         expect(p1.topic.custom_fields["accepted_answer_post_id"]).to eq(nil)
+      end
+
+      it 'triggers a webhook' do
+        Fabricate(:web_hook)
+        post "/solution/unaccept.json", params: { id: p1.id }
+
+        job_args = Jobs::EmitWebHookEvent.jobs[0]["args"].first
+
+        expect(job_args["event_name"]).to eq("post_edited")
+        payload = JSON.parse(job_args["payload"])
+        expect(payload["id"]).to eq(p1.id)
       end
     end
   end
