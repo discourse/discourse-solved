@@ -138,6 +138,11 @@ SQL
       topic.save!
       post.save!
 
+      if WebHook.active_web_hooks(:post).exists?
+        payload = WebHook.generate_payload(:post, post)
+        WebHook.enqueue_post_hooks(:post_edited, post, payload)
+      end
+
       DiscourseEvent.trigger(:accepted_solution, post)
     end
 
@@ -172,6 +177,12 @@ SQL
       )
 
       notification.destroy! if notification
+
+      if WebHook.active_web_hooks(:post).exists?
+        payload = WebHook.generate_payload(:post, post)
+        WebHook.enqueue_post_hooks(:post_edited, post, payload)
+      end
+
       DiscourseEvent.trigger(:unaccepted_solution, post)
     end
   end
