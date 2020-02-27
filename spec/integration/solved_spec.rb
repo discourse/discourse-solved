@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require_relative '../fabricators/solved_hook_fabricator.rb'
 
 RSpec.describe "Managing Posts solved status" do
   let(:topic) { Fabricate(:topic) }
@@ -100,12 +101,12 @@ RSpec.describe "Managing Posts solved status" do
     end
 
     it 'triggers a webhook' do
-      Fabricate(:web_hook)
+      Fabricate(:solved_web_hook)
       post "/solution/accept.json", params: { id: p1.id }
 
       job_args = Jobs::EmitWebHookEvent.jobs[0]["args"].first
 
-      expect(job_args["event_name"]).to eq("post_edited")
+      expect(job_args["event_name"]).to eq("accepted_solution")
       payload = JSON.parse(job_args["payload"])
       expect(payload["id"]).to eq(p1.id)
     end
@@ -134,16 +135,17 @@ RSpec.describe "Managing Posts solved status" do
         expect(p1.topic.custom_fields["accepted_answer_post_id"]).to eq(nil)
       end
 
-      it 'triggers a webhook' do
-        Fabricate(:web_hook)
-        post "/solution/unaccept.json", params: { id: p1.id }
+    end
 
-        job_args = Jobs::EmitWebHookEvent.jobs[0]["args"].first
+    it 'triggers a webhook' do
+      Fabricate(:solved_web_hook)
+      post "/solution/unaccept.json", params: { id: p1.id }
 
-        expect(job_args["event_name"]).to eq("post_edited")
-        payload = JSON.parse(job_args["payload"])
-        expect(payload["id"]).to eq(p1.id)
-      end
+      job_args = Jobs::EmitWebHookEvent.jobs[0]["args"].first
+
+      expect(job_args["event_name"]).to eq("unaccepted_solution")
+      payload = JSON.parse(job_args["payload"])
+      expect(payload["id"]).to eq(p1.id)
     end
   end
 end
