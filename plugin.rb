@@ -21,10 +21,6 @@ register_asset 'stylesheets/mobile/solutions.scss', :mobile
 
 after_initialize do
 
-  class ::WebHookEventType
-    SOLVED = 100.freeze
-  end
-
   SeedFu.fixture_paths << Rails.root.join("plugins", "discourse-solved", "db", "fixtures").to_s
 
   [
