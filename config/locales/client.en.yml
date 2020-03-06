@@ -32,3 +32,9 @@ en:
       advanced:
         statuses:
           solved: "are solved"
+
+    admin:
+      web_hooks:
+        solved_event:
+          name: "Solved Event"
+          details: "When a user marks a post as the accepted or unaccepted answer."

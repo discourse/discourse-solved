@@ -20,6 +20,7 @@ register_asset 'stylesheets/solutions.scss'
 register_asset 'stylesheets/mobile/solutions.scss', :mobile
 
 after_initialize do
+
   SeedFu.fixture_paths << Rails.root.join("plugins", "discourse-solved", "db", "fixtures").to_s
 
   [
@@ -138,6 +139,11 @@ SQL
       topic.save!
       post.save!
 
+      if WebHook.active_web_hooks(:solved).exists?
+        payload = WebHook.generate_payload(:post, post)
+        WebHook.enqueue_solved_hooks(:accepted_solution, post, payload)
+      end
+
       DiscourseEvent.trigger(:accepted_solution, post)
     end
 
@@ -172,6 +178,12 @@ SQL
       )
 
       notification.destroy! if notification
+
+      if WebHook.active_web_hooks(:solved).exists?
+        payload = WebHook.generate_payload(:post, post)
+        WebHook.enqueue_solved_hooks(:unaccepted_solution, post, payload)
+      end
+
       DiscourseEvent.trigger(:unaccepted_solution, post)
     end
   end
@@ -344,6 +356,21 @@ SQL
 
       def solved_count
         object.solved_count
+      end
+    end
+  end
+
+  class ::WebHook
+    def self.enqueue_solved_hooks(event, post, payload = nil)
+      if active_web_hooks('solved').exists? && post.present?
+        payload ||= WebHook.generate_payload(:post, post)
+
+        WebHook.enqueue_hooks(:solved, event,
+          id: post.id,
+          category_id: post.topic&.category_id,
+          tag_ids: post.topic&.tags&.pluck(:id),
+          payload: payload
+        )
       end
     end
   end
