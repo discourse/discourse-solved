@@ -27,3 +27,8 @@ en:
     topic_statuses:
       solved:
         help: "This topic has a solution"
+
+    search:
+      advanced:
+        statuses:
+          solved: "are solved"

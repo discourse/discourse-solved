@@ -465,7 +465,7 @@ SQL
 
   #TODO Remove when plugin is 1.0
   if Search.respond_to? :advanced_filter
-    Search.advanced_filter(/in:solved/) do |posts|
+    Search.advanced_filter(/status:solved/) do |posts|
       posts.where("topics.id IN (
         SELECT tc.topic_id
         FROM topic_custom_fields tc
@@ -475,7 +475,7 @@ SQL
 
     end
 
-    Search.advanced_filter(/in:unsolved/) do |posts|
+    Search.advanced_filter(/status:unsolved/) do |posts|
       posts.where("topics.id NOT IN (
         SELECT tc.topic_id
         FROM topic_custom_fields tc
