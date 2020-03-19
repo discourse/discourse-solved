@@ -125,8 +125,9 @@ SQL
       if (auto_close_hours > 0) && !topic.closed
         topic_timer = topic.set_or_create_timer(
           TopicTimer.types[:close],
-          auto_close_hours,
-          based_on_last_post: true
+          nil,
+          based_on_last_post: true,
+          duration: auto_close_hours
         )
 
         topic.custom_fields[
