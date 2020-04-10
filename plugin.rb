@@ -317,11 +317,11 @@ SQL
         category_filter = report.filters.dig(:category)
         report.add_filter('category', default: category_filter)
         if category_filter
-          accepted_solutions = accepted_solutions.joins(:topic).where("topics.category_id = ?", category_filter)
+          accepted_solutions = accepted_solutions.joins(:topic).where("topics.category_id IN (?)", Category.subcategory_ids(category_filter.to_i))
         end
       else
         if report.category_id
-          accepted_solutions = accepted_solutions.joins(:topic).where("topics.category_id = ?", report.category_id)
+          accepted_solutions = accepted_solutions.joins(:topic).where("topics.category_id IN (?)", Category.subcategory_ids(report.category_id.to_i))
         end
       end
 
