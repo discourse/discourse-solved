@@ -123,12 +123,22 @@ SQL
       auto_close_hours = SiteSetting.solved_topics_auto_close_hours
 
       if (auto_close_hours > 0) && !topic.closed
-        topic_timer = topic.set_or_create_timer(
-          TopicTimer.types[:close],
-          nil,
-          based_on_last_post: true,
-          duration: auto_close_hours
-        )
+        begin
+          topic_timer = topic.set_or_create_timer(
+            TopicTimer.types[:close],
+            nil,
+            based_on_last_post: true,
+            duration: auto_close_hours
+          )
+        rescue ArgumentError
+          # https://github.com/discourse/discourse/commit/aad12822b7d7c9c6ecd976e23d3a83626c052dce#diff-4d0afa19fa7752955f36089bca420ab4L1135
+          # this rescue block can be deleted after discourse stable version > 2.4
+          topic_timer = topic.set_or_create_timer(
+            TopicTimer.types[:close],
+            auto_close_hours,
+            based_on_last_post: true
+          )
+        end
 
         topic.custom_fields[
           AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD
