@@ -7,6 +7,12 @@
 
 bg:
   js:
+    notifications:
+      alt:
+        solved:
+          accepted_notification: "прието"
     solved:
+      accepted_answer: "Решение"
+      solution: "Решение"
       topic_status_filter:
         all: "всички подкатегории"

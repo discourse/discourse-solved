@@ -32,3 +32,12 @@ es:
     topic_statuses:
       solved:
         help: "Este tema tiene una solución"
+    search:
+      advanced:
+        statuses:
+          solved: "están resueltos"
+    admin:
+      web_hooks:
+        solved_event:
+          name: "Al resolver"
+          details: "Cuando un usuario marca o desmarca una publicación como la respuesta aceptada."

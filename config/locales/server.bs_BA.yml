@@ -9,3 +9,4 @@ bs_BA:
   reports:
     accepted_solutions:
       xaxis: "Day"
+      yaxis: "Suma"

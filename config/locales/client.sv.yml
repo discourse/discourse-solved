@@ -32,3 +32,12 @@ sv:
     topic_statuses:
       solved:
         help: "Detta ämne har en lösning"
+    search:
+      advanced:
+        statuses:
+          solved: "är lösta"
+    admin:
+      web_hooks:
+        solved_event:
+          name: "Löst händelse"
+          details: "När en användare markerar ett svarsinlägg som accepterat eller icke accepterat. "

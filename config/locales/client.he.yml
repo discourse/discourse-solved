@@ -34,3 +34,12 @@ he:
     topic_statuses:
       solved:
         help: "נושא זה נפתר"
+    search:
+      advanced:
+        statuses:
+          solved: "נפתרו"
+    admin:
+      web_hooks:
+        solved_event:
+          name: "אירוע שנפתר"
+          details: "כאשר משתמש מסמן פוסט בתור התשובה המקובלת או הבלתי מקובלת."

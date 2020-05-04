@@ -31,3 +31,12 @@ zh_CN:
     topic_statuses:
       solved:
         help: "这个主题已经有了解决方案"
+    search:
+      advanced:
+        statuses:
+          solved: "已解决"
+    admin:
+      web_hooks:
+        solved_event:
+          name: "已解决事件"
+          details: "当用户将帖子标记为接受或不被接受的答案时。"

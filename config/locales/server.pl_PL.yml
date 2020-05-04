@@ -23,3 +23,10 @@ pl_PL:
     no_solutions:
       self: "Nie masz jeszcze żadnych akceptowanych rozwiązań."
       others: "Brak akceptowanych rozwiązań."
+  badges:
+    helpdesk:
+      name: "Dział pomocy technicznej"
+      description: "Pierwsza zaakceptowana odpowiedź w temacie"
+    tech_support:
+      name: "Wsparcie techniczne"
+      description: "10 Akceptowanych odpowiedzi"

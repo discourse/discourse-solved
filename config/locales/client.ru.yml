@@ -34,3 +34,7 @@ ru:
     topic_statuses:
       solved:
         help: "Тема содержит решение вопроса"
+    search:
+      advanced:
+        statuses:
+          solved: "Решённые"
