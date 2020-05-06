@@ -6,12 +6,35 @@ GIT
 
 GEM
   specs:
+    ast (2.4.0)
+    jaro_winkler (1.5.4)
+    parallel (1.19.1)
+    parser (2.7.1.2)
+      ast (~> 2.4.0)
+    rainbow (3.0.0)
+    rexml (3.2.4)
+    rubocop (0.82.0)
+      jaro_winkler (~> 1.5.1)
+      parallel (~> 1.10)
+      parser (>= 2.7.0.1)
+      rainbow (>= 2.2.2, < 4.0)
+      rexml
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 1.4.0, < 2.0)
+    rubocop-discourse (2.1.2)
+      rubocop (>= 0.69.0)
+      rubocop-rspec (>= 1.39.0)
+    rubocop-rspec (1.39.0)
+      rubocop (>= 0.68.1)
+    ruby-progressbar (1.10.1)
+    unicode-display_width (1.7.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  rubocop-discourse
   translations-manager!
 
 BUNDLED WITH
-   1.17.3
+   2.1.4
