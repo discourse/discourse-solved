@@ -32,3 +32,12 @@ fr:
     topic_statuses:
       solved:
         help: "Ce sujet a une solution"
+    search:
+      advanced:
+        statuses:
+          solved: "sont résolus"
+    admin:
+      web_hooks:
+        solved_event:
+          name: "Événement de résolution"
+          details: "Lorsqu'un utilisateur sélectionne un message comme la réponse acceptée ou non."

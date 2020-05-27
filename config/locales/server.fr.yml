@@ -23,3 +23,10 @@ fr:
     no_solutions:
       self: "Vous n'avez pas encore de solutions acceptées."
       others: "Aucune solution acceptées."
+  badges:
+    helpdesk:
+      name: "Centre d'assistance"
+      description: "Première réponse acceptée dans un sujet"
+    tech_support:
+      name: "Support technique"
+      description: "10 réponses acceptées"
