@@ -1,16 +1,8 @@
+$solved-color: green;
+
 .select-kit {
   &.solved-status-filter {
     min-width: auto;
-  }
-}
-
-.solved-panel,
-.post-controls .accepted,
-.fa.accepted,
-.accepted-text {
-  color: green;
-  .d-icon {
-    color: currentColor;
   }
 }
 
@@ -19,11 +11,25 @@
   align-items: baseline;
 }
 
+.fa.accepted {
+  color: $solved-color;
+}
+
 .post-controls {
   .accepted,
   .unaccepted {
     .d-button-label {
       margin-left: 7px;
+    }
+  }
+
+  .accepted {
+    .d-icon,
+    .d-button-label {
+      color: $solved-color;
+      .discourse-no-touch & {
+        color: $solved-color;
+      }
     }
   }
 }
@@ -39,11 +45,6 @@
   }
 }
 
-// you can style accepted answers however your want
-.quote.accepted-answer {
-  //  background-color: #E9FFE0;
-}
-
 .mobile-view .solved-panel {
   margin-bottom: 15px;
 }
@@ -56,10 +57,6 @@
   margin-top: 20px;
   margin-bottom: 0px;
   font-size: 13px;
-  // margin-bottom: 0px;
-  // padding: 4px 0px;
-  //border-top: 1px solid #ddd;
-  //background-color: #E9FFE0;
 }
 
 aside.quote .title.title-only {
