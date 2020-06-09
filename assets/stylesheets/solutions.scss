@@ -22,14 +22,22 @@ $solved-color: green;
       margin-left: 7px;
     }
   }
+}
 
+.post-controls .extra-buttons {
+  // anon text
+  .accepted-text {
+    .d-icon,
+    .accepted-label {
+      color: $solved-color;
+    }
+  }
+
+  // logged in button
   .accepted {
     .d-icon,
     .d-button-label {
       color: $solved-color;
-      .discourse-no-touch & {
-        color: $solved-color;
-      }
     }
   }
 }
