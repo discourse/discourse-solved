@@ -270,6 +270,10 @@ export default {
           name: I18n.t("search.advanced.statuses.solved"),
           value: "solved"
         });
+        this.statusOptions.push({
+          name: I18n.t("search.advanced.statuses.unsolved"),
+          value: "unsolved"
+        });
       }
     });
 
