@@ -14,17 +14,17 @@ fr:
     solved:
       title: "Solutions"
       allow_accepted_answers: "Autoriser l'auteur du sujet et les responsables à marquer une réponse comme solution"
-      accept_answer: "Sélectionner si cette réponse résout le problème"
+      accept_answer: "Sélectionnez si cette réponse résout le problème"
       accepted_description: "C'est la solution acceptée à ce sujet"
       has_no_accepted_answer: "Ce sujet n'a pas de solution"
-      unaccept_answer: "Désélectionner si cette réponse ne résout plus le problème"
+      unaccept_answer: "Désélectionnez si cette réponse ne résout plus le problème"
       accepted_answer: "Solution"
       solution: "Solution"
       solution_summary:
         one: "solution"
         other: "solutions"
-      accepted_html: "{{icon}} Résolu <span class='by'>par <a href data-user-card='{{username_lower}}'>{{username}}</a></span> dans le <a href='{{post_path}}' class='back'>message #{{post_number}}</a>"
-      accepted_notification: "<p><span>{{username}}</span> {{description}}</p>"
+      accepted_html: "%{icon} Résolu <span class='by'>par <a href data-user-card='%{username_lower}'>%{username}</a></span> dans le <a href='%{post_path}' class='back'>message #%{post_number}</a>"
+      accepted_notification: "<p><span>%{username}</span> %{description}</p>"
       topic_status_filter:
         all: "tout"
         solved: "résolu"

@@ -7,6 +7,10 @@
 
 th:
   js:
+    notifications:
+      alt:
+        solved:
+          accepted_notification: "ยอมรับแล้ว"
     solved:
       topic_status_filter:
         all: "ทั้งหมด"

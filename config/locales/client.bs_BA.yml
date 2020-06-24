@@ -24,8 +24,6 @@ bs_BA:
         one: "riješenje"
         few: "riješenja"
         other: "riješenja"
-      accepted_html: "{{icon}} Riješio<span class='by'> <a href data-user-card='{{username_lower}}'>{{username}}</a></span> u<a href='{{post_path}}' class='back'>odgovoru #{{post_number}}</a>"
-      accepted_notification: "<p><span>{{username}}</span>{{description}}</p>"
       topic_status_filter:
         all: "sve"
         solved: "riješeno"

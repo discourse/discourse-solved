@@ -22,8 +22,6 @@ hy:
       solution_summary:
         one: "լուծում"
         other: "լուծում"
-      accepted_html: "{{icon}} Լուծված է <span class='by'> <a href data-user-card='{{username_lower}}'>{{username}}</a> -ի կողմից</span> <a href='{{post_path}}' class='back'> #{{post_number}} հրապարակման մեջ</a>"
-      accepted_notification: "<p><span>{{username}}</span> {{description}}</p>"
       topic_status_filter:
         all: "բոլոր"
         solved: "լուծված"

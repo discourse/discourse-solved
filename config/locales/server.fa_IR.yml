@@ -13,3 +13,6 @@ fa_IR:
       title: "راه حل مورد قبول"
       xaxis: "روز"
       yaxis: "مجموع"
+  solved:
+    no_solutions:
+      others: "هیچ راه حل پذیرفته ای وجود ندارد"

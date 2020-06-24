@@ -7,7 +7,7 @@
 
 fr:
   site_settings:
-    solved_enabled: "Activer le plugin Solutions, autoriser les utilisateurs à sélectionner des solutions aux sujets"
+    solved_enabled: "Activer l'extension Solutions permettant aux utilisateurs de sélectionner des solutions aux sujets"
     allow_solved_on_all_topics: "Autoriser les utilisateurs à sélectionner une solution sur tous les sujets (par défaut, vous devez modifier les catégories concernées)"
     accept_all_solutions_trust_level: "Niveau de confiance minimum requis pour accepter des solutions sur n'importe quel sujet (même sans en être l'auteur)"
     empty_box_on_unsolved: "Afficher une coche vide à côté des sujets non résolus"
@@ -22,7 +22,7 @@ fr:
   solved:
     no_solutions:
       self: "Vous n'avez pas encore de solutions acceptées."
-      others: "Aucune solution acceptées."
+      others: "Aucune solution acceptée."
   badges:
     helpdesk:
       name: "Centre d'assistance"

@@ -7,6 +7,10 @@
 
 gl:
   js:
+    notifications:
+      alt:
+        solved:
+          accepted_notification: "aceptado"
     solved:
       topic_status_filter:
         all: "todo"

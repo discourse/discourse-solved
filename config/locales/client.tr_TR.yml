@@ -23,8 +23,6 @@ tr_TR:
       solution_summary:
         one: "çözüm"
         other: "çözümler"
-      accepted_html: "{{icon}}Bu konu <span class='by'><a href data-user-card='{{username_lower}}'>{{username}}</a></span> tarafından <a href='{{post_path}}' class='back'>şu gönderide #{{post_number}}</a> çözülmüştür."
-      accepted_notification: "<p><span>{{username}}</span>{{description}}</p>"
       topic_status_filter:
         all: "tüm"
         solved: "çözüldü"

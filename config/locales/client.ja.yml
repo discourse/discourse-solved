@@ -21,8 +21,6 @@ ja:
       solution: "解決策"
       solution_summary:
         other: "解決策"
-      accepted_html: "{{icon}}<a href='{{post_path}}' class='back'>ポスト #{{post_number}}</a>は<span class='by'><a href data-user-card='{{username_lower}}'>{{username}}</a>によって</span>解決されました"
-      accepted_notification: "<p><span>{{username}}</span>{{description}}</p>"
       topic_status_filter:
         all: "すべて"
         solved: "解決済み"

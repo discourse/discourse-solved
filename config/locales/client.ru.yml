@@ -25,8 +25,8 @@ ru:
         few: "Вопроса решёны"
         many: "Вопросов решёны"
         other: "Вопросов решёны"
-      accepted_html: "{{icon}} Решён пользователем <span class='by'> - <a href data-user-card='{{username_lower}}'>{{username}}</a></span> в <a href='{{post_path}}' class='back'>посте #{{post_number}}</a>"
-      accepted_notification: "<p><span>{{username}}</span> {{description}}</p>"
+      accepted_html: "%{icon} Решён пользователем <span class='by'> - <a href data-user-card='%{username_lower}'>%{username}</a></span> в <a href='%{post_path}' class='back'>посте #%{post_number}</a>"
+      accepted_notification: "<p><span>%{username}</span> %{description}</p>"
       topic_status_filter:
         all: "все"
         solved: "Решённые"

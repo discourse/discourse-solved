@@ -23,8 +23,6 @@ ur:
       solution_summary:
         one: "حل"
         other: "حل"
-      accepted_html: "{{icon}} حل کر دیا گیا <span class='by'><a href data-user-card='{{username_lower}}'>{{username}}</a>کی طرف سے</span> <a href='{{post_path}}' class='back'>پوسٹ # {{post_number}}</a> میں"
-      accepted_notification: "<p><span>{{username}}</span> {{description}}</p>"
       topic_status_filter:
         all: "تمام"
         solved: "حل شدہ"

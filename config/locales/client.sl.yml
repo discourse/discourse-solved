@@ -24,8 +24,6 @@ sl:
         two: "rešitvi"
         few: "rešitve"
         other: "rešitev"
-      accepted_html: "{{icon}} Rešeno od <a href data-user-card='{{username_lower}}'>{{username}}</a></span> v <a href='{{post_path}}' class='back'>prispevku #{{post_number}}</a>"
-      accepted_notification: "<p><span>{{username}}</span> {{description}}</p>"
       topic_status_filter:
         all: "vse"
         solved: "rešeno"
