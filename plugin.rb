@@ -250,7 +250,6 @@ SQL
     mount ::DiscourseSolved::Engine, at: "solution"
   end
 
-
   # TODO Drop after Discourse 2.6.0 release
   if TopicView.respond_to?(:add_post_custom_fields_whitelister)
     TopicView.add_post_custom_fields_whitelister do |user|
