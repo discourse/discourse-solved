@@ -148,4 +148,21 @@ RSpec.describe "Managing Posts solved status" do
       expect(payload["id"]).to eq(p1.id)
     end
   end
+
+  context 'group moderators' do
+    fab!(:group_user) { Fabricate(:group_user) }
+    let(:user_gm) { group_user.user }
+    let(:group) { group_user.group }
+
+    before do
+      SiteSetting.enable_category_group_moderation = true
+      p1.topic.category.update!(reviewable_by_group_id: group.id)
+      sign_in(user_gm)
+    end
+
+    it 'can accept a solution' do
+      post "/solution/accept.json", params: { id: p1.id }
+      expect(response.status).to eq(200)
+    end
+  end
 end
