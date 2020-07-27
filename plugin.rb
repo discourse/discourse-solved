@@ -472,6 +472,10 @@ SQL
       return true if is_staff?
       return true if current_user.trust_level >= SiteSetting.accept_all_solutions_trust_level
 
+      if respond_to? :can_perform_action_available_to_group_moderators?
+        return true if can_perform_action_available_to_group_moderators?(topic)
+      end
+
       topic.user_id == current_user.id && !topic.closed
 
     end
