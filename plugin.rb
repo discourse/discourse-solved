@@ -251,12 +251,12 @@ SQL
   end
 
   # TODO Drop after Discourse 2.6.0 release
-  if TopicView.respond_to?(:add_post_custom_fields_whitelister)
-    TopicView.add_post_custom_fields_whitelister do |user|
+  if TopicView.respond_to?(:add_post_custom_fields_allowlister)
+    TopicView.add_post_custom_fields_allowlister do |user|
       ["is_accepted_answer"]
     end
   else
-    TopicView.add_post_custom_fields_allowlister do |user|
+    TopicView.add_post_custom_fields_whitelister do |user|
       ["is_accepted_answer"]
     end
   end
