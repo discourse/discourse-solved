@@ -1,9 +1,8 @@
-# encoding: utf-8
-#
-# Never edit this file. It will be overwritten when translations are pulled from Transifex.
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
 #
 # To work with us on translations, join this project:
-# https://www.transifex.com/projects/p/discourse-org/
+# https://translate.discourse.org/
 
 ru:
   site_settings:
@@ -23,3 +22,10 @@ ru:
     no_solutions:
       self: "У вас пока нет решённых вопросов."
       others: "Нет решённых вопросов."
+  badges:
+    helpdesk:
+      name: "Служба поддержки"
+      description: "Первый принятый ответ по теме"
+    tech_support:
+      name: "Техническая поддержка"
+      description: "10 принятых ответов"

@@ -1,8 +1,31 @@
-# encoding: utf-8
-#
-# Never edit this file. It will be overwritten when translations are pulled from Transifex.
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
 #
 # To work with us on translations, join this project:
-# https://www.transifex.com/projects/p/discourse-org/
+# https://translate.discourse.org/
 
-sl: {}
+sl:
+  site_settings:
+    solved_enabled: "Omogočite vtičnik za rešitve, omogočite uporabnikom, da izberejo rešitve za teme"
+    allow_solved_on_all_topics: "Dovoli uporabnikom, da izberejo rešitve za vse teme (privzeto to nadzorujete z urejanjem kategorij)"
+    accept_all_solutions_trust_level: "Minimalna raven zaupanja, potrebna za sprejemanje rešitev za katero koli temo (tudi če ni avtor teme)"
+    empty_box_on_unsolved: "Prikaz praznega polja ob nerešenih temah"
+    solved_quote_length: "Število citiranih znakov rešitve pod prvo objavo"
+    solved_topics_auto_close_hours: "Samodejno zapiranje teme (n) ur po zadnjem odgovoru, ko je tema označena kot rešena"
+    show_filter_by_solved_status: "Prikažite spustni seznam, če želite filtrirati seznam tem po rešenem stanju."
+  reports:
+    accepted_solutions:
+      title: "Sprejete rešitve"
+      xaxis: "Dan"
+      yaxis: "Skupaj"
+  solved:
+    no_solutions:
+      self: "Zaenkrat nimate sprejetih rešitev."
+      others: "Ni sprejetih rešitev."
+  badges:
+    helpdesk:
+      name: "Služba za pomoč"
+      description: "Prvi sprejeti odgovor na temo"
+    tech_support:
+      name: "Tehnična podpora"
+      description: "10 Sprejetih odgovorov"
