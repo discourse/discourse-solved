@@ -7,5 +7,32 @@
 el:
   js:
     solved:
+      title: "Λύθηκε"
+      allow_accepted_answers: "Επιτρέψτε στον κάτοχο και το προσωπικό να επισημάνει μια απάντηση ως λύση"
+      accept_answer: "Επιλέξτε αν αυτή η απάντηση λύνει το πρόβλημα"
+      accepted_description: "Αυτή είναι η αποδεκτή λύση σε αυτό το θέμα"
+      has_no_accepted_answer: "Αυτό το θέμα δεν έχει καμία λύση"
+      unaccept_answer: "Απενεργοποιήστε την επιλογή αν αυτή η απάντηση δεν λύνει πλέον το πρόβλημα"
+      accepted_answer: "Λύση"
+      solution: "Λύση"
+      solution_summary:
+        one: "λύση"
+        other: "λύση"
+      accepted_html: "%{icon} Λύθηκε <span class='by'>από <a href data-user-card='%{username_lower}'>%{username}</a></span> σε <a href='%{post_path}' class='back'>θέση #%{post_number}</a>"
+      accepted_notification: "<p><span>%{username}</span> %{description}</p>"
       topic_status_filter:
         all: "όλα"
+        solved: "λύθηκε"
+        unsolved: "άλυτο"
+    topic_statuses:
+      solved:
+        help: "Αυτό το θέμα έχει μια λύση"
+    search:
+      advanced:
+        statuses:
+          solved: "έχουν επιλυθεί"
+    admin:
+      web_hooks:
+        solved_event:
+          name: "Επιλύθηκε γεγονός"
+          details: "Όταν ένας χρήστης επισημαίνει μια ανάρτηση ως αποδεκτή ή μη αποδεκτή απάντηση."
