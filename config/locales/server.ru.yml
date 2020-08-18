@@ -15,7 +15,7 @@ ru:
     show_filter_by_solved_status: "Отображать раскрывающийся список для фильтрации тем по статусу <b>Решённые/Нерешённые</b>."
   reports:
     accepted_solutions:
-      title: "Решённые"
+      title: "Решённые вопросы"
       xaxis: "День"
       yaxis: "Всего"
   solved:
