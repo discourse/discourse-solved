@@ -1,3 +1,4 @@
+import I18n from "I18n";
 import DiscourseUrl from "discourse/lib/url";
 
 export default {
@@ -16,10 +17,10 @@ export default {
   },
 
   setupComponent(args, component) {
-    const statuses = ["all", "solved", "unsolved"].map(status => {
+    const statuses = ["all", "solved", "unsolved"].map((status) => {
       return {
         name: I18n.t(`solved.topic_status_filter.${status}`),
-        value: status
+        value: status,
       };
     });
     component.set("statuses", statuses);
@@ -42,7 +43,7 @@ export default {
         ? queryStrings.substr(1).split("&")
         : [];
 
-      params = params.filter(param => !param.startsWith("solved="));
+      params = params.filter((param) => !param.startsWith("solved="));
 
       if (newStatus && newStatus !== "all") {
         newStatus = newStatus === "solved" ? "yes" : "no";
@@ -53,6 +54,6 @@ export default {
       DiscourseUrl.routeTo(
         `${location.pathname}${queryStrings}${location.hash}`
       );
-    }
-  }
+    },
+  },
 };

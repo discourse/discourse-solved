@@ -3,11 +3,11 @@ import { acceptance } from "helpers/qunit-helpers";
 acceptance("Discourse Solved Plugin", {
   loggedIn: true,
   beforeEach() {
-    const response = object => {
+    const response = (object) => {
       return [200, { "Content-Type": "application/json" }, object];
     };
 
-    const postStreamWithAcceptedAnswerExcerpt = excerpt => {
+    const postStreamWithAcceptedAnswerExcerpt = (excerpt) => {
       return {
         post_stream: {
           posts: [
@@ -49,7 +49,7 @@ acceptance("Discourse Solved Plugin", {
                 { id: 4, can_act: true },
                 { id: 5, hidden: true, can_act: true },
                 { id: 7, can_act: true },
-                { id: 8, can_act: true }
+                { id: 8, can_act: true },
               ],
               moderator: false,
               admin: true,
@@ -65,7 +65,7 @@ acceptance("Discourse Solved Plugin", {
               wiki: false,
               can_accept_answer: false,
               can_unaccept_answer: false,
-              accepted_answer: false
+              accepted_answer: false,
             },
             {
               id: 22,
@@ -106,7 +106,7 @@ acceptance("Discourse Solved Plugin", {
                 { id: 4, can_act: true },
                 { id: 5, hidden: true, can_act: true },
                 { id: 7, can_act: true },
-                { id: 8, can_act: true }
+                { id: 8, can_act: true },
               ],
               moderator: false,
               admin: true,
@@ -122,10 +122,10 @@ acceptance("Discourse Solved Plugin", {
               wiki: false,
               can_accept_answer: false,
               can_unaccept_answer: true,
-              accepted_answer: true
-            }
+              accepted_answer: true,
+            },
           ],
-          stream: [21, 22]
+          stream: [21, 22],
         },
         timeline_lookup: [[1, 0]],
         id: 23,
@@ -164,13 +164,13 @@ acceptance("Discourse Solved Plugin", {
             id: 1,
             username: "kzh",
             avatar_template:
-              "/letter_avatar_proxy/v2/letter/k/ac91a4/{size}.png"
+              "/letter_avatar_proxy/v2/letter/k/ac91a4/{size}.png",
           },
           last_poster: {
             id: 1,
             username: "kzh",
             avatar_template:
-              "/letter_avatar_proxy/v2/letter/k/ac91a4/{size}.png"
+              "/letter_avatar_proxy/v2/letter/k/ac91a4/{size}.png",
           },
           participants: [
             {
@@ -182,8 +182,8 @@ acceptance("Discourse Solved Plugin", {
               primary_group_name: null,
               primary_group_flair_url: null,
               primary_group_flair_color: null,
-              primary_group_flair_bg_color: null
-            }
+              primary_group_flair_bg_color: null,
+            },
           ],
           notification_level: 3,
           notifications_reason_id: 1,
@@ -195,7 +195,7 @@ acceptance("Discourse Solved Plugin", {
           can_invite_via_email: true,
           can_create_post: true,
           can_reply_as_new_topic: true,
-          can_flag_topic: true
+          can_flag_topic: true,
         },
         highest_post_number: 2,
         last_read_post_number: 2,
@@ -205,7 +205,7 @@ acceptance("Discourse Solved Plugin", {
         actions_summary: [
           { id: 4, count: 0, hidden: false, can_act: true },
           { id: 7, count: 0, hidden: false, can_act: true },
-          { id: 8, count: 0, hidden: false, can_act: true }
+          { id: 8, count: 0, hidden: false, can_act: true },
         ],
         chunk_size: 20,
         bookmarked: false,
@@ -213,7 +213,7 @@ acceptance("Discourse Solved Plugin", {
         featured_link: null,
         topic_timer: null,
         message_bus_last_id: 0,
-        accepted_answer: { post_number: 2, username: "kzh", excerpt: excerpt }
+        accepted_answer: { post_number: 2, username: "kzh", excerpt: excerpt },
       };
     };
 
@@ -228,10 +228,10 @@ acceptance("Discourse Solved Plugin", {
     server.get("/t/12.json", () => {
       return response(postStreamWithAcceptedAnswerExcerpt(null));
     });
-  }
+  },
 });
 
-test("A topic with an accepted answer shows an excerpt of the answer, if provided", assert => {
+test("A topic with an accepted answer shows an excerpt of the answer, if provided", (assert) => {
   visit("/t/with-excerpt/11");
 
   andThen(() => {

@@ -12,9 +12,9 @@ export default {
         {
           get(fieldName) {
             return Ember.get(this.custom_fields, fieldName) === "true";
-          }
+          },
         }
-      )
+      ),
     });
-  }
+  },
 };

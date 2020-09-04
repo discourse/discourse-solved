@@ -3,5 +3,5 @@ export default {
 
   map() {
     this.route("solved");
-  }
+  },
 };
