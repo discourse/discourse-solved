@@ -1,3 +1,4 @@
+import I18n from "I18n";
 import Topic from "discourse/models/topic";
 import User from "discourse/models/user";
 import TopicStatus from "discourse/raw-views/topic-status";
@@ -13,12 +14,12 @@ import SearchAdvancedOptions from "discourse/components/search-advanced-options"
 
 function clearAccepted(topic) {
   const posts = topic.get("postStream.posts");
-  posts.forEach(post => {
+  posts.forEach((post) => {
     if (post.get("post_number") > 1) {
       post.setProperties({
         accepted_answer: false,
         can_accept_answer: true,
-        can_unaccept_answer: false
+        can_unaccept_answer: false,
       });
     }
   });
@@ -33,13 +34,13 @@ function unacceptPost(post) {
   post.setProperties({
     can_accept_answer: true,
     can_unaccept_answer: false,
-    accepted_answer: false
+    accepted_answer: false,
   });
   topic.set("accepted_answer", undefined);
 
   ajax("/solution/unaccept", {
     type: "POST",
-    data: { id: post.id }
+    data: { id: post.id },
   }).catch(popupAjaxError);
 }
 
@@ -51,18 +52,18 @@ function acceptPost(post) {
   post.setProperties({
     can_unaccept_answer: true,
     can_accept_answer: false,
-    accepted_answer: true
+    accepted_answer: true,
   });
 
   topic.set("accepted_answer", {
     username: post.username,
     post_number: post.post_number,
-    excerpt: post.cooked
+    excerpt: post.cooked,
   });
 
   ajax("/solution/accept", {
     type: "POST",
-    data: { id: post.id }
+    data: { id: post.id },
   }).catch(popupAjaxError);
 }
 
@@ -72,7 +73,7 @@ function initializeWithApi(api) {
   TopicStatusIcons.addObject([
     "has_accepted_answer",
     "far-check-square",
-    "solved"
+    "solved",
   ]);
 
   api.includePostAttributes(
@@ -85,7 +86,7 @@ function initializeWithApi(api) {
     api.addDiscoveryQueryParam("solved", { replace: true, refreshModel: true });
   }
 
-  api.addPostMenuButton("solved", attrs => {
+  api.addPostMenuButton("solved", (attrs) => {
     const canAccept = attrs.can_accept_answer;
     const canUnaccept = attrs.can_unaccept_answer;
     const accepted = attrs.accepted_answer;
@@ -100,7 +101,7 @@ function initializeWithApi(api) {
         className: "unaccepted",
         title: "solved.accept_answer",
         label: "solved.solution",
-        position
+        position,
       };
     } else if (canUnaccept && accepted) {
       const title = canUnaccept
@@ -112,7 +113,7 @@ function initializeWithApi(api) {
         title,
         className: "accepted fade-out",
         position,
-        label: "solved.solution"
+        label: "solved.solution",
       };
     } else if (!canAccept && accepted) {
       return {
@@ -123,19 +124,19 @@ function initializeWithApi(api) {
           return h(
             "span.accepted-text",
             {
-              title: I18n.t("solved.accepted_description")
+              title: I18n.t("solved.accepted_description"),
             },
             [
               h("span", iconNode("check")),
-              h("span.accepted-label", I18n.t("solved.solution"))
+              h("span.accepted-label", I18n.t("solved.solution")),
             ]
           );
-        }
+        },
       };
     }
   });
 
-  api.decorateWidget("post-contents:after-cooked", dec => {
+  api.decorateWidget("post-contents:after-cooked", (dec) => {
     if (dec.attrs.post_number === 1) {
       const postModel = dec.getModel();
       if (postModel) {
@@ -172,23 +173,23 @@ function initializeWithApi(api) {
     }
   });
 
-  api.attachWidgetAction("post", "acceptAnswer", function() {
+  api.attachWidgetAction("post", "acceptAnswer", function () {
     const post = this.model;
-    const current = post.get("topic.postStream.posts").filter(p => {
+    const current = post.get("topic.postStream.posts").filter((p) => {
       return p.post_number === 1 || p.accepted_answer;
     });
     acceptPost(post);
 
-    current.forEach(p =>
+    current.forEach((p) =>
       this.appEvents.trigger("post-stream:refresh", { id: p.id })
     );
   });
 
-  api.attachWidgetAction("post", "unacceptAnswer", function() {
+  api.attachWidgetAction("post", "unacceptAnswer", function () {
     const post = this.model;
     const op = post
       .get("topic.postStream.posts")
-      .find(p => p.post_number === 1);
+      .find((p) => p.post_number === 1);
     unacceptPost(post);
     this.appEvents.trigger("post-stream:refresh", { id: op.id });
   });
@@ -197,7 +198,7 @@ function initializeWithApi(api) {
     api.registerConnectorClass("user-activity-bottom", "solved-list", {
       shouldRender(args, component) {
         return component.siteSettings.solved_enabled;
-      }
+      },
     });
     api.registerConnectorClass("user-summary-stat", "solved-count", {
       shouldRender(args, component) {
@@ -207,7 +208,7 @@ function initializeWithApi(api) {
       },
       setupComponent() {
         this.set("classNames", ["linked-stat"]);
-      }
+      },
     });
   }
 }
@@ -217,7 +218,7 @@ export default {
   initialize() {
     Topic.reopen({
       // keeping this here cause there is complex localization
-      acceptedAnswerHtml: Ember.computed("accepted_answer", "id", function() {
+      acceptedAnswerHtml: Ember.computed("accepted_answer", "id", function () {
         const username = this.get("accepted_answer.username");
         const postNumber = this.get("accepted_answer.post_number");
 
@@ -231,13 +232,13 @@ export default {
           username: formatUsername(username),
           post_path: `${this.url}/${postNumber}`,
           post_number: postNumber,
-          user_path: User.create({ username }).path
+          user_path: User.create({ username }).path,
         });
-      })
+      }),
     });
 
     TopicStatus.reopen({
-      statuses: Ember.computed(function() {
+      statuses: Ember.computed(function () {
         const results = this._super(...arguments);
 
         if (this.topic.has_accepted_answer) {
@@ -245,7 +246,7 @@ export default {
             openTag: "span",
             closeTag: "span",
             title: I18n.t("topic_statuses.solved.help"),
-            icon: "far-check-square"
+            icon: "far-check-square",
           });
         } else if (
           this.topic.can_have_answer &&
@@ -256,11 +257,11 @@ export default {
             openTag: "span",
             closeTag: "span",
             title: I18n.t("solved.has_no_accepted_answer"),
-            icon: "far-square"
+            icon: "far-square",
           });
         }
         return results;
-      })
+      }),
     });
 
     SearchAdvancedOptions.reopen({
@@ -268,18 +269,18 @@ export default {
         this._super();
         this.statusOptions.push({
           name: I18n.t("search.advanced.statuses.solved"),
-          value: "solved"
+          value: "solved",
         });
-      }
+      },
     });
 
     withPluginApi("0.1", initializeWithApi);
 
-    withPluginApi("0.8.10", api => {
+    withPluginApi("0.8.10", (api) => {
       api.replaceIcon(
         "notification.solved.accepted_notification",
         "check-square"
       );
     });
-  }
+  },
 };
