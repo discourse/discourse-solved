@@ -184,19 +184,6 @@ function initializeWithApi(api) {
     );
   });
 
-  api.addAdvancedSearchOptions({
-    statusOptions: [
-      {
-        name: I18n.t("search.advanced.statuses.solved"),
-        value: "solved",
-      },
-      {
-        name: I18n.t("search.advanced.statuses.unsolved"),
-        value: "unsolved",
-      },
-    ],
-  });
-
   api.attachWidgetAction("post", "unacceptAnswer", function () {
     const post = this.model;
     const op = post
@@ -283,6 +270,21 @@ export default {
         "notification.solved.accepted_notification",
         "check-square"
       );
+    });
+
+    withPluginApi("0.11.0", (api) => {
+      api.addAdvancedSearchOptions({
+        statusOptions: [
+          {
+            name: I18n.t("search.advanced.statuses.solved"),
+            value: "solved",
+          },
+          {
+            name: I18n.t("search.advanced.statuses.unsolved"),
+            value: "unsolved",
+          },
+        ],
+      });
     });
   },
 };
