@@ -10,7 +10,6 @@ import PostCooked from "discourse/widgets/post-cooked";
 import { formatUsername } from "discourse/lib/utilities";
 import { iconHTML } from "discourse-common/lib/icon-library";
 import { iconNode } from "discourse-common/lib/icon-library";
-import SearchAdvancedOptions from "discourse/components/search-advanced-options";
 
 function clearAccepted(topic) {
   const posts = topic.get("postStream.posts");
@@ -185,6 +184,19 @@ function initializeWithApi(api) {
     );
   });
 
+  api.addAdvancedSearchOptions({
+    statusOptions: [
+      {
+        name: I18n.t("search.advanced.statuses.solved"),
+        value: "solved",
+      },
+      {
+        name: I18n.t("search.advanced.statuses.unsolved"),
+        value: "unsolved",
+      },
+    ],
+  });
+
   api.attachWidgetAction("post", "unacceptAnswer", function () {
     const post = this.model;
     const op = post
@@ -262,16 +274,6 @@ export default {
         }
         return results;
       }),
-    });
-
-    SearchAdvancedOptions.reopen({
-      didInsertElement() {
-        this._super();
-        this.statusOptions.push({
-          name: I18n.t("search.advanced.statuses.solved"),
-          value: "solved",
-        });
-      },
     });
 
     withPluginApi("0.1", initializeWithApi);
