@@ -32,6 +32,7 @@ en:
       advanced:
         statuses:
           solved: "are solved"
+          unsolved: "are unsolved"
 
     admin:
       web_hooks:
