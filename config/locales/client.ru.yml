@@ -37,6 +37,7 @@ ru:
       advanced:
         statuses:
           solved: "Решённые"
+          unsolved: "Нерешённые"
     admin:
       web_hooks:
         solved_event:

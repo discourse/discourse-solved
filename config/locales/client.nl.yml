@@ -35,6 +35,7 @@ nl:
       advanced:
         statuses:
           solved: "zijn opgelost"
+          unsolved: "zijn niet opgelost"
     admin:
       web_hooks:
         solved_event:
