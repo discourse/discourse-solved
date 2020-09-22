@@ -9,12 +9,12 @@ sv:
     notifications:
       alt:
         solved:
-          accepted_notification: "godkänd"
+          accepted_notification: "accepterad"
     solved:
       title: "Löst"
       allow_accepted_answers: "Låt ämnesägare och personal markera ett svar som lösningen"
-      accept_answer: "Välj det här om detta svar löser problemet"
-      accepted_description: "Detta är den godkända lösningen på detta ämne"
+      accept_answer: "Välj om det här svaret löser problemet"
+      accepted_description: "Detta är den accepterade lösningen för detta ämne"
       has_no_accepted_answer: "Detta ämne har ingen lösning"
       unaccept_answer: "Avmarkera om detta svar inte längre löser problemet"
       accepted_answer: "Lösning"
@@ -35,8 +35,9 @@ sv:
       advanced:
         statuses:
           solved: "är lösta"
+          unsolved: "är olösta"
     admin:
       web_hooks:
         solved_event:
           name: "Löst händelse"
-          details: "När en användare markerar ett svarsinlägg som accepterat eller icke accepterat. "
+          details: "När en användare markerar ett svarsinlägg som accepterat eller icke accepterat."
