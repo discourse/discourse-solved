@@ -37,6 +37,7 @@ he:
       advanced:
         statuses:
           solved: "נפתרו"
+          unsolved: "לא נפתרו"
     admin:
       web_hooks:
         solved_event:
