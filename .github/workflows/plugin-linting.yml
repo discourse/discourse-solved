@@ -39,6 +39,7 @@ jobs:
       - name: Prettier
         run: |
           yarn prettier -v
+          [ -d "assets" ] && \
           yarn prettier --list-different \
             "assets/**/*.{scss,js,es6}"
 
