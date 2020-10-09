@@ -1,6 +1,11 @@
 name: Plugin Tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
 
 jobs:
   build:
@@ -23,7 +28,7 @@ jobs:
 
       matrix:
         build_types: ["BACKEND", "FRONTEND"]
-        target: ["PLUGINS", "CORE"]
+        target: ["PLUGINS"]
         os: [ubuntu-latest]
         ruby: ["2.6"]
         postgres: ["12"]
