@@ -40,10 +40,7 @@ jobs:
         run: |
           yarn prettier -v
           if [ -d "assets" ]; then \
-            yarn prettier --list-different \
-              "assets/**/*.{scss,js,es6}" \
-          else \
-            exit 0 \
+            yarn prettier --list-different "assets/**/*.{scss,js,es6}" ; \
           fi
 
       - name: Rubocop
