@@ -9,19 +9,26 @@ fa_IR:
     notifications:
       alt:
         solved:
-          accepted_notification: "تأیدد شده"
+          accepted_notification: "تایید شده"
     solved:
       title: "حل شده"
       allow_accepted_answers: "به صاحب عنوان و مدیران اجازه انتخاب یک پاسخ را به عنوان راه حل بده."
-      accept_answer: "انتخاب کنید اگر این پاسخ مشکل را حل کرده است"
+      accept_answer: "اگر این پاسخ مشکل را حل می‌کند، آن را انتخاب کنید"
       has_no_accepted_answer: "این موضوع هیچ راه حلی ندارد"
       accepted_answer: "راه حل مورد قبول"
       solution: "راه حل"
       solution_summary:
         one: "راه حل"
         other: "راه حل ها"
+      accepted_notification: "<p><span>%{username}</span> %{description}</p>"
       topic_status_filter:
         all: "همه"
+        solved: "حل شده"
+        unsolved: "حل نشده"
     topic_statuses:
       solved:
         help: "این موضوع راه حلی دارد"
+    search:
+      advanced:
+        statuses:
+          solved: "حل شده‌اند"
