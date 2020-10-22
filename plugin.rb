@@ -108,17 +108,29 @@ SQL
           )
         end
 
+        notification_data = {
+          message: 'solved.accepted_notification',
+          display_username: acting_user.username,
+          topic_title: topic.title
+        }.to_json
+
         unless acting_user.id == post.user_id
           Notification.create!(
             notification_type: Notification.types[:custom],
             user_id: post.user_id,
             topic_id: post.topic_id,
             post_number: post.post_number,
-            data: {
-              message: 'solved.accepted_notification',
-              display_username: acting_user.username,
-              topic_title: topic.title
-            }.to_json
+            data: notification_data
+          )
+        end
+
+        if SiteSetting.notify_op_on_staff_accept && acting_user.id != topic.user_id
+          Notification.create!(
+            notification_type: Notification.types[:custom],
+            user_id: topic.user_id,
+            topic_id: post.topic_id,
+            post_number: post.post_number,
+            data: notification_data
           )
         end
 

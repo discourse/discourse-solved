@@ -64,6 +64,32 @@ RSpec.describe "Managing Posts solved status" do
       expect(topic.public_topic_timer.based_on_last_post).to eq(true)
     end
 
+    it 'sends notifications to correct users' do
+      SiteSetting.notify_op_on_staff_accept = true
+      user = Fabricate(:user)
+      topic = Fabricate(:topic, user: user)
+      post = Fabricate(:post, post_number: 2, topic: topic)
+
+      op = topic.user
+      user = post.user
+
+      expect {
+        DiscourseSolved.accept_answer!(post, Discourse.system_user)
+      }.to \
+        change { user.notifications.count }.by(1) &
+        change { op.notifications.count }.by(1)
+
+      notification = user.notifications.last
+      expect(notification.notification_type).to eq(Notification.types[:custom])
+      expect(notification.topic_id).to eq(post.topic_id)
+      expect(notification.post_number).to eq(post.post_number)
+
+      notification = op.notifications.last
+      expect(notification.notification_type).to eq(Notification.types[:custom])
+      expect(notification.topic_id).to eq(post.topic_id)
+      expect(notification.post_number).to eq(post.post_number)
+    end
+
     it 'does not set a timer when the topic is closed' do
       topic.update!(closed: true)
       post "/solution/accept.json", params: { id: p1.id }
