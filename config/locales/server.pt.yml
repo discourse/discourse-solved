@@ -11,7 +11,6 @@ pt:
     accept_all_solutions_trust_level: "Nível de confiança mínimo necessário para aceitar soluções em qualquer tópico (mesmo quando não é o autor do tópico)"
     empty_box_on_unsolved: "Mostrar uma caixa vazia junto a tópicos não soluccionados"
     solved_quote_length: "O número de carateres a serem citados quando exibir a solução debaixo da primeira mensagem"
-    solved_topics_auto_close_hours: "Fechar automaticamente o tópico (n) horas depois do tópico ser marcado como solução"
   reports:
     accepted_solutions:
       title: "Soluções aceites"

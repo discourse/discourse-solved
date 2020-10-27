@@ -11,7 +11,6 @@ de:
     accept_all_solutions_trust_level: "Vertrauensstufe, die das Akzeptieren von Lösungen in jedem Thema erlaubt (selbst wenn kein eigener Beitrag)"
     empty_box_on_unsolved: "Zeige eine leere Box neben ungelösten Themen"
     solved_quote_length: "Anzahl der Zeichen, die zitiert werden, wenn die Lösung unterhalb des ersten Beitrags angezeigt wird"
-    solved_topics_auto_close_hours: "Thema automatisch (n) Stunden nach der letzten Antwort schließen, sobald das Thema als gelöst markiert wurde"
     show_filter_by_solved_status: "Anzeige einer Dropdown-Liste, um eine Themenliste nach gelöst-Status zu filtern"
   reports:
     accepted_solutions:

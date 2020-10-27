@@ -11,7 +11,6 @@ cs:
     accept_all_solutions_trust_level: "Minimální důvěryhodnost požadovaná pro schválení řešení jakéhokoliv tématu (i když není OP)"
     empty_box_on_unsolved: "Zobrazit prázdný box vedle nevyřešených témat"
     solved_quote_length: "Počet citovaných znaků daného řešení tématu pod prvním příspěvkem"
-    solved_topics_auto_close_hours: "Automaticky uzavřít téma po (n) hodinách od poslední odpovědi, jakmile téma bylo označeno za vyřešené"
   reports:
     accepted_solutions:
       title: "Přijatá řešení"

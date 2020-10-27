@@ -11,7 +11,6 @@ hu:
     accept_all_solutions_trust_level: "Szükséges minimum bizalmi szint a megoldások elfogadásához bármelyik témában (even when not OP)"
     empty_box_on_unsolved: "Egy üres doboz megjelenítése a megoldatlan témák mellett"
     solved_quote_length: "Idézett karakterek száma amikor a megoldás megjelenik az első bejegyzés alatt"
-    solved_topics_auto_close_hours: "Automatikusan zárja le a témát (n) órával az utolsó válasz után, miután a témát megoldották"
   reports:
     accepted_solutions:
       title: "Elfogadott megoldások"

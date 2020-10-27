@@ -11,7 +11,6 @@ fi:
     accept_all_solutions_trust_level: "Luottamustaso joka vaaditaan, jotta voi merkitä ratkaisuksi (vaikkei olisikaan itse kysyjä)"
     empty_box_on_unsolved: "Näytä tyhjä laatikko ratkaisemattomien ketjujen yhteydessä"
     solved_quote_length: "Kuinka monta merkkiä näytetään, kun lainataan ratkaisua ketjun avausviestin alapuolella"
-    solved_topics_auto_close_hours: "Sulje ketju automaattisesti (n) tunnin kuluttua viimeisestä vastauksesta, kun aihe on ratkaistu"
     show_filter_by_solved_status: "Näytä pudotusvalikko, jolla voi suodattaa ketjulistausta selvitystilan mukaan."
   reports:
     accepted_solutions:
