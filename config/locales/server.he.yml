@@ -11,7 +11,6 @@ he:
     accept_all_solutions_trust_level: "רמת האמון המזערית שנדרשת לקבלת פתרונות בכל נושא שהוא (אפילו לא בתור המפרסם המקורי)"
     empty_box_on_unsolved: "להציג תיבה ריקה ליד הנושאים שלא נפתרו"
     solved_quote_length: "מספר התווים לציטוט בעת הצגת הפתרון תחת הפוסט הראשון"
-    solved_topics_auto_close_hours: "לסגור נושא אוטומטית (n) שעות לאחר התגובה האחרונה כאשר הנושא סומן כפתור"
     show_filter_by_solved_status: "הצגת רשימה נגללת כדי לסנן רשימת נושאים לפי מצב פתרון."
   reports:
     accepted_solutions:

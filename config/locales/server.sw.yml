@@ -11,7 +11,6 @@ sw:
     accept_all_solutions_trust_level: "Kiwango cha chini cha uaminifu kinachohitajika kukubali suluhisho kwenye mada zozote (hata kama sio OP)"
     empty_box_on_unsolved: "Onyesha boxi lililowazi pembeni ya mada ambazo hazijatatuliwa"
     solved_quote_length: "Namba za herufi kunuku wakati wa kuonyesha suluhisho chini ya taarifa za kwanza."
-    solved_topics_auto_close_hours: "Mada iliyopita (n) hours itajifunga yenyewe baada ya jibu la mwisho pale kipindi mada ikipata ufumbuzi au suluhisho "
   reports:
     accepted_solutions:
       title: "Majibu yaliyokubaliwa"

@@ -11,7 +11,6 @@ es:
     accept_all_solutions_trust_level: "Nivel de confianza mínimo requerido para aceptar soluciones en cualquier tema (incluso cuando no sea el publicador original)"
     empty_box_on_unsolved: "Mostrar un cuadro vacío junto a los temas sin solución"
     solved_quote_length: "Número de caracteres que se citan al mostrar la solución debajo de la primera publicación"
-    solved_topics_auto_close_hours: "Cierre automático del tema (n) horas después de la última respuesta una vez que el tema se haya marcado como solucionado"
     show_filter_by_solved_status: "Mostrar un menú desplegable para filtrar una lista de temas por estado de solución."
   reports:
     accepted_solutions:

@@ -11,7 +11,6 @@ ro:
     accept_all_solutions_trust_level: "Nivelul minim de încredere necesar pentru a accepta soluții la fiecare subiect (chiar dacă nu este OP)."
     empty_box_on_unsolved: "Afișați o casetă goală lângă subiectele nerezolvate"
     solved_quote_length: "Numărul de caractere de citat când se afișează soluția sub prima postare"
-    solved_topics_auto_close_hours: "Închide subiectul automat la (n) ore după ultimul răspuns după ce subiectul a fost marcat ca rezolvat"
     show_filter_by_solved_status: "Afișați o listă verticală pentru a filtra o listă de subiecte după criteriul rezolvat/nerezolvat."
   reports:
     accepted_solutions:

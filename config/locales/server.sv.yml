@@ -11,7 +11,6 @@ sv:
     accept_all_solutions_trust_level: "Lägsta förtroendenivå som krävs för att godkänna lösningar för endera ämne (ursprunglig skribent eller ej)"
     empty_box_on_unsolved: "Visa en tom ruta bredvid olösta ämnen"
     solved_quote_length: "Antal tecken att citera när lösningen visas under det första inlägget"
-    solved_topics_auto_close_hours: "Stäng automatiskt ämnet (n) timmar efter det senaste svaret när ämnet har markerats som löst"
     show_filter_by_solved_status: "Visa en rullgardinsmeny för att filtrera en ämneslista efter löst status."
   reports:
     accepted_solutions:

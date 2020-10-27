@@ -11,7 +11,6 @@ nb_NO:
     accept_all_solutions_trust_level: "Laveste tilltisnivå som kreves for å godta løsninger for ethvert emne (selv når du ikke er OP)"
     empty_box_on_unsolved: "Vis en tom boks ved siden av uløste emner"
     solved_quote_length: "Antall tegn som skal siteres når løsning vises under første innlegg"
-    solved_topics_auto_close_hours: "Lukk emnet automatisk (n) timer etter siste svar når det har blitt merket som løst"
   reports:
     accepted_solutions:
       title: "Godtatte løsninger"
