@@ -124,7 +124,7 @@ SQL
           )
         end
 
-        if SiteSetting.notify_op_on_staff_accept && acting_user.id != topic.user_id
+        if SiteSetting.notify_on_staff_accept_solved && acting_user.id != topic.user_id
           Notification.create!(
             notification_type: Notification.types[:custom],
             user_id: topic.user_id,

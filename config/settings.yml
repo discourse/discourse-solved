@@ -19,5 +19,5 @@ plugins:
   show_filter_by_solved_status:
     default: false
     client: true
-  notify_op_on_staff_accept:
+  notify_on_staff_accept_solved:
     default: false

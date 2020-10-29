@@ -65,7 +65,7 @@ RSpec.describe "Managing Posts solved status" do
     end
 
     it 'sends notifications to correct users' do
-      SiteSetting.notify_op_on_staff_accept = true
+      SiteSetting.notify_on_staff_accept_solved = true
       user = Fabricate(:user)
       topic = Fabricate(:topic, user: user)
       post = Fabricate(:post, post_number: 2, topic: topic)
