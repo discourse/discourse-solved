@@ -12,6 +12,7 @@ pl_PL:
     empty_box_on_unsolved: "Wyświetl puste pole obok nierozwiązanych tematów"
     solved_quote_length: "Liczba znaków do wyświetlenia przy wyświetlaniu rozwiązania pod pierwszym wpisem"
     show_filter_by_solved_status: "Pokaż rozwinięcie, aby filtrować listę tematów po statusie rozwiązania"
+    notify_on_staff_accept_solved: "Wyślij powiadomienie do twórcy tematu, gdy post zostanie oznaczony przez personel jako rozwiązanie."
   reports:
     accepted_solutions:
       title: "Zaakceptowane rozwiązania"
