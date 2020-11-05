@@ -3,7 +3,12 @@ import DiscourseUrl from "discourse/lib/url";
 
 export default {
   shouldRender(args, component) {
-    if (!component.siteSettings.show_filter_by_solved_status) {
+    const router = Discourse.__container__.lookup("router:main");
+
+    if (
+      !component.siteSettings.show_filter_by_solved_status ||
+      router.currentPath === "discovery.categories"
+    ) {
       return false;
     } else if (component.siteSettings.allow_solved_on_all_topics) {
       return true;
