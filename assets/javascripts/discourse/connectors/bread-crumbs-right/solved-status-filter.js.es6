@@ -3,7 +3,8 @@ import DiscourseUrl from "discourse/lib/url";
 
 export default {
   shouldRender(args, component) {
-    const router = Discourse.__container__.lookup("router:main");
+    const register = component.store.register;
+    const router = register.lookup("router:main");
 
     if (
       !component.siteSettings.show_filter_by_solved_status ||
@@ -13,10 +14,7 @@ export default {
     } else if (component.siteSettings.allow_solved_on_all_topics) {
       return true;
     } else {
-      const controller = Discourse.__container__.lookup(
-        "controller:navigation/category"
-      );
-
+      const controller = register.lookup("controller:navigation/category");
       return controller && controller.get("category.enable_accepted_answers");
     }
   },
