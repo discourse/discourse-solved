@@ -12,6 +12,7 @@ nl:
     empty_box_on_unsolved: "Een leeg vakje naast onopgeloste topics weergeven"
     solved_quote_length: "Aantal te citeren tekens bij weergeven van de oplossing onder het eerste bericht"
     show_filter_by_solved_status: "Een vervolgkeuzelijst tonen om een topic op oplossingsstatus te filteren."
+    notify_on_staff_accept_solved: "Melding naar de topicmaker sturen wanneer een bericht door een staflid als oplossing wordt gemarkeerd."
   reports:
     accepted_solutions:
       title: "Geaccepteerde oplossingen"
