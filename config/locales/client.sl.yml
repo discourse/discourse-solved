@@ -37,6 +37,7 @@ sl:
       advanced:
         statuses:
           solved: "so rešene"
+          unsolved: "so nerešene"
     admin:
       web_hooks:
         solved_event:
