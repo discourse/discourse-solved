@@ -1,10 +1,10 @@
 import I18n from "I18n";
 import DiscourseUrl from "discourse/lib/url";
+import { getOwner } from "discourse-common/lib/get-owner";
 
 export default {
   shouldRender(args, component) {
-    const register = component.store.register;
-    const router = register.lookup("router:main");
+    const router = getOwner(this).lookup("router:main");
 
     if (
       !component.siteSettings.show_filter_by_solved_status ||
@@ -14,7 +14,9 @@ export default {
     } else if (component.siteSettings.allow_solved_on_all_topics) {
       return true;
     } else {
-      const controller = register.lookup("controller:navigation/category");
+      const controller = getOwner(this).lookup(
+        "controller:navigation/category"
+      );
       return controller && controller.get("category.enable_accepted_answers");
     }
   },
