@@ -52,7 +52,7 @@ RSpec.describe "Managing Posts solved status" do
       expect(p1.reload.custom_fields["is_accepted_answer"]).to eq("true")
 
       expect(topic.public_topic_timer.status_type)
-        .to eq(TopicTimer.types[:close])
+        .to eq(TopicTimer.types[:silent_close])
 
       expect(topic.custom_fields[
         DiscourseSolved::AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD
