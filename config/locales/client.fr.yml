@@ -35,6 +35,7 @@ fr:
       advanced:
         statuses:
           solved: "sont résolus"
+          unsolved: "ne sont pas résolus"
     admin:
       web_hooks:
         solved_event:
