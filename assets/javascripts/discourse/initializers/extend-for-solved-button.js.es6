@@ -246,6 +246,7 @@ export default {
             closeTag: "span",
             title: I18n.t("topic_statuses.solved.help"),
             icon: "far-check-square",
+            key: "solved",
           });
         } else if (
           this.topic.can_have_answer &&

@@ -1,12 +1,13 @@
-import { acceptance } from "helpers/qunit-helpers";
+import { acceptance, queryAll } from "helpers/qunit-helpers";
+import {
+  fixturesByUrl,
+  response,
+} from "discourse/tests/helpers/create-pretender";
 
-acceptance("Discourse Solved Plugin", {
-  loggedIn: true,
-  beforeEach() {
-    const response = (object) => {
-      return [200, { "Content-Type": "application/json" }, object];
-    };
+acceptance("Discourse Solved Plugin", function (needs) {
+  needs.user();
 
+  needs.pretender((server, helper) => {
     const postStreamWithAcceptedAnswerExcerpt = (excerpt) => {
       return {
         post_stream: {
@@ -217,31 +218,49 @@ acceptance("Discourse Solved Plugin", {
       };
     };
 
-    // eslint-disable-next-line no-undef
     server.get("/t/11.json", () => {
       return response(
         postStreamWithAcceptedAnswerExcerpt("this is an excerpt")
       );
     });
 
-    // eslint-disable-next-line no-undef
     server.get("/t/12.json", () => {
       return response(postStreamWithAcceptedAnswerExcerpt(null));
     });
-  },
-});
 
-test("A topic with an accepted answer shows an excerpt of the answer, if provided", (assert) => {
-  visit("/t/with-excerpt/11");
-
-  andThen(() => {
-    assert.ok(exists('.quote blockquote:contains("this is an excerpt")'));
+    server.get("/search", () => {
+      const fixtures = fixturesByUrl["/search.json"];
+      fixtures.topics.firstObject.has_accepted_answer = true;
+      return response(fixtures);
+    });
   });
 
-  visit("/t/without-excerpt/12");
+  test("A topic with an accepted answer shows an excerpt of the answer, if provided", (assert) => {
+    visit("/t/with-excerpt/11");
 
-  andThen(() => {
-    assert.notOk(exists(".quote blockquote"));
-    assert.ok(exists(".quote .title.title-only"));
+    andThen(() => {
+      assert.ok(exists('.quote blockquote:contains("this is an excerpt")'));
+    });
+
+    visit("/t/without-excerpt/12");
+
+    andThen(() => {
+      assert.notOk(exists(".quote blockquote"));
+      assert.ok(exists(".quote .title.title-only"));
+    });
+  });
+
+  test("Full page search displays solved status", async function (assert) {
+    await visit("/search");
+
+    await fillIn(".search-query", "discourse");
+    await click(".search-cta");
+
+    assert.ok(queryAll(".fps-topic").length === 1, "has one post");
+
+    assert.ok(
+      queryAll(".topic-status .solved").length === 1,
+      "shows the right icon"
+    );
   });
 });
