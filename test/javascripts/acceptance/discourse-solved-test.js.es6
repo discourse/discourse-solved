@@ -1,8 +1,5 @@
 import { acceptance, queryAll } from "helpers/qunit-helpers";
-import {
-  fixturesByUrl,
-  response,
-} from "discourse/tests/helpers/create-pretender";
+import { fixturesByUrl } from "discourse/tests/helpers/create-pretender";
 
 acceptance("Discourse Solved Plugin", function (needs) {
   needs.user();
@@ -219,35 +216,31 @@ acceptance("Discourse Solved Plugin", function (needs) {
     };
 
     server.get("/t/11.json", () => {
-      return response(
+      return helper.response(
         postStreamWithAcceptedAnswerExcerpt("this is an excerpt")
       );
     });
 
     server.get("/t/12.json", () => {
-      return response(postStreamWithAcceptedAnswerExcerpt(null));
+      return helper.response(postStreamWithAcceptedAnswerExcerpt(null));
     });
 
     server.get("/search", () => {
-      const fixtures = fixturesByUrl["/search.json"];
-      fixtures.topics.firstObject.has_accepted_answer = true;
-      return response(fixtures);
+      const fixtures = Object.assign({}, fixturesByUrl["/search.json"]);
+      fixtures.topics[0].has_accepted_answer = true;
+      return helper.response(fixtures);
     });
   });
 
-  test("A topic with an accepted answer shows an excerpt of the answer, if provided", (assert) => {
-    visit("/t/with-excerpt/11");
+  test("A topic with an accepted answer shows an excerpt of the answer, if provided", async function (assert) {
+    await visit("/t/with-excerpt/11");
 
-    andThen(() => {
-      assert.ok(exists('.quote blockquote:contains("this is an excerpt")'));
-    });
+    assert.ok(queryAll('.quote blockquote:contains("this is an excerpt")').length === 1);
 
-    visit("/t/without-excerpt/12");
+    await visit("/t/without-excerpt/12");
 
-    andThen(() => {
-      assert.notOk(exists(".quote blockquote"));
-      assert.ok(exists(".quote .title.title-only"));
-    });
+    assert.notOk(queryAll(".quote blockquote").length === 1);
+    assert.ok(queryAll(".quote .title.title-only").length === 1);
   });
 
   test("Full page search displays solved status", async function (assert) {
@@ -259,7 +252,7 @@ acceptance("Discourse Solved Plugin", function (needs) {
     assert.ok(queryAll(".fps-topic").length === 1, "has one post");
 
     assert.ok(
-      queryAll(".topic-status .solved").length === 1,
+      queryAll(".topic-status .solved").length,
       "shows the right icon"
     );
   });
