@@ -252,7 +252,7 @@ acceptance("Discourse Solved Plugin", function (needs) {
     assert.ok(queryAll(".fps-topic").length === 1, "has one post");
 
     assert.ok(
-      queryAll(".topic-status .solved").length === 1,
+      queryAll(".topic-status .solved").length,
       "shows the right icon"
     );
   });
