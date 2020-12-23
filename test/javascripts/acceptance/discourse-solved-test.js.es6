@@ -7,7 +7,7 @@ import {
 acceptance("Discourse Solved Plugin", function (needs) {
   needs.user();
 
-  needs.pretender((server, helper) => {
+  needs.pretender((server) => {
     const postStreamWithAcceptedAnswerExcerpt = (excerpt) => {
       return {
         post_stream: {
