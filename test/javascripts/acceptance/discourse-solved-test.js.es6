@@ -226,7 +226,7 @@ acceptance("Discourse Solved Plugin", function (needs) {
     });
 
     server.get("/search", () => {
-      const fixtures = fixturesByUrl["/search.json"];
+      const fixtures = Object.assign({}, fixturesByUrl["/search.json"]);
       fixtures.topics[0].has_accepted_answer = true;
       return helper.response(fixtures);
     });
