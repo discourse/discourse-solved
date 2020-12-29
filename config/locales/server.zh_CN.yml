@@ -19,12 +19,12 @@ zh_CN:
       yaxis: "总计"
   solved:
     no_solutions:
-      self: "你尚无接受的解决方案。"
+      self: "你尚无被接受的解决方案。"
       others: "尚无接受的解决方案。"
   badges:
     helpdesk:
       name: "助人为乐"
-      description: "主题中首个被接受的回答"
+      description: "首个被接受的回答"
     tech_support:
       name: "技术支持"
       description: "10 个已接受的回答"

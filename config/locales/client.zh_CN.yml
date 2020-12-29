@@ -34,6 +34,7 @@ zh_CN:
       advanced:
         statuses:
           solved: "已解决"
+          unsolved: "未解决"
     admin:
       web_hooks:
         solved_event:
