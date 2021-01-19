@@ -602,4 +602,14 @@ SQL
       SQL
     })
   end
+
+  on(:before_post_publish_changes) do |post_changes, topic_changes, options|
+    category_id_changes = topic_changes.diff["category_id"]
+    next if category_id_changes.blank?
+
+    old_category_allows = Guardian.new.allow_accepted_answers_on_category?(category_id_changes[0])
+    new_category_allows = Guardian.new.allow_accepted_answers_on_category?(category_id_changes[1])
+
+    options[:refresh_stream] = true if old_category_allows != new_category_allows
+  end
 end
