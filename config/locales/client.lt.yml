@@ -12,5 +12,34 @@ lt:
           accepted_notification: "patvirtinta"
     solved:
       title: "Išspresta"
+      allow_accepted_answers: "Allow topic owner and staff to mark a reply as the solution"
+      accept_answer: "Select if this reply solves the problem"
+      accepted_description: "This is the accepted solution to this topic"
+      has_no_accepted_answer: "This topic has no solution"
+      unaccept_answer: "Unselect if this reply no longer solves the problem"
+      accepted_answer: "Solution"
+      solution: "Solution"
+      solution_summary:
+        one: "solution"
+        few: "solutions"
+        many: "solutions"
+        other: "solutions"
+      accepted_html: "%{icon} Solved <span class='by'>by <a href data-user-card='%{username_lower}'>%{username}</a></span> in <a href='%{post_path}' class='back'>post #%{post_number}</a>"
+      accepted_notification: "<p><span>%{username}</span> %{description}</p>"
       topic_status_filter:
         all: "visi"
+        solved: "solved"
+        unsolved: "unsolved"
+    topic_statuses:
+      solved:
+        help: "This topic has a solution"
+    search:
+      advanced:
+        statuses:
+          solved: "are solved"
+          unsolved: "are unsolved"
+    admin:
+      web_hooks:
+        solved_event:
+          name: "Solved Event"
+          details: "When a user marks a post as the accepted or unaccepted answer."

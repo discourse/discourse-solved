@@ -11,7 +11,9 @@ he:
     accept_all_solutions_trust_level: "רמת האמון המזערית שנדרשת לקבלת פתרונות בכל נושא שהוא (אפילו לא בתור המפרסם המקורי)"
     empty_box_on_unsolved: "להציג תיבה ריקה ליד הנושאים שלא נפתרו"
     solved_quote_length: "מספר התווים לציטוט בעת הצגת הפתרון תחת הפוסט הראשון"
+    solved_topics_auto_close_hours: "Auto close topic (n) hours after the last reply once the topic has been marked as solved. Set to 0 to disable auto closing."
     show_filter_by_solved_status: "הצגת רשימה נגללת כדי לסנן רשימת נושאים לפי מצב פתרון."
+    notify_on_staff_accept_solved: "Send notification to the topic creator when a post is marked as solution by a staff."
   reports:
     accepted_solutions:
       title: "פתרונות מקובלים"

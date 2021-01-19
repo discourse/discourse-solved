@@ -14,12 +14,30 @@ nb_NO:
       title: "Løst"
       allow_accepted_answers: "Tillat enmeeier og personale å markere et svar som løsning"
       accept_answer: "Velg hvis dette svaret løser problemet"
+      accepted_description: "This is the accepted solution to this topic"
       has_no_accepted_answer: "Dette emnet har ingen løsning"
       unaccept_answer: "Fravelg dette hvis svaret ikke lenger løser problemet"
       accepted_answer: "Løsning"
       solution: "Løsning"
+      solution_summary:
+        one: "solution"
+        other: "solutions"
+      accepted_html: "%{icon} Solved <span class='by'>by <a href data-user-card='%{username_lower}'>%{username}</a></span> in <a href='%{post_path}' class='back'>post #%{post_number}</a>"
+      accepted_notification: "<p><span>%{username}</span> %{description}</p>"
       topic_status_filter:
         all: "alle"
+        solved: "solved"
+        unsolved: "unsolved"
     topic_statuses:
       solved:
         help: "Dette emnet har en løsning"
+    search:
+      advanced:
+        statuses:
+          solved: "are solved"
+          unsolved: "are unsolved"
+    admin:
+      web_hooks:
+        solved_event:
+          name: "Solved Event"
+          details: "When a user marks a post as the accepted or unaccepted answer."

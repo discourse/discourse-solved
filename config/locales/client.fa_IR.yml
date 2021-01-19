@@ -14,12 +14,15 @@ fa_IR:
       title: "حل شده"
       allow_accepted_answers: "به صاحب عنوان و مدیران اجازه انتخاب یک پاسخ را به عنوان راه حل بده."
       accept_answer: "اگر این پاسخ مشکل را حل می‌کند، آن را انتخاب کنید"
+      accepted_description: "This is the accepted solution to this topic"
       has_no_accepted_answer: "این موضوع هیچ راه حلی ندارد"
+      unaccept_answer: "Unselect if this reply no longer solves the problem"
       accepted_answer: "راه حل مورد قبول"
       solution: "راه حل"
       solution_summary:
         one: "راه حل"
         other: "راه حل ها"
+      accepted_html: "%{icon} Solved <span class='by'>by <a href data-user-card='%{username_lower}'>%{username}</a></span> in <a href='%{post_path}' class='back'>post #%{post_number}</a>"
       accepted_notification: "<p><span>%{username}</span> %{description}</p>"
       topic_status_filter:
         all: "همه"
@@ -32,3 +35,9 @@ fa_IR:
       advanced:
         statuses:
           solved: "حل شده‌اند"
+          unsolved: "are unsolved"
+    admin:
+      web_hooks:
+        solved_event:
+          name: "Solved Event"
+          details: "When a user marks a post as the accepted or unaccepted answer."

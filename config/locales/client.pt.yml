@@ -14,6 +14,7 @@ pt:
       title: "Resolvido"
       allow_accepted_answers: "Permitir que o autor do tópico e a equipa marquem uma resposta como solução"
       accept_answer: "Selecionar se esta resposta resolver o problema"
+      accepted_description: "This is the accepted solution to this topic"
       has_no_accepted_answer: "Este tópico não tem solução"
       unaccept_answer: "Desselecionar se esta resposta já não resolver o problema"
       accepted_answer: "Solução"
@@ -25,6 +26,18 @@ pt:
       accepted_notification: "<p><span>%{username}</span> %{description}</p>"
       topic_status_filter:
         all: "todos"
+        solved: "solved"
+        unsolved: "unsolved"
     topic_statuses:
       solved:
         help: "Este tópico tem uma solução"
+    search:
+      advanced:
+        statuses:
+          solved: "are solved"
+          unsolved: "are unsolved"
+    admin:
+      web_hooks:
+        solved_event:
+          name: "Solved Event"
+          details: "When a user marks a post as the accepted or unaccepted answer."

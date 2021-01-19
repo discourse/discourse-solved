@@ -11,7 +11,9 @@ hy:
     accept_all_solutions_trust_level: "Վստահության նվազագույն մակարդակը, որը պահանջվում է ցանկացած թեմայի լուծումը ընդունելու համար (նույնիսկ եթե OP չէ)"
     empty_box_on_unsolved: "Ցուցադրել դատարկ արկղ չլուծված թեմաների կողքին"
     solved_quote_length: "Մեջբերվող սիմվոլների քանակը՝ առաջին գրառմնա տակ լուծումը ցուցադրելիս"
+    solved_topics_auto_close_hours: "Auto close topic (n) hours after the last reply once the topic has been marked as solved. Set to 0 to disable auto closing."
     show_filter_by_solved_status: "Ցուցադրել բացվող ցուցակ՝ թեմաների ցանկը ըստ լուծման կարգավիճակի ֆիլտրելու համար:"
+    notify_on_staff_accept_solved: "Send notification to the topic creator when a post is marked as solution by a staff."
   reports:
     accepted_solutions:
       title: "Ընդունված լուծումներ"
@@ -21,3 +23,10 @@ hy:
     no_solutions:
       self: "Դուք դեռևս չունեք ընդունված լուծումներ:"
       others: "Ընդունված լուծումներ չկան"
+  badges:
+    helpdesk:
+      name: "Helpdesk"
+      description: "First Accepted Answer on a Topic"
+    tech_support:
+      name: "Tech Support"
+      description: "10 Accepted answers"

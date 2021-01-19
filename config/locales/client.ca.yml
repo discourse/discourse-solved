@@ -31,3 +31,13 @@ ca:
     topic_statuses:
       solved:
         help: "Aquest tema té una solució"
+    search:
+      advanced:
+        statuses:
+          solved: "are solved"
+          unsolved: "are unsolved"
+    admin:
+      web_hooks:
+        solved_event:
+          name: "Solved Event"
+          details: "When a user marks a post as the accepted or unaccepted answer."

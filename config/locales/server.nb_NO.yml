@@ -11,6 +11,9 @@ nb_NO:
     accept_all_solutions_trust_level: "Laveste tilltisnivå som kreves for å godta løsninger for ethvert emne (selv når du ikke er OP)"
     empty_box_on_unsolved: "Vis en tom boks ved siden av uløste emner"
     solved_quote_length: "Antall tegn som skal siteres når løsning vises under første innlegg"
+    solved_topics_auto_close_hours: "Auto close topic (n) hours after the last reply once the topic has been marked as solved. Set to 0 to disable auto closing."
+    show_filter_by_solved_status: "Show a dropdown to filter a topic list by solved status."
+    notify_on_staff_accept_solved: "Send notification to the topic creator when a post is marked as solution by a staff."
   reports:
     accepted_solutions:
       title: "Godtatte løsninger"
@@ -20,3 +23,10 @@ nb_NO:
     no_solutions:
       self: "Du har ingen godtatte løsninger enda."
       others: "Ingen godtatte løsninger."
+  badges:
+    helpdesk:
+      name: "Helpdesk"
+      description: "First Accepted Answer on a Topic"
+    tech_support:
+      name: "Tech Support"
+      description: "10 Accepted answers"

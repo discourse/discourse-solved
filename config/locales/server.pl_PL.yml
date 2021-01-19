@@ -11,6 +11,7 @@ pl_PL:
     accept_all_solutions_trust_level: "Minimalny poziom zaufania wymagany do zaakceptowania rozwiązania w każdym temacie (nawet jeśli nie jest się jego autorem)"
     empty_box_on_unsolved: "Wyświetl puste pole obok nierozwiązanych tematów"
     solved_quote_length: "Liczba znaków do wyświetlenia przy wyświetlaniu rozwiązania pod pierwszym wpisem"
+    solved_topics_auto_close_hours: "Auto close topic (n) hours after the last reply once the topic has been marked as solved. Set to 0 to disable auto closing."
     show_filter_by_solved_status: "Pokaż rozwinięcie, aby filtrować listę tematów po statusie rozwiązania"
     notify_on_staff_accept_solved: "Wyślij powiadomienie do twórcy tematu, gdy post zostanie oznaczony przez personel jako rozwiązanie."
   reports:

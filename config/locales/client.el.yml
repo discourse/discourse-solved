@@ -6,6 +6,10 @@
 
 el:
   js:
+    notifications:
+      alt:
+        solved:
+          accepted_notification: "accepted"
     solved:
       title: "Λύθηκε"
       allow_accepted_answers: "Επιτρέψτε στον κάτοχο και το προσωπικό να επισημάνει μια απάντηση ως λύση"
@@ -31,6 +35,7 @@ el:
       advanced:
         statuses:
           solved: "έχουν επιλυθεί"
+          unsolved: "are unsolved"
     admin:
       web_hooks:
         solved_event:

@@ -11,7 +11,9 @@ ur:
     accept_all_solutions_trust_level: "کسی بھی ٹاپک پر سے حل کا انتخاب کرنے کے لئے کم از کم ٹرسٹ لَیول (یہاں تک کہ جب اصل پوسٹر بھی نہ ہوں)"
     empty_box_on_unsolved: "غیر حل شدہ ٹاپکس کے ساتھ خالی باکس دکھائیں"
     solved_quote_length: "پہلی پوسٹ کے نیچے حل کو ظاہر کرنے کیلئے حروف کی تعداد"
+    solved_topics_auto_close_hours: "Auto close topic (n) hours after the last reply once the topic has been marked as solved. Set to 0 to disable auto closing."
     show_filter_by_solved_status: "حل شدہ ہونے کی بنیاد پر ٹاپک فہرست کو فلٹر کرنے کیلئے ڈراپ ڈاؤن دکھائیں۔"
+    notify_on_staff_accept_solved: "Send notification to the topic creator when a post is marked as solution by a staff."
   reports:
     accepted_solutions:
       title: "قبول شدہ حل"
@@ -21,3 +23,10 @@ ur:
     no_solutions:
       self: "ابھی تک آپ کے کوئیقبول شدہ حل نہیں ہیں۔"
       others: "کوئی قبول شدہ حل نہیں"
+  badges:
+    helpdesk:
+      name: "Helpdesk"
+      description: "First Accepted Answer on a Topic"
+    tech_support:
+      name: "Tech Support"
+      description: "10 Accepted answers"

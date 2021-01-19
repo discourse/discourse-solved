@@ -14,6 +14,7 @@ hy:
       title: "Լուծված է"
       allow_accepted_answers: "Թույլատրել թեմայի սեփականատիրոջը և անձնակազմին՝ նշել պատասխանը որպես լուծում"
       accept_answer: "Ընտրեք, թե արդյոք այս պատասխանը լուծում է խնդիրը"
+      accepted_description: "This is the accepted solution to this topic"
       has_no_accepted_answer: "Այս թեման լուծում չունի"
       unaccept_answer: "Ընտրությունից հանել, եթե այս պատասխանը այլևս չի լուծում խնդիրը"
       accepted_answer: "Լուծում"
@@ -21,6 +22,8 @@ hy:
       solution_summary:
         one: "լուծում"
         other: "լուծում"
+      accepted_html: "%{icon} Solved <span class='by'>by <a href data-user-card='%{username_lower}'>%{username}</a></span> in <a href='%{post_path}' class='back'>post #%{post_number}</a>"
+      accepted_notification: "<p><span>%{username}</span> %{description}</p>"
       topic_status_filter:
         all: "բոլոր"
         solved: "լուծված"
@@ -28,3 +31,13 @@ hy:
     topic_statuses:
       solved:
         help: "Այս թեման ունի լուծում:"
+    search:
+      advanced:
+        statuses:
+          solved: "are solved"
+          unsolved: "are unsolved"
+    admin:
+      web_hooks:
+        solved_event:
+          name: "Solved Event"
+          details: "When a user marks a post as the accepted or unaccepted answer."

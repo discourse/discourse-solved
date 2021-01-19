@@ -11,6 +11,9 @@ hu:
     accept_all_solutions_trust_level: "Szükséges minimum bizalmi szint a megoldások elfogadásához bármelyik témában (even when not OP)"
     empty_box_on_unsolved: "Egy üres doboz megjelenítése a megoldatlan témák mellett"
     solved_quote_length: "Idézett karakterek száma amikor a megoldás megjelenik az első bejegyzés alatt"
+    solved_topics_auto_close_hours: "Auto close topic (n) hours after the last reply once the topic has been marked as solved. Set to 0 to disable auto closing."
+    show_filter_by_solved_status: "Show a dropdown to filter a topic list by solved status."
+    notify_on_staff_accept_solved: "Send notification to the topic creator when a post is marked as solution by a staff."
   reports:
     accepted_solutions:
       title: "Elfogadott megoldások"
@@ -20,3 +23,10 @@ hu:
     no_solutions:
       self: "Még nincs elfogadott megoldásod."
       others: "Nincs elfogadott megoldás."
+  badges:
+    helpdesk:
+      name: "Helpdesk"
+      description: "First Accepted Answer on a Topic"
+    tech_support:
+      name: "Tech Support"
+      description: "10 Accepted answers"

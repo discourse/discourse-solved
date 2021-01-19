@@ -21,6 +21,8 @@ ko:
       solution: "해결책"
       solution_summary:
         other: "해결책"
+      accepted_html: "%{icon} Solved <span class='by'>by <a href data-user-card='%{username_lower}'>%{username}</a></span> in <a href='%{post_path}' class='back'>post #%{post_number}</a>"
+      accepted_notification: "<p><span>%{username}</span> %{description}</p>"
       topic_status_filter:
         all: "모두"
         solved: "해결됨"
@@ -32,6 +34,7 @@ ko:
       advanced:
         statuses:
           solved: "해결되다"
+          unsolved: "are unsolved"
     admin:
       web_hooks:
         solved_event:

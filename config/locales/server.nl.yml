@@ -11,6 +11,7 @@ nl:
     accept_all_solutions_trust_level: "Minimale vertrouwensniveau dat nodig is om oplossingen bij alle topics te accepteren (zelfs wanneer geen OP)"
     empty_box_on_unsolved: "Een leeg vakje naast onopgeloste topics weergeven"
     solved_quote_length: "Aantal te citeren tekens bij weergeven van de oplossing onder het eerste bericht"
+    solved_topics_auto_close_hours: "Auto close topic (n) hours after the last reply once the topic has been marked as solved. Set to 0 to disable auto closing."
     show_filter_by_solved_status: "Een vervolgkeuzelijst tonen om een topic op oplossingsstatus te filteren."
     notify_on_staff_accept_solved: "Melding naar de topicmaker sturen wanneer een bericht door een staflid als oplossing wordt gemarkeerd."
   reports:

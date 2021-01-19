@@ -14,10 +14,20 @@ ar:
       title: "تم الحل"
       allow_accepted_answers: "السماح لصاحب الموضوع وفريق العمل الرد كـحل للموضوع"
       accept_answer: "اختر إن كان هذا الرد يحل المشكلة"
+      accepted_description: "This is the accepted solution to this topic"
       has_no_accepted_answer: "لا يوجد حل بخصوص هذا الموضوع"
       unaccept_answer: "احذف الاختيار إن كان هذا الرد لا يحل المشكلة الآن"
       accepted_answer: "الحل"
       solution: "الحل"
+      solution_summary:
+        zero: "solutions"
+        one: "solution"
+        two: "solutions"
+        few: "solutions"
+        many: "solutions"
+        other: "solutions"
+      accepted_html: "%{icon} Solved <span class='by'>by <a href data-user-card='%{username_lower}'>%{username}</a></span> in <a href='%{post_path}' class='back'>post #%{post_number}</a>"
+      accepted_notification: "<p><span>%{username}</span> %{description}</p>"
       topic_status_filter:
         all: "الكل"
         solved: "تم حله"
@@ -25,3 +35,13 @@ ar:
     topic_statuses:
       solved:
         help: "هذا الموضوع فيه الحل"
+    search:
+      advanced:
+        statuses:
+          solved: "are solved"
+          unsolved: "are unsolved"
+    admin:
+      web_hooks:
+        solved_event:
+          name: "Solved Event"
+          details: "When a user marks a post as the accepted or unaccepted answer."

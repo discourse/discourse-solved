@@ -22,6 +22,7 @@ it:
       solution_summary:
         one: "soluzione"
         other: "soluzioni"
+      accepted_html: "%{icon} Solved <span class='by'>by <a href data-user-card='%{username_lower}'>%{username}</a></span> in <a href='%{post_path}' class='back'>post #%{post_number}</a>"
       accepted_notification: "<p> <span>%{username}</span> %{description} </p>"
       topic_status_filter:
         all: "tutti"
@@ -34,6 +35,7 @@ it:
       advanced:
         statuses:
           solved: "sono risolti"
+          unsolved: "are unsolved"
     admin:
       web_hooks:
         solved_event:

@@ -11,7 +11,9 @@ ca:
     accept_all_solutions_trust_level: "Nivell mínim de confiança necessari per a acceptar solucions sobre qualsevol tema (encara que no sigui OP)"
     empty_box_on_unsolved: "Mostra un quadre buit al costat dels temes no resolts"
     solved_quote_length: "Nombre de caràcters que se citen quan es mostri la solució sota la primera publicació"
+    solved_topics_auto_close_hours: "Auto close topic (n) hours after the last reply once the topic has been marked as solved. Set to 0 to disable auto closing."
     show_filter_by_solved_status: "Mostra un menú desplegable per a filtrar una llista de temes per estat de resolució."
+    notify_on_staff_accept_solved: "Send notification to the topic creator when a post is marked as solution by a staff."
   reports:
     accepted_solutions:
       title: "Solucions acceptades"
@@ -21,3 +23,10 @@ ca:
     no_solutions:
       self: "Encara no teniu solucions acceptades."
       others: "No hi ha solucions acceptades."
+  badges:
+    helpdesk:
+      name: "Helpdesk"
+      description: "First Accepted Answer on a Topic"
+    tech_support:
+      name: "Tech Support"
+      description: "10 Accepted answers"

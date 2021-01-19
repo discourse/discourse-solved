@@ -11,7 +11,9 @@ de:
     accept_all_solutions_trust_level: "Vertrauensstufe, die das Akzeptieren von Lösungen in jedem Thema erlaubt (selbst wenn kein eigener Beitrag)"
     empty_box_on_unsolved: "Zeige eine leere Box neben ungelösten Themen"
     solved_quote_length: "Anzahl der Zeichen, die zitiert werden, wenn die Lösung unterhalb des ersten Beitrags angezeigt wird"
+    solved_topics_auto_close_hours: "Thema automatisch (n) Stunden nach der letzten Antwort schließen, sobald das Thema als gelöst markiert wurde. Auf 0 setzen, um automatisches Schließen zu deaktivieren."
     show_filter_by_solved_status: "Anzeige einer Dropdown-Liste, um eine Themenliste nach gelöst-Status zu filtern"
+    notify_on_staff_accept_solved: "Benachrichtigung an den Themenersteller senden, wenn ein Beitrag von einem Teammitglied als Lösung markiert wird."
   reports:
     accepted_solutions:
       title: "Akzeptierte Lösungen"
@@ -21,3 +23,10 @@ de:
     no_solutions:
       self: "Du hast noch keine akzeptierte Lösung."
       others: "Keine akzeptierten Lösungen."
+  badges:
+    helpdesk:
+      name: "Helpdesk"
+      description: "Erste akzeptierte Antwort zu einem Thema"
+    tech_support:
+      name: "Technischer Support"
+      description: "10 akzeptierte Antworten"

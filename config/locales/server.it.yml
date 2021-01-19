@@ -11,7 +11,9 @@ it:
     accept_all_solutions_trust_level: "Livello di esperienza minimo richiesto per poter accettare soluzioni su qualsiasi argomento (anche quando non si è l'autore dell'argomento stesso)"
     empty_box_on_unsolved: "Mostra una casella vuota accanto agli argomenti non risolti"
     solved_quote_length: "Numero di caratteri da citare quando si visualizza la soluzione sotto il primo messaggio"
+    solved_topics_auto_close_hours: "Auto close topic (n) hours after the last reply once the topic has been marked as solved. Set to 0 to disable auto closing."
     show_filter_by_solved_status: "Mostra un menu a discesa per filtrare un elenco di argomenti in base allo stato risolto."
+    notify_on_staff_accept_solved: "Send notification to the topic creator when a post is marked as solution by a staff."
   reports:
     accepted_solutions:
       title: "Soluzioni accettate"

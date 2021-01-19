@@ -11,7 +11,9 @@ tr_TR:
     accept_all_solutions_trust_level: "Herhangi bir konudaki çözümleri kabul etmek için gereken asgari güven seviyesi (OP olmasa bile)"
     empty_box_on_unsolved: "Çözülmemiş konuların yanında boş bir kutu görüntüle"
     solved_quote_length: "İlk gönderinin altındaki çözümü görüntülerken alıntı yapılacak karakter sayısı"
+    solved_topics_auto_close_hours: "Auto close topic (n) hours after the last reply once the topic has been marked as solved. Set to 0 to disable auto closing."
     show_filter_by_solved_status: "Bir konu listesini çözülmüş duruma göre filtrelemek için bir açılır menü gösterin."
+    notify_on_staff_accept_solved: "Send notification to the topic creator when a post is marked as solution by a staff."
   reports:
     accepted_solutions:
       title: "Kabul edilen çözümler"
