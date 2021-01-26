@@ -13,7 +13,7 @@ es:
     solved:
       title: "Solucionado"
       allow_accepted_answers: "Permitir al propietario del tema y al staff marcar una respuesta como la solución"
-      accept_answer: "Seleccionar si esta respuesta resuelve el problema"
+      accept_answer: "Selecciona si esta respuesta resuelve el problema"
       accepted_description: "Esta es la solución aceptada para este tema"
       has_no_accepted_answer: "Este tema no tiene una solución"
       unaccept_answer: "Deseleccionar si esta respuesta ya no resuelve el problema"
