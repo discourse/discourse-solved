@@ -8,8 +8,7 @@ import { withPluginApi } from "discourse/lib/plugin-api";
 import { ajax } from "discourse/lib/ajax";
 import PostCooked from "discourse/widgets/post-cooked";
 import { formatUsername } from "discourse/lib/utilities";
-import { iconHTML } from "discourse-common/lib/icon-library";
-import { iconNode } from "discourse-common/lib/icon-library";
+import { iconHTML, iconNode } from "discourse-common/lib/icon-library";
 
 function clearAccepted(topic) {
   const posts = topic.get("postStream.posts");
