@@ -235,7 +235,9 @@ acceptance("Discourse Solved Plugin", function (needs) {
   test("A topic with an accepted answer shows an excerpt of the answer, if provided", async function (assert) {
     await visit("/t/with-excerpt/11");
 
-    assert.ok(queryAll('.quote blockquote:contains("this is an excerpt")').length === 1);
+    assert.ok(
+      queryAll('.quote blockquote:contains("this is an excerpt")').length === 1
+    );
 
     await visit("/t/without-excerpt/12");
 
@@ -251,9 +253,6 @@ acceptance("Discourse Solved Plugin", function (needs) {
 
     assert.ok(queryAll(".fps-topic").length === 1, "has one post");
 
-    assert.ok(
-      queryAll(".topic-status .solved").length,
-      "shows the right icon"
-    );
+    assert.ok(queryAll(".topic-status .solved").length, "shows the right icon");
   });
 });
