@@ -142,7 +142,7 @@ SQL
             TopicTimer.types[:silent_close] || TopicTimer.types[:close],
             nil,
             based_on_last_post: true,
-            duration: auto_close_hours
+            duration_minutes: auto_close_hours * 60
           )
 
           topic.custom_fields[
