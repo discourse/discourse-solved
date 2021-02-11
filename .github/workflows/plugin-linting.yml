@@ -20,21 +20,16 @@ jobs:
           node-version: 12
 
       - name: Set up ruby
-        uses: actions/setup-ruby@v1
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7
-
-      - name: Setup bundler
-        run: gem install bundler -v 2.1.4 --no-doc
-
-      - name: Setup gems
-        run: bundle install --jobs 4
+          bundler-cache: true
 
       - name: Yarn install
-        run: yarn install --dev
+        run: yarn install
 
       - name: ESLint
-        run: yarn eslint --ext .js,.js.es6 --no-error-on-unmatched-pattern assets/javascripts
+        run: yarn eslint --ext .js,.js.es6 --no-error-on-unmatched-pattern {test,assets}/javascripts
 
       - name: Prettier
         run: |
@@ -42,6 +37,12 @@ jobs:
           if [ -d "assets" ]; then \
             yarn prettier --list-different "assets/**/*.{scss,js,es6}" ; \
           fi
+          if [ -d "test" ]; then \
+            yarn prettier --list-different "test/**/*.{js,es6}" ; \
+          fi
+
+      - name: Ember template lint
+        run: yarn ember-template-lint assets/javascripts
 
       - name: Rubocop
         run: bundle exec rubocop .
