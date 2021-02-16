@@ -10,11 +10,6 @@ $solved-color: green;
   }
 }
 
-.post-controls span:not(.d-button-label) {
-  display: inline-flex;
-  align-items: baseline;
-}
-
 .fa.accepted {
   color: $solved-color;
 }
