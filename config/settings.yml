@@ -16,6 +16,8 @@ plugins:
     client: false
   solved_topics_auto_close_hours:
     default: 0
+    min: 0
+    max: 175200 # 20 years
   show_filter_by_solved_status:
     default: false
     client: true
