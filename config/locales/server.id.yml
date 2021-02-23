@@ -7,7 +7,17 @@
 id:
   site_settings:
     solved_enabled: "Aktifkan plugin yang terpecahkan, inzinkan pengguna memilih solusi untuk topik"
+    notify_on_staff_accept_solved: "Kirim notifikasi ke pembuat topik saat postingan ditandai sebagai solusi oleh staf."
   reports:
     accepted_solutions:
+      title: "Solusi yang diterima"
       xaxis: "Hari"
-      yaxis: "Total"
+      yaxis: "Jumlah"
+  solved:
+    no_solutions:
+      self: "Anda belum memiliki solusi yang diterima."
+      others: "Tidak ada solusi yang diterima."
+  badges:
+    tech_support:
+      name: "Dukungan Teknis"
+      description: "10 Jawaban yang diterima"
