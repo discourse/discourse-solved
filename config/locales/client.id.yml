@@ -11,5 +11,15 @@ id:
         solved:
           accepted_notification: "Diterima"
     solved:
+      allow_accepted_answers: "Izinkan pemilik topik dan staf untuk menandai balasan sebagai solusi"
+      accept_answer: "Pilih jika balasan ini menyelesaikan masalah"
+      has_no_accepted_answer: "Topik ini tidak memiliki solusi"
+      accepted_answer: "Solusi"
+      solution: "Solusi"
+      solution_summary:
+        other: "Solusi"
       topic_status_filter:
         all: "Semua"
+    topic_statuses:
+      solved:
+        help: "Topik ini memiliki solusi"
