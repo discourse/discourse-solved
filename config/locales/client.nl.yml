@@ -27,7 +27,7 @@ nl:
       topic_status_filter:
         all: "alle"
         solved: "opgelost"
-        unsolved: "niet opgelost"
+        unsolved: "onopgelost"
     topic_statuses:
       solved:
         help: "Dit topic heeft een oplossing"
@@ -40,4 +40,4 @@ nl:
       web_hooks:
         solved_event:
           name: "Opgelost-gebeurtenis"
-          details: "Wanneer een gebruiker een bericht als het geaccepteerde of niet-geaccepteerde antwoord markeert."
+          details: "Wanneer een gebruiker een post als het geaccepteerde of niet-geaccepteerde antwoord markeert."
