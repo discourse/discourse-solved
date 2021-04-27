@@ -1,3 +1,7 @@
-{{#link-to 'userActivity.solved'}}
-  {{user-stat value=model.solved_count label="solved.solution_summary" icon="check-square"}}
+{{#link-to "userActivity.solved"}}
+  {{user-stat
+    value=model.solved_count
+    label="solved.solution_summary"
+    icon="check-square"
+  }}
 {{/link-to}}
