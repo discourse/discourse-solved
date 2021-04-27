@@ -1,5 +1,5 @@
 {{#if topic.accepted_answer}}
-<p class="solved">
-{{{topic.acceptedAnswerHtml}}}
-</p>
+  <p class="solved">
+    {{html-safe topic.acceptedAnswerHtml}}
+  </p>
 {{/if}}

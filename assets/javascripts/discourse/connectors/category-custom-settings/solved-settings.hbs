@@ -1,6 +1,6 @@
 {{#unless siteSettings.allow_solved_on_all_topics}}
-  <h3>{{i18n 'solved.title'}}</h3>
-  <section class='field'>
+  <h3>{{i18n "solved.title"}}</h3>
+  <section class="field">
     <div class="enable-accepted-answer">
       <label class="checkbox-label">
         {{input
@@ -8,7 +8,7 @@
           checked=(readonly category.enable_accepted_answers)
           change=(action "onChangeSetting" value="target.checked")
         }}
-        {{i18n 'solved.allow_accepted_answers'}}
+        {{i18n "solved.allow_accepted_answers"}}
       </label>
     </div>
   </section>
