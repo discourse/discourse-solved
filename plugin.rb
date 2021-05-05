@@ -83,7 +83,7 @@ SQL
 
         if accepted_id > 0
           if p2 = Post.find_by(id: accepted_id)
-            p2.custom_fields["is_accepted_answer"] = nil
+            p2.custom_fields.delete("is_accepted_answer")
             p2.save!
 
             if defined?(UserAction::SOLVED)
@@ -168,13 +168,13 @@ SQL
       topic ||= post.topic
 
       DistributedMutex.synchronize("discourse_solved_toggle_answer_#{topic.id}") do
-        post.custom_fields["is_accepted_answer"] = nil
-        topic.custom_fields["accepted_answer_post_id"] = nil
+        post.custom_fields.delete("is_accepted_answer")
+        topic.custom_fields.delete("accepted_answer_post_id")
 
         if timer_id = topic.custom_fields[AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD]
           topic_timer = TopicTimer.find_by(id: timer_id)
           topic_timer.destroy! if topic_timer
-          topic.custom_fields[AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD] = nil
+          topic.custom_fields.delete(AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD)
         end
 
         topic.save!
