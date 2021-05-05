@@ -6,25 +6,27 @@
 
 zh_CN:
   site_settings:
-    solved_enabled: "启用已解决插件，允许用户为主题选择解决方案"
-    allow_solved_on_all_topics: "允许用户在所有主题选择解决方案（默认情况下在各个分类设置中更设置）"
-    accept_all_solutions_trust_level: "在任意主题接受解决方案所需的最低信任等级 (即便不是 OP)。"
-    empty_box_on_unsolved: "在未解决主题旁显示一个空框"
+    solved_enabled: "启用 Solved 插件，允许用户为话题选择解决方案"
+    allow_solved_on_all_topics: "允许用户给所有话题选择解决方案（默认情况在要编辑分类控制此项）"
+    accept_all_solutions_trust_level: "在任何话题中接受一个解决方案所需的最小信任等级（即使不是管理人员）"
+    empty_box_on_unsolved: "在未解决的话题旁显示一个空框"
     solved_quote_length: "在第一个帖子下显示解决方案时引用的字符数目"
-    show_filter_by_solved_status: "按照问题的解决状态来显示下拉列表以筛选主题。"
+    solved_topics_auto_close_hours: "当话题被标记为已解决后，等待（n）小时后自动关闭话题。设置为 0 以禁用自动关闭。"
+    show_filter_by_solved_status: "通过下拉列表按解决状态筛选话题列表"
+    notify_on_staff_accept_solved: "当帖子被工作人员标记为解决方案时，向话题创建者发送通知"
   reports:
     accepted_solutions:
-      title: "接受的解决方案"
+      title: "已接受的解决方案"
       xaxis: "天"
       yaxis: "总计"
   solved:
     no_solutions:
       self: "你尚无被接受的解决方案。"
-      others: "尚无接受的解决方案。"
+      others: "尚无被接受的解决方案。"
   badges:
     helpdesk:
       name: "助人为乐"
-      description: "首个被接受的回答"
+      description: "答案第一次在话题中被接受"
     tech_support:
       name: "技术支持"
       description: "10 个已接受的回答"
