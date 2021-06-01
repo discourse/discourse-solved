@@ -22,6 +22,8 @@ pt_BR:
       solution_summary:
         one: "solução"
         other: "soluções"
+      accepted_html: "%{icon} resolvido <span class='by'>por <a href data-user-card='%{username_lower}'>%{username}</a></span> em <a href='%{post_path}' class='back'>post #%{post_number}</a>"
+      accepted_notification: "<p><span>%{username}</span> %{description}</p>"
       topic_status_filter:
         all: "todos"
         solved: "resolvidos"
@@ -29,3 +31,13 @@ pt_BR:
     topic_statuses:
       solved:
         help: "Este tópico tem uma solução"
+    search:
+      advanced:
+        statuses:
+          solved: "estão resolvidos"
+          unsolved: "não estão resolvidos"
+    admin:
+      web_hooks:
+        solved_event:
+          name: "Evento Resolvido"
+          details: "Quando um usuário marca uma postagem como uma resposta aceita ou não aceita."
