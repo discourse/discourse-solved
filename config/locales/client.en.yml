@@ -4,6 +4,7 @@ en:
       alt:
         solved:
           accepted_notification: "accepted"
+    solutions: "Solutions"
 
     solved:
       title: "Solved"

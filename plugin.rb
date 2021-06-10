@@ -612,4 +612,10 @@ SQL
 
     options[:refresh_stream] = true if old_category_allows != new_category_allows
   end
+
+  column = "solution"
+  with_rows = "COUNT(DISTINCT pcf.post_id) AS solutions"
+  joins = "INNER JOIN post_custom_fields AS pcf ON p.id = pcf.post_id AND pcf.name = 'is_accepted_answer'"
+
+  add_directory_column(column, with_rows: with_rows, joins: joins)
 end
