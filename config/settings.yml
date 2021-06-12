@@ -23,3 +23,5 @@ plugins:
     client: true
   notify_on_staff_accept_solved:
     default: false
+  disable_solved_education_message:
+    default: false
