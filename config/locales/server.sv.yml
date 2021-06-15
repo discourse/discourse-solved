@@ -14,6 +14,7 @@ sv:
     solved_topics_auto_close_hours: "Stäng automatiskt ämnet (n) timmar efter det senaste svaret när ämnet har markerats som löst. Ange 0 för att inaktivera automatisk stängning."
     show_filter_by_solved_status: "Visa en rullgardinsmeny för att filtrera en ämneslista efter löst status."
     notify_on_staff_accept_solved: "Meddela ämnesskaparen när personal markerar ett inlägg som en lösning."
+    disable_solved_education_message: "Inaktivera utbildningsmeddelande för lösta ämnen."
   reports:
     accepted_solutions:
       title: "Godkända lösningar"
@@ -30,3 +31,14 @@ sv:
     tech_support:
       name: "Teknisk support"
       description: "10 Accepterade svar"
+  education:
+    topic_is_solved: |
+      ### Detta ämne har lösts
+
+      Svara bara här om:
+
+      - Du har ytterligare information
+
+      - Lösningen inte fungerar för dig
+
+      Om du har ett orelaterat problem ber vi dig [starta ett nytt ämne](%{base_url}/new-topic) istället.

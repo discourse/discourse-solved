@@ -12,6 +12,7 @@ he:
     empty_box_on_unsolved: "להציג תיבה ריקה ליד הנושאים שלא נפתרו"
     solved_quote_length: "מספר התווים לציטוט בעת הצגת הפתרון תחת הפוסט הראשון"
     show_filter_by_solved_status: "הצגת רשימה נגללת כדי לסנן רשימת נושאים לפי מצב פתרון."
+    disable_solved_education_message: "השבתת הודעת חינוך לנושאים שנפתרו."
   reports:
     accepted_solutions:
       title: "פתרונות מקובלים"
@@ -28,3 +29,14 @@ he:
     tech_support:
       name: "תמיכה טכנית"
       description: "10 תשובות שקיבלו אישור"
+  education:
+    topic_is_solved: |
+      ### נושא זה נפתר
+
+      יש להגיב כאן רק אם:
+
+      - יש לך פרטים נוספים
+
+      - הפתרון לא עובד עבורך
+
+      אם יש לך בעיה שלא קשורה, נא [לפתוח נושא חדש] (%{base_url}/new-topic) במקום.
