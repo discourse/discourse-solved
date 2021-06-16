@@ -618,7 +618,7 @@ SQL
       u.id user_id,
       COUNT(DISTINCT ua.id) AS solutions
       FROM users AS u
-      INNER JOIN user_actions AS ua ON ua.user_id = u.id AND ua.action_type = 15 AND COALESCE(ua.created_at, :since) > :since
+      INNER JOIN user_actions AS ua ON ua.user_id = u.id AND ua.action_type = #{UserAction::SOLVED} AND COALESCE(ua.created_at, :since) > :since
       WHERE u.active
         AND u.silenced_till IS NULL
         AND u.id > 0
