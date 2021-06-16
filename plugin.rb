@@ -632,4 +632,18 @@ SQL
     AND di.solutions <> x.solutions
   "
   add_directory_column("solutions", query: query)
+
+  add_to_class(:composer_messages_finder, :check_topic_is_solved) do
+    return if !SiteSetting.solved_enabled || SiteSetting.disable_solved_education_message
+    return if !replying? || @topic.blank? || @topic.private_message?
+    return if @topic.custom_fields["accepted_answer_post_id"].blank?
+
+    {
+      id: 'solved_topic',
+      templateName: 'education',
+      wait_for_typing: false,
+      extraClass: 'education-message',
+      body: PrettyText.cook(I18n.t('education.topic_is_solved', base_url: Discourse.base_url))
+    }
+  end
 end
