@@ -613,9 +613,23 @@ SQL
     options[:refresh_stream] = true if old_category_allows != new_category_allows
   end
 
-  column = "solution"
-  with_rows = "COUNT(DISTINCT pcf.post_id) AS solutions"
-  joins = "INNER JOIN post_custom_fields AS pcf ON p.id = pcf.post_id AND pcf.name = 'is_accepted_answer'"
-
-  add_directory_column(column, with_rows: with_rows, joins: joins)
+  query = "
+    WITH x AS (SELECT
+      u.id user_id,
+      COUNT(DISTINCT ua.id) AS solutions
+      FROM users AS u
+      INNER JOIN user_actions AS ua ON ua.user_id = u.id AND ua.action_type = 15 AND COALESCE(ua.created_at, :since) > :since
+      WHERE u.active
+        AND u.silenced_till IS NULL
+        AND u.id > 0
+      GROUP BY u.id
+    )
+    UPDATE directory_items di SET
+      solutions = x.solutions
+    FROM x
+    WHERE x.user_id = di.user_id
+    AND di.period_type = :period_type
+    AND di.solutions <> x.solutions
+  "
+  add_directory_column("solutions", query: query)
 end
