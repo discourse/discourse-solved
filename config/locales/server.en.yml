@@ -10,6 +10,7 @@ en:
     notify_on_staff_accept_solved: "Send notification to the topic creator when a post is marked as solution by a staff."
     disable_solved_education_message: "Disable education message for solved topics."
     accept_solutions_topic_starter: "Allow the topic starter to accept a solution."
+    solved_add_schema_markup: "When to add QAPage schema markup to HTML?"
   reports:
     accepted_solutions:
       title: "Accepted solutions"

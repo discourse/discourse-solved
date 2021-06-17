@@ -27,3 +27,11 @@ plugins:
     default: false
   accept_solutions_topic_starter:
     default: true
+  solved_add_schema_markup:
+    type: enum
+    default: "always"
+    choices:
+      - "never"
+      - "always"
+      - "answered only"
+

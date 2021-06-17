@@ -282,6 +282,7 @@ SQL
     # it can get confusing to have this on every page and it should make page 1
     # a bit more prominent + cut down on pointless work
 
+    return "" if SiteSetting.solved_add_schema_markup == "never"
     return "" if !controller.guardian.allow_accepted_answers_on_category?(topic.category_id)
 
     first_post = topic_view.posts&.first
@@ -313,6 +314,8 @@ SQL
           'name' => accepted_answer.user&.username
         }
       }
+    else
+      return "" if SiteSetting.solved_add_schema_markup == "answered only"
     end
 
     ['<script type="application/ld+json">', MultiJson.dump(
