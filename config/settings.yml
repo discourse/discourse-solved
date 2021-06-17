@@ -25,3 +25,5 @@ plugins:
     default: false
   disable_solved_education_message:
     default: false
+  accept_solutions_topic_starter:
+    default: true

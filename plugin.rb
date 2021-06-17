@@ -483,7 +483,7 @@ SQL
         return true if can_perform_action_available_to_group_moderators?(topic)
       end
 
-      topic.user_id == current_user.id && !topic.closed
+      topic.user_id == current_user.id && !topic.closed && SiteSetting.accept_solutions_topic_starter
     end
   end
 
