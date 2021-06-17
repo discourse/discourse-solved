@@ -25,3 +25,13 @@ plugins:
     default: false
   disable_solved_education_message:
     default: false
+  accept_solutions_topic_author:
+    default: true
+  solved_add_schema_markup:
+    type: enum
+    default: "always"
+    choices:
+      - "never"
+      - "always"
+      - "answered only"
+
