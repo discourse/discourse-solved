@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RecreateSolutionsColumn < ActiveRecord::Migration[6.1]
   def up
     if !ActiveRecord::Base.connection.column_exists?(:directory_items, :solutions)
