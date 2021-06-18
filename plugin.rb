@@ -616,6 +616,26 @@ SQL
     options[:refresh_stream] = true if old_category_allows != new_category_allows
   end
 
+  query = "
+    WITH x AS (SELECT
+      u.id user_id,
+      COUNT(DISTINCT ua.id) AS solutions
+      FROM users AS u
+      INNER JOIN user_actions AS ua ON ua.user_id = u.id AND ua.action_type = #{UserAction::SOLVED} AND COALESCE(ua.created_at, :since) > :since
+      WHERE u.active
+        AND u.silenced_till IS NULL
+        AND u.id > 0
+      GROUP BY u.id
+    )
+    UPDATE directory_items di SET
+      solutions = x.solutions
+    FROM x
+    WHERE x.user_id = di.user_id
+    AND di.period_type = :period_type
+    AND di.solutions <> x.solutions
+  "
+  add_directory_column("solutions", query: query)
+
   add_to_class(:composer_messages_finder, :check_topic_is_solved) do
     return if !SiteSetting.solved_enabled || SiteSetting.disable_solved_education_message
     return if !replying? || @topic.blank? || @topic.private_message?
