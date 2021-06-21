@@ -11,7 +11,15 @@ export default {
         "custom_fields.enable_accepted_answers",
         {
           get(fieldName) {
-            return Ember.get(this.custom_fields, fieldName) === "true";
+            if (this.custom_fields) {
+              return Ember.get(this.custom_fields, fieldName) === "true";
+            } else if (this.preloaded_custom_fields) {
+              return (
+                Ember.get(this.preloaded_custom_fields, fieldName) === "true"
+              );
+            } else {
+              return false;
+            }
           },
         }
       ),
