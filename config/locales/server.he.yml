@@ -11,8 +11,12 @@ he:
     accept_all_solutions_trust_level: "רמת האמון המזערית שנדרשת לקבלת פתרונות בכל נושא שהוא (אפילו לא בתור המפרסם המקורי)"
     empty_box_on_unsolved: "להציג תיבה ריקה ליד הנושאים שלא נפתרו"
     solved_quote_length: "מספר התווים לציטוט בעת הצגת הפתרון תחת הפוסט הראשון"
+    solved_topics_auto_close_hours: "לסגור נושא אוטומטית (n) שעות לאחר התגובה האחרונה כאשר הנושא סומן כפתור. יש להגדיר כ־0 להשבתת הסגירה האוטומטית."
     show_filter_by_solved_status: "הצגת רשימה נגללת כדי לסנן רשימת נושאים לפי מצב פתרון."
+    notify_on_staff_accept_solved: "לשלוח הודעה ליוצר הנושא כאשר פוסט מסומן כפתרון על ידי הסגל."
     disable_solved_education_message: "השבתת הודעת חינוך לנושאים שנפתרו."
+    accept_solutions_topic_author: "לאפשר ליוצר הנושא לאשר פתרון."
+    solved_add_schema_markup: "להוסיף סימון סכמת QAPage ל־HTML."
   reports:
     accepted_solutions:
       title: "פתרונות מקובלים"

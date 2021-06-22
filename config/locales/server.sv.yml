@@ -15,6 +15,8 @@ sv:
     show_filter_by_solved_status: "Visa en rullgardinsmeny för att filtrera en ämneslista efter löst status."
     notify_on_staff_accept_solved: "Meddela ämnesskaparen när personal markerar ett inlägg som en lösning."
     disable_solved_education_message: "Inaktivera utbildningsmeddelande för lösta ämnen."
+    accept_solutions_topic_author: "Låt ämnets skapare godkänna en lösning."
+    solved_add_schema_markup: "Lägg till QAPage-schemakod i HTML."
   reports:
     accepted_solutions:
       title: "Godkända lösningar"
