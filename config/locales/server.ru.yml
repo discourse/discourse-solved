@@ -15,6 +15,8 @@ ru:
     show_filter_by_solved_status: "Отображать раскрывающийся список для фильтрации тем по статусу <b>Решённые/Нерешённые</b>."
     notify_on_staff_accept_solved: "Отправлять уведомление автору темы, когда сотрудник помечает сообщение статусом 'Вопрос решён'."
     disable_solved_education_message: "Отключить обучающее сообщение для решённых тем."
+    accept_solutions_topic_author: "Разрешать автору темы помечать ответ статусом 'Вопрос решён'"
+    solved_add_schema_markup: "Добавить разметку схемы QAPage в HTML."
   reports:
     accepted_solutions:
       title: "Решённые вопросы"

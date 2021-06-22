@@ -14,6 +14,7 @@ zh_CN:
     solved_topics_auto_close_hours: "当话题被标记为已解决后，等待（n）小时后自动关闭话题。设置为 0 以禁用自动关闭。"
     show_filter_by_solved_status: "通过下拉列表按解决状态筛选话题列表"
     notify_on_staff_accept_solved: "当帖子被工作人员标记为解决方案时，向话题创建者发送通知"
+    disable_solved_education_message: "禁用已解决话题的指导消息。"
   reports:
     accepted_solutions:
       title: "已接受的解决方案"
@@ -30,3 +31,14 @@ zh_CN:
     tech_support:
       name: "技术支持"
       description: "10 个已接受的回答"
+  education:
+    topic_is_solved: |
+      ### 此话题已解决
+
+      仅在以下情况回复：
+
+      - 您有其他详细信息
+
+      - 该解决方案对您不起作用
+
+      如果您有不相关的问题，请 [新建话题](%{base_url}/new-topic）。
