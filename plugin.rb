@@ -634,7 +634,9 @@ SQL
     AND di.period_type = :period_type
     AND di.solutions <> x.solutions
   "
-  add_directory_column("solutions", query: query)
+  if respond_to?(:add_directory_column)
+    add_directory_column("solutions", query: query)
+  end
 
   add_to_class(:composer_messages_finder, :check_topic_is_solved) do
     return if !SiteSetting.solved_enabled || SiteSetting.disable_solved_education_message
