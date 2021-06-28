@@ -138,8 +138,7 @@ SQL
 
         if (auto_close_hours > 0) && !topic.closed
           topic_timer = topic.set_or_create_timer(
-            # Fallback to TopicTimer.types[:close] can be removed after discourse stable version > 2.7
-            TopicTimer.types[:silent_close] || TopicTimer.types[:close],
+            TopicTimer.types[:silent_close],
             nil,
             based_on_last_post: true,
             duration_minutes: auto_close_hours * 60
