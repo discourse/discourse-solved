@@ -10,6 +10,7 @@ ru:
       alt:
         solved:
           accepted_notification: "принято"
+    solutions: "Решения"
     solved:
       title: "Решённые"
       allow_accepted_answers: "Разрешать автору темы и модераторам помечать ответ статусом 'Вопрос решён'"
