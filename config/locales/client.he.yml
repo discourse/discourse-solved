@@ -10,6 +10,7 @@ he:
       alt:
         solved:
           accepted_notification: "התקבל"
+    solutions: "פתרונות"
     solved:
       title: "נפתר"
       allow_accepted_answers: "לאפשר למשתמשים לאשר תשובות"

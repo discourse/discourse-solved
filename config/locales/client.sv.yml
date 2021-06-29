@@ -10,6 +10,7 @@ sv:
       alt:
         solved:
           accepted_notification: "accepterad"
+    solutions: "Lösningar"
     solved:
       title: "Löst"
       allow_accepted_answers: "Låt ämnesägare och personal markera ett svar som lösningen"
