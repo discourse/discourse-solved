@@ -28,7 +28,7 @@ jobs:
       matrix:
         build_type: ["backend", "frontend"]
         ruby: ["2.7"]
-        postgres: ["12"]
+        postgres: ["13"]
         redis: ["4.x"]
 
     services:
@@ -57,18 +57,6 @@ jobs:
         with:
           path: plugins/${{ github.event.repository.name }}
           fetch-depth: 1
-
-      - name: Check spec existence
-        id: check_spec
-        uses: andstor/file-existence-action@v1
-        with:
-          files: "plugins/${{ github.event.repository.name }}/spec"
-
-      - name: Check qunit existence
-        id: check_qunit
-        uses: andstor/file-existence-action@v1
-        with:
-          files: "plugins/${{ github.event.repository.name }}/test/javascripts"
 
       - name: Setup Git
         run: |
@@ -121,11 +109,29 @@ jobs:
           bin/rake db:create
           bin/rake db:migrate
 
+      - name: Check spec existence
+        id: check_spec
+        shell: bash
+        run: |
+          shopt -s extglob
+          if ls plugins/${{ github.event.repository.name }}/spec/**/*.@(rb) &> /dev/null; then
+            echo "::set-output name=files_exist::true"
+          fi
+
       - name: Plugin RSpec
-        if: matrix.build_type == 'backend' && steps.check_spec.outputs.files_exists == 'true'
+        if: matrix.build_type == 'backend' && steps.check_spec.outputs.files_exist == 'true'
         run: bin/rake plugin:spec[${{ github.event.repository.name }}]
 
+      - name: Check qunit existence
+        id: check_qunit
+        shell: bash
+        run: |
+          shopt -s extglob
+          if ls plugins/${{ github.event.repository.name }}/test/javascripts/**/*.@(js|es6) &> /dev/null; then
+            echo "::set-output name=files_exist::true"
+          fi
+
       - name: Plugin QUnit
-        if: matrix.build_type == 'frontend' && steps.check_qunit.outputs.files_exists == 'true'
+        if: matrix.build_type == 'frontend' && steps.check_qunit.outputs.files_exist == 'true'
         run: bundle exec rake plugin:qunit['${{ github.event.repository.name }}','1200000']
         timeout-minutes: 30
