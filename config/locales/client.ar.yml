@@ -10,14 +10,18 @@ ar:
       alt:
         solved:
           accepted_notification: "مقبول"
+    solutions: "الحلول"
     solved:
       title: "تم الحل"
       allow_accepted_answers: "السماح لصاحب الموضوع وفريق العمل الرد كـحل للموضوع"
       accept_answer: "اختر إن كان هذا الرد يحل المشكلة"
+      accepted_description: "هذا هو الحل المقبول لهذا الموضوع"
       has_no_accepted_answer: "لا يوجد حل بخصوص هذا الموضوع"
       unaccept_answer: "احذف الاختيار إن كان هذا الرد لا يحل المشكلة الآن"
       accepted_answer: "الحل"
       solution: "الحل"
+      accepted_html: "%{icon} تم حله <span class='by'>بواسطة <a href data-user-card='%{username_lower}'>%{username}</a></span> في <a href='%{post_path}' class='back'>مشاركة #%{post_number}</a>"
+      accepted_notification: "<p><span>%{username}</span> %{description}</p>"
       topic_status_filter:
         all: "الكل"
         solved: "تم حله"
@@ -25,3 +29,12 @@ ar:
     topic_statuses:
       solved:
         help: "هذا الموضوع فيه الحل"
+    search:
+      advanced:
+        statuses:
+          solved: "تم حلها"
+          unsolved: "لم يتم حلها"
+    admin:
+      web_hooks:
+        solved_event:
+          details: "عندما يقوم المستخدم بوضع علامة على مشاركة كإجابة مقبولة أو غير مقبولة."
