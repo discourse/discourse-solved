@@ -286,5 +286,10 @@ export default {
         ],
       });
     });
+
+    withPluginApi("0.11.7", (api) => {
+      api.addSearchSuggestion("status:solved");
+      api.addSearchSuggestion("status:unsolved");
+    });
   },
 };
