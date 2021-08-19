@@ -680,8 +680,9 @@ SQL
     {
       id: 'solved_topic',
       templateName: 'education',
-      wait_for_typing: false,
+      wait_for_typing: true,
       extraClass: 'education-message',
+      hide_if_whisper: true,
       body: PrettyText.cook(I18n.t('education.topic_is_solved', base_url: Discourse.base_url))
     }
   end
