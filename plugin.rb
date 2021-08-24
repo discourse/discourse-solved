@@ -691,7 +691,7 @@ SQL
     attr_accessor :accepted_answer_user_id
   end
 
-  on(:before_topic_list_user_lookup) do |topics, user_ids|
+  register_topic_list_preload_user_ids do |topics, user_ids, topic_list|
     Topic.preload_custom_fields(topics, ['accepted_answer_post_id'])
     answer_post_ids = topics.map { |t| t.custom_fields['accepted_answer_post_id'] }.uniq.compact
     answer_user_ids = Post.where(id: answer_post_ids).pluck(:topic_id, :user_id).to_h
