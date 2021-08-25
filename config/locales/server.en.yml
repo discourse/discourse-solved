@@ -1,6 +1,4 @@
 en:
-  accepted_answer: "Accepted Answer"
-
   site_settings:
     solved_enabled: "Enable solved plugin, allow users to select solutions for topics"
     allow_solved_on_all_topics: "Allow users to select solutions on all topics (by default you control this by editing categories)"
