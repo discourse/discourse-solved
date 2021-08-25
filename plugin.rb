@@ -686,49 +686,4 @@ SQL
       body: PrettyText.cook(I18n.t('education.topic_is_solved', base_url: Discourse.base_url))
     }
   end
-
-  class ::Topic
-    attr_accessor :accepted_answer_user_id
-  end
-
-  register_topic_list_preload_user_ids do |topics, user_ids, topic_list|
-    Topic.preload_custom_fields(topics, ['accepted_answer_post_id'])
-    answer_post_ids = topics.map { |t| t.custom_fields['accepted_answer_post_id'] }.uniq.compact
-    answer_user_ids = Post.where(id: answer_post_ids).pluck(:topic_id, :user_id).to_h
-    topics.each { |topic| topic.accepted_answer_user_id = answer_user_ids[topic.id] }
-    user_ids.concat(answer_user_ids.values)
-  end
-
-  module AddSolvedToTopicPostersSummary
-    def descriptions_by_id
-      if !defined? @descriptions_by_id
-        super(ids: old_user_ids)
-
-        if id = topic.accepted_answer_user_id
-          @descriptions_by_id[id] ||= []
-          @descriptions_by_id[id] << I18n.t(:accepted_answer)
-        end
-      end
-
-      super
-    end
-
-    def last_poster_is_topic_creator?
-      super || topic.accepted_answer_user_id == topic.last_post_user_id
-    end
-
-    def user_ids
-      if id = topic.accepted_answer_user_id
-        super.insert(1, id)
-      else
-        super
-      end
-    end
-  end
-
-  TopicPostersSummary.class_eval do
-    alias :old_user_ids :user_ids
-
-    prepend AddSolvedToTopicPostersSummary
-  end
 end
