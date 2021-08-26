@@ -687,6 +687,14 @@ SQL
     }
   end
 
+  add_to_serializer(:user_card, :accepted_answers) do
+    Post
+      .where(user: User.find_by_username('bar3'))
+      .joins(:_custom_fields)
+      .where(_custom_fields: { name: 'is_accepted_answer', value: 'true' })
+      .count
+  end
+
   class ::Topic
     attr_accessor :accepted_answer_user_id
   end
