@@ -689,7 +689,7 @@ SQL
 
   add_to_serializer(:user_card, :accepted_answers) do
     Post
-      .where(user: User.find_by_username('bar3'))
+      .where(user_id: object.id)
       .joins(:_custom_fields)
       .where(_custom_fields: { name: 'is_accepted_answer', value: 'true' })
       .count
