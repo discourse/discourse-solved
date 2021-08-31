@@ -5,6 +5,7 @@
 # https://translate.discourse.org/
 
 he:
+  accepted_answer: "תשובה שקיבלה אישור"
   site_settings:
     solved_enabled: "הפעלת תוסף הפתרונות, מאפשר למשתמשים לבחור פתרונות לנושאים"
     allow_solved_on_all_topics: "אפשר למשתמשים לקבל תשובות לכל הנושאים(כברירת מחדל שולט בזה על ידי עריכת הקטגוריה"

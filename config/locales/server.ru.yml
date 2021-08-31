@@ -5,6 +5,7 @@
 # https://translate.discourse.org/
 
 ru:
+  accepted_answer: "Принятый ответ"
   site_settings:
     solved_enabled: "Включить этот плагин, разрешающий помечать сообщения, содержащие решённые вопросы"
     allow_solved_on_all_topics: "Разрешать пользователям отмечать ответы в темах (управляется в настройках раздела)"
