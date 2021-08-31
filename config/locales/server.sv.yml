@@ -5,6 +5,7 @@
 # https://translate.discourse.org/
 
 sv:
+  accepted_answer: "Godkänt svar"
   site_settings:
     solved_enabled: "Aktivera tillägg för lösningar, låt användare välja lösningar för ämnen"
     allow_solved_on_all_topics: "Låt användare välja lösningar för alla ämnen (som standard styr du detta genom att redigera kategorier)"

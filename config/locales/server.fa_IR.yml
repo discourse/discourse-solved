@@ -5,6 +5,7 @@
 # https://translate.discourse.org/
 
 fa_IR:
+  accepted_answer: "پاسخ پذیرفته شد"
   site_settings:
     allow_solved_on_all_topics: "به کاربر اجازه انتخاب راه حل را بده."
   reports:
