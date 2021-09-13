@@ -687,12 +687,13 @@ SQL
     }
   end
 
-  add_to_serializer(:user_card, :accepted_answers) do
-    Post
-      .where(user_id: object.id)
-      .joins(:_custom_fields)
-      .where(_custom_fields: { name: 'is_accepted_answer', value: 'true' })
-      .count
+  if defined?(UserAction::SOLVED)
+    add_to_serializer(:user_card, :accepted_answers) do
+      UserAction
+        .where(user_id: object.id)
+        .where(action_type: UserAction::SOLVED)
+        .count
+    end
   end
 
   if respond_to?(:register_topic_list_preload_user_ids)

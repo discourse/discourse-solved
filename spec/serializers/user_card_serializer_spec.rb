@@ -8,12 +8,15 @@ describe UserCardSerializer do
   let(:json) { serializer.as_json }
 
   it "accepted_answers serializes number of accepted answers" do
-    post = Fabricate(:post, user: user)
-    post.upsert_custom_fields(is_accepted_answer: 'true')
+    post1 = Fabricate(:post, user: user)
+    DiscourseSolved.accept_answer!(post1, Discourse.system_user)
     expect(serializer.as_json[:accepted_answers]).to eq(1)
 
-    post = Fabricate(:post, user: user)
-    post.upsert_custom_fields(is_accepted_answer: 'true')
+    post2 = Fabricate(:post, user: user)
+    DiscourseSolved.accept_answer!(post2, Discourse.system_user)
     expect(serializer.as_json[:accepted_answers]).to eq(2)
+
+    DiscourseSolved.unaccept_answer!(post1)
+    expect(serializer.as_json[:accepted_answers]).to eq(1)
   end
 end
