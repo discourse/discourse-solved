@@ -13,6 +13,8 @@ en:
     disable_solved_education_message: "Disable education message for solved topics."
     accept_solutions_topic_author: "Allow the topic author to accept a solution."
     solved_add_schema_markup: "Add QAPage schema markup to HTML."
+    enable_solved_tags: "Allow users to select solutions on all topics (when unchecked, solutions can be enabled per category or tag)"
+
   reports:
     accepted_solutions:
       title: "Accepted solutions"
