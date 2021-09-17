@@ -282,7 +282,13 @@ SQL
     # a bit more prominent + cut down on pointless work
 
     return "" if SiteSetting.solved_add_schema_markup == "never"
-    return "" if !controller.guardian.allow_accepted_answers_on_category?(topic.category_id)
+
+    allowed = controller
+      .guardian
+      .allow_accepted_answers?(
+        topic.category_id, topic.tags.pluck(:name)
+      )
+    return "" if !allowed
 
     first_post = topic_view.posts&.first
     return "" if first_post&.post_number != 1
@@ -466,9 +472,17 @@ SQL
         end
     end
 
-    def allow_accepted_answers_on_category?(category_id)
+    def allow_accepted_answers?(category_id, tag_names = [])
       return true if SiteSetting.allow_solved_on_all_topics
 
+      if SiteSetting.enable_solved_tags.present? && tag_names.present?
+        allowed_tags = SiteSetting.enable_solved_tags.split('|')
+        is_allowed = (tag_names & allowed_tags).present?
+
+        return true if is_allowed
+      end
+
+      return false if category_id.blank?
       self.class.reset_accepted_answer_cache unless @@allowed_accepted_cache["allowed"]
       @@allowed_accepted_cache["allowed"].include?(category_id)
     end
@@ -476,7 +490,7 @@ SQL
     def can_accept_answer?(topic, post)
       return false if !authenticated?
       return false if !topic || !post || post.whisper?
-      return false if !allow_accepted_answers_on_category?(topic.category_id)
+      return false if !allow_accepted_answers?(topic.category_id, topic.tags.map(&:name))
 
       return true if is_staff?
       return true if current_user.trust_level >= SiteSetting.accept_all_solutions_trust_level
@@ -606,13 +620,13 @@ SQL
   end
 
   on(:before_post_publish_changes) do |post_changes, topic_changes, options|
-    category_id_changes = topic_changes.diff["category_id"]
-    next if category_id_changes.blank?
+    category_id_changes = topic_changes.diff['category_id'].to_a
+    tag_changes = topic_changes.diff['tags'].to_a
 
-    old_category_allows = Guardian.new.allow_accepted_answers_on_category?(category_id_changes[0])
-    new_category_allows = Guardian.new.allow_accepted_answers_on_category?(category_id_changes[1])
+    old_allowed = Guardian.new.allow_accepted_answers?(category_id_changes[0], tag_changes[0])
+    new_allowed = Guardian.new.allow_accepted_answers?(category_id_changes[1], tag_changes[1])
 
-    options[:refresh_stream] = true if old_category_allows != new_category_allows
+    options[:refresh_stream] = true if old_allowed != new_allowed
   end
 
   on(:after_populate_dev_records) do |records, type|

@@ -34,4 +34,7 @@ plugins:
       - "never"
       - "always"
       - "answered only"
+  enable_solved_tags:
+    type: tag_list
+    default: ""
 

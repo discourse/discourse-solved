@@ -31,33 +31,67 @@ RSpec.describe TopicsController do
     }
   end
 
-  before do
-    SiteSetting.allow_solved_on_all_topics = true
+  context 'solved enabled on every topic' do
+    before do
+      SiteSetting.allow_solved_on_all_topics = true
+    end
+
+    it 'should include correct schema information in header' do
+      get "/t/#{topic.slug}/#{topic.id}"
+
+      expect(response.body).to include(schema_json(0))
+
+      p2.custom_fields["is_accepted_answer"] = true
+      p2.save_custom_fields
+      topic.custom_fields["accepted_answer_post_id"] = p2.id
+      topic.save_custom_fields
+
+      get "/t/#{topic.slug}/#{topic.id}"
+
+      expect(response.body).to include(schema_json(1))
+    end
+
+    it 'should include quoted content in schema information' do
+      post = topic.first_post
+      post.raw = "[quote]This is a quoted text.[/quote]"
+      post.save!
+      post.rebake!
+
+      get "/t/#{topic.slug}/#{topic.id}"
+
+      expect(response.body).to include('"text":"This is a quoted text."')
+    end
   end
 
-  it 'should include correct schema information in header' do
-    get "/t/#{topic.slug}/#{topic.id}"
+  context 'solved enabled for topics with specific tags' do
+    let(:tag) { Fabricate(:tag) }
 
-    expect(response.body).to include(schema_json(0))
+    before { SiteSetting.enable_solved_tags = tag.name }
 
-    p2.custom_fields["is_accepted_answer"] = true
-    p2.save_custom_fields
-    topic.custom_fields["accepted_answer_post_id"] = p2.id
-    topic.save_custom_fields
+    it 'includes the correct schema information' do
+      DiscourseTagging.add_or_create_tags_by_name(topic, [tag.name])
+      p2.custom_fields["is_accepted_answer"] = true
+      p2.save_custom_fields
+      topic.custom_fields["accepted_answer_post_id"] = p2.id
+      topic.save_custom_fields
 
-    get "/t/#{topic.slug}/#{topic.id}"
+      get "/t/#{topic.slug}/#{topic.id}"
 
-    expect(response.body).to include(schema_json(1))
-  end
+      expect(response.body).to include(schema_json(1))
+    end
 
-  it 'should include quoted content in schema information' do
-    post = topic.first_post
-    post.raw = "[quote]This is a quoted text.[/quote]"
-    post.save!
-    post.rebake!
+    it "doesn't include solved schema information when the topic has a different tag" do
+      another_tag = Fabricate(:tag)
 
-    get "/t/#{topic.slug}/#{topic.id}"
+      DiscourseTagging.add_or_create_tags_by_name(topic, [another_tag.name])
+      p2.custom_fields["is_accepted_answer"] = true
+      p2.save_custom_fields
+      topic.custom_fields["accepted_answer_post_id"] = p2.id
+      topic.save_custom_fields
 
-    expect(response.body).to include('"text":"This is a quoted text."')
+      get "/t/#{topic.slug}/#{topic.id}"
+
+      expect(response.body).not_to include(schema_json(1))
+    end
   end
 end
