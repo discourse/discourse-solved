@@ -16,7 +16,7 @@ module TopicAnswerMixin
   def can_have_answer
     return true if SiteSetting.allow_solved_on_all_topics
     return false if object.closed || object.archived
-    scope.allow_accepted_answer?(object.category_id, object.tags.map(&:name))
+    scope.allow_accepted_answers?(object.category_id, object.tags.map(&:name))
   end
 
   def include_can_have_answer?
