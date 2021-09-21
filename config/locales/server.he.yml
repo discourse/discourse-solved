@@ -8,7 +8,7 @@ he:
   accepted_answer: "תשובה שקיבלה אישור"
   site_settings:
     solved_enabled: "הפעלת תוסף הפתרונות, מאפשר למשתמשים לבחור פתרונות לנושאים"
-    allow_solved_on_all_topics: "אפשר למשתמשים לקבל תשובות לכל הנושאים(כברירת מחדל שולט בזה על ידי עריכת הקטגוריה"
+    allow_solved_on_all_topics: "לאפשר למשתמשים לבחור פתרונות בכל הנושאים (כשלא מסומן, ניתן להפעיל פתרונות לפי קטגוריה או תגית)"
     accept_all_solutions_trust_level: "רמת האמון המזערית שנדרשת לקבלת פתרונות בכל נושא שהוא (אפילו לא בתור המפרסם המקורי)"
     empty_box_on_unsolved: "להציג תיבה ריקה ליד הנושאים שלא נפתרו"
     solved_quote_length: "מספר התווים לציטוט בעת הצגת הפתרון תחת הפוסט הראשון"
@@ -18,6 +18,7 @@ he:
     disable_solved_education_message: "השבתת הודעת חינוך לנושאים שנפתרו."
     accept_solutions_topic_author: "לאפשר ליוצר הנושא לאשר פתרון."
     solved_add_schema_markup: "להוסיף סימון סכמת QAPage ל־HTML."
+    enable_solved_tags: "תגיות שיאפשרו למשתמשים לבחור פתרונות."
   reports:
     accepted_solutions:
       title: "פתרונות מקובלים"

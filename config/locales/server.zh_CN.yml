@@ -7,7 +7,6 @@
 zh_CN:
   site_settings:
     solved_enabled: "启用 Solved 插件，允许用户为话题选择解决方案"
-    allow_solved_on_all_topics: "允许用户给所有话题选择解决方案（默认情况在要编辑分类控制此项）"
     accept_all_solutions_trust_level: "在任何话题中接受一个解决方案所需的最小信任等级（即使不是管理人员）"
     empty_box_on_unsolved: "在未解决的话题旁显示一个空框"
     solved_quote_length: "在第一个帖子下显示解决方案时引用的字符数目"

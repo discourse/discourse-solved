@@ -7,7 +7,6 @@
 nl:
   site_settings:
     solved_enabled: "Solved-plug-in inschakelen, gebruikers kunnen oplossingen voor topics selecteren"
-    allow_solved_on_all_topics: "Gebruikers mogen oplossingen selecteren bij alle topics (standaard bepaalt u dit door categorieën te bewerken)"
     accept_all_solutions_trust_level: "Minimale vertrouwensniveau dat nodig is om oplossingen bij alle topics te accepteren (zelfs wanneer geen OP)"
     empty_box_on_unsolved: "Een leeg vakje naast onopgeloste topics weergeven"
     solved_quote_length: "Aantal te citeren tekens bij weergeven van de oplossing onder het eerste bericht"

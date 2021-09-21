@@ -7,7 +7,6 @@
 pl_PL:
   site_settings:
     solved_enabled: "Aktywuj wtyczkę solved, zezwól użytkownikom wybierać rozwiązania w tematach"
-    allow_solved_on_all_topics: "Pozwól oznaczać użytkownikom wszystkie tematy jako rozwiązane (domyślnie tylko dla wybranych kategorii w ich ustawieniach)"
     accept_all_solutions_trust_level: "Minimalny poziom zaufania wymagany do zaakceptowania rozwiązania w każdym temacie (nawet jeśli nie jest się jego autorem)"
     empty_box_on_unsolved: "Wyświetl puste pole obok nierozwiązanych tematów"
     solved_quote_length: "Liczba znaków do wyświetlenia przy wyświetlaniu rozwiązania pod pierwszym wpisem"

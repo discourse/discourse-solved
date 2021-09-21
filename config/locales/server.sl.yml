@@ -7,7 +7,6 @@
 sl:
   site_settings:
     solved_enabled: "Omogočite vtičnik za rešitve, omogočite uporabnikom, da izberejo rešitve za teme"
-    allow_solved_on_all_topics: "Dovoli uporabnikom, da izberejo rešitve za vse teme (privzeto to nadzorujete z urejanjem kategorij)"
     accept_all_solutions_trust_level: "Minimalna raven zaupanja, potrebna za sprejemanje rešitev za katero koli temo (tudi če ni avtor teme)"
     empty_box_on_unsolved: "Prikaz praznega polja ob nerešenih temah"
     solved_quote_length: "Število citiranih znakov rešitve pod prvo objavo"

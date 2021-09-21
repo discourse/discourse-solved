@@ -7,7 +7,6 @@
 hu:
   site_settings:
     solved_enabled: "Solved plugin engedélyezése, hogy a felhasználók kiválaszthassák a megoldást a témához"
-    allow_solved_on_all_topics: "Lehetővé teszi a felhasználók számára, hogy minden témában megoldásokat válasszanak (alapértelmezés szerint ezt a kategóriák szerkesztésével szabályozhatja)"
     accept_all_solutions_trust_level: "Szükséges minimum bizalmi szint a megoldások elfogadásához bármelyik témában (even when not OP)"
     empty_box_on_unsolved: "Egy üres doboz megjelenítése a megoldatlan témák mellett"
     solved_quote_length: "Idézett karakterek száma amikor a megoldás megjelenik az első bejegyzés alatt"

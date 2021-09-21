@@ -7,7 +7,6 @@
 ko:
   site_settings:
     solved_enabled: "해결 된 플러그인 사용, 사용자가 주제에 대한 솔루션을 선택할 수 있도록 허용"
-    allow_solved_on_all_topics: "사용자가 모든 주제에 대한 솔루션을 선택할 수 있도록 허용 (기본적으로 카테고리를 편집하여 제어)"
     accept_all_solutions_trust_level: "모든 주제에 대한 솔루션을 수락하는 데 필요한 최소 신뢰 수준 (OP가 아닌 경우에도)"
     empty_box_on_unsolved: "해결되지 않은 주제 옆에 빈 상자 표시"
     solved_quote_length: "첫 번째 게시물 아래에 솔루션을 표시 할 때 인용 할 문자 수"
