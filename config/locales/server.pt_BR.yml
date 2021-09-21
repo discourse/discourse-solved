@@ -7,7 +7,6 @@
 pt_BR:
   site_settings:
     solved_enabled: "Habilitar plugin resolvido, permite aos usuários selecionar soluções para tópicos"
-    allow_solved_on_all_topics: "Permitir que usuários selecionem soluções em todos tópicos (por padrão você controla isto editando categorias)"
     accept_all_solutions_trust_level: "Nível mínimo de confiança requerido para aceitar soluções em qualquer tópico (mesmo quando não for o OP)"
     empty_box_on_unsolved: "Apresentar uma caixa vazia próximo a tópicos não resolvidos"
     solved_quote_length: "Número de caracteres para citar ao exibir a solução abaixo da primeira postagem"

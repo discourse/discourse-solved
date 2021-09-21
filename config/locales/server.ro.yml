@@ -7,7 +7,6 @@
 ro:
   site_settings:
     solved_enabled: "Activează extensia \"Rezolvat\", permite utilizatorilor să selecteze soluții pentru subiecte"
-    allow_solved_on_all_topics: "Permite utilizatorilor să selecteze soluții la toate subiectele (implicit tu controlezi asta prin editarea categoriilor)"
     accept_all_solutions_trust_level: "Nivelul minim de încredere necesar pentru a accepta soluții la fiecare subiect (chiar dacă nu este OP)."
     empty_box_on_unsolved: "Afișați o casetă goală lângă subiectele nerezolvate"
     solved_quote_length: "Numărul de caractere de citat când se afișează soluția sub prima postare"

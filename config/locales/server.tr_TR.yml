@@ -7,7 +7,6 @@
 tr_TR:
   site_settings:
     solved_enabled: "Çözüldü eklentisini etkinleştirin, kullanıcıların konularda yanıtları çözüldü olarak seçmesine izin verin"
-    allow_solved_on_all_topics: "Kullanıcılar yanıtları çözüldü olarak seçebilsinler mi? (Varsayılan olarak kategori düzenleme kısmından ayarlayabilirsiniz.)"
     accept_all_solutions_trust_level: "Herhangi bir konudaki çözümleri kabul etmek için gereken asgari güven seviyesi (OP olmasa bile)"
     empty_box_on_unsolved: "Çözülmemiş konuların yanında boş bir kutu görüntüle"
     solved_quote_length: "İlk gönderinin altındaki çözümü görüntülerken alıntı yapılacak karakter sayısı"
