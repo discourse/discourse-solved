@@ -1,5 +1,7 @@
-import { acceptance, queryAll } from "helpers/qunit-helpers";
+import { acceptance, queryAll } from "discourse/tests/helpers/qunit-helpers";
 import { fixturesByUrl } from "discourse/tests/helpers/create-pretender";
+import { test } from "qunit";
+import { click, visit } from "@ember/test-helpers";
 
 acceptance("Discourse Solved Plugin", function (needs) {
   needs.user();
