@@ -24,6 +24,8 @@ en:
         all: "all"
         solved: "solved"
         unsolved: "unsolved"
+      no_solved_topics_title: "You haven’t solved any topics yet"
+      no_solved_topics_body: "When you give an especially helpful answer to a topic, your reply might be indicated as the solution."
 
     topic_statuses:
       solved:
