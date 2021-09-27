@@ -8,7 +8,7 @@ export default UserActivityStreamRoute.extend({
   emptyState() {
     return {
       title: I18n.t("solved.no_solved_topics_title"),
-      body: I18n.t("solved.no_solved_topics_body")
+      body: I18n.t("solved.no_solved_topics_body"),
     };
-  }
+  },
 });
