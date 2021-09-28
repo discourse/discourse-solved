@@ -1,4 +1,4 @@
-import { acceptance, exists, query } from "discourse/tests/helpers/qunit-helpers";
+import { acceptance, exists } from "discourse/tests/helpers/qunit-helpers";
 import { test } from "qunit";
 import { visit } from "@ember/test-helpers";
 
@@ -18,12 +18,8 @@ acceptance("Discourse Solved Plugin | activity/solved | empty state", function (
     assert.ok(exists("div.empty-state"));
   });
 
-  test("When looking at another user activity it renders the 'No activity' message", async function (assert) {
+  test("When looking at another user's activity it renders the 'No activity' message", async function (assert) {
     await visit("/u/charlie/activity/solved");
     assert.ok(exists("div.alert-info"));
-    assert.equal(
-      query("div.alert-info").innerText.trim(),
-      I18n.t("user_activity.no_activity_others")
-    );
   });
 });
