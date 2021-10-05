@@ -31,6 +31,8 @@ he:
         all: "הכול"
         solved: "נפתר"
         unsolved: "בלתי פתור"
+      no_solved_topics_title: "עדיין לא פתרת אף נושא"
+      no_solved_topics_body: "לאחר שכתבת תגובה מועילה לנושא, התגובה שלך עשויה להיבחר כפתרון על ידי בעלי הנושא או הסגל."
     topic_statuses:
       solved:
         help: "נושא זה נפתר"
