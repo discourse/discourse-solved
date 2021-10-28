@@ -256,16 +256,7 @@ SQL
     mount ::DiscourseSolved::Engine, at: "solution"
   end
 
-  # TODO Drop after Discourse 2.6.0 release
-  if TopicView.respond_to?(:add_post_custom_fields_allowlister)
-    TopicView.add_post_custom_fields_allowlister do |user|
-      ["is_accepted_answer"]
-    end
-  else
-    TopicView.add_post_custom_fields_whitelister do |user|
-      ["is_accepted_answer"]
-    end
-  end
+  topic_view_post_custom_fields_allowlister { ["is_accepted_answer"] }
 
   def get_schema_text(post)
     post.excerpt(nil, keep_onebox_body: true).presence || post.excerpt(nil, keep_onebox_body: true, keep_quotes: true)
