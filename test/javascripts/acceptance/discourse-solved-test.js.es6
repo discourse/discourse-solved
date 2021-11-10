@@ -213,7 +213,7 @@ acceptance("Discourse Solved Plugin", function (needs) {
         featured_link: null,
         topic_timer: null,
         message_bus_last_id: 0,
-        accepted_answer: { post_number: 2, username: "kzh", excerpt: excerpt },
+        accepted_answer: { post_number: 2, username: "kzh", excerpt },
       };
     };
 
