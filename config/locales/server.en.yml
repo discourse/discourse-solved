@@ -33,6 +33,12 @@ en:
       name: "Tech Support"
       description: "10 Accepted answers"
 
+  discourse_automation:
+    triggerables:
+      first_accepted_solution:
+        title: First accepted solution
+        doc: Triggers when a user got a solution accepted for the first time.
+
   education:
     topic_is_solved: |
       ### This topic has been solved
