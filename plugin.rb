@@ -24,6 +24,7 @@ after_initialize do
   SeedFu.fixture_paths << Rails.root.join("plugins", "discourse-solved", "db", "fixtures").to_s
 
   [
+    '../app/lib/first_accepted_post_solution_validator.rb',
     '../app/serializers/concerns/topic_answer_mixin.rb'
   ].each { |path| load File.expand_path(path, __FILE__) }
 
@@ -750,6 +751,47 @@ SQL
       alias :old_user_ids :user_ids
 
       prepend AddSolvedToTopicPostersSummary
+    end
+  end
+
+  if defined?(DiscourseAutomation)
+    if respond_to?(:add_triggerable_to_scriptable)
+      on(:accepted_solution) do |post|
+        # testing directly automation is prone to issues
+        # we prefer to abstract logic in service object and test this
+        next if Rails.env.test?
+
+        name = 'first_accepted_solution'
+        DiscourseAutomation::Automation.where(trigger: name, enabled: true).find_each do |automation|
+          maximum_trust_level = automation.trigger_field('maximum_trust_level')&.dig('value')
+          if FirstAcceptedPostSolutionValidator.check(post, trust_level: maximum_trust_level)
+            automation.trigger!(
+              'kind' => name,
+              'accepted_post_id' => post.id,
+              'usernames' => [post.user.username],
+              'placeholders' => {
+                'post_url' => Discourse.base_url + post.url
+              }
+            )
+          end
+        end
+      end
+
+      TRUST_LEVELS = [
+        { id: 1, name: 'discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl1' },
+        { id: 2, name: 'discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl2' },
+        { id: 3, name: 'discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl3' },
+        { id: 4, name: 'discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl4' },
+        { id: 'any', name: 'discourse_automation.triggerables.first_accepted_solution.max_trust_level.any' },
+      ]
+
+      add_triggerable_to_scriptable(:first_accepted_solution, :send_pms)
+
+      DiscourseAutomation::Triggerable.add(:first_accepted_solution) do
+        placeholder :post_url
+
+        field :maximum_trust_level, component: :choices, extra: { content: TRUST_LEVELS }, required: true
+      end
     end
   end
 end
