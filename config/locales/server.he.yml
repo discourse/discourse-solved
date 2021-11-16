@@ -35,6 +35,11 @@ he:
     tech_support:
       name: "תמיכה טכנית"
       description: "10 תשובות שקיבלו אישור"
+  discourse_automation:
+    triggerables:
+      first_accepted_solution:
+        title: הפתרון הראשון שהתקבל
+        doc: מקפיץ כאשר אושר פתרון של משתמש לראשונה.
   education:
     topic_is_solved: |
       ### נושא זה נפתר

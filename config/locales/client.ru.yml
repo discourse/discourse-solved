@@ -46,3 +46,16 @@ ru:
         solved_event:
           name: "Событие решения вопроса"
           details: "При пометке сообщения статусом 'Вопрос решён'."
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          max_trust_level:
+            tl1: < 1 уровня
+            tl2: < 2 уровня
+            tl3: < 3 уровня
+            tl4: < 4 уровня
+            any: Любой
+          fields:
+            maximum_trust_level:
+              label: Уровень доверия
+              description: Пользователи с этим уровнем доверия будут запускать этот скрипт

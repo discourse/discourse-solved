@@ -46,3 +46,16 @@ he:
         solved_event:
           name: "אירוע שנפתר"
           details: "כאשר משתמש מסמן פוסט בתור התשובה המקובלת או הבלתי מקובלת."
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          max_trust_level:
+            tl1: < דרגת אמון 1
+            tl2: < דרגת אמון 2
+            tl3: < דרגת אמון 3
+            tl4: < דרגת אמון 4
+            any: כלשהו
+          fields:
+            maximum_trust_level:
+              label: דרגת אמון
+              description: משתמשים מתחת לדרגת אמון זו יקפיצו אוטומציה זו

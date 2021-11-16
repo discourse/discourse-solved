@@ -35,6 +35,11 @@ ru:
     tech_support:
       name: "Техническая поддержка"
       description: "10 принятых ответов"
+  discourse_automation:
+    triggerables:
+      first_accepted_solution:
+        title: Первый решённый вопрос
+        doc: Срабатывает, когда пользователь впервые получает решение вопроса.
   education:
     topic_is_solved: |
       ### Вопрос уже решён
