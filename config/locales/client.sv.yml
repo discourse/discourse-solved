@@ -44,3 +44,16 @@ sv:
         solved_event:
           name: "Löst händelse"
           details: "När en användare markerar ett svarsinlägg som accepterat eller icke accepterat."
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          max_trust_level:
+            tl1: < TL1
+            tl2: < TL2
+            tl3: < TL3
+            tl4: < TL4
+            any: Valfri
+          fields:
+            maximum_trust_level:
+              label: Förtroendenivå
+              description: Användare under denna förtroendenivå kommer att utlösa denna automatisering
