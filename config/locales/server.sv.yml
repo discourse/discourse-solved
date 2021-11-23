@@ -35,6 +35,11 @@ sv:
     tech_support:
       name: "Teknisk support"
       description: "10 Accepterade svar"
+  discourse_automation:
+    triggerables:
+      first_accepted_solution:
+        title: Första accepterade lösningen
+        doc: Utlöses när en användare fick en lösning accepterad för första gången.
   education:
     topic_is_solved: |
       ### Detta ämne har lösts
