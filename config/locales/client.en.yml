@@ -27,6 +27,10 @@ en:
       no_solved_topics_title: "You haven’t solved any topics yet"
       no_solved_topics_body: "When you provide a helpful reply to a topic, your reply might be selected as the solution by the topic owner or staff."
 
+      no_answer:
+        title: Has your question been answered?
+        description: "Highlight the answer and help others by using the solution button below the correct reply."
+
     topic_statuses:
       solved:
         help: "This topic has a solution"
