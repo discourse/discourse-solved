@@ -5,11 +5,20 @@
 # https://translate.discourse.org/
 
 hu:
+  accepted_answer: "Elfogadott válasz"
   site_settings:
     solved_enabled: "Solved plugin engedélyezése, hogy a felhasználók kiválaszthassák a megoldást a témához"
+    allow_solved_on_all_topics: "A felhasználók kiválaszthatják a megoldásokat az összes témában (ha nincs bejelölve, akkor a megoldások kategóriánként vagy címkénként kapcsolhatók be)"
     accept_all_solutions_trust_level: "Szükséges minimum bizalmi szint a megoldások elfogadásához bármelyik témában (even when not OP)"
     empty_box_on_unsolved: "Egy üres doboz megjelenítése a megoldatlan témák mellett"
     solved_quote_length: "Idézett karakterek száma amikor a megoldás megjelenik az első bejegyzés alatt"
+    solved_topics_auto_close_hours: "Automatikusan zárja le a témát (n) órával az utolsó válasz után, miután a témát megoldották. Állítsa 0-ra az automatikus lezárás letiltásához."
+    show_filter_by_solved_status: "Legördülő menü megjelenítése a témalista megoldási állapot szerinti szűréséhez."
+    notify_on_staff_accept_solved: "Értesítés küldése a téma létrehozójának, ha egy bejegyzést a stáb megoldásként jelöl meg."
+    disable_solved_education_message: "Oktatási üzenet letiltása a megoldott témáknál."
+    accept_solutions_topic_author: "Engedélyezés, hogy a téma szerzője elfogadjon egy megoldást."
+    solved_add_schema_markup: "QAPage sémaleíró hozzáadása a HTML-hez."
+    enable_solved_tags: "Címkék, amelyek lehetővé teszik a felhasználók számára a megoldások kiválasztását."
   reports:
     accepted_solutions:
       title: "Elfogadott megoldások"
@@ -19,3 +28,26 @@ hu:
     no_solutions:
       self: "Még nincs elfogadott megoldásod."
       others: "Nincs elfogadott megoldás."
+  badges:
+    helpdesk:
+      name: "Ügyfélszolgálat"
+      description: "Első elfogadott válasz egy témában"
+    tech_support:
+      name: "Műszaki támogatás"
+      description: "10 elfogadott válasz"
+  discourse_automation:
+    triggerables:
+      first_accepted_solution:
+        title: Első elfogadott megoldás
+        doc: Akkor aktiválódik, amikor a felhasználó megoldását először fogadják el.
+  education:
+    topic_is_solved: |
+      ### Ezt a témát sikerült megoldani
+
+      Csak akkor válaszoljon ide, ha:
+
+      - További információi vannak
+
+      - A megoldás nem működik az Ön számára
+
+      Ha nem kapcsolódó problémája van, inkább [indítson új témát](%{base_url}/new-topic).
