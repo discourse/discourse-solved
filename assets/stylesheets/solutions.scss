@@ -26,6 +26,7 @@ $solved-color: green;
 .post-controls .extra-buttons {
   // anon text
   .accepted-text {
+    white-space: nowrap;
     .d-icon,
     .accepted-label {
       color: $solved-color;
