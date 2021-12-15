@@ -5,9 +5,17 @@ const MAX_DURATION_WITH_NO_ANSWER = 7 * 24 * 60 * 60 * 1000;
 
 export default {
   setupComponent(args, component) {
-    this.set("show", false);
+    component.set("show", false);
 
     later(() => {
+      if (
+        !component.element ||
+        component.isDestroying ||
+        component.isDestroyed
+      ) {
+        return;
+      }
+
       const topic = args.topic;
       const currentUser = component.currentUser;
 
@@ -15,14 +23,17 @@ export default {
       // - user can accept answer
       // - it does not have an accepted answer
       // - topic is old
-      // - topic has at least one reply from another user
+      // - topic has at least one reply from another user that can be accepted
       if (
         !topic.accepted_answer &&
+        currentUser &&
         topic.user_id === currentUser.id &&
         moment() - moment(topic.created_at) > MAX_DURATION_WITH_NO_ANSWER &&
-        topic.postStream.posts.some((post) => post.user_id !== currentUser.id)
+        topic.postStream.posts.some(
+          (post) => post.user_id !== currentUser.id && post.can_accept_answer
+        )
       ) {
-        this.set("show", true);
+        component.set("show", true);
       }
     }, 2000);
   },
