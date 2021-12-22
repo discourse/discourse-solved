@@ -31,6 +31,9 @@ hu:
         unsolved: "megoldatlan"
       no_solved_topics_title: "Még egy témát sem oldott meg"
       no_solved_topics_body: "Ha hasznos választ ad egy témára, előfordulhat, hogy a téma tulajdonosa vagy a stáb az Ön válaszát választják megoldásként."
+      no_answer:
+        title: Megválaszolták a kérdését?
+        description: "Emelje ki a választ, és segítsen másoknak is a helyes válasz alatti megoldás gomb segítségével."
     topic_statuses:
       solved:
         help: "Ez a téma tartalmaz egy megoldást"
