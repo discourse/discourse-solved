@@ -3,7 +3,6 @@ $solved-color: green;
 .select-kit {
   &.solved-status-filter {
     min-width: auto;
-    margin-bottom: var(--nav-space); // core variable
     .select-kit-header {
       margin: 0;
     }
