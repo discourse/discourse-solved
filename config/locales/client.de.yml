@@ -10,9 +10,10 @@ de:
       alt:
         solved:
           accepted_notification: "akzeptiert"
+    solutions: "Lösungen"
     solved:
       title: "Gelöst"
-      allow_accepted_answers: "Erlaube dem Ersteller des Themas und Mitarbeitern eine Antwort als Lösung zu markieren"
+      allow_accepted_answers: "Erlaube dem Ersteller des Themas und Team-Mitgliedern, eine Antwort als Lösung zu markieren"
       accept_answer: "Auswählen, wenn diese Antwort das Problem löst"
       accepted_description: "Dies ist die für dieses Thema akzeptierte Lösung"
       has_no_accepted_answer: "Dieses Thema hat keine Lösung"
@@ -28,6 +29,11 @@ de:
         all: "alle"
         solved: "gelöst"
         unsolved: "ungelöst"
+      no_solved_topics_title: "Du hast noch keine Themen gelöst"
+      no_solved_topics_body: "Wenn du eine hilfreiche Antwort auf ein Thema gibst, kann es sein, dass deine Antwort vom Themenersteller oder einem Team-Mitglied als Lösung ausgewählt wird."
+      no_answer:
+        title: Wurde deine Frage beantwortet?
+        description: "Hebe die Antwort hervor und hilf anderen, indem du die Lösungsschaltfläche unter der richtigen Antwort verwendest."
     topic_statuses:
       solved:
         help: "Dieses Thema hat eine Lösung"
@@ -41,3 +47,16 @@ de:
         solved_event:
           name: "Gelöstes Ereignis"
           details: "Wenn ein Benutzer einen Beitrag als akzeptierte oder nicht akzeptierte Antwort markiert."
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          max_trust_level:
+            tl1: < VS1
+            tl2: < VS2
+            tl3: < VS3
+            tl4: < VS4
+            any: Beliebig
+          fields:
+            maximum_trust_level:
+              label: Vertrauensstufe
+              description: Benutzer unter dieser Vertrauensstufe lösen diese Automatisierung aus

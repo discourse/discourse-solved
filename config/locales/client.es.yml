@@ -29,6 +29,11 @@ es:
         all: "todos"
         solved: "solucionado"
         unsolved: "sin solución"
+      no_solved_topics_title: "Todavía no has resuelto ningún tema"
+      no_solved_topics_body: "Cuando proporcionas una respuesta útil a un tema, el propietario del tema o el personal pueden seleccionar tu respuesta como la solución."
+      no_answer:
+        title: '¿Se ha respondido a tu pregunta?'
+        description: "Destaca la respuesta y ayuda a los demás utilizando el botón de solución que hay debajo de la respuesta correcta."
     topic_statuses:
       solved:
         help: "Este tema tiene una solución"
@@ -42,3 +47,16 @@ es:
         solved_event:
           name: "Al resolver"
           details: "Cuando un usuario marca o desmarca una publicación como la respuesta aceptada."
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          max_trust_level:
+            tl1: < NC1
+            tl2: < NC2
+            tl3: < NC3
+            tl4: < NC4
+            any: Cualquiera
+          fields:
+            maximum_trust_level:
+              label: Nivel de confianza
+              description: Los usuarios bajo este Nivel de confianza activarán esta automatización

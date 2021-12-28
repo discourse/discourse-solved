@@ -17,8 +17,8 @@ es:
     notify_on_staff_accept_solved: "Enviar una notificación al creador del tema cuando alguien del staff marque una publicación como solución."
     disable_solved_education_message: "Desactivar mensajes informativos en los temas resueltos."
     accept_solutions_topic_author: "Permitir que el autor de un tema marque una respuesta como la solución."
-    solved_add_schema_markup: "Añadir texto estructurado del esquema QAPage al HTML."
-    enable_solved_tags: "Etiquetas en las que los usuarios pueden elegir soluciones."
+    solved_add_schema_markup: "Añade el marcado del esquema de QAPage al HTML."
+    enable_solved_tags: "Etiquetas que permitirán a los usuarios seleccionar soluciones."
   reports:
     accepted_solutions:
       title: "Soluciones aceptadas"
@@ -30,11 +30,16 @@ es:
       others: "No hay soluciones aceptadas."
   badges:
     helpdesk:
-      name: "Asistencia a los usuarios"
+      name: "Servicio de ayuda"
       description: "Primera respuesta aceptada en un tema"
     tech_support:
       name: "Asistencia técnica"
       description: "10 respuestas aceptadas"
+  discourse_automation:
+    triggerables:
+      first_accepted_solution:
+        title: Primera solución aceptada
+        doc: Se activa cuando un usuario obtiene una solución aceptada por primera vez.
   education:
     topic_is_solved: |
       ### Este tema está resuelto

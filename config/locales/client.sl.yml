@@ -30,6 +30,9 @@ sl:
         all: "vse"
         solved: "rešeno"
         unsolved: "nerešeno"
+      no_answer:
+        title: Ste dobili odgovor na vaše vprašanje?
+        description: "Z izbiro gumba za potrditev pod ustrezno objavo izpostavite odgovor in s tem pomagajte drugim."
     topic_statuses:
       solved:
         help: "Ta tema ima rešitev"
