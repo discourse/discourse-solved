@@ -5,14 +5,20 @@
 # https://translate.discourse.org/
 
 de:
+  accepted_answer: "Akzeptierte Antwort"
   site_settings:
-    solved_enabled: "Aktiviere Solved-Plugin, erlaubt Benutzern, Lösungen für Themen auszuwählen"
-    accept_all_solutions_trust_level: "Vertrauensstufe, die das Akzeptieren von Lösungen in jedem Thema erlaubt (selbst wenn kein eigener Beitrag)"
+    solved_enabled: "Aktiviere das solved-Plug-in; erlaubt Benutzern, Lösungen für Themen auszuwählen"
+    allow_solved_on_all_topics: "Benutzern erlauben, Lösungen für alle Themen auszuwählen (wenn diese Option nicht aktiviert ist, können Lösungen nach Kategorie oder Schlagwort aktiviert werden)"
+    accept_all_solutions_trust_level: "Minimale Vertrauensstufe, die das Akzeptieren von Lösungen in jedem Thema erlaubt (auch wenn nicht selbst erstellt)"
     empty_box_on_unsolved: "Zeige eine leere Box neben ungelösten Themen"
     solved_quote_length: "Anzahl der Zeichen, die zitiert werden, wenn die Lösung unterhalb des ersten Beitrags angezeigt wird"
     solved_topics_auto_close_hours: "Thema automatisch (n) Stunden nach der letzten Antwort schließen, sobald das Thema als gelöst markiert wurde. Auf 0 setzen, um automatisches Schließen zu deaktivieren."
-    show_filter_by_solved_status: "Anzeige einer Dropdown-Liste, um eine Themenliste nach gelöst-Status zu filtern"
-    notify_on_staff_accept_solved: "Benachrichtigung an den Themenersteller senden, wenn ein Beitrag von einem Teammitglied als Lösung markiert wird."
+    show_filter_by_solved_status: "Zeige eine Drop-down-Liste, um eine Themenliste nach „Gelöst“-Status zu filtern."
+    notify_on_staff_accept_solved: "Benachrichtigung an den Themenersteller senden, wenn ein Beitrag von einem Team-Mitglied als Lösung markiert wird."
+    disable_solved_education_message: "Deaktiviert den Hinweis für gelöste Themen."
+    accept_solutions_topic_author: "Erlaube dem Themenverfasser, eine Lösung zu akzeptieren."
+    solved_add_schema_markup: "Füge QAPage-Schema-Mark-up zu HTML hinzu."
+    enable_solved_tags: "Schlagwörter, die es Benutzern ermöglichen, Lösungen auszuwählen."
   reports:
     accepted_solutions:
       title: "Akzeptierte Lösungen"
@@ -29,3 +35,19 @@ de:
     tech_support:
       name: "Technischer Support"
       description: "10 akzeptierte Antworten"
+  discourse_automation:
+    triggerables:
+      first_accepted_solution:
+        title: Erste akzeptierte Lösung
+        doc: Wird ausgelöst, wenn für einen Benutzer zum ersten Mal eine Lösung akzeptiert wird.
+  education:
+    topic_is_solved: |
+      ### Dieses Thema wurde gelöst
+
+      Antworte hier nur, wenn:
+
+      - du zusätzliche Details hast.
+
+      - die Lösung für dich nicht funktioniert.
+
+      Wenn du ein anderes Problem hast, erstelle bitte stattdessen [ein neues Thema](%{base_url}/new-topic).

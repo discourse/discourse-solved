@@ -5,17 +5,20 @@
 # https://translate.discourse.org/
 
 fr:
+  accepted_answer: "Réponse acceptée"
   site_settings:
-    solved_enabled: "Activer l'extension Solutions permettant aux utilisateurs de sélectionner des solutions aux sujets"
-    accept_all_solutions_trust_level: "Niveau de confiance minimum requis pour accepter des solutions sur n'importe quel sujet (même sans en être l'auteur)"
-    empty_box_on_unsolved: "Afficher une coche vide à côté des sujets non résolus"
-    solved_quote_length: "Nombre de caractères à citer lors de l'affichage de la solution sous le premier post"
-    solved_topics_auto_close_hours: "Fermer automatiquement le sujet (n) heures après la dernière réponse, une fois que le sujet a été marqué comme résolu. Mettre 0 pour désactiver la fermeture automatique."
+    solved_enabled: "Activer l'extension permettant aux utilisateurs de sélectionner des solutions aux sujets"
+    allow_solved_on_all_topics: "Autoriser les utilisateurs à sélectionner des solutions sur tous les sujets (lorsque cette option n'est pas activée, les solutions peuvent être activées par catégorie ou étiquette)"
+    accept_all_solutions_trust_level: "Niveau de confiance minimal requis pour accepter des solutions sur n'importe quel sujet (même sans en être l'auteur)"
+    empty_box_on_unsolved: "Afficher une case vide à côté des sujets non résolus"
+    solved_quote_length: "Nombre de caractères à citer lors de l'affichage de la solution sous le premier message"
+    solved_topics_auto_close_hours: "Fermer automatiquement le sujet (n) heures après la dernière réponse, une fois que le sujet a été marqué comme résolu. Mettre à 0 pour désactiver la fermeture automatique."
     show_filter_by_solved_status: "Afficher une liste déroulante pour filtrer les sujets par état de résolution."
-    notify_on_staff_accept_solved: "Envoyer une notification au créateur du sujet lorsqu'un message est marqué comme solution par un responsable."
-    disable_solved_education_message: "Désactivez les messages éducatifs pour les sujets résolus."
-    accept_solutions_topic_author: "Autorisez l'auteur du sujet à accepter une solution."
+    notify_on_staff_accept_solved: "Envoyer une notification au créateur du sujet lorsqu'un message est marqué comme une solution par un responsable."
+    disable_solved_education_message: "Désactiver les messages éducatifs pour les sujets résolus."
+    accept_solutions_topic_author: "Permettre à l'auteur du sujet d'accepter une solution."
     solved_add_schema_markup: "Ajouter le marquage du schéma QAPage au code HTML."
+    enable_solved_tags: "Étiquettes qui permettront aux utilisateurs de sélectionner des solutions."
   reports:
     accepted_solutions:
       title: "Solutions acceptées"
@@ -27,19 +30,24 @@ fr:
       others: "Aucune solution acceptée."
   badges:
     helpdesk:
-      name: "Centre d'assistance"
+      name: "Service d'assistance"
       description: "Première réponse acceptée dans un sujet"
     tech_support:
-      name: "Support technique"
+      name: "Assistance technique"
       description: "10 réponses acceptées"
+  discourse_automation:
+    triggerables:
+      first_accepted_solution:
+        title: Première solution acceptée
+        doc: Se déclenche lorsqu'une solution est acceptée pour la première fois par un utilisateur.
   education:
     topic_is_solved: |
       ### Ce sujet a été résolu
 
-      Ne répondez seulement si :
+      Répondez uniquement si :
 
       - Vous avez des informations supplémentaires
 
       - La solution ne fonctionne pas pour vous
 
-      Si vous avez un problème sans rapport avec le sujet, veuillez [en créer un nouveau](%{base_url}/nouveau- sujet) à la place.
+      Si vous avez un problème sans lien avec le sujet, veuillez [créer un nouveau sujet](%{base_url}/nouveau- sujet) à la place.

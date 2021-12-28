@@ -5,40 +5,49 @@
 # https://translate.discourse.org/
 
 ar:
+  accepted_answer: "الإجابة المقبولة"
   site_settings:
-    solved_enabled: "قم بتفعيل إضافة الحلول. اسمح للمستخدمين باختيار حلول لمواضيعهم."
-    accept_all_solutions_trust_level: "أدنى حد مطلوب للثقة وذلك لقبول الحلول في أي موضوع (حتى لو لم يكن OP)"
-    empty_box_on_unsolved: "اعرض مربعًا فارغًا بجوار الموضوعات التي لم يتم حلها"
-    solved_quote_length: "عدد الأحرف التي يجب اقتباسها عند عرض الحل تحت المشاركة الأولى"
-    solved_topics_auto_close_hours: "إغلاق الموضوع تلقائياً بعد (n) ساعات من آخر رد بمجرد تعليم الموضوع على أنه محلول. تعيين 0 لتعطيل الإغلاق التلقائي."
-    notify_on_staff_accept_solved: "أرسل إشعارًا إلى منشئ الموضوع عندما يتم وضع علامة على إحدى المشاركات كحل من قبل فريق العمل."
-    disable_solved_education_message: "تعطيل رسالة التعليم للموضوعات التي تم حلها."
-    accept_solutions_topic_author: "السماح لكاتب الموضوع بقبول حل."
-    solved_add_schema_markup: "إضافة ترميز مخطط Qapage إلى HTML."
+    solved_enabled: "تفعيل المكوِّن الإضافي للحل السماح للمستخدمين باختيار حلول لمواضيعهم"
+    allow_solved_on_all_topics: "السماح للمستخدمين بتحديد الحلول في جميع الموضوعات (عند إلغاء التحديد، يمكن تفعيل الحلول لكل فئة أو وسم)"
+    accept_all_solutions_trust_level: "الحد الأدنى من مستوى الثقة المطلوب لقبول الحلول في أي موضوع (حتى لو لم يكن الناشر الأصلي)"
+    empty_box_on_unsolved: "عرض مربع فارغ بجوار الموضوعات غير المحلولة"
+    solved_quote_length: "عدد الأحرف التي يجب اقتباسها عند عرض الحل تحت المنشور الأول"
+    solved_topics_auto_close_hours: "إغلاق الموضوع تلقائيًا بعد مرور (n) من الساعات على آخر رد بمجرد وضع علامة على الموضوع على أنه محلول. اضبط القيمة على 0 لإيقاف الإغلاق التلقائي."
+    show_filter_by_solved_status: "عرض قائمة منسدلة لتصفية قائمة الموضوعات حسب حالة الحل"
+    notify_on_staff_accept_solved: "إرسال إشعار إلى منشئ الموضوع عندما يتم وضع علامة على أحد المنشورات من قِبل فريق العمل على أنه الحل."
+    disable_solved_education_message: "إيقاف رسالة الإعلام للموضوعات المحلولة"
+    accept_solutions_topic_author: "السماح لكاتب الموضوع بقبول حل"
+    solved_add_schema_markup: "إضافة علامات مخطط Qapage إلى HTML"
+    enable_solved_tags: "الوسوم التي ستسمح للمستخدمين بتحديد الحلول"
   reports:
     accepted_solutions:
       title: "الحلول المقبولة"
       xaxis: "اليوم"
-      yaxis: "المجموع"
+      yaxis: "الإجمالي"
   solved:
     no_solutions:
-      self: "لم تقم بقبول حلول حتى الآن."
-      others: "لا حلول مقبولة."
+      self: "ليس لديك أي حلول مقبولة حتى الآن."
+      others: "لا توجد حلول مقبولة."
   badges:
     helpdesk:
       name: "مكتب المساعدة"
       description: "أول إجابة مقبولة في موضوع"
     tech_support:
-      name: "الدعم التقني"
+      name: "الدعم الفني"
       description: "10 إجابات مقبولة"
+  discourse_automation:
+    triggerables:
+      first_accepted_solution:
+        title: أول حل مقبول
+        doc: يتم تشغيله عند قبول حل من أحد المستخدمين للمرة الأولى.
   education:
     topic_is_solved: |
       ### تم حل هذا الموضوع
 
-      فقط قم بالرد هنا إذا:
+      لا ترد هنا إلا إذا كان:
 
       - لديك تفاصيل إضافية
 
       - الحل لا يناسبك
 
-      إذا كانت لديك مشكلة غير ذات صلة ، يرجى [بدء موضوع جديد] (%{base_url}/new-topic) بدلاً من ذلك.
+      إذا كانت لديك مشكلة غير ذات صلة، يُرجى [إنشاء موضوع جديد] (%{base_url}/new-topic) بدلًا من ذلك.
