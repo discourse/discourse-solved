@@ -10,9 +10,10 @@ pt_BR:
       alt:
         solved:
           accepted_notification: "aceito"
+    solutions: "Soluções"
     solved:
       title: "Resolvido"
-      allow_accepted_answers: "Permitir que o proprietário do tópico e a staff marquem uma resposta como a solução"
+      allow_accepted_answers: "Permitir que o(a) proprietário(a) do tópico e a equipe marquem uma resposta como a solução"
       accept_answer: "Selecione se esta resposta resolve o problema"
       accepted_description: "Esta é a solução aceita para este tópico"
       has_no_accepted_answer: "Este tópico não tem solução"
@@ -22,22 +23,40 @@ pt_BR:
       solution_summary:
         one: "solução"
         other: "soluções"
-      accepted_html: "%{icon} resolvido <span class='by'>por <a href data-user-card='%{username_lower}'>%{username}</a></span> em <a href='%{post_path}' class='back'>post #%{post_number}</a>"
+      accepted_html: "%{icon} resolvido <span class='by'>por <a href data-user-card='%{username_lower}'>%{username}</a></span> em <a href='%{post_path}' class='back'>postagem #%{post_number}</a>"
       accepted_notification: "<p><span>%{username}</span> %{description}</p>"
       topic_status_filter:
-        all: "todos"
-        solved: "resolvidos"
-        unsolved: "não resolvidos"
+        all: "tudo"
+        solved: "solucionados"
+        unsolved: "não solucionados"
+      no_solved_topics_title: "Você ainda não solucionou nenhum tópico"
+      no_solved_topics_body: "Quando você fornecer uma resposta útil a um tópico, ela poderá ser selecionada como uma solução pelo(a) proprietário(a) ou equipe do tópico."
+      no_answer:
+        title: Sua pergunta foi respondida?
+        description: "Destaque a resposta e ajude as outras pessoas ao usar o botão de solução abaixo para responder corretamente."
     topic_statuses:
       solved:
         help: "Este tópico tem uma solução"
     search:
       advanced:
         statuses:
-          solved: "estão resolvidos"
-          unsolved: "não estão resolvidos"
+          solved: "foram solucionados"
+          unsolved: "não foram solucionados"
     admin:
       web_hooks:
         solved_event:
-          name: "Evento Resolvido"
-          details: "Quando um usuário marca uma postagem como uma resposta aceita ou não aceita."
+          name: "Evento solucionado"
+          details: "Quando um(a) usuário(a) marca uma postagem como uma resposta aceita ou não aceita."
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          max_trust_level:
+            tl1: < TL1
+            tl2: < TL2
+            tl3: < TL3
+            tl4: < TL4
+            any: Qualquer
+          fields:
+            maximum_trust_level:
+              label: Nível de confiança
+              description: Os(as) usuários(as) com este nível de confiança ativarão esta automação
