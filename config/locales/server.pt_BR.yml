@@ -5,14 +5,20 @@
 # https://translate.discourse.org/
 
 pt_BR:
+  accepted_answer: "Resposta aceita"
   site_settings:
-    solved_enabled: "Habilitar plugin resolvido, permite aos usuários selecionar soluções para tópicos"
-    accept_all_solutions_trust_level: "Nível mínimo de confiança requerido para aceitar soluções em qualquer tópico (mesmo quando não for o OP)"
-    empty_box_on_unsolved: "Apresentar uma caixa vazia próximo a tópicos não resolvidos"
+    solved_enabled: "Ativar plugin solucionado, permite que usuários(a) selecionem soluções para tópicos"
+    allow_solved_on_all_topics: "Permite que os(as) usuários(as) escolham soluções em todos os tópicos (quando esta opção estiver desmarcada, as soluções podem ser ativadas por categoria ou etiqueta)"
+    accept_all_solutions_trust_level: "Nível mínimo de confiança requerido para aceitar soluções em qualquer tópico (mesmo quando não for OP)"
+    empty_box_on_unsolved: "Apresentar uma caixa vazia próximo a tópicos não solucionados"
     solved_quote_length: "Número de caracteres para citar ao exibir a solução abaixo da primeira postagem"
-    solved_topics_auto_close_hours: "Fechar tópico automaticamente (n) horas após a última resposta, uma vez que o tópico foi marcado como resolvido. Defina como 0 para desativar o fechamento automático."
-    show_filter_by_solved_status: "Mostrar um \"dropdown\" para filtrar uma lista de tópicos com o status de resolvido."
+    solved_topics_auto_close_hours: "Fechar tópico automaticamente (n) horas após a última resposta, uma vez que o tópico foi marcado como solucionado. Defina como 0 para desativar o fechamento automático."
+    show_filter_by_solved_status: "Mostrar um menu suspenso para filtrar uma lista de tópicos com o status de solucionado."
     notify_on_staff_accept_solved: "Enviar uma notificação ao criador do tópico quando uma postagem for marcada como uma solução pela equipe."
+    disable_solved_education_message: "Desativar mensagem educativa para tópicos solucionados."
+    accept_solutions_topic_author: "Permitir que o(a) autor(a) do tópico aceite uma solução."
+    solved_add_schema_markup: "Adicione uma marcação do esquema de QAPage ao HTML."
+    enable_solved_tags: "Etiquetas que permitirão que usuários(as) escolham soluções."
   reports:
     accepted_solutions:
       title: "Soluções aceitas"
@@ -29,3 +35,19 @@ pt_BR:
     tech_support:
       name: "Suporte Técnico"
       description: "10 respostas aceitas"
+  discourse_automation:
+    triggerables:
+      first_accepted_solution:
+        title: Primeira solução aceita
+        doc: Se ativa quando um(a) usuário(a) tiver uma solução aceita pela primeira vez.
+  education:
+    topic_is_solved: |
+      ### Este tópico foi solucionado
+
+      Responda aqui apenas se:
+
+      - Você tiver mais informações
+
+      - A solução não funcionar para você
+
+      Se tiver algum assunto não relacionado, [comece um novo tópico](%{base_url}/new-topic).
