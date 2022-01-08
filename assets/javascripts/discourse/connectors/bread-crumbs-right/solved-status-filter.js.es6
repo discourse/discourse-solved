@@ -1,5 +1,4 @@
 import I18n from "I18n";
-import DiscourseUrl from "discourse/lib/url";
 import { getOwner } from "discourse-common/lib/get-owner";
 
 export default {
@@ -42,23 +41,11 @@ export default {
 
   actions: {
     changeStatus(newStatus) {
-      let location = window.location;
-      let queryStrings = location.search;
-      let params = queryStrings.startsWith("?")
-        ? queryStrings.substr(1).split("&")
-        : [];
-
-      params = params.filter((param) => !param.startsWith("solved="));
-
+      const router = getOwner(this).lookup("router:main");
       if (newStatus && newStatus !== "all") {
         newStatus = newStatus === "solved" ? "yes" : "no";
-        params.push(`solved=${newStatus}`);
       }
-
-      queryStrings = params.length > 0 ? `?${params.join("&")}` : "";
-      DiscourseUrl.routeTo(
-        `${location.pathname}${queryStrings}${location.hash}`
-      );
+      router.transitionTo({ queryParams: { solved: newStatus } });
     },
   },
 };
