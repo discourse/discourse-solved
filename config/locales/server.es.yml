@@ -14,7 +14,7 @@ es:
     solved_quote_length: "Número de caracteres que se citan al mostrar la solución debajo de la primera publicación"
     solved_topics_auto_close_hours: "Cerrar automáticamente el tema (n) horas después de la última respuesta una vez que el tema se ha marcado como resuelto. Establecer a 0 para deshabilitar el cierre automático."
     show_filter_by_solved_status: "Mostrar un menú desplegable para filtrar una lista de temas por estado de solución."
-    notify_on_staff_accept_solved: "Enviar una notificación al creador del tema cuando alguien del staff marque una publicación como solución."
+    notify_on_staff_accept_solved: "Enviar una notificación al creador del tema cuando alguien del personal marque una publicación como solución."
     disable_solved_education_message: "Desactivar mensajes informativos en los temas resueltos."
     accept_solutions_topic_author: "Permitir que el autor de un tema marque una respuesta como la solución."
     solved_add_schema_markup: "Añade el marcado del esquema de QAPage al HTML."
@@ -50,4 +50,4 @@ es:
 
       - La solución no te ha funcionado
 
-      Si tienes otro problema, [empieza un nuevo tema](%{base_url}/new-topic) en vez de responder aquí, por favor.
+      Si tienes otro problema, [empieza un nuevo tema](%{base_url}/new-topic) en vez de responder aquí.

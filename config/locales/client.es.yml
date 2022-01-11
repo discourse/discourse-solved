@@ -14,7 +14,7 @@ es:
     solved:
       title: "Solucionado"
       allow_accepted_answers: "Permitir al propietario del tema y al staff marcar una respuesta como la solución"
-      accept_answer: "Selecciona si esta respuesta soluciona el problema"
+      accept_answer: "Seleccionar si esta respuesta soluciona el problema"
       accepted_description: "Esta es la solución aceptada para este tema"
       has_no_accepted_answer: "Este tema no tiene una solución"
       unaccept_answer: "Deseleccionar si esta respuesta ya no resuelve el problema"
@@ -45,7 +45,7 @@ es:
     admin:
       web_hooks:
         solved_event:
-          name: "Al resolver"
+          name: "Evento resuelto"
           details: "Cuando un usuario marca o desmarca una publicación como la respuesta aceptada."
     discourse_automation:
       triggerables:
