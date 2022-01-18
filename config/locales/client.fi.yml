@@ -10,22 +10,53 @@ fi:
       alt:
         solved:
           accepted_notification: "hyväksytty"
+    solutions: "Ratkaisut"
     solved:
       title: "Ratkaistu"
       allow_accepted_answers: "Salli ketjun omistajan ja henkilökunnan merkitä viesti ratkaisuksi"
       accept_answer: "Valitse, jos tämä vastaus ratkaisee ongelman"
-      accepted_description: "Tämä on aiheelle hyväksytty ratkaisu"
-      has_no_accepted_answer: "Tähän aiheeseen ei ole ratkaisua"
+      accepted_description: "Tämä on ketjun hyväksytty ratkaisu"
+      has_no_accepted_answer: "Tässä ketjussa ei ole ratkaisua"
       unaccept_answer: "Kumoa valinta, jos tämä vastaus ei enää ratkaise ongelmaa"
       accepted_answer: "Ratkaisu"
       solution: "Ratkaisu"
       solution_summary:
         one: "ratkaisu"
-        other: "ratkaisut"
+        other: "ratkaisua"
+      accepted_html: "%{icon} <span class='by'><a href data-user-card='%{username_lower}'>%{username}</a></span> ratkaisi <a href='%{post_path}' class='back'>viestissä %{post_number}</a>"
+      accepted_notification: "<p><span>%{username}</span> %{description}</p>"
       topic_status_filter:
         all: "kaikki"
         solved: "ratkaistu"
         unsolved: "ratkaisematon"
+      no_solved_topics_title: "Et ole vielä ratkaissut ketjuja"
+      no_solved_topics_body: "Kun annat hyödyllisen vastauksen ketjuun, aiheen omistaja tai henkilökunta saattaa valita vastauksesi ratkaisuksi."
+      no_answer:
+        title: Onko kysymykseesi vastattu?
+        description: "Korosta vastaus ja auta muita käyttämällä oikean vastauksen alla olevaa ratkaisupainiketta."
     topic_statuses:
       solved:
-        help: "Tämä aihe on ratkaistu"
+        help: "Tämä ketju on ratkaistu"
+    search:
+      advanced:
+        statuses:
+          solved: "ovat ratkaistu"
+          unsolved: "ovat ratkaisemattomia"
+    admin:
+      web_hooks:
+        solved_event:
+          name: "Ratkaistu tapahtuma"
+          details: "Kun käyttäjä merkitsee viestin hyväksytyksi tai hyväksymättömäksi vastaukseksi."
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          max_trust_level:
+            tl1: < LT1
+            tl2: < LT2
+            tl3: < LT3
+            tl4: < LT4
+            any: Mikä tahansa
+          fields:
+            maximum_trust_level:
+              label: Luottamustaso
+              description: Tämän luottamustason alittavat käyttäjät laukaisevat tämän automaation
