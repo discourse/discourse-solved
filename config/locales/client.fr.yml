@@ -12,7 +12,7 @@ fr:
           accepted_notification: "accepté"
     solutions: "Solutions"
     solved:
-      title: "Résolu"
+      title: "Résolus"
       allow_accepted_answers: "Autoriser l'auteur du sujet et les responsables à marquer une réponse comme solution"
       accept_answer: "Sélectionnez si cette réponse résout le problème"
       accepted_description: "C'est la solution acceptée à ce sujet"

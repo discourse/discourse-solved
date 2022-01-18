@@ -5,12 +5,20 @@
 # https://translate.discourse.org/
 
 fi:
+  accepted_answer: "Hyväksytty vastaus"
   site_settings:
     solved_enabled: "Ota käyttöön Solved-lisäosa, salii käyttäjän merkitä ratkaisuja ketjuille"
+    allow_solved_on_all_topics: "Salli käyttäjien valita ratkaisuja kaikissa ketjuissa (jos tätä ei ole valittu, ratkaisut voidaan ottaa käyttöön alue- tai tunnistekohtaisesti)"
     accept_all_solutions_trust_level: "Luottamustaso joka vaaditaan, jotta voi merkitä ratkaisuksi (vaikkei olisikaan itse kysyjä)"
     empty_box_on_unsolved: "Näytä tyhjä laatikko ratkaisemattomien ketjujen yhteydessä"
     solved_quote_length: "Kuinka monta merkkiä näytetään, kun lainataan ratkaisua ketjun avausviestin alapuolella"
-    show_filter_by_solved_status: "Näytä pudotusvalikko, jolla voi suodattaa ketjulistausta selvitystilan mukaan."
+    solved_topics_auto_close_hours: "Sulje ketju automaattisesti (n) tunnin kuluttua viimeisestä vastauksesta, kun aihe on merkitty ratkaistuksi. Poista automaattinen sulkeminen käytöstä asettamalla arvoksi 0."
+    show_filter_by_solved_status: "Näytä pudotusvalikko, jolla voi suodattaa ketjuluetteloa ratkaisun tilan mukaan."
+    notify_on_staff_accept_solved: "Lähetä ilmoitus ketjun luojalle, kun henkilökunta merkitsee viestin ratkaisuksi."
+    disable_solved_education_message: "Poista koulutusviesti käytöstä ratkaistuissa ketjuissa."
+    accept_solutions_topic_author: "Salli ketjun luojan hyväksyä ratkaisu."
+    solved_add_schema_markup: "Lisää QAPage-skeemamerkintä HTML:ään."
+    enable_solved_tags: "Tunnisteet, joilla käyttäjät voivat valita ratkaisuja."
   reports:
     accepted_solutions:
       title: "Hyväksytyt ratkaisut"
@@ -18,7 +26,7 @@ fi:
       yaxis: "Yhteensä"
   solved:
     no_solutions:
-      self: "Viestejäsi ei ole hyväksytty ratkaisuiksi."
+      self: "Viestejäsi ei ole vielä hyväksytty ratkaisuiksi."
       others: "Ei hyväksyttyjä ratkaisuja."
   badges:
     helpdesk:
@@ -27,3 +35,19 @@ fi:
     tech_support:
       name: "Tukipalvelu"
       description: "10 hyväksyttyä vastausta"
+  discourse_automation:
+    triggerables:
+      first_accepted_solution:
+        title: Ensimmäinen hyväksytty ratkaisu
+        doc: Laukaistaan, kun käyttäjän ratkaisu hyväksytään ensimmäisen kerran.
+  education:
+    topic_is_solved: |
+      ### Tämä ketju on ratkaistu
+
+      Vastaa tähän vain, jos:
+
+      – sinulla on lisätietoja
+
+      – ratkaisu ei toimi sinulle
+
+      Jos sinulla on asiaan liittymätön ongelma, [aloita uusi ketju](%{base_url}/new-topic).
