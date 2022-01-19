@@ -1,11 +1,15 @@
 import { later } from "@ember/runloop";
 
-// 7 days in milliseconds
-const MAX_DURATION_WITH_NO_ANSWER = 7 * 24 * 60 * 60 * 1000;
+const ONE_WEEK = 7 * 24 * 60 * 60 * 1000; // milliseconds
+const MAX_DURATION_WITH_NO_ANSWER = ONE_WEEK;
 
 export default {
   setupComponent(args, component) {
     component.set("show", false);
+    component.setProperties({
+      oneWeek: ONE_WEEK,
+      show: false,
+    });
 
     later(() => {
       if (
