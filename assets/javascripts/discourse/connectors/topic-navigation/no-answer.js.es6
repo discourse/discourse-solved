@@ -4,6 +4,10 @@ const ONE_WEEK = 7 * 24 * 60 * 60 * 1000; // milliseconds
 const MAX_DURATION_WITH_NO_ANSWER = ONE_WEEK;
 
 export default {
+  shouldRender(args, component) {
+    return !component.site.mobileView;
+  },
+
   setupComponent(args, component) {
     component.set("show", false);
     component.setProperties({
