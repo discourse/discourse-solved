@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require_relative '../fabricators/solved_hook_fabricator.rb'
 
 RSpec.describe "Managing Posts solved status" do
   let(:topic) { Fabricate(:topic) }
@@ -50,6 +49,8 @@ RSpec.describe "Managing Posts solved status" do
 
       expect(response.status).to eq(200)
       expect(p1.reload.custom_fields["is_accepted_answer"]).to eq("true")
+
+      topic.reload
 
       expect(topic.public_topic_timer.status_type)
         .to eq(TopicTimer.types[:silent_close])
