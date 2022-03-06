@@ -1,5 +1,5 @@
 import Category from "discourse/models/category";
-import { computed } from "@ember/object";
+import { computed, get } from "@ember/object";
 
 export default {
   name: "extend-category-for-solved",
@@ -12,7 +12,7 @@ export default {
         "custom_fields.enable_accepted_answers",
         {
           get(fieldName) {
-            return this.get(this.custom_fields, fieldName) === "true";
+            return get(this.custom_fields, fieldName) === "true";
           },
         }
       ),
