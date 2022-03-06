@@ -498,10 +498,10 @@ escape-string-regexp@^1.0.5:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
-eslint-config-discourse@^1.1.8:
-  version "1.1.8"
-  resolved "https://registry.yarnpkg.com/eslint-config-discourse/-/eslint-config-discourse-1.1.8.tgz#c297831876811ea08203aa348d1ba2a963b2ae78"
-  integrity sha512-ZSQfhliiO5Cfa7WcKoMkN4wW/1rBJpecpMJpfjiFsElfgPj4EV4Pzksi5CvFnRbJDoZh6DYYrQfO+tW062VOUA==
+eslint-config-discourse@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-discourse/-/eslint-config-discourse-2.0.0.tgz#811ab2cf4e32c1f0d41bd57d9736d578fe80b741"
+  integrity sha512-enjsLU++iibJXM64YM6Y/yUM5580wKtkti9fQdrJDFkfLJnvv8/f2j7QmNbX//MoqWfIQfY2RkHH6VTfRUg4Mw==
   dependencies:
     babel-eslint "^10.1.0"
     ember-template-lint "^2.11.0"

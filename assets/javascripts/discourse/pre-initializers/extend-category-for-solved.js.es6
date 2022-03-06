@@ -1,4 +1,5 @@
 import Category from "discourse/models/category";
+import { computed } from "@ember/object";
 
 export default {
   name: "extend-category-for-solved",
@@ -7,11 +8,11 @@ export default {
 
   initialize() {
     Category.reopen({
-      enable_accepted_answers: Ember.computed(
+      enable_accepted_answers: computed(
         "custom_fields.enable_accepted_answers",
         {
           get(fieldName) {
-            return Ember.get(this.custom_fields, fieldName) === "true";
+            return this.get(this.custom_fields, fieldName) === "true";
           },
         }
       ),

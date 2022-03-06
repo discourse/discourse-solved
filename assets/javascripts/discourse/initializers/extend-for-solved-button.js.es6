@@ -9,6 +9,7 @@ import { ajax } from "discourse/lib/ajax";
 import PostCooked from "discourse/widgets/post-cooked";
 import { formatUsername } from "discourse/lib/utilities";
 import { iconHTML, iconNode } from "discourse-common/lib/icon-library";
+import { computed } from "@ember/object";
 
 function clearAccepted(topic) {
   const posts = topic.get("postStream.posts");
@@ -216,7 +217,7 @@ export default {
   initialize() {
     Topic.reopen({
       // keeping this here cause there is complex localization
-      acceptedAnswerHtml: Ember.computed("accepted_answer", "id", function () {
+      acceptedAnswerHtml: computed("accepted_answer", "id", function () {
         const username = this.get("accepted_answer.username");
         const postNumber = this.get("accepted_answer.post_number");
 
@@ -236,7 +237,7 @@ export default {
     });
 
     TopicStatus.reopen({
-      statuses: Ember.computed(function () {
+      statuses: computed(function () {
         const results = this._super(...arguments);
 
         if (this.topic.has_accepted_answer) {
