@@ -1,7 +1,9 @@
 import { later } from "@ember/runloop";
+import { isTesting } from "discourse-common/config/environment";
 
 const ONE_WEEK = 7 * 24 * 60 * 60 * 1000; // milliseconds
 const MAX_DURATION_WITH_NO_ANSWER = ONE_WEEK;
+const DISPLAY_DELAY = isTesting() ? 0 : 2000;
 
 export default {
   shouldRender(args, component) {
@@ -43,6 +45,6 @@ export default {
       ) {
         component.set("show", true);
       }
-    }, 2000);
+    }, DISPLAY_DELAY);
   },
 };
