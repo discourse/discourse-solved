@@ -2,6 +2,7 @@ import { acceptance, queryAll } from "discourse/tests/helpers/qunit-helpers";
 import { fixturesByUrl } from "discourse/tests/helpers/create-pretender";
 import { test } from "qunit";
 import { click, fillIn, visit } from "@ember/test-helpers";
+import { cloneJSON } from "discourse-common/lib/object";
 
 acceptance("Discourse Solved Plugin", function (needs) {
   needs.user();
@@ -228,7 +229,7 @@ acceptance("Discourse Solved Plugin", function (needs) {
     });
 
     server.get("/search", () => {
-      const fixtures = Object.assign({}, fixturesByUrl["/search.json"]);
+      const fixtures = cloneJSON(fixturesByUrl["/search.json"]);
       fixtures.topics[0].has_accepted_answer = true;
       return helper.response(fixtures);
     });
