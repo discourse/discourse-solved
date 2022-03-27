@@ -1,10 +1,13 @@
-import { acceptance, exists } from "discourse/tests/helpers/qunit-helpers";
-import { test } from "qunit";
+import { acceptance, query } from "discourse/tests/helpers/qunit-helpers";
+import { skip, test } from "qunit";
 import { visit } from "@ember/test-helpers";
+import I18n from "I18n";
 
 acceptance(
   "Discourse Solved Plugin | activity/solved | empty state",
   function (needs) {
+    const currentUser = "eviltrout";
+    const anotherUser = "charlie";
     needs.user();
 
     needs.pretender((server, helper) => {
@@ -15,14 +18,29 @@ acceptance(
       });
     });
 
-    test("When looking at own activity it renders the empty state panel", async function (assert) {
-      await visit("/u/eviltrout/activity/solved");
-      assert.ok(exists("div.empty-state"));
+    test("When looking at own activity", async function (assert) {
+      await visit(`/u/${currentUser}/activity/solved`);
+
+      assert.equal(
+        query("div.empty-state span.empty-state-title").innerText,
+        I18n.t("solved.no_solved_topics_title")
+      );
+      assert.equal(
+        query("div.empty-state div.empty-state-body").innerText,
+        I18n.t("solved.no_solved_topics_body")
+      );
     });
 
-    test("When looking at another user's activity it renders the 'No activity' message", async function (assert) {
-      await visit("/u/charlie/activity/solved");
-      assert.ok(exists("div.alert-info"));
+    skip("When looking at another user's activity", async function (assert) {
+      await visit(`/u/${anotherUser}/activity/solved`);
+
+      assert.equal(
+        query("div.empty-state span.empty-state-title").innerText,
+        I18n.t("solved.no_solved_topics_title_others", {
+          username: anotherUser,
+        })
+      );
+      assert.equal(query("div.empty-state div.empty-state-body").innerText, "");
     });
   }
 );

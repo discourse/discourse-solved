@@ -6,9 +6,19 @@ export default UserActivityStreamRoute.extend({
   noContentHelpKey: "solved.no_solutions",
 
   emptyState() {
-    return {
-      title: I18n.t("solved.no_solved_topics_title"),
-      body: I18n.t("solved.no_solved_topics_body"),
-    };
+    const user = this.modelFor("user");
+
+    let title, body;
+    if (this.isCurrentUser(user)) {
+      title = I18n.t("solved.no_solved_topics_title");
+      body = I18n.t("solved.no_solved_topics_body");
+    } else {
+      title = I18n.t("solved.no_solved_topics_title_others", {
+        username: user.username,
+      });
+      body = "";
+    }
+
+    return { title, body };
   },
 });
