@@ -31,7 +31,7 @@ acceptance(
       );
     });
 
-    skip("When looking at another user's activity", async function (assert) {
+    test("When looking at another user's activity", async function (assert) {
       await visit(`/u/${anotherUser}/activity/solved`);
 
       assert.equal(
