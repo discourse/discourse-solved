@@ -1,5 +1,5 @@
 import { acceptance, query } from "discourse/tests/helpers/qunit-helpers";
-import { skip, test } from "qunit";
+import { test } from "qunit";
 import { visit } from "@ember/test-helpers";
 import I18n from "I18n";
 
