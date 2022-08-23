@@ -32,6 +32,7 @@ he:
         solved: "נפתר"
         unsolved: "בלתי פתור"
       no_solved_topics_title: "עדיין לא פתרת אף נושא"
+      no_solved_topics_title_others: "אין נושאים שנפתרו על ידי %{username} עדיין"
       no_solved_topics_body: "לאחר שכתבת תגובה מועילה לנושא, התגובה שלך עשויה להיבחר כפתרון על ידי בעלי הנושא או הסגל."
       no_answer:
         title: התשובה שלך נענתה?

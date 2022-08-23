@@ -30,6 +30,7 @@ sv:
         solved: "lösta"
         unsolved: "olösta"
       no_solved_topics_title: "Du har inte löst några ämnen än"
+      no_solved_topics_title_others: "%{username} har inte löst några ämnen ännu"
       no_solved_topics_body: "När du ger ett användbart svar på ett ämne kan ditt svar väljas som lösningen av ämnesägaren eller personalen."
       no_answer:
         title: Har din fråga besvarats?
