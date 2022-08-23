@@ -25,6 +25,7 @@ fa_IR:
         all: "همه"
         solved: "حل شده"
         unsolved: "حل نشده"
+      no_solved_topics_title_others: "%{username} هنوز هیچ موضوعی را حل نکرده است"
     topic_statuses:
       solved:
         help: "این موضوع راه حلی دارد"
