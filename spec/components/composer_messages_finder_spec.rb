@@ -5,7 +5,7 @@ require 'rails_helper'
 require 'composer_messages_finder'
 
 describe ComposerMessagesFinder do
-  context '.check_topic_is_solved' do
+  describe '.check_topic_is_solved' do
     fab!(:user)  { Fabricate(:user) }
     fab!(:topic) { Fabricate(:topic) }
     fab!(:post) { Fabricate(:post, topic: topic, user: Fabricate(:user)) }
@@ -19,7 +19,7 @@ describe ComposerMessagesFinder do
       expect(described_class.new(user, composer_action: 'reply').check_topic_is_solved).to be_blank
     end
 
-    context "a reply" do
+    describe "a reply" do
       it "does not show message if topic is not solved" do
         expect(described_class.new(user, composer_action: 'reply', topic_id: topic.id).check_topic_is_solved).to be_blank
       end
