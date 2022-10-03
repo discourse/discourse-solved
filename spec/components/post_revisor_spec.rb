@@ -30,7 +30,7 @@ describe PostRevisor do
     expect(messages.first.data[:refresh_stream]).to eq(true)
   end
 
-  context 'Allowing solved via tags' do
+  describe 'Allowing solved via tags' do
     before do
       SiteSetting.solved_enabled = true
       SiteSetting.tagging_enabled = true

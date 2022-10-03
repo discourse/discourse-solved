@@ -31,7 +31,7 @@ RSpec.describe TopicsController do
     }
   end
 
-  context 'solved enabled on every topic' do
+  context 'with solved enabled on every topic' do
     before do
       SiteSetting.allow_solved_on_all_topics = true
     end
@@ -63,7 +63,7 @@ RSpec.describe TopicsController do
     end
   end
 
-  context 'solved enabled for topics with specific tags' do
+  context 'with solved enabled for topics with specific tags' do
     let(:tag) { Fabricate(:tag) }
 
     before { SiteSetting.enable_solved_tags = tag.name }
