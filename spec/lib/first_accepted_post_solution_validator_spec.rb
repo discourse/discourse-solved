@@ -63,6 +63,7 @@ describe FirstAcceptedPostSolutionValidator do
 
   context 'when post is a PM' do
     it 'doesn’t validate the post' do
+      Group.refresh_automatic_groups!
       post_1 = create_post(user: user_tl1, target_usernames: [user_tl1.username], archetype: Archetype.private_message)
       expect(described_class.check(post_1, trust_level: 'any')).to eq(false)
     end
