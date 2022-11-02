@@ -29,6 +29,7 @@ ja:
         solved: "解決済み"
         unsolved: "未解決"
       no_solved_topics_title: "まだトピックを解決していません。"
+      no_solved_topics_title_others: "%{username} はまだトピックを解決していません"
       no_solved_topics_body: "トピックに有益な返信を提供すると、その返信がトピックオーナーまたはスタッフによって解決策として選択される場合があります。"
       no_answer:
         title: 質問の回答は得られましたか？

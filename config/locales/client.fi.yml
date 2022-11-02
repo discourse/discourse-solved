@@ -30,6 +30,7 @@ fi:
         solved: "ratkaistu"
         unsolved: "ratkaisematon"
       no_solved_topics_title: "Et ole vielä ratkaissut ketjuja"
+      no_solved_topics_title_others: "%{username} ei ole vielä ratkaissut ketjuja"
       no_solved_topics_body: "Kun annat hyödyllisen vastauksen ketjuun, aiheen omistaja tai henkilökunta saattaa valita vastauksesi ratkaisuksi."
       no_answer:
         title: Onko kysymykseesi vastattu?
