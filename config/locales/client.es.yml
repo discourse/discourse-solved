@@ -30,6 +30,7 @@ es:
         solved: "solucionado"
         unsolved: "sin solución"
       no_solved_topics_title: "Todavía no has resuelto ningún tema"
+      no_solved_topics_title_others: "%{username} no ha resuelto ningún tema todavía"
       no_solved_topics_body: "Cuando proporcionas una respuesta útil a un tema, el propietario del tema o el personal pueden seleccionar tu respuesta como la solución."
       no_answer:
         title: '¿Se ha respondido a tu pregunta?'

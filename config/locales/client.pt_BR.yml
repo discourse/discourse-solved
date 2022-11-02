@@ -30,6 +30,7 @@ pt_BR:
         solved: "solucionados"
         unsolved: "não solucionados"
       no_solved_topics_title: "Você ainda não solucionou nenhum tópico"
+      no_solved_topics_title_others: "%{username} ainda não respondeu a nenhum tópico"
       no_solved_topics_body: "Quando você fornecer uma resposta útil a um tópico, ela poderá ser selecionada como uma solução pelo(a) proprietário(a) ou equipe do tópico."
       no_answer:
         title: Sua pergunta foi respondida?

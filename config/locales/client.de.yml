@@ -30,6 +30,7 @@ de:
         solved: "gelöst"
         unsolved: "ungelöst"
       no_solved_topics_title: "Du hast noch keine Themen gelöst"
+      no_solved_topics_title_others: "%{username} hat noch keine Themen gelöst"
       no_solved_topics_body: "Wenn du eine hilfreiche Antwort auf ein Thema gibst, kann es sein, dass deine Antwort vom Themenersteller oder einem Team-Mitglied als Lösung ausgewählt wird."
       no_answer:
         title: Wurde deine Frage beantwortet?
