@@ -40,25 +40,17 @@ Badge.seed(:name) do |badge|
   badge.system = false
 end
 
-tech_support_query = <<-EOS
-SELECT id user_id, current_timestamp granted_at
-FROM users
-WHERE id  IN (
-       SELECT p1.user_id
-       FROM post_custom_fields pc
-       JOIN badge_posts p1 ON p1.id = pc.post_id
-       JOIN topics t1 ON p1.topic_id = t1.id
-       WHERE p1.user_id <> t1.user_id AND
-                    name = 'is_accepted_answer' AND
-            p1.user_id IN (
-                   SELECT user_id
-                   FROM posts
-                   WHERE :backfill OR  p1.id IN (:post_ids)
-            )
-        GROUP BY p1.user_id
-        HAVING COUNT(*) > 9
-)
-EOS
+tech_support_query = <<-SQL
+  SELECT p.user_id, MAX(pcf.created_at) AS granted_at
+  FROM post_custom_fields pcf
+       JOIN badge_posts p ON pcf.post_id = p.id
+       JOIN topics t ON p.topic_id = t.id
+  WHERE pcf.name = 'is_accepted_answer'
+    AND p.user_id <> t.user_id -- ignore topics solved by OP
+    AND (:backfill OR p.id IN (:post_ids))
+  GROUP BY p.user_id
+  HAVING COUNT(*) >= 10
+SQL
 
 Badge.seed(:name) do |badge|
   badge.name = I18n.t("badges.tech_support.name")
