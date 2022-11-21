@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-return unless badge_grouping = BadgeGrouping.find_by(name: "Community")
-
-first_solution_query = <<-SQL
+first_solution_query = <<~SQL
   SELECT post_id, user_id, created_at AS granted_at
   FROM (
            SELECT p.id AS post_id, p.user_id, pcf.created_at,
@@ -19,9 +17,9 @@ SQL
 
 Badge.seed(:name) do |badge|
   badge.name = "Solved 1"
-  badge.icon = "check-square"
-  badge.badge_type_id = 3
-  badge.badge_grouping = badge_grouping
+  badge.default_icon = "check-square"
+  badge.badge_type_id = BadgeType::Bronze
+  badge.default_badge_grouping_id = BadgeGrouping::Community
   badge.query = first_solution_query
   badge.listable = true
   badge.target_posts = true
@@ -32,30 +30,38 @@ Badge.seed(:name) do |badge|
   badge.system = true
 end
 
-solved_10_query = <<-SQL
-  SELECT p.user_id, MAX(pcf.created_at) AS granted_at
-  FROM post_custom_fields pcf
-       JOIN badge_posts p ON pcf.post_id = p.id
-       JOIN topics t ON p.topic_id = t.id
-  WHERE pcf.name = 'is_accepted_answer'
-    AND p.user_id <> t.user_id -- ignore topics solved by OP
-    AND (:backfill OR p.id IN (:post_ids))
-  GROUP BY p.user_id
-  HAVING COUNT(*) >= 10
-SQL
+def solved_query_with_count(min_count)
+  <<~SQL
+    SELECT p.user_id, MAX(pcf.created_at) AS granted_at
+    FROM post_custom_fields pcf
+         JOIN badge_posts p ON pcf.post_id = p.id
+         JOIN topics t ON p.topic_id = t.id
+    WHERE pcf.name = 'is_accepted_answer'
+      AND p.user_id <> t.user_id -- ignore topics solved by OP
+      AND (:backfill OR p.id IN (:post_ids))
+    GROUP BY p.user_id
+    HAVING COUNT(*) >= #{min_count}
+  SQL
+end
 
-Badge.seed(:name) do |badge|
-  badge.name = "Solved 2"
-  badge.icon = "check-square"
-  badge.badge_type_id = 2
-  badge.badge_grouping = badge_grouping
-  badge.query = solved_10_query
-  badge.listable = true
-  badge.allow_title = true
-  badge.target_posts = false
-  badge.enabled = false
-  badge.trigger = Badge::Trigger::PostRevision
-  badge.auto_revoke = true
-  badge.show_posts = false
-  badge.system = true
+[
+  ["Solved 2", BadgeType::Silver, 10],
+  ["Solved 3", BadgeType::Gold, 50],
+  ["Solved 4", BadgeType::Gold, 150],
+].each do |name, level, count|
+  Badge.seed(:name) do |badge|
+    badge.name = name
+    badge.default_icon = "check-square"
+    badge.badge_type_id = level
+    badge.default_badge_grouping_id = BadgeGrouping::Community
+    badge.query = solved_query_with_count(count)
+    badge.listable = true
+    badge.default_allow_title = true
+    badge.target_posts = false
+    badge.enabled = false
+    badge.trigger = Badge::Trigger::PostRevision
+    badge.auto_revoke = true
+    badge.show_posts = false
+    badge.system = true
+  end
 end

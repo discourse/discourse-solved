@@ -27,11 +27,21 @@ en:
 
   badges:
     solved_1:
-      name: "Helpdesk"
-      description: "First Accepted Answer on a Topic"
+      name: "Solved!"
+      description: "Have a reply marked as a Solution"
+      long_description: "This badge is granted for having a reply marked as a Solution to a topic. :white_check_mark: Nice job. :+1:"
     solved_2:
-      name: "Tech Support"
-      description: "10 Accepted answers"
+      name: "Guidance Counsellor"
+      description: "Have 10 replies marked as Solutions"
+      long_description: "This badge is granted for having 10 of your replies marked as Solutions to topics. :white_check_mark: You are a true asset to your fellow community members."
+    solved_3:
+      name: "Know-it-All"
+      description: "Have 50 replies marked as Solutions"
+      long_description: "This badge is granted for having 50 of your replies marked as Solutions to topics. :white_check_mark: You really know your stuff. :clap:"
+    solved_4:
+      name: "Solution Institution"
+      description: "Have 150 replies marked as Solutions"
+      long_description: "This badge is granted for having 150 of your replies marked as Solutions to topics. :white_check_mark: Excellent work. :slightly_smiling_face: You are officially a Solution Institution. :brain:"
 
   discourse_automation:
     triggerables:
