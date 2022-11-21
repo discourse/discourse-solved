@@ -26,10 +26,10 @@ en:
       others: "No accepted solutions."
 
   badges:
-    helpdesk:
+    solved_1:
       name: "Helpdesk"
       description: "First Accepted Answer on a Topic"
-    tech_support:
+    solved_2:
       name: "Tech Support"
       description: "10 Accepted answers"
 

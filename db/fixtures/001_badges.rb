@@ -2,7 +2,7 @@
 
 return unless badge_grouping = BadgeGrouping.find_by(name: "Community")
 
-helpdesk_query = <<-SQL
+first_solution_query = <<-SQL
   SELECT post_id, user_id, created_at AS granted_at
   FROM (
            SELECT p.id AS post_id, p.user_id, pcf.created_at,
@@ -18,12 +18,11 @@ helpdesk_query = <<-SQL
 SQL
 
 Badge.seed(:name) do |badge|
-  badge.name = I18n.t("badges.helpdesk.name")
+  badge.name = "Solved 1"
   badge.icon = "check-square"
   badge.badge_type_id = 3
   badge.badge_grouping = badge_grouping
-  badge.description = I18n.t("badges.helpdesk.description")
-  badge.query = helpdesk_query
+  badge.query = first_solution_query
   badge.listable = true
   badge.target_posts = true
   badge.enabled = false
@@ -33,7 +32,7 @@ Badge.seed(:name) do |badge|
   badge.system = true
 end
 
-tech_support_query = <<-SQL
+solved_10_query = <<-SQL
   SELECT p.user_id, MAX(pcf.created_at) AS granted_at
   FROM post_custom_fields pcf
        JOIN badge_posts p ON pcf.post_id = p.id
@@ -46,12 +45,11 @@ tech_support_query = <<-SQL
 SQL
 
 Badge.seed(:name) do |badge|
-  badge.name = I18n.t("badges.tech_support.name")
+  badge.name = "Solved 2"
   badge.icon = "check-square"
   badge.badge_type_id = 2
   badge.badge_grouping = badge_grouping
-  badge.description = I18n.t("badges.tech_support.description")
-  badge.query = tech_support_query
+  badge.query = solved_10_query
   badge.listable = true
   badge.allow_title = true
   badge.target_posts = false
