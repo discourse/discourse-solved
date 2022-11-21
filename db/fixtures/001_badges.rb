@@ -2,27 +2,20 @@
 
 return unless badge_grouping = BadgeGrouping.find_by(name: "Community")
 
-helpdesk_query = <<-EOS
-SELECT p.user_id, p.id post_id, p.updated_at granted_at
-FROM badge_posts p
-WHERE p.post_number > 1 AND
-    p.id IN (
-      SELECT post_id FROM (
-       SELECT pc.post_id, row_number()
-       OVER (PARTITION BY p1.user_id ORDER BY pc.created_at) as rnum
-       FROM post_custom_fields pc
-       JOIN badge_posts p1 ON p1.id = pc.post_id
-       JOIN topics t1 ON p1.topic_id = t1.id
-       WHERE name = 'is_accepted_answer' AND
-                    p1.user_id <> t1.user_id AND
-        (
-          :backfill OR
-           p1.user_id IN (
-                   select user_id from posts where p1.id IN (:post_ids)
-           )
-       )
-) X  WHERE rnum = 1)
-EOS
+helpdesk_query = <<-SQL
+  SELECT post_id, user_id, created_at AS granted_at
+  FROM (
+           SELECT p.id AS post_id, p.user_id, pcf.created_at,
+                  ROW_NUMBER() OVER (PARTITION BY p.user_id ORDER BY pcf.created_at) AS row_number
+           FROM post_custom_fields pcf
+                JOIN badge_posts p ON pcf.post_id = p.id
+                JOIN topics t ON p.topic_id = t.id
+           WHERE pcf.name = 'is_accepted_answer'
+             AND p.user_id <> t.user_id -- ignore topics solved by OP
+             AND (:backfill OR p.id IN (:post_ids))
+       ) x
+  WHERE row_number = 1
+SQL
 
 Badge.seed(:name) do |badge|
   badge.name = I18n.t("badges.helpdesk.name")
