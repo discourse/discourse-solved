@@ -30,7 +30,7 @@ Badge.seed(:name) do |badge|
   badge.trigger = Badge::Trigger::PostRevision
   badge.auto_revoke = true
   badge.show_posts = true
-  badge.system = false
+  badge.system = true
 end
 
 tech_support_query = <<-SQL
@@ -59,5 +59,5 @@ Badge.seed(:name) do |badge|
   badge.trigger = Badge::Trigger::PostRevision
   badge.auto_revoke = true
   badge.show_posts = false
-  badge.system = false
+  badge.system = true
 end
