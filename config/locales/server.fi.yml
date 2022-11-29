@@ -28,13 +28,6 @@ fi:
     no_solutions:
       self: "Viestejäsi ei ole vielä hyväksytty ratkaisuiksi."
       others: "Ei hyväksyttyjä ratkaisuja."
-  badges:
-    helpdesk:
-      name: "Neuvonta"
-      description: "Ensimmäinen hyväksytty vastaus ketjussa"
-    tech_support:
-      name: "Tukipalvelu"
-      description: "10 hyväksyttyä vastausta"
   discourse_automation:
     triggerables:
       first_accepted_solution:

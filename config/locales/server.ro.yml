@@ -20,10 +20,3 @@ ro:
     no_solutions:
       self: "Încă nu aveți soluții acceptate"
       others: "Nu există soluții acceptate"
-  badges:
-    helpdesk:
-      name: "Ajutor"
-      description: "Primul răspuns acceptat pe o temă"
-    tech_support:
-      name: "Asistenţă tehnică"
-      description: "10 răspunsuri acceptate"

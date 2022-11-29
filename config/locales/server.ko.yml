@@ -20,10 +20,3 @@ ko:
     no_solutions:
       self: "아직 수락 된 솔루션이 없습니다."
       others: "허용되는 솔루션이 없습니다."
-  badges:
-    helpdesk:
-      name: "안내 데스크"
-      description: "주제에 대한 첫 번째 답변"
-    tech_support:
-      name: "기술 지원"
-      description: "10 개의 답변"

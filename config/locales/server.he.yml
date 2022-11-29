@@ -29,12 +29,22 @@ he:
       self: "אין לך פתרונות מקובלים עדיין."
       others: "אין פתרונות מקובלים."
   badges:
-    helpdesk:
-      name: "דלפק עזרה"
-      description: "התשובה הראשונה שמאושרת לנושא"
-    tech_support:
-      name: "תמיכה טכנית"
-      description: "10 תשובות שקיבלו אישור"
+    solved_1:
+      name: "נפתר!"
+      description: "סימון תגובה כפתרון"
+      long_description: "עיטור זה מוענק על תגובה שסומנה כפתרון לנושא. :white_check_mark: כל הכבוד. :+1:"
+    solved_2:
+      name: "יעוץ הדרכה"
+      description: "10 תגובות שלך סומנו כפתרונות"
+      long_description: "עיטור זה מוענק על כך ש־10 מהתגובות שלך סומנו כפתרונות לנושאים. :white_check_mark: המעורבות שלך היא נכס שלא יסולא בפז לחברי הקהילה."
+    solved_3:
+      name: "חכמולוג"
+      description: "50 תגובות שלך סומנו כפתרונות"
+      long_description: "עיטור זה מוענק על כך ש־50 מהתגובות שלך סומנו כפתרונות לנושאים. :white_check_mark: נראה שיש לך מושג בדבר או שניים. :clap:"
+    solved_4:
+      name: "מכון הפתרונות"
+      description: "150 תגובות שלך סומנו כפתרונות"
+      long_description: "עיטור זה מוענק על כך ש־150 מהתגובות שלך סומנו כפתרונות לנושאים. :white_check_mark: עבודה מצוינת. :slightly_smiling_face: אפשר להכתיר אותך בתור מכון פתרונות. :brain:"
   discourse_automation:
     triggerables:
       first_accepted_solution:

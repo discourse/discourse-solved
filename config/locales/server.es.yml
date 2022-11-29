@@ -28,13 +28,6 @@ es:
     no_solutions:
       self: "Todavía no te han marcado ninguna respuesta como solución."
       others: "No hay soluciones aceptadas."
-  badges:
-    helpdesk:
-      name: "Servicio de ayuda"
-      description: "Primera respuesta aceptada en un tema"
-    tech_support:
-      name: "Asistencia técnica"
-      description: "10 respuestas aceptadas"
   discourse_automation:
     triggerables:
       first_accepted_solution:
