@@ -28,13 +28,6 @@ zh_CN:
     no_solutions:
       self: "您还没有被接受的解决方案。"
       others: "没有被接受的解决方案。"
-  badges:
-    helpdesk:
-      name: "帮助台"
-      description: "话题中第一个被接受的回答"
-    tech_support:
-      name: "技术支持"
-      description: "10 个被接受的回答"
   discourse_automation:
     triggerables:
       first_accepted_solution:

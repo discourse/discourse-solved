@@ -20,10 +20,3 @@ tr_TR:
     no_solutions:
       self: "Henüz kabul edilmiş bir çözümün yok."
       others: "Kabul edilen çözüm yok."
-  badges:
-    helpdesk:
-      name: "Yardım masası"
-      description: "Bir Konuya İlk Kabul Edilen Cevap"
-    tech_support:
-      name: "Teknik Destek"
-      description: "10 Kabul edilen cevaplar"

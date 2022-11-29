@@ -28,13 +28,6 @@ sv:
     no_solutions:
       self: "Du har inga godkända lösningar än."
       others: "Inga godkända lösningar."
-  badges:
-    helpdesk:
-      name: "Kundtjänst"
-      description: "Första accepterade svar för ett ämne"
-    tech_support:
-      name: "Teknisk support"
-      description: "10 Accepterade svar"
   discourse_automation:
     triggerables:
       first_accepted_solution:

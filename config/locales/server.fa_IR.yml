@@ -14,3 +14,7 @@ fa_IR:
   solved:
     no_solutions:
       others: "هیچ راه حل پذیرفته ای وجود ندارد"
+  badges:
+    solved_1:
+      name: "حل شده!"
+      description: "یک پاسخ به عنوان راه حل علامت گذاری شده است"

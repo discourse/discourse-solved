@@ -28,13 +28,6 @@ de:
     no_solutions:
       self: "Du hast noch keine akzeptierte Lösung."
       others: "Keine akzeptierten Lösungen."
-  badges:
-    helpdesk:
-      name: "Helpdesk"
-      description: "Erste akzeptierte Antwort zu einem Thema"
-    tech_support:
-      name: "Technischer Support"
-      description: "10 akzeptierte Antworten"
   discourse_automation:
     triggerables:
       first_accepted_solution:

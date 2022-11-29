@@ -28,13 +28,6 @@ ja:
     no_solutions:
       self: "受け入れられた解決策はありません。"
       others: "受け入れられた解決策はありません。"
-  badges:
-    helpdesk:
-      name: "ヘルプデスク"
-      description: "トピックで最初に受け入れられた回答"
-    tech_support:
-      name: "技術サポート"
-      description: "10 件の受け入れられた回答"
   discourse_automation:
     triggerables:
       first_accepted_solution:

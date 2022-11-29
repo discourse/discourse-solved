@@ -17,7 +17,3 @@ id:
     no_solutions:
       self: "Anda belum memiliki solusi yang diterima."
       others: "Tidak ada solusi yang diterima."
-  badges:
-    tech_support:
-      name: "Dukungan Teknis"
-      description: "10 Jawaban yang diterima"

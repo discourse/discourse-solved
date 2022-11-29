@@ -20,10 +20,3 @@ el:
     no_solutions:
       self: "Δεν έχετε αποδεχτεί ακόμη λύσεις."
       others: "Καμία αποδεκτή λύση."
-  badges:
-    helpdesk:
-      name: "Γραφείο βοήθειας"
-      description: "Πρώτη αποδεκτή απάντηση σε ένα θέμα"
-    tech_support:
-      name: "Τεχνική υποστήριξη"
-      description: "10 Αποδεκτές απαντήσεις"

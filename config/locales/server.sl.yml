@@ -22,10 +22,3 @@ sl:
     no_solutions:
       self: "Zaenkrat nimate sprejetih rešitev."
       others: "Ni sprejetih rešitev."
-  badges:
-    helpdesk:
-      name: "Služba za pomoč"
-      description: "Prvi sprejeti odgovor na temo"
-    tech_support:
-      name: "Tehnična podpora"
-      description: "10 Sprejetih odgovorov"

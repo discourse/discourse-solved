@@ -10,9 +10,10 @@ nl:
       alt:
         solved:
           accepted_notification: "geaccepteerd"
+    solutions: "Oplossingen"
     solved:
       title: "Opgelost"
-      allow_accepted_answers: "Topiceigenaar en staf mogen een antwoord als de oplossing markeren"
+      allow_accepted_answers: "Topiceigenaar en medewerkers toestaan een antwoord als oplossing te markeren"
       accept_answer: "Selecteer als dit antwoord het probleem oplost"
       accepted_description: "Dit is de geaccepteerde oplossing voor dit topic"
       has_no_accepted_answer: "Dit topic heeft geen oplossing"
@@ -22,12 +23,18 @@ nl:
       solution_summary:
         one: "oplossing"
         other: "oplossingen"
-      accepted_html: "%{icon} Opgelost <span class='by'>door <a href data-user-card='%{username_lower}'>%{username}</a></span> in <a href='%{post_path}' class='back'>bericht #%{post_number}</a>"
+      accepted_html: "%{icon} Opgelost <span class='by'>door <a href data-user-card='%{username_lower}'>%{username}</a></span> in <a href='%{post_path}' class='back'>bericht %{post_number}</a>"
       accepted_notification: "<p><span>%{username}</span> %{description}</p>"
       topic_status_filter:
         all: "alle"
         solved: "opgelost"
         unsolved: "onopgelost"
+      no_solved_topics_title: "Je hebt nog geen topics opgelost"
+      no_solved_topics_title_others: "%{username} heeft nog geen topics opgelost"
+      no_solved_topics_body: "Als je een nuttig antwoord geeft op een topic, kan je antwoord door de eigenaar van het topic of door een medewerker als oplossing worden gekozen."
+      no_answer:
+        title: Is je vraag beantwoord?
+        description: "Markeer het antwoord en help anderen door de oplossingsknop onder het juiste antwoord te gebruiken."
     topic_statuses:
       solved:
         help: "Dit topic heeft een oplossing"
@@ -35,9 +42,22 @@ nl:
       advanced:
         statuses:
           solved: "zijn opgelost"
-          unsolved: "zijn niet opgelost"
+          unsolved: "zijn onopgelost"
     admin:
       web_hooks:
         solved_event:
-          name: "Opgelost-gebeurtenis"
-          details: "Wanneer een gebruiker een post als het geaccepteerde of niet-geaccepteerde antwoord markeert."
+          name: "Oplossingsgebeurtenis"
+          details: "Wanneer een gebruiker een bericht als geaccepteerd of niet-geaccepteerd antwoord markeert."
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          max_trust_level:
+            tl1: < TL1
+            tl2: < TL2
+            tl3: < TL3
+            tl4: < TL4
+            any: Alle
+          fields:
+            maximum_trust_level:
+              label: Vertrouwensniveau
+              description: Gebruikers onder dit vertrouwensniveau activeren deze automatisering
