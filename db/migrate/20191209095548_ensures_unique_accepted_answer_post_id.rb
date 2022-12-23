@@ -12,9 +12,9 @@ class EnsuresUniqueAcceptedAnswerPostId < ActiveRecord::Migration[5.2]
     SQL
 
     add_index :topic_custom_fields,
-      :topic_id,
-      name: :idx_topic_custom_fields_accepted_answer,
-      unique: true,
-      where: "name = 'accepted_answer_post_id'"
+              :topic_id,
+              name: :idx_topic_custom_fields_accepted_answer,
+              unique: true,
+              where: "name = 'accepted_answer_post_id'"
   end
 end

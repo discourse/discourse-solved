@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'post_revisor'
+require "rails_helper"
+require "post_revisor"
 
 describe PostRevisor do
   fab!(:category) { Fabricate(:category_with_definition) }
@@ -17,20 +17,22 @@ describe PostRevisor do
     topic = Fabricate(:topic, category: Fabricate(:category_with_definition))
     post = Fabricate(:post, topic: topic)
 
-    messages = MessageBus.track_publish("/topic/#{topic.id}") do
-      described_class.new(post).revise!(admin, { category_id: category.id })
-    end
+    messages =
+      MessageBus.track_publish("/topic/#{topic.id}") do
+        described_class.new(post).revise!(admin, { category_id: category.id })
+      end
 
     expect(messages.first.data[:refresh_stream]).to eq(nil)
 
-    messages = MessageBus.track_publish("/topic/#{topic.id}") do
-      described_class.new(post).revise!(admin, { category_id: category_solved.id })
-    end
+    messages =
+      MessageBus.track_publish("/topic/#{topic.id}") do
+        described_class.new(post).revise!(admin, { category_id: category_solved.id })
+      end
 
     expect(messages.first.data[:refresh_stream]).to eq(true)
   end
 
-  describe 'Allowing solved via tags' do
+  describe "Allowing solved via tags" do
     before do
       SiteSetting.solved_enabled = true
       SiteSetting.tagging_enabled = true
@@ -42,22 +44,24 @@ describe PostRevisor do
     fab!(:topic) { Fabricate(:topic) }
     let(:post) { Fabricate(:post, topic: topic) }
 
-    it 'sets the refresh option after adding an allowed tag' do
+    it "sets the refresh option after adding an allowed tag" do
       SiteSetting.enable_solved_tags = tag1.name
 
-      messages = MessageBus.track_publish("/topic/#{topic.id}") do
-        described_class.new(post).revise!(admin, tags: [tag1.name])
-      end
+      messages =
+        MessageBus.track_publish("/topic/#{topic.id}") do
+          described_class.new(post).revise!(admin, tags: [tag1.name])
+        end
 
       expect(messages.first.data[:refresh_stream]).to eq(true)
     end
 
-    it 'sets the refresh option if the added tag matches any of the allowed tags' do
-      SiteSetting.enable_solved_tags = [tag1, tag2].map(&:name).join('|')
+    it "sets the refresh option if the added tag matches any of the allowed tags" do
+      SiteSetting.enable_solved_tags = [tag1, tag2].map(&:name).join("|")
 
-      messages = MessageBus.track_publish("/topic/#{topic.id}") do
-        described_class.new(post).revise!(admin, tags: [tag2.name])
-      end
+      messages =
+        MessageBus.track_publish("/topic/#{topic.id}") do
+          described_class.new(post).revise!(admin, tags: [tag2.name])
+        end
 
       expect(messages.first.data[:refresh_stream]).to eq(true)
     end
