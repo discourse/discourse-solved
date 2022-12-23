@@ -17,23 +17,22 @@ end
 
 PLUGIN_NAME = "discourse_solved".freeze
 
-register_asset 'stylesheets/solutions.scss'
-register_asset 'stylesheets/mobile/solutions.scss', :mobile
+register_asset "stylesheets/solutions.scss"
+register_asset "stylesheets/mobile/solutions.scss", :mobile
 
 after_initialize do
-
   SeedFu.fixture_paths << Rails.root.join("plugins", "discourse-solved", "db", "fixtures").to_s
 
-  [
-    '../app/lib/first_accepted_post_solution_validator.rb',
-    '../app/serializers/concerns/topic_answer_mixin.rb'
+  %w[
+    ../app/lib/first_accepted_post_solution_validator.rb
+    ../app/serializers/concerns/topic_answer_mixin.rb
   ].each { |path| load File.expand_path(path, __FILE__) }
 
   skip_db = defined?(GlobalSetting.skip_db?) && GlobalSetting.skip_db?
 
   # we got to do a one time upgrade
   if !skip_db && defined?(UserAction::SOLVED)
-    unless Discourse.redis.get('solved_already_upgraded')
+    unless Discourse.redis.get("solved_already_upgraded")
       unless UserAction.where(action_type: UserAction::SOLVED).exists?
         Rails.logger.info("Upgrading storage for solved")
         sql = <<SQL
@@ -89,10 +88,7 @@ SQL
             p2.save!
 
             if defined?(UserAction::SOLVED)
-              UserAction.where(
-                action_type: UserAction::SOLVED,
-                target_post_id: p2.id
-              ).destroy_all
+              UserAction.where(action_type: UserAction::SOLVED, target_post_id: p2.id).destroy_all
             end
           end
         end
@@ -106,14 +102,14 @@ SQL
             user_id: post.user_id,
             acting_user_id: acting_user.id,
             target_post_id: post.id,
-            target_topic_id: post.topic_id
+            target_topic_id: post.topic_id,
           )
         end
 
         notification_data = {
-          message: 'solved.accepted_notification',
+          message: "solved.accepted_notification",
           display_username: acting_user.username,
-          topic_title: topic.title
+          topic_title: topic.title,
         }.to_json
 
         unless acting_user.id == post.user_id
@@ -122,7 +118,7 @@ SQL
             user_id: post.user_id,
             topic_id: post.topic_id,
             post_number: post.post_number,
-            data: notification_data
+            data: notification_data,
           )
         end
 
@@ -132,23 +128,22 @@ SQL
             user_id: topic.user_id,
             topic_id: post.topic_id,
             post_number: post.post_number,
-            data: notification_data
+            data: notification_data,
           )
         end
 
         auto_close_hours = SiteSetting.solved_topics_auto_close_hours
 
         if (auto_close_hours > 0) && !topic.closed
-          topic_timer = topic.set_or_create_timer(
-            TopicTimer.types[:silent_close],
-            nil,
-            based_on_last_post: true,
-            duration_minutes: auto_close_hours * 60
-          )
+          topic_timer =
+            topic.set_or_create_timer(
+              TopicTimer.types[:silent_close],
+              nil,
+              based_on_last_post: true,
+              duration_minutes: auto_close_hours * 60,
+            )
 
-          topic.custom_fields[
-            AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD
-          ] = topic_timer.id
+          topic.custom_fields[AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD] = topic_timer.id
 
           MessageBus.publish("/topic/#{topic.id}", reload_topic: true)
         end
@@ -182,20 +177,18 @@ SQL
         post.save!
 
         # TODO remove_action! does not allow for this type of interface
-        if defined? UserAction::SOLVED
-          UserAction.where(
-            action_type: UserAction::SOLVED,
-            target_post_id: post.id
-          ).destroy_all
+        if defined?(UserAction::SOLVED)
+          UserAction.where(action_type: UserAction::SOLVED, target_post_id: post.id).destroy_all
         end
 
         # yank notification
-        notification = Notification.find_by(
-          notification_type: Notification.types[:custom],
-          user_id: post.user_id,
-          topic_id: post.topic_id,
-          post_number: post.post_number
-        )
+        notification =
+          Notification.find_by(
+            notification_type: Notification.types[:custom],
+            user_id: post.user_id,
+            topic_id: post.topic_id,
+            post_number: post.post_number,
+          )
 
         notification.destroy! if notification
 
@@ -212,7 +205,6 @@ SQL
   require_dependency "application_controller"
 
   class DiscourseSolved::AnswerController < ::ApplicationController
-
     def accept
       limit_accepts
 
@@ -254,14 +246,13 @@ SQL
     post "/unaccept" => "answer#unaccept"
   end
 
-  Discourse::Application.routes.append do
-    mount ::DiscourseSolved::Engine, at: "solution"
-  end
+  Discourse::Application.routes.append { mount ::DiscourseSolved::Engine, at: "solution" }
 
   topic_view_post_custom_fields_allowlister { ["is_accepted_answer"] }
 
   def get_schema_text(post)
-    post.excerpt(nil, keep_onebox_body: true).presence || post.excerpt(nil, keep_onebox_body: true, keep_quotes: true)
+    post.excerpt(nil, keep_onebox_body: true).presence ||
+      post.excerpt(nil, keep_onebox_body: true, keep_quotes: true)
   end
 
   def before_head_close_meta(controller)
@@ -276,59 +267,63 @@ SQL
 
     return "" if SiteSetting.solved_add_schema_markup == "never"
 
-    allowed = controller
-      .guardian
-      .allow_accepted_answers?(
-        topic.category_id, topic.tags.pluck(:name)
-      )
+    allowed =
+      controller.guardian.allow_accepted_answers?(topic.category_id, topic.tags.pluck(:name))
     return "" if !allowed
 
     first_post = topic_view.posts&.first
     return "" if first_post&.post_number != 1
 
     question_json = {
-      '@type' => 'Question',
-      'name' => topic.title,
-      'text' => get_schema_text(first_post),
-      'upvoteCount' => first_post.like_count,
-      'answerCount' => 0,
-      'dateCreated' => topic.created_at,
-      'author' => {
-        '@type' => 'Person',
-        'name' => topic.user&.name
-      }
+      "@type" => "Question",
+      "name" => topic.title,
+      "text" => get_schema_text(first_post),
+      "upvoteCount" => first_post.like_count,
+      "answerCount" => 0,
+      "dateCreated" => topic.created_at,
+      "author" => {
+        "@type" => "Person",
+        "name" => topic.user&.name,
+      },
     }
 
     if accepted_answer = Post.find_by(id: topic.custom_fields["accepted_answer_post_id"])
-      question_json['answerCount'] = 1
+      question_json["answerCount"] = 1
       question_json[:acceptedAnswer] = {
-        '@type' => 'Answer',
-        'text' => get_schema_text(accepted_answer),
-        'upvoteCount' => accepted_answer.like_count,
-        'dateCreated' => accepted_answer.created_at,
-        'url' => accepted_answer.full_url,
-        'author' => {
-          '@type' => 'Person',
-          'name' => accepted_answer.user&.username
-        }
+        "@type" => "Answer",
+        "text" => get_schema_text(accepted_answer),
+        "upvoteCount" => accepted_answer.like_count,
+        "dateCreated" => accepted_answer.created_at,
+        "url" => accepted_answer.full_url,
+        "author" => {
+          "@type" => "Person",
+          "name" => accepted_answer.user&.username,
+        },
       }
     else
       return "" if SiteSetting.solved_add_schema_markup == "answered only"
     end
 
-    ['<script type="application/ld+json">', MultiJson.dump(
-      '@context' => 'http://schema.org',
-      '@type' => 'QAPage',
-      'name' => topic&.title,
-      'mainEntity' => question_json
-    ).gsub("</", "<\\/").html_safe, '</script>'].join("")
+    [
+      '<script type="application/ld+json">',
+      MultiJson
+        .dump(
+          "@context" => "http://schema.org",
+          "@type" => "QAPage",
+          "name" => topic&.title,
+          "mainEntity" => question_json,
+        )
+        .gsub("</", "<\\/")
+        .html_safe,
+      "</script>",
+    ].join("")
   end
 
-  register_html_builder('server:before-head-close-crawler') do |controller|
+  register_html_builder("server:before-head-close-crawler") do |controller|
     before_head_close_meta(controller)
   end
 
-  register_html_builder('server:before-head-close') do |controller|
+  register_html_builder("server:before-head-close") do |controller|
     before_head_close_meta(controller)
   end
 
@@ -341,39 +336,42 @@ SQL
       category_id, include_subcategories = report.add_category_filter
       if category_id
         if include_subcategories
-          accepted_solutions = accepted_solutions.joins(:topic).where('topics.category_id IN (?)', Category.subcategory_ids(category_id))
+          accepted_solutions =
+            accepted_solutions.joins(:topic).where(
+              "topics.category_id IN (?)",
+              Category.subcategory_ids(category_id),
+            )
         else
-          accepted_solutions = accepted_solutions.joins(:topic).where('topics.category_id = ?', category_id)
+          accepted_solutions =
+            accepted_solutions.joins(:topic).where("topics.category_id = ?", category_id)
         end
       end
 
-      accepted_solutions.where("topic_custom_fields.created_at >= ?", report.start_date)
+      accepted_solutions
+        .where("topic_custom_fields.created_at >= ?", report.start_date)
         .where("topic_custom_fields.created_at <= ?", report.end_date)
         .group("DATE(topic_custom_fields.created_at)")
         .order("DATE(topic_custom_fields.created_at)")
         .count
-        .each do |date, count|
-        report.data << { x: date, y: count }
-      end
+        .each { |date, count| report.data << { x: date, y: count } }
       report.total = accepted_solutions.count
-      report.prev30Days = accepted_solutions.where("topic_custom_fields.created_at >= ?", report.start_date - 30.days)
-        .where("topic_custom_fields.created_at <= ?", report.start_date)
-        .count
+      report.prev30Days =
+        accepted_solutions
+          .where("topic_custom_fields.created_at >= ?", report.start_date - 30.days)
+          .where("topic_custom_fields.created_at <= ?", report.start_date)
+          .count
     end
   end
 
   if defined?(UserAction::SOLVED)
-    require_dependency 'user_summary'
+    require_dependency "user_summary"
     class ::UserSummary
       def solved_count
-        UserAction
-          .where(user: @user)
-          .where(action_type: UserAction::SOLVED)
-          .count
+        UserAction.where(user: @user).where(action_type: UserAction::SOLVED).count
       end
     end
 
-    require_dependency 'user_summary_serializer'
+    require_dependency "user_summary_serializer"
     class ::UserSummarySerializer
       attributes :solved_count
 
@@ -385,20 +383,22 @@ SQL
 
   class ::WebHook
     def self.enqueue_solved_hooks(event, post, payload = nil)
-      if active_web_hooks('solved').exists? && post.present?
+      if active_web_hooks("solved").exists? && post.present?
         payload ||= WebHook.generate_payload(:post, post)
 
-        WebHook.enqueue_hooks(:solved, event,
+        WebHook.enqueue_hooks(
+          :solved,
+          event,
           id: post.id,
           category_id: post.topic&.category_id,
           tag_ids: post.topic&.tags&.pluck(:id),
-          payload: payload
+          payload: payload,
         )
       end
     end
   end
 
-  require_dependency 'topic_view_serializer'
+  require_dependency "topic_view_serializer"
   class ::TopicViewSerializer
     attributes :accepted_answer
 
@@ -408,20 +408,18 @@ SQL
 
     def accepted_answer
       if info = accepted_answer_post_info
-        {
-          post_number: info[0],
-          username: info[1],
-          excerpt: info[2]
-        }
+        { post_number: info[0], username: info[1], excerpt: info[2] }
       end
     end
 
     def accepted_answer_post_info
       # TODO: we may already have it in the stream ... so bypass query here
-      postInfo = Post.where(id: accepted_answer_post_id, topic_id: object.topic.id)
-        .joins(:user)
-        .pluck('post_number', 'username', 'cooked')
-        .first
+      postInfo =
+        Post
+          .where(id: accepted_answer_post_id, topic_id: object.topic.id)
+          .joins(:user)
+          .pluck("post_number", "username", "cooked")
+          .first
 
       if postInfo
         postInfo[2] = if SiteSetting.solved_quote_length > 0
@@ -436,40 +434,42 @@ SQL
     def accepted_answer_post_id
       id = object.topic.custom_fields["accepted_answer_post_id"]
       # a bit messy but race conditions can give us an array here, avoid
-      id && id.to_i rescue nil
+      begin
+        id && id.to_i
+      rescue StandardError
+        nil
+      end
     end
-
   end
 
   class ::Category
     after_save :reset_accepted_cache
 
     protected
+
     def reset_accepted_cache
       ::Guardian.reset_accepted_answer_cache
     end
   end
 
   class ::Guardian
-
     @@allowed_accepted_cache = DistributedCache.new("allowed_accepted")
 
     def self.reset_accepted_answer_cache
-      @@allowed_accepted_cache["allowed"] =
-        begin
-          Set.new(
-            CategoryCustomField
-              .where(name: "enable_accepted_answers", value: "true")
-              .pluck(:category_id)
-          )
-        end
+      @@allowed_accepted_cache["allowed"] = begin
+        Set.new(
+          CategoryCustomField.where(name: "enable_accepted_answers", value: "true").pluck(
+            :category_id,
+          ),
+        )
+      end
     end
 
     def allow_accepted_answers?(category_id, tag_names = [])
       return true if SiteSetting.allow_solved_on_all_topics
 
       if SiteSetting.enable_solved_tags.present? && tag_names.present?
-        allowed_tags = SiteSetting.enable_solved_tags.split('|')
+        allowed_tags = SiteSetting.enable_solved_tags.split("|")
         is_allowed = (tag_names & allowed_tags).present?
 
         return true if is_allowed
@@ -496,7 +496,7 @@ SQL
     end
   end
 
-  require_dependency 'post_serializer'
+  require_dependency "post_serializer"
   class ::PostSerializer
     attributes :can_accept_answer, :can_unaccept_answer, :accepted_answer
 
@@ -510,67 +510,76 @@ SQL
 
     def can_unaccept_answer
       if topic = (topic_view && topic_view.topic) || object.topic
-        scope.can_accept_answer?(topic, object) && (post_custom_fields["is_accepted_answer"] == 'true')
+        scope.can_accept_answer?(topic, object) &&
+          (post_custom_fields["is_accepted_answer"] == "true")
       end
     end
 
     def accepted_answer
-      post_custom_fields["is_accepted_answer"] == 'true'
+      post_custom_fields["is_accepted_answer"] == "true"
     end
   end
 
-  require_dependency 'search'
+  require_dependency "search"
 
   #TODO Remove when plugin is 1.0
   if Search.respond_to? :advanced_filter
     Search.advanced_filter(/status:solved/) do |posts|
-      posts.where("topics.id IN (
+      posts.where(
+        "topics.id IN (
         SELECT tc.topic_id
         FROM topic_custom_fields tc
         WHERE tc.name = 'accepted_answer_post_id' AND
                         tc.value IS NOT NULL
-        )")
-
+        )",
+      )
     end
 
     Search.advanced_filter(/status:unsolved/) do |posts|
-      posts.where("topics.id NOT IN (
+      posts.where(
+        "topics.id NOT IN (
         SELECT tc.topic_id
         FROM topic_custom_fields tc
         WHERE tc.name = 'accepted_answer_post_id' AND
                         tc.value IS NOT NULL
-        )")
-
+        )",
+      )
     end
   end
 
-  if Discourse.has_needed_version?(Discourse::VERSION::STRING, '1.8.0.beta6')
-    require_dependency 'topic_query'
+  if Discourse.has_needed_version?(Discourse::VERSION::STRING, "1.8.0.beta6")
+    require_dependency "topic_query"
 
     TopicQuery.add_custom_filter(:solved) do |results, topic_query|
-      if topic_query.options[:solved] == 'yes'
-        results = results.where("topics.id IN (
+      if topic_query.options[:solved] == "yes"
+        results =
+          results.where(
+            "topics.id IN (
           SELECT tc.topic_id
           FROM topic_custom_fields tc
           WHERE tc.name = 'accepted_answer_post_id' AND
                           tc.value IS NOT NULL
-          )")
-      elsif topic_query.options[:solved] == 'no'
-        results = results.where("topics.id NOT IN (
+          )",
+          )
+      elsif topic_query.options[:solved] == "no"
+        results =
+          results.where(
+            "topics.id NOT IN (
           SELECT tc.topic_id
           FROM topic_custom_fields tc
           WHERE tc.name = 'accepted_answer_post_id' AND
                           tc.value IS NOT NULL
-          )")
+          )",
+          )
       end
       results
     end
   end
 
-  require_dependency 'topic_list_item_serializer'
-  require_dependency 'search_topic_list_item_serializer'
-  require_dependency 'suggested_topic_serializer'
-  require_dependency 'user_summary_serializer'
+  require_dependency "topic_list_item_serializer"
+  require_dependency "search_topic_list_item_serializer"
+  require_dependency "suggested_topic_serializer"
+  require_dependency "user_summary_serializer"
 
   class ::TopicListItemSerializer
     include TopicAnswerMixin
@@ -592,16 +601,21 @@ SQL
     include TopicAnswerMixin
   end
 
-  TopicList.preloaded_custom_fields << "accepted_answer_post_id" if TopicList.respond_to? :preloaded_custom_fields
-  Site.preloaded_category_custom_fields << "enable_accepted_answers" if Site.respond_to? :preloaded_category_custom_fields
-  Search.preloaded_topic_custom_fields << "accepted_answer_post_id" if Search.respond_to? :preloaded_topic_custom_fields
+  if TopicList.respond_to? :preloaded_custom_fields
+    TopicList.preloaded_custom_fields << "accepted_answer_post_id"
+  end
+  if Site.respond_to? :preloaded_category_custom_fields
+    Site.preloaded_category_custom_fields << "enable_accepted_answers"
+  end
+  if Search.respond_to? :preloaded_topic_custom_fields
+    Search.preloaded_topic_custom_fields << "accepted_answer_post_id"
+  end
 
   if CategoryList.respond_to?(:preloaded_topic_custom_fields)
     CategoryList.preloaded_topic_custom_fields << "accepted_answer_post_id"
   end
 
-  on(:filter_auto_bump_topics) do |_category, filters|
-    filters.push(->(r) { r.where(<<~SQL)
+  on(:filter_auto_bump_topics) { |_category, filters| filters.push(->(r) { r.where(<<~SQL) }) }
         NOT EXISTS(
           SELECT 1 FROM topic_custom_fields
           WHERE topic_id = topics.id
@@ -609,12 +623,10 @@ SQL
           AND value IS NOT NULL
         )
       SQL
-    })
-  end
 
   on(:before_post_publish_changes) do |post_changes, topic_changes, options|
-    category_id_changes = topic_changes.diff['category_id'].to_a
-    tag_changes = topic_changes.diff['tags'].to_a
+    category_id_changes = topic_changes.diff["category_id"].to_a
+    tag_changes = topic_changes.diff["tags"].to_a
 
     old_allowed = Guardian.new.allow_accepted_answers?(category_id_changes[0], tag_changes[0])
     new_allowed = Guardian.new.allow_accepted_answers?(category_id_changes[1], tag_changes[1])
@@ -628,14 +640,25 @@ SQL
     if type == :category
       next if SiteSetting.allow_solved_on_all_topics
 
-      solved_category = DiscourseDev::Record.random(Category.where(read_restricted: false, id: records.pluck(:id), parent_category_id: nil))
-      CategoryCustomField.create!(category_id: solved_category.id, name: "enable_accepted_answers", value: "true")
+      solved_category =
+        DiscourseDev::Record.random(
+          Category.where(read_restricted: false, id: records.pluck(:id), parent_category_id: nil),
+        )
+      CategoryCustomField.create!(
+        category_id: solved_category.id,
+        name: "enable_accepted_answers",
+        value: "true",
+      )
       puts "discourse-solved enabled on category '#{solved_category.name}' (#{solved_category.id})."
     elsif type == :topic
       topics = Topic.where(id: records.pluck(:id))
 
       unless SiteSetting.allow_solved_on_all_topics
-        solved_category_id = CategoryCustomField.where(name: "enable_accepted_answers", value: "true").first.category_id
+        solved_category_id =
+          CategoryCustomField
+            .where(name: "enable_accepted_answers", value: "true")
+            .first
+            .category_id
 
         unless topics.exists?(category_id: solved_category_id)
           topics.last.update(category_id: solved_category_id)
@@ -657,7 +680,8 @@ SQL
     end
   end
 
-  query = "
+  query =
+    "
     WITH x AS (SELECT
       u.id user_id,
       COUNT(DISTINCT ua.id) AS solutions
@@ -675,9 +699,7 @@ SQL
     AND di.period_type = :period_type
     AND di.solutions <> x.solutions
   "
-  if respond_to?(:add_directory_column)
-    add_directory_column("solutions", query: query)
-  end
+  add_directory_column("solutions", query: query) if respond_to?(:add_directory_column)
 
   add_to_class(:composer_messages_finder, :check_topic_is_solved) do
     return if !SiteSetting.solved_enabled || SiteSetting.disable_solved_education_message
@@ -685,21 +707,18 @@ SQL
     return if @topic.custom_fields["accepted_answer_post_id"].blank?
 
     {
-      id: 'solved_topic',
-      templateName: 'education',
+      id: "solved_topic",
+      templateName: "education",
       wait_for_typing: true,
-      extraClass: 'education-message',
+      extraClass: "education-message",
       hide_if_whisper: true,
-      body: PrettyText.cook(I18n.t('education.topic_is_solved', base_url: Discourse.base_url))
+      body: PrettyText.cook(I18n.t("education.topic_is_solved", base_url: Discourse.base_url)),
     }
   end
 
   if defined?(UserAction::SOLVED)
     add_to_serializer(:user_card, :accepted_answers) do
-      UserAction
-        .where(user_id: object.id)
-        .where(action_type: UserAction::SOLVED)
-        .count
+      UserAction.where(user_id: object.id).where(action_type: UserAction::SOLVED).count
     end
   end
 
@@ -709,21 +728,19 @@ SQL
     end
 
     register_topic_list_preload_user_ids do |topics, user_ids, topic_list|
-      answer_post_ids = TopicCustomField
-        .select('value::INTEGER')
-        .where(name: 'accepted_answer_post_id')
-        .where(topic_id: topics.map(&:id))
-      answer_user_ids = Post
-        .where(id: answer_post_ids)
-        .pluck(:topic_id, :user_id)
-        .to_h
+      answer_post_ids =
+        TopicCustomField
+          .select("value::INTEGER")
+          .where(name: "accepted_answer_post_id")
+          .where(topic_id: topics.map(&:id))
+      answer_user_ids = Post.where(id: answer_post_ids).pluck(:topic_id, :user_id).to_h
       topics.each { |topic| topic.accepted_answer_user_id = answer_user_ids[topic.id] }
       user_ids.concat(answer_user_ids.values)
     end
 
     module AddSolvedToTopicPostersSummary
       def descriptions_by_id
-        if !defined? @descriptions_by_id
+        if !defined?(@descriptions_by_id)
           super(ids: old_user_ids)
 
           if id = topic.accepted_answer_user_id
@@ -749,7 +766,7 @@ SQL
     end
 
     TopicPostersSummary.class_eval do
-      alias :old_user_ids :user_ids
+      alias old_user_ids user_ids
 
       prepend AddSolvedToTopicPostersSummary
     end
@@ -762,28 +779,45 @@ SQL
         # we prefer to abstract logic in service object and test this
         next if Rails.env.test?
 
-        name = 'first_accepted_solution'
-        DiscourseAutomation::Automation.where(trigger: name, enabled: true).find_each do |automation|
-          maximum_trust_level = automation.trigger_field('maximum_trust_level')&.dig('value')
-          if FirstAcceptedPostSolutionValidator.check(post, trust_level: maximum_trust_level)
-            automation.trigger!(
-              'kind' => name,
-              'accepted_post_id' => post.id,
-              'usernames' => [post.user.username],
-              'placeholders' => {
-                'post_url' => Discourse.base_url + post.url
-              }
-            )
+        name = "first_accepted_solution"
+        DiscourseAutomation::Automation
+          .where(trigger: name, enabled: true)
+          .find_each do |automation|
+            maximum_trust_level = automation.trigger_field("maximum_trust_level")&.dig("value")
+            if FirstAcceptedPostSolutionValidator.check(post, trust_level: maximum_trust_level)
+              automation.trigger!(
+                "kind" => name,
+                "accepted_post_id" => post.id,
+                "usernames" => [post.user.username],
+                "placeholders" => {
+                  "post_url" => Discourse.base_url + post.url,
+                },
+              )
+            end
           end
-        end
       end
 
       TRUST_LEVELS = [
-        { id: 1, name: 'discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl1' },
-        { id: 2, name: 'discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl2' },
-        { id: 3, name: 'discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl3' },
-        { id: 4, name: 'discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl4' },
-        { id: 'any', name: 'discourse_automation.triggerables.first_accepted_solution.max_trust_level.any' },
+        {
+          id: 1,
+          name: "discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl1",
+        },
+        {
+          id: 2,
+          name: "discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl2",
+        },
+        {
+          id: 3,
+          name: "discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl3",
+        },
+        {
+          id: 4,
+          name: "discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl4",
+        },
+        {
+          id: "any",
+          name: "discourse_automation.triggerables.first_accepted_solution.max_trust_level.any",
+        },
       ]
 
       add_triggerable_to_scriptable(:first_accepted_solution, :send_pms)
@@ -791,7 +825,12 @@ SQL
       DiscourseAutomation::Triggerable.add(:first_accepted_solution) do
         placeholder :post_url
 
-        field :maximum_trust_level, component: :choices, extra: { content: TRUST_LEVELS }, required: true
+        field :maximum_trust_level,
+              component: :choices,
+              extra: {
+                content: TRUST_LEVELS,
+              },
+              required: true
       end
     end
   end

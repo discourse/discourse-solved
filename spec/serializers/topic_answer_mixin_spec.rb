@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 describe TopicAnswerMixin do
   let(:topic) { Fabricate(:topic) }
@@ -17,7 +17,7 @@ describe TopicAnswerMixin do
       TopicListItemSerializer,
       SearchTopicListItemSerializer,
       SuggestedTopicSerializer,
-      UserSummarySerializer::TopicSerializer
+      UserSummarySerializer::TopicSerializer,
     ].each do |serializer|
       json = serializer.new(topic, scope: guardian, root: false).as_json
       expect(json[:has_accepted_answer]).to be_truthy

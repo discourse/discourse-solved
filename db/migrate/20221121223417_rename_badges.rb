@@ -18,7 +18,7 @@ class RenameBadges < ActiveRecord::Migration[6.1]
     "sv" => "Kundtjänst",
     "tr_TR" => "Yardım masası",
     "zh_CN" => "帮助台",
-    "zh_TW" => "服務台"
+    "zh_TW" => "服務台",
   }
 
   TECH_SUPPORT_TRANSLATIONS = {
@@ -43,11 +43,12 @@ class RenameBadges < ActiveRecord::Migration[6.1]
     "sv" => "Teknisk support",
     "tr_TR" => "Teknik Destek",
     "zh_CN" => "技术支持",
-    "zh_TW" => "技術支援"
+    "zh_TW" => "技術支援",
   }
 
   def up
-    default_locale = DB.query_single("SELECT value FROM site_settings WHERE name = 'default_locale'").first || "en"
+    default_locale =
+      DB.query_single("SELECT value FROM site_settings WHERE name = 'default_locale'").first || "en"
 
     sql = <<~SQL
       UPDATE badges
