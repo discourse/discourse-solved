@@ -22,7 +22,9 @@ RSpec.describe TopicsController do
       answer_json = ""
     end
 
+    # rubocop:todo Layout/LineLength
     '<script type="application/ld+json">{"@context":"http://schema.org","@type":"QAPage","name":"%{title}","mainEntity":{"@type":"Question","name":"%{title}","text":"%{question_text}","upvoteCount":%{question_likes},"answerCount":%{answerCount},"dateCreated":"%{created_at}","author":{"@type":"Person","name":"%{username1}"}%{answer_json}}}</script>' %
+      # rubocop:enable Layout/LineLength
       {
         title: topic.title,
         question_text: p1.excerpt,
