@@ -236,7 +236,7 @@ SQL
 
     def limit_accepts
       return if current_user.staff?
-      RateLimiter.new(nil, "accept-hr-#{current_user.id}", 20, 1.hour).performed!
+      RateLimiter.new(nil, "accept-hr-#{current_user.id}", 20, 1.hour).performed! unless current_user.staff?
       RateLimiter.new(nil, "accept-min-#{current_user.id}", 4, 30.seconds).performed!
     end
   end
