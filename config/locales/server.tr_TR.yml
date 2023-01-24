@@ -26,7 +26,7 @@ tr_TR:
       yaxis: "Toplam"
   solved:
     no_solutions:
-      self: "Henüz kabul edilmiş bir çözümün yok."
+      self: "Henüz kabul edilmiş bir çözümünüz yok."
       others: "Kabul edilen çözüm yok."
   badges:
     solved_1:
@@ -40,11 +40,11 @@ tr_TR:
     solved_3:
       name: "Her Şeyi Bilen"
       description: "Çözüm olarak işaretlenmiş 50 yanıtı var"
-      long_description: "Bu rozet, yanıtlarınızdan 50'inin konulara Çözüm olarak işaretlenmesi durumunda verilir. :white_check_mark: Gerçekten işinizi biliyorsunuz. :clap:"
+      long_description: "Bu rozet, yanıtlarınızdan 50'sinin konulara Çözüm olarak işaretlenmesi durumunda verilir. :white_check_mark: Gerçekten işinizi biliyorsunuz. :clap:"
     solved_4:
       name: "Çözüm Kurumu"
       description: "Çözüm olarak işaretlenmiş 150 yanıtı var"
-      long_description: "Bu rozet, yanıtlarınızın 150'sinin konulara Çözüm olarak işaretlenmesi durumunda verilir. :white_check_mark: Mükemmel iş çıkardınız. :slightly_smiling_face: Artık resmi olarak bir Çözüm Kurumusunuz. :brain:"
+      long_description: "Bu rozet, yanıtlarınızın 150'sinin konulara Çözüm olarak işaretlenmesi durumunda verilir. :white_check_mark: Mükemmel bir iş çıkardınız. :slightly_smiling_face: Artık resmi olarak bir Çözüm Kurumusunuz. :brain:"
   discourse_automation:
     triggerables:
       first_accepted_solution:
