@@ -9,24 +9,24 @@ tr_TR:
     notifications:
       alt:
         solved:
-          accepted_notification: "onaylanmış"
+          accepted_notification: "kabul edildi"
     solutions: "Çözümler"
     solved:
-      title: "Çözülmüş"
-      allow_accepted_answers: "Konu sahibi kullanıcılar ve yöneticiler gönderileri çözüm olarak seçebilsinler mi?"
-      accept_answer: "Bu cevabın sorunu çözüp çözmediğini seçin"
-      accepted_description: "Bu, bu konu için kabul edilen bir çözümdür"
-      has_no_accepted_answer: "Bu konu çözüme sahip değil"
-      unaccept_answer: "Bu cevab eğer sorunu çözmediyse seçimini kaldırın"
+      title: "Çözüldü"
+      allow_accepted_answers: "Konu sahibinin ve personelin bir yanıtı çözüm olarak işaretlemesine izin verin"
+      accept_answer: "Bu yanıtın sorunu çözüp çözmediğini seçin"
+      accepted_description: "Bu, bu konu için kabul edilen çözümdür"
+      has_no_accepted_answer: "Bu konunun çözümü yok"
+      unaccept_answer: "Bu yanıt artık sorunu çözmüyorsa seçimi kaldırın"
       accepted_answer: "Çözüm"
       solution: "Çözüm"
       solution_summary:
         one: "çözüm"
-        other: "çözümler"
+        other: "çözüm"
       accepted_html: "%{icon} Çözüldü; <span class='by'> <a href data-user-card='%{username_lower}'>%{username}</a></span> tarafından, <a href='%{post_path}' class='back'>%{post_number}. gönderide</a>"
       accepted_notification: "<p><span>%{username}</span> %{description}</p>"
       topic_status_filter:
-        all: "tüm"
+        all: "tümü"
         solved: "çözüldü"
         unsolved: "çözülmedi"
       no_solved_topics_title: "Henüz hiçbir konuyu çözmediniz"
