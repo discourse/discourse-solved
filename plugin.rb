@@ -110,6 +110,7 @@ SQL
           message: "solved.accepted_notification",
           display_username: acting_user.username,
           topic_title: topic.title,
+          title: "solved.notification.title",
         }.to_json
 
         unless acting_user.id == post.user_id
