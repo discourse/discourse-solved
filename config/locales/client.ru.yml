@@ -54,10 +54,10 @@ ru:
       triggerables:
         first_accepted_solution:
           max_trust_level:
-            tl1: < 1 уровня
-            tl2: < 2 уровня
-            tl3: < 3 уровня
-            tl4: < 4 уровня
+            tl1: < ур. 1
+            tl2: < ур. 2
+            tl3: < ур. 3
+            tl4: < ур. 4
             any: Любой
           fields:
             maximum_trust_level:
