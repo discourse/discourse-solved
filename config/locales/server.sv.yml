@@ -28,6 +28,9 @@ sv:
     no_solutions:
       self: "Du har inga godkända lösningar än."
       others: "Inga godkända lösningar."
+  badges:
+    solved_1:
+      name: "Löst!"
   discourse_automation:
     triggerables:
       first_accepted_solution:

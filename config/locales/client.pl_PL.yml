@@ -31,3 +31,9 @@ pl_PL:
     topic_statuses:
       solved:
         help: "Ten temat ma zaakceptowane rozwiązanie"
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          fields:
+            maximum_trust_level:
+              label: Poziom zaufania

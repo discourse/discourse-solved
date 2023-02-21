@@ -31,3 +31,9 @@ ca:
     topic_statuses:
       solved:
         help: "Aquest tema té una solució"
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          fields:
+            maximum_trust_level:
+              label: Nivell de confiança

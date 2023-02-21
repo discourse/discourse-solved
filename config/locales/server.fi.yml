@@ -28,6 +28,9 @@ fi:
     no_solutions:
       self: "Viestejäsi ei ole vielä hyväksytty ratkaisuiksi."
       others: "Ei hyväksyttyjä ratkaisuja."
+  badges:
+    solved_1:
+      name: "Ratkaistu!"
   discourse_automation:
     triggerables:
       first_accepted_solution:

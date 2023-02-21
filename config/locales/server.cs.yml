@@ -19,3 +19,6 @@ cs:
     no_solutions:
       self: "Nemáte zatím žádná akceptovaná řešení."
       others: "Žádná akceptovaná řešení."
+  badges:
+    solved_1:
+      name: "Vyřešeno!"

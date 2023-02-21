@@ -20,6 +20,13 @@ nb_NO:
       solution: "Løsning"
       topic_status_filter:
         all: "alle"
+        solved: "løst"
     topic_statuses:
       solved:
         help: "Dette emnet har en løsning"
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          fields:
+            maximum_trust_level:
+              label: Tillitsnivå

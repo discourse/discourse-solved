@@ -15,3 +15,9 @@ bg:
       solution: "Решение"
       topic_status_filter:
         all: "всички подкатегории"
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          fields:
+            maximum_trust_level:
+              label: Ниво на Доверие

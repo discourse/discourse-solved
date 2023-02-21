@@ -42,3 +42,9 @@ ro:
         solved_event:
           name: "Eveniment rezolvat"
           details: "Când un utilizator marchează o postare ca răspuns acceptat sau neacceptat."
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          fields:
+            maximum_trust_level:
+              label: Nivel de încredere

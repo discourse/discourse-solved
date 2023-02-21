@@ -14,3 +14,10 @@ lt:
       title: "Išspresta"
       topic_status_filter:
         all: "visi"
+        solved: "išspresta"
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          fields:
+            maximum_trust_level:
+              label: Patikimumo lygis

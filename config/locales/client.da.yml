@@ -19,3 +19,9 @@ da:
     topic_statuses:
       solved:
         help: "Dette svar har en løsning"
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          fields:
+            maximum_trust_level:
+              label: Tillidsniveau

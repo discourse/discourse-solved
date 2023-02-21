@@ -13,3 +13,6 @@ et:
   solved:
     no_solutions:
       others: "Aktsepteeritud lahendusi pole."
+  badges:
+    solved_1:
+      name: "Lahendatud!"

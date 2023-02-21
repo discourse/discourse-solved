@@ -25,6 +25,13 @@ pt:
       accepted_notification: "<p><span>%{username}</span> %{description}</p>"
       topic_status_filter:
         all: "todos"
+        solved: "resolvido"
     topic_statuses:
       solved:
         help: "Este tópico tem uma solução"
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          fields:
+            maximum_trust_level:
+              label: Nível de Confiança

@@ -18,5 +18,13 @@ hr:
       has_no_accepted_answer: "Ova tema nema rješenje"
       unaccept_answer: "Poništite odabir ako ovaj odgovor više ne rješava problem"
       accepted_answer: "Riješenje"
+      solution: "Riješenje"
       topic_status_filter:
         all: "sve"
+        solved: "riješeno"
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          fields:
+            maximum_trust_level:
+              label: Razina povjerenja

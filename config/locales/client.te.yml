@@ -9,3 +9,9 @@ te:
     solved:
       topic_status_filter:
         all: "అన్నీ"
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          fields:
+            maximum_trust_level:
+              label: నమ్మకం స్థాయి

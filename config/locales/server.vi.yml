@@ -9,3 +9,6 @@ vi:
     accepted_solutions:
       xaxis: "Ngày"
       yaxis: "Tổng số"
+  badges:
+    solved_1:
+      name: "Đã xử lý!"

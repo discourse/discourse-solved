@@ -23,3 +23,9 @@ id:
     topic_statuses:
       solved:
         help: "Topik ini memiliki solusi"
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          fields:
+            maximum_trust_level:
+              label: Level Kepercayaan

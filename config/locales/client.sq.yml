@@ -9,3 +9,9 @@ sq:
     solved:
       topic_status_filter:
         all: "të gjitha"
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          fields:
+            maximum_trust_level:
+              label: Niveli i besimit

@@ -8,3 +8,6 @@ th:
   reports:
     accepted_solutions:
       yaxis: "ทั้งหมด"
+  badges:
+    solved_1:
+      name: "แก้ไขแล้ว!"

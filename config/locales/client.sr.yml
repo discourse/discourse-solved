@@ -6,6 +6,16 @@
 
 sr:
   js:
+    notifications:
+      alt:
+        solved:
+          accepted_notification: "prihvaćen"
     solved:
       topic_status_filter:
         all: "sve"
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          fields:
+            maximum_trust_level:
+              label: Nivo poverenja

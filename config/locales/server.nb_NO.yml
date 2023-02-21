@@ -19,3 +19,6 @@ nb_NO:
     no_solutions:
       self: "Du har ingen godtatte løsninger enda."
       others: "Ingen godtatte løsninger."
+  badges:
+    solved_1:
+      name: "Løst!"

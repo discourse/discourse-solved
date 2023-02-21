@@ -20,3 +20,6 @@ ro:
     no_solutions:
       self: "Încă nu aveți soluții acceptate"
       others: "Nu există soluții acceptate"
+  badges:
+    solved_1:
+      name: "Rezolvat!"

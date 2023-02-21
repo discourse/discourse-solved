@@ -10,6 +10,7 @@ fa_IR:
       alt:
         solved:
           accepted_notification: "تایید شده"
+    solutions: "راه‌حل‌ها"
     solved:
       title: "حل شده"
       allow_accepted_answers: "به صاحب عنوان و مدیران اجازه انتخاب یک پاسخ را به عنوان راه حل بده."
@@ -26,6 +27,8 @@ fa_IR:
         solved: "حل شده"
         unsolved: "حل نشده"
       no_solved_topics_title_others: "%{username} هنوز هیچ موضوعی را حل نکرده است"
+      notification:
+        title: "نوشته شما به عنوان راه حل مشخص شد"
     topic_statuses:
       solved:
         help: "این موضوع راه حلی دارد"
@@ -33,3 +36,9 @@ fa_IR:
       advanced:
         statuses:
           solved: "حل شده‌اند"
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          fields:
+            maximum_trust_level:
+              label: سطح‌اعتماد

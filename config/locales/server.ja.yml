@@ -28,6 +28,9 @@ ja:
     no_solutions:
       self: "受け入れられた解決策はありません。"
       others: "受け入れられた解決策はありません。"
+  badges:
+    solved_1:
+      name: "解決済み!"
   discourse_automation:
     triggerables:
       first_accepted_solution:

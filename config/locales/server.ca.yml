@@ -20,3 +20,6 @@ ca:
     no_solutions:
       self: "Encara no teniu solucions acceptades."
       others: "No hi ha solucions acceptades."
+  badges:
+    solved_1:
+      name: "Solucionat!"

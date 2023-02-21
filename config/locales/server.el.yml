@@ -20,3 +20,6 @@ el:
     no_solutions:
       self: "Δεν έχετε αποδεχτεί ακόμη λύσεις."
       others: "Καμία αποδεκτή λύση."
+  badges:
+    solved_1:
+      name: "Λύθηκε!"

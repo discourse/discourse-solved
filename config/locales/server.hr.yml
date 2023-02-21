@@ -9,3 +9,6 @@ hr:
     accepted_solutions:
       xaxis: "Dan"
       yaxis: "Ukupno"
+  badges:
+    solved_1:
+      name: "Riješeno!"

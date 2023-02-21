@@ -29,3 +29,9 @@ ur:
     topic_statuses:
       solved:
         help: "اِس ٹاپک کا حل ہے"
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          fields:
+            maximum_trust_level:
+              label: ٹرسٹ لَیول
