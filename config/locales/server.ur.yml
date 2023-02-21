@@ -20,3 +20,6 @@ ur:
     no_solutions:
       self: "ابھی تک آپ کے کوئیقبول شدہ حل نہیں ہیں۔"
       others: "کوئی قبول شدہ حل نہیں"
+  badges:
+    solved_1:
+      name: "حل شدہ!"

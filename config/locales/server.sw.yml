@@ -19,3 +19,6 @@ sw:
     no_solutions:
       self: "Bado hauna majibu yaliyokubaliwa."
       others: "Hakuna majibu yaliyokubaliwa."
+  badges:
+    solved_1:
+      name: "Imetatuliwa!"

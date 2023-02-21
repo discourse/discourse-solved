@@ -19,3 +19,6 @@ pt:
     no_solutions:
       self: "Ainda não tem soluções aceites."
       others: "Sem soluções aceites."
+  badges:
+    solved_1:
+      name: "Resolvido!"

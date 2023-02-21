@@ -9,3 +9,6 @@ lt:
     accepted_solutions:
       xaxis: "Diena"
       yaxis: "Viso"
+  badges:
+    solved_1:
+      name: "Išspresta!"

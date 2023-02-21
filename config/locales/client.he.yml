@@ -37,6 +37,8 @@ he:
       no_answer:
         title: התשובה שלך נענתה?
         description: "ניתן להדגיש את התשובה ולסייע לאחרים על ידי לחיצה על כפתור הפתרון שלהלן מתחת לתגובה הנכונה."
+      notification:
+        title: "הפוסט שלך סומן כפתרון"
     topic_statuses:
       solved:
         help: "נושא זה נפתר"

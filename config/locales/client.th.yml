@@ -23,3 +23,10 @@ th:
         other: "การแก้ปัญหา"
       topic_status_filter:
         all: "ทั้งหมด"
+        solved: "แก้ไขแล้ว"
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          fields:
+            maximum_trust_level:
+              label: ระดับความไว้ใจ

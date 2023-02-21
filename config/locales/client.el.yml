@@ -6,6 +6,10 @@
 
 el:
   js:
+    notifications:
+      alt:
+        solved:
+          accepted_notification: "αποδεκτό"
     solved:
       title: "Λύθηκε"
       allow_accepted_answers: "Επιτρέψτε στον κάτοχο και το προσωπικό να επισημάνει μια απάντηση ως λύση"
@@ -36,3 +40,9 @@ el:
         solved_event:
           name: "Επιλύθηκε γεγονός"
           details: "Όταν ένας χρήστης επισημαίνει μια ανάρτηση ως αποδεκτή ή μη αποδεκτή απάντηση."
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          fields:
+            maximum_trust_level:
+              label: Επίπεδο Εμπιστοσύνης

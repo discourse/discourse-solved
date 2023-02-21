@@ -30,3 +30,9 @@ bs_BA:
     topic_statuses:
       solved:
         help: "Ova tema ima riješenje"
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          fields:
+            maximum_trust_level:
+              label: Trust Level

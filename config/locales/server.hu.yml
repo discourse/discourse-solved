@@ -28,6 +28,9 @@ hu:
     no_solutions:
       self: "Még nincs elfogadott megoldásod."
       others: "Nincs elfogadott megoldás."
+  badges:
+    solved_1:
+      name: "Megoldott!"
   discourse_automation:
     triggerables:
       first_accepted_solution:

@@ -28,6 +28,9 @@ ru:
     no_solutions:
       self: "У вас пока нет решённых вопросов."
       others: "Нет решённых вопросов."
+  badges:
+    solved_1:
+      name: "Решённые!"
   discourse_automation:
     triggerables:
       first_accepted_solution:

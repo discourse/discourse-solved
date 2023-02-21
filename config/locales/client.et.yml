@@ -20,6 +20,13 @@ et:
         other: "lahendused"
       topic_status_filter:
         all: "kõik"
+        solved: "lahendatud"
     topic_statuses:
       solved:
         help: "ellel teemal on lahendus"
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          fields:
+            maximum_trust_level:
+              label: Usaldustase

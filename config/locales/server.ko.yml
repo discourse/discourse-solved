@@ -20,3 +20,6 @@ ko:
     no_solutions:
       self: "아직 수락 된 솔루션이 없습니다."
       others: "허용되는 솔루션이 없습니다."
+  badges:
+    solved_1:
+      name: "해결됨!"

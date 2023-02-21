@@ -22,3 +22,6 @@ sl:
     no_solutions:
       self: "Zaenkrat nimate sprejetih rešitev."
       others: "Ni sprejetih rešitev."
+  badges:
+    solved_1:
+      name: "Rešeno!"

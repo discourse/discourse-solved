@@ -14,3 +14,10 @@ vi:
       title: "Đã xử lý"
       topic_status_filter:
         all: "Tất cả"
+        solved: "đã xử lý"
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          fields:
+            maximum_trust_level:
+              label: Bậc tin tưởng

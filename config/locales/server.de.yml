@@ -28,6 +28,9 @@ de:
     no_solutions:
       self: "Du hast noch keine akzeptierte Lösung."
       others: "Keine akzeptierten Lösungen."
+  badges:
+    solved_1:
+      name: "Gelöst!"
   discourse_automation:
     triggerables:
       first_accepted_solution:

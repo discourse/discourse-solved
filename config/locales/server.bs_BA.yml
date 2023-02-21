@@ -9,3 +9,6 @@ bs_BA:
     accepted_solutions:
       xaxis: "Day"
       yaxis: "Suma"
+  badges:
+    solved_1:
+      name: "Riješeno!"

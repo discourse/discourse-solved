@@ -13,3 +13,6 @@ zh_TW:
       title: "接受的解決方案"
       xaxis: "天"
       yaxis: "總計"
+  badges:
+    solved_1:
+      name: "已解決!"

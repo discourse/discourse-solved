@@ -20,6 +20,13 @@ cs:
       solution: "Řešení"
       topic_status_filter:
         all: "vše"
+        solved: "vyřešeno"
     topic_statuses:
       solved:
         help: "Toto téma má řešení"
+    discourse_automation:
+      triggerables:
+        first_accepted_solution:
+          fields:
+            maximum_trust_level:
+              label: Věrohodnost
