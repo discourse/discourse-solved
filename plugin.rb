@@ -249,6 +249,11 @@ SQL
 
   Discourse::Application.routes.append { mount ::DiscourseSolved::Engine, at: "solution" }
 
+  add_api_key_scope(
+    :solved,
+    { answer: { actions: %w[discourse_solved/answer#accept discourse_solved/answer#unaccept] } },
+  )
+
   topic_view_post_custom_fields_allowlister { ["is_accepted_answer"] }
 
   def get_schema_text(post)
