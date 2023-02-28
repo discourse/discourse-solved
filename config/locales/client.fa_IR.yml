@@ -36,6 +36,15 @@ fa_IR:
       advanced:
         statuses:
           solved: "حل شده‌اند"
+    admin:
+      web_hooks:
+        solved_event:
+          name: "رویداد حل شده"
+      api:
+        scopes:
+          descriptions:
+            solved:
+              answer: تایید/رد کردن یک راه‌حل
     discourse_automation:
       triggerables:
         first_accepted_solution:
