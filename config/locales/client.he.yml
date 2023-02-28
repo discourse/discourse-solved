@@ -52,6 +52,11 @@ he:
         solved_event:
           name: "אירוע שנפתר"
           details: "כאשר משתמש מסמן פוסט בתור התשובה המקובלת או הבלתי מקובלת."
+      api:
+        scopes:
+          descriptions:
+            solved:
+              answer: קבלת/דחיית פתרון.
     discourse_automation:
       triggerables:
         first_accepted_solution:
