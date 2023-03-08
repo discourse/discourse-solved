@@ -86,12 +86,9 @@ function initializeWithApi(api) {
   }
 
   api.addPostMenuButton("solved", (attrs) => {
-    const canAccept = attrs.can_accept_answer;
-    const canUnaccept = attrs.can_unaccept_answer;
-    const accepted = attrs.accepted_answer;
-    const isOp = currentUser && currentUser.id === attrs.topicCreatedById;
+    const isOp = currentUser?.id === attrs.topicCreatedById;
 
-    if (canAccept) {
+    if (attrs.can_accept_answer) {
       return {
         action: "acceptAnswer",
         icon: "far-check-square",
@@ -100,36 +97,35 @@ function initializeWithApi(api) {
         label: isOp ? "solved.solution" : null,
         position: isOp ? "first" : "second",
       };
-    } else if (canUnaccept && accepted) {
-      const title = canUnaccept
-        ? "solved.unaccept_answer"
-        : "solved.accepted_answer";
-      return {
-        action: "unacceptAnswer",
-        icon: "check-square",
-        title,
-        className: "accepted fade-out",
-        position: isOp ? "first" : "second",
-        label: isOp ? "solved.solution" : null,
-      };
-    } else if (!canAccept && accepted) {
-      return {
-        className: "hidden",
-        disabled: "true",
-        position: "first",
-        beforeButton(h) {
-          return h(
-            "span.accepted-text",
-            {
-              title: I18n.t("solved.accepted_description"),
-            },
-            [
-              h("span", iconNode("check")),
-              h("span.accepted-label", I18n.t("solved.solution")),
-            ]
-          );
-        },
-      };
+    } else if (attrs.accepted_answer) {
+      if (attrs.can_unaccept_answer) {
+        return {
+          action: "unacceptAnswer",
+          icon: "check-square",
+          title: "solved.unaccept_answer",
+          className: "accepted fade-out",
+          position: isOp ? "first" : "second",
+          label: isOp ? "solved.solution" : null,
+        };
+      } else {
+        return {
+          className: "hidden",
+          disabled: "true",
+          position: "first",
+          beforeButton(h) {
+            return h(
+              "span.accepted-text",
+              {
+                title: I18n.t("solved.accepted_description"),
+              },
+              [
+                h("span", iconNode("check")),
+                h("span.accepted-label", I18n.t("solved.solution")),
+              ]
+            );
+          },
+        };
+      }
     }
   });
 
