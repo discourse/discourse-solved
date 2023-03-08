@@ -90,8 +90,6 @@ function initializeWithApi(api) {
     const canUnaccept = attrs.can_unaccept_answer;
     const accepted = attrs.accepted_answer;
     const isOp = currentUser && currentUser.id === attrs.topicCreatedById;
-    const position =
-      !accepted && canAccept && !isOp ? "second-last-hidden" : "first";
 
     if (canAccept) {
       return {
@@ -99,8 +97,8 @@ function initializeWithApi(api) {
         icon: "far-check-square",
         className: "unaccepted",
         title: "solved.accept_answer",
-        label: "solved.solution",
-        position,
+        label: isOp ? "solved.solution" : null,
+        position: isOp ? "first" : "second",
       };
     } else if (canUnaccept && accepted) {
       const title = canUnaccept
@@ -111,14 +109,14 @@ function initializeWithApi(api) {
         icon: "check-square",
         title,
         className: "accepted fade-out",
-        position,
-        label: "solved.solution",
+        position: isOp ? "first" : "second",
+        label: isOp ? "solved.solution" : null,
       };
     } else if (!canAccept && accepted) {
       return {
         className: "hidden",
         disabled: "true",
-        position,
+        position: "first",
         beforeButton(h) {
           return h(
             "span.accepted-text",
