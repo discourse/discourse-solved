@@ -504,7 +504,7 @@ SQL
 
   require_dependency "post_serializer"
   class ::PostSerializer
-    attributes :can_accept_answer, :can_unaccept_answer, :accepted_answer
+    attributes :can_accept_answer, :can_unaccept_answer, :accepted_answer, :topic_accepted_answer
 
     def can_accept_answer
       if topic = (topic_view && topic_view.topic) || object.topic
@@ -523,6 +523,12 @@ SQL
 
     def accepted_answer
       post_custom_fields["is_accepted_answer"] == "true"
+    end
+
+    def topic_accepted_answer
+      if topic = (topic_view && topic_view.topic) || object.topic
+        topic.custom_fields["accepted_answer_post_id"].present?
+      end
     end
   end
 
