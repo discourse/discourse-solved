@@ -19,6 +19,7 @@ function clearAccepted(topic) {
         accepted_answer: false,
         can_accept_answer: true,
         can_unaccept_answer: false,
+        topic_accepted_answer: false,
       });
     }
   });
@@ -78,7 +79,8 @@ function initializeWithApi(api) {
   api.includePostAttributes(
     "can_accept_answer",
     "can_unaccept_answer",
-    "accepted_answer"
+    "accepted_answer",
+    "topic_accepted_answer"
   );
 
   if (api.addDiscoveryQueryParam) {
@@ -86,16 +88,16 @@ function initializeWithApi(api) {
   }
 
   api.addPostMenuButton("solved", (attrs) => {
-    const isOp = currentUser?.id === attrs.topicCreatedById;
-
     if (attrs.can_accept_answer) {
+      const isOp = currentUser?.id === attrs.topicCreatedById;
+
       return {
         action: "acceptAnswer",
         icon: "far-check-square",
         className: "unaccepted",
         title: "solved.accept_answer",
         label: isOp ? "solved.solution" : null,
-        position: isOp ? "first" : "second",
+        position: attrs.topic_accepted_answer ? "second-last-hidden" : "first",
       };
     } else if (attrs.accepted_answer) {
       if (attrs.can_unaccept_answer) {
@@ -104,8 +106,8 @@ function initializeWithApi(api) {
           icon: "check-square",
           title: "solved.unaccept_answer",
           className: "accepted fade-out",
-          position: isOp ? "first" : "second",
-          label: isOp ? "solved.solution" : null,
+          position: "first",
+          label: "solved.solution",
         };
       } else {
         return {
@@ -168,23 +170,22 @@ function initializeWithApi(api) {
 
   api.attachWidgetAction("post", "acceptAnswer", function () {
     const post = this.model;
-    const current = post.get("topic.postStream.posts").filter((p) => {
-      return p.post_number === 1 || p.accepted_answer;
-    });
     acceptPost(post);
 
-    current.forEach((p) =>
-      this.appEvents.trigger("post-stream:refresh", { id: p.id })
-    );
+    post.get("topic.postStream.posts").forEach((p) => {
+      p.set("topic_accepted_answer", true);
+      this.appEvents.trigger("post-stream:refresh", { id: p.id });
+    });
   });
 
   api.attachWidgetAction("post", "unacceptAnswer", function () {
     const post = this.model;
-    const op = post
-      .get("topic.postStream.posts")
-      .find((p) => p.post_number === 1);
     unacceptPost(post);
-    this.appEvents.trigger("post-stream:refresh", { id: op.id });
+
+    post.get("topic.postStream.posts").forEach((p) => {
+      p.set("topic_accepted_answer", false);
+      this.appEvents.trigger("post-stream:refresh", { id: p.id });
+    });
   });
 
   if (api.registerConnectorClass) {
