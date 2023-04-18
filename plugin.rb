@@ -133,7 +133,15 @@ SQL
           )
         end
 
-        auto_close_hours = SiteSetting.solved_topics_auto_close_hours
+        if topic&.category.present?
+          auto_close_hours =
+            topic&.category&.custom_fields&.[]("solved_topics_auto_close_hours").to_i
+          auto_close_hours = 175_200 if auto_close_hours > 175_200 # 20 years
+        end
+
+        if auto_close_hours.nil? || auto_close_hours == 0
+          auto_close_hours = SiteSetting.solved_topics_auto_close_hours
+        end
 
         if (auto_close_hours > 0) && !topic.closed
           topic_timer =
