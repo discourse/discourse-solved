@@ -61,6 +61,32 @@ RSpec.describe "Managing Posts solved status" do
       expect(topic.public_topic_timer.based_on_last_post).to eq(true)
     end
 
+    it "gives priority to category's solved_topics_auto_close_hours setting" do
+      freeze_time
+      custom_auto_close_category = Fabricate(:category)
+      topic_2 = Fabricate(:topic, category: custom_auto_close_category)
+      post_2 = Fabricate(:post, topic: topic_2)
+      custom_auto_close_category.custom_fields["solved_topics_auto_close_hours"] = 4
+      custom_auto_close_category.save_custom_fields
+
+      post "/solution/accept.json", params: { id: post_2.id }
+
+      expect(response.status).to eq(200)
+      expect(post_2.reload.custom_fields["is_accepted_answer"]).to eq("true")
+
+      topic_2.reload
+
+      expect(topic_2.public_topic_timer.status_type).to eq(TopicTimer.types[:silent_close])
+
+      expect(
+        topic_2.custom_fields[DiscourseSolved::AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD].to_i,
+      ).to eq(topic_2.public_topic_timer.id)
+
+      expect(topic_2.public_topic_timer.execute_at).to eq_time(Time.zone.now + 4.hours)
+
+      expect(topic_2.public_topic_timer.based_on_last_post).to eq(true)
+    end
+
     it "sends notifications to correct users" do
       SiteSetting.notify_on_staff_accept_solved = true
       user = Fabricate(:user)
