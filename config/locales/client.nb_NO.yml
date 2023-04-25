@@ -13,6 +13,7 @@ nb_NO:
     solved:
       title: "Løst"
       allow_accepted_answers: "Tillat enmeeier og personale å markere et svar som løsning"
+      solved_topics_auto_close_hours: "Lukk emnet automatisk (n) timer etter siste svar når det har blitt merket som løst."
       accept_answer: "Velg hvis dette svaret løser problemet"
       has_no_accepted_answer: "Dette emnet har ingen løsning"
       unaccept_answer: "Fravelg dette hvis svaret ikke lenger løser problemet"

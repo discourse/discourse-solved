@@ -14,6 +14,7 @@ es:
     solved:
       title: "Solucionado"
       allow_accepted_answers: "Permitir al propietario del tema y al staff marcar una respuesta como la solución"
+      solved_topics_auto_close_hours: "Cierre automático del tema (n) horas después de la última respuesta una vez que el tema se haya marcado como solucionado."
       accept_answer: "Seleccionar si esta respuesta soluciona el problema"
       accepted_description: "Esta es la solución aceptada para este tema"
       has_no_accepted_answer: "Este tema no tiene una solución"

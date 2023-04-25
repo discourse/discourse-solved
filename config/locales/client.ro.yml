@@ -13,6 +13,7 @@ ro:
     solved:
       title: "Rezolvat"
       allow_accepted_answers: "Permite inițiatorului subiectului și personalului să marcheze un răspuns ca soluție"
+      solved_topics_auto_close_hours: "Închide subiectul automat la (n) ore după ultimul răspuns după ce subiectul a fost marcat ca rezolvat."
       accept_answer: "Selectează acest mesaj dacă rezolvă problema"
       accepted_description: "Aceasta este soluţia acceptată pentru acest subiect"
       has_no_accepted_answer: "Acest subiect nu are nicio soluție"

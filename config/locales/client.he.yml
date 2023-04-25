@@ -14,6 +14,7 @@ he:
     solved:
       title: "נפתר"
       allow_accepted_answers: "לאפשר למשתמשים לאשר תשובות"
+      solved_topics_auto_close_hours: "לסגור נושא אוטומטית (n) שעות לאחר התגובה האחרונה כאשר הנושא סומן כפתור."
       accept_answer: "יש לבחור בזה אם התגובה הזאת פותרת את הבעיה"
       accepted_description: "זה הפתרון המקובל לנושא זה"
       has_no_accepted_answer: "לנושא הזה אין פתרון"
