@@ -14,6 +14,7 @@ fi:
     solved:
       title: "Ratkaistu"
       allow_accepted_answers: "Salli ketjun omistajan ja henkilökunnan merkitä viesti ratkaisuksi"
+      solved_topics_auto_close_hours: "Sulje ketju automaattisesti (n) tunnin kuluttua viimeisestä vastauksesta, kun aihe on ratkaistu."
       accept_answer: "Valitse, jos tämä vastaus ratkaisee ongelman"
       accepted_description: "Tämä on ketjun hyväksytty ratkaisu"
       has_no_accepted_answer: "Tässä ketjussa ei ole ratkaisua"

@@ -14,6 +14,7 @@ sl:
     solved:
       title: "Rešeno"
       allow_accepted_answers: "Lastniku teme in osebju dovolite, da odgovor označijo kot rešitev"
+      solved_topics_auto_close_hours: "Samodejno zapiranje teme (n) ur po zadnjem odgovoru, ko je tema označena kot rešena."
       accept_answer: "Izberite, če ta odgovor reši problem"
       accepted_description: "To je sprejeta rešitev te teme"
       has_no_accepted_answer: "Ta tema nima rešitve"

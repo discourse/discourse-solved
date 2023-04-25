@@ -14,6 +14,7 @@ fr:
     solved:
       title: "Résolus"
       allow_accepted_answers: "Autoriser l'auteur du sujet et les responsables à marquer une réponse comme solution"
+      solved_topics_auto_close_hours: "Fermer automatiquement le sujet (n) heures après la dernière réponse, une fois que le sujet a été marqué comme résolu."
       accept_answer: "Sélectionnez si cette réponse résout le problème"
       accepted_description: "C'est la solution acceptée à ce sujet"
       has_no_accepted_answer: "Ce sujet n'a pas de solution"

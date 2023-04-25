@@ -14,6 +14,7 @@ pt_BR:
     solved:
       title: "Resolvido"
       allow_accepted_answers: "Permitir que o(a) proprietário(a) do tópico e a equipe marquem uma resposta como a solução"
+      solved_topics_auto_close_hours: "Fechar tópico automaticamente (n) horas após a última resposta, uma vez que o tópico foi marcado como resolvido."
       accept_answer: "Selecione se esta resposta resolve o problema"
       accepted_description: "Esta é a solução aceita para este tópico"
       has_no_accepted_answer: "Este tópico não tem solução"

@@ -14,6 +14,7 @@ zh_CN:
     solved:
       title: "已解决"
       allow_accepted_answers: "允许话题所有者和管理人员将回复标记为解决方案"
+      solved_topics_auto_close_hours: "若主题标记为已解决，在最后回复 (n) 小时后自动关闭主题."
       accept_answer: "如果此回复解决了问题，请选择"
       accepted_description: "这是此话题被接受的解决方案"
       has_no_accepted_answer: "此话题尚无解决方案"

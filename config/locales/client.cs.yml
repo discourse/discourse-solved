@@ -13,6 +13,7 @@ cs:
     solved:
       title: "Vyřešeno"
       allow_accepted_answers: "Povolit vlastníkovi tématu a správcům označit odpověď jako řešení"
+      solved_topics_auto_close_hours: "Automaticky uzavřít téma po (n) hodinách od poslední odpovědi, jakmile téma bylo označeno za vyřešené."
       accept_answer: "Tato odpověď je řešením problému"
       has_no_accepted_answer: "Toto téma nemá žádné řešení"
       unaccept_answer: "Tato odpověď již neřeší tento problém"
