@@ -4,11 +4,11 @@
   <section class="field">
     <div class="enable-accepted-answer">
       <label class="checkbox-label">
-        {{input
-          type="checkbox"
-          checked=(readonly category.enable_accepted_answers)
-          change=(action "onChangeSetting" value="target.checked")
-        }}
+        <Input
+          @type="checkbox"
+          @checked={{readonly category.enable_accepted_answers}}
+          {{on "change" (action "onChangeSetting" value="target.checked")}}
+        />
         {{i18n "solved.allow_accepted_answers"}}
       </label>
     </div>

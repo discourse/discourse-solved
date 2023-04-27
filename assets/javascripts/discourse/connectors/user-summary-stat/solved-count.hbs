@@ -1,7 +1,7 @@
-{{#link-to "userActivity.solved"}}
-  {{user-stat
-    value=model.solved_count
-    label="solved.solution_summary"
-    icon="check-square"
-  }}
-{{/link-to}}
+<LinkTo @route="userActivity.solved">
+  <UserStat
+    @value={{model.solved_count}}
+    @label="solved.solution_summary"
+    @icon="check-square"
+  />
+</LinkTo>
