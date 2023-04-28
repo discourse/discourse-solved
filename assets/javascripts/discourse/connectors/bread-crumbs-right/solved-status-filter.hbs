@@ -5,6 +5,6 @@
     @value={{status}}
     @valueProperty="value"
     @options={{hash caretDownIcon="caret-right" caretUpIcon="caret-down"}}
-    {{on "change" (action "changeStatus")}}
+    @onChange={{(action "changeStatus")}}
   />
 {{/if}}
