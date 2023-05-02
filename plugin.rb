@@ -382,15 +382,20 @@ SQL
 
   if respond_to?(:register_modifier)
     register_modifier(:search_rank_sort_priorities) do |priorities, search|
-      priorities << [<<~SQL, 1.1] if SiteSetting.prioritize_solved_topics_in_search
-            EXISTS
-              (
-                SELECT 1 FROM topic_custom_fields f
-                WHERE topics.id = f.topic_id AND
-                  f.name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
-              )
-          SQL
-      priorities
+      if SiteSetting.prioritize_solved_topics_in_search 
+        condition = <<~SQL
+          EXISTS
+            (
+              SELECT 1 FROM topic_custom_fields f
+              WHERE topics.id = f.topic_id 
+              AND f.name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
+            )
+        SQL
+
+        priorities.push([condition, 1.1])
+      else
+        priorities
+      end
     end
   end
 
