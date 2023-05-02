@@ -15,8 +15,6 @@ RSpec.describe "Managing Posts solved status" do
     after { SearchIndexer.disable }
 
     it "can prioritize solved topics in search" do
-      SiteSetting.prioritize_solved_topics_in_search = true
-
       normal_post =
         Fabricate(
           :post,
@@ -32,6 +30,11 @@ RSpec.describe "Managing Posts solved status" do
         )
 
       DiscourseSolved.accept_answer!(solved_post, Discourse.system_user)
+
+      result = Search.execute("carrot")
+      expect(result.posts.pluck(:id)).to eq([normal_post.id, solved_post.id])
+
+      SiteSetting.prioritize_solved_topics_in_search = true
 
       result = Search.execute("carrot")
       expect(result.posts.pluck(:id)).to eq([solved_post.id, normal_post.id])
