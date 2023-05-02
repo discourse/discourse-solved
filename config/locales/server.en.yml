@@ -14,6 +14,7 @@ en:
     accept_solutions_topic_author: "Allow the topic author to accept a solution."
     solved_add_schema_markup: "Add QAPage schema markup to HTML."
     enable_solved_tags: "Tags that will allow users to select solutions."
+    prioritize_solved_topics_in_search: "Prioritize solved topics in search results."
 
   reports:
     accepted_solutions:

@@ -15,7 +15,7 @@ if respond_to?(:register_svg_icon)
   register_svg_icon "far fa-square"
 end
 
-PLUGIN_NAME = "discourse_solved".freeze
+PLUGIN_NAME = "discourse_solved"
 
 register_asset "stylesheets/solutions.scss"
 register_asset "stylesheets/mobile/solutions.scss", :mobile
@@ -74,13 +74,14 @@ SQL
       isolate_namespace DiscourseSolved
     end
 
-    AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD = "solved_auto_close_topic_timer_id".freeze
+    AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD = "solved_auto_close_topic_timer_id"
+    ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD = "accepted_answer_post_id"
 
     def self.accept_answer!(post, acting_user, topic: nil)
       topic ||= post.topic
 
       DistributedMutex.synchronize("discourse_solved_toggle_answer_#{topic.id}") do
-        accepted_id = topic.custom_fields["accepted_answer_post_id"].to_i
+        accepted_id = topic.custom_fields[ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD].to_i
 
         if accepted_id > 0
           if p2 = Post.find_by(id: accepted_id)
@@ -94,7 +95,7 @@ SQL
         end
 
         post.custom_fields["is_accepted_answer"] = "true"
-        topic.custom_fields["accepted_answer_post_id"] = post.id
+        topic.custom_fields[ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD] = post.id
 
         if defined?(UserAction::SOLVED)
           UserAction.log_action!(
@@ -172,7 +173,7 @@ SQL
 
       DistributedMutex.synchronize("discourse_solved_toggle_answer_#{topic.id}") do
         post.custom_fields.delete("is_accepted_answer")
-        topic.custom_fields.delete("accepted_answer_post_id")
+        topic.custom_fields.delete(ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD)
 
         if timer_id = topic.custom_fields[AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD]
           topic_timer = TopicTimer.find_by(id: timer_id)
@@ -299,7 +300,10 @@ SQL
       },
     }
 
-    if accepted_answer = Post.find_by(id: topic.custom_fields["accepted_answer_post_id"])
+    if accepted_answer =
+         Post.find_by(
+           id: topic.custom_fields[::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD],
+         )
       question_json["answerCount"] = 1
       question_json[:acceptedAnswer] = {
         "@type" => "Answer",
@@ -343,7 +347,8 @@ SQL
     Report.add_report("accepted_solutions") do |report|
       report.data = []
 
-      accepted_solutions = TopicCustomField.where(name: "accepted_answer_post_id")
+      accepted_solutions =
+        TopicCustomField.where(name: ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD)
 
       category_id, include_subcategories = report.add_category_filter
       if category_id
@@ -372,6 +377,20 @@ SQL
           .where("topic_custom_fields.created_at >= ?", report.start_date - 30.days)
           .where("topic_custom_fields.created_at <= ?", report.start_date)
           .count
+    end
+  end
+
+  if respond_to?(:register_modifier)
+    register_modifier(:search_rank_sort_priorities) do |priorities, search|
+      priorities << [<<~SQL, 1.1] if SiteSetting.prioritize_solved_topics_in_search
+            EXISTS
+              (
+                SELECT 1 FROM topic_custom_fields f
+                WHERE topics.id = f.topic_id AND
+                  f.name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
+              )
+          SQL
+      priorities
     end
   end
 
@@ -444,7 +463,7 @@ SQL
     end
 
     def accepted_answer_post_id
-      id = object.topic.custom_fields["accepted_answer_post_id"]
+      id = object.topic.custom_fields[::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD]
       # a bit messy but race conditions can give us an array here, avoid
       begin
         id && id.to_i
@@ -533,7 +552,7 @@ SQL
 
     def topic_accepted_answer
       if topic = (topic_view && topic_view.topic) || object.topic
-        topic.custom_fields["accepted_answer_post_id"].present?
+        topic.custom_fields[::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD].present?
       end
     end
   end
@@ -547,7 +566,7 @@ SQL
         "topics.id IN (
         SELECT tc.topic_id
         FROM topic_custom_fields tc
-        WHERE tc.name = 'accepted_answer_post_id' AND
+        WHERE tc.name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}' AND
                         tc.value IS NOT NULL
         )",
       )
@@ -558,7 +577,7 @@ SQL
         "topics.id NOT IN (
         SELECT tc.topic_id
         FROM topic_custom_fields tc
-        WHERE tc.name = 'accepted_answer_post_id' AND
+        WHERE tc.name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}' AND
                         tc.value IS NOT NULL
         )",
       )
@@ -575,7 +594,7 @@ SQL
             "topics.id IN (
           SELECT tc.topic_id
           FROM topic_custom_fields tc
-          WHERE tc.name = 'accepted_answer_post_id' AND
+          WHERE tc.name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}' AND
                           tc.value IS NOT NULL
           )",
           )
@@ -585,7 +604,7 @@ SQL
             "topics.id NOT IN (
           SELECT tc.topic_id
           FROM topic_custom_fields tc
-          WHERE tc.name = 'accepted_answer_post_id' AND
+          WHERE tc.name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}' AND
                           tc.value IS NOT NULL
           )",
           )
@@ -620,13 +639,13 @@ SQL
   end
 
   if TopicList.respond_to? :preloaded_custom_fields
-    TopicList.preloaded_custom_fields << "accepted_answer_post_id"
+    TopicList.preloaded_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
   end
   if Site.respond_to? :preloaded_category_custom_fields
     Site.preloaded_category_custom_fields << "enable_accepted_answers"
   end
   if Search.respond_to? :preloaded_topic_custom_fields
-    Search.preloaded_topic_custom_fields << "accepted_answer_post_id"
+    Search.preloaded_topic_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
   end
 
   if CategoryList.respond_to?(:preloaded_topic_custom_fields)
@@ -637,7 +656,7 @@ SQL
         NOT EXISTS(
           SELECT 1 FROM topic_custom_fields
           WHERE topic_id = topics.id
-          AND name = 'accepted_answer_post_id'
+          AND name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
           AND value IS NOT NULL
         )
       SQL
@@ -722,7 +741,7 @@ SQL
   add_to_class(:composer_messages_finder, :check_topic_is_solved) do
     return if !SiteSetting.solved_enabled || SiteSetting.disable_solved_education_message
     return if !replying? || @topic.blank? || @topic.private_message?
-    return if @topic.custom_fields["accepted_answer_post_id"].blank?
+    return if @topic.custom_fields[::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD].blank?
 
     {
       id: "solved_topic",
@@ -749,7 +768,7 @@ SQL
       answer_post_ids =
         TopicCustomField
           .select("value::INTEGER")
-          .where(name: "accepted_answer_post_id")
+          .where(name: ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD)
           .where(topic_id: topics.map(&:id))
       answer_user_ids = Post.where(id: answer_post_ids).pluck(:topic_id, :user_id).to_h
       topics.each { |topic| topic.accepted_answer_user_id = answer_user_ids[topic.id] }

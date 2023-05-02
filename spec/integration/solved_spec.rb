@@ -9,6 +9,35 @@ RSpec.describe "Managing Posts solved status" do
 
   before { SiteSetting.allow_solved_on_all_topics = true }
 
+  describe "search" do
+    before { SearchIndexer.enable }
+
+    after { SearchIndexer.disable }
+
+    it "can prioritize solved topics in search" do
+      SiteSetting.prioritize_solved_topics_in_search = true
+
+      normal_post =
+        Fabricate(
+          :post,
+          raw: "My reply carrot",
+          topic: Fabricate(:topic, title: "A topic that is not solved but open"),
+        )
+
+      solved_post =
+        Fabricate(
+          :post,
+          raw: "My solution carrot",
+          topic: Fabricate(:topic, title: "A topic that will be closed", closed: true),
+        )
+
+      DiscourseSolved.accept_answer!(solved_post, Discourse.system_user)
+
+      result = Search.execute("carrot")
+      expect(result.posts.pluck(:id)).to eq([solved_post.id, normal_post.id])
+    end
+  end
+
   describe "auto bump" do
     it "does not automatically bump solved topics" do
       category = Fabricate(:category_with_definition)
