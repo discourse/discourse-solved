@@ -34,6 +34,7 @@ plugins:
       - "never"
       - "always"
       - "answered only"
+  prioritize_solved_topics_in_search: false
   enable_solved_tags:
     type: tag_list
     default: ""
