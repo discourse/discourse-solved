@@ -19,6 +19,7 @@ he:
     accept_solutions_topic_author: "לאפשר ליוצר הנושא לאשר פתרון."
     solved_add_schema_markup: "להוסיף סימון סכמת QAPage ל־HTML."
     enable_solved_tags: "תגיות שיאפשרו למשתמשים לבחור פתרונות."
+    prioritize_solved_topics_in_search: "תעדוף נושאים שנפתרו בתוצאות החיפוש."
   reports:
     accepted_solutions:
       title: "פתרונות מקובלים"
