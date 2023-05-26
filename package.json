@@ -2,6 +2,6 @@
   "author": "Discourse",
   "license": "MIT",
   "devDependencies": {
-    "eslint-config-discourse": "^3.3.0"
+    "eslint-config-discourse": "^3.4.0"
   }
 }
