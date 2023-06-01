@@ -57,6 +57,7 @@ function acceptPost(post) {
 
   topic.set("accepted_answer", {
     username: post.username,
+    name: post.name,
     post_number: post.post_number,
     excerpt: post.cooked,
   });
@@ -214,16 +215,22 @@ export default {
       // keeping this here cause there is complex localization
       acceptedAnswerHtml: computed("accepted_answer", "id", function () {
         const username = this.get("accepted_answer.username");
+        const name = this.get("accepted_answer.name");
         const postNumber = this.get("accepted_answer.post_number");
 
         if (!username || !postNumber) {
           return "";
         }
 
+        const displayedUser =
+          this.siteSettings.display_name_on_posts && name
+            ? name
+            : formatUsername(username);
+
         return I18n.t("solved.accepted_html", {
           icon: iconHTML("check-square", { class: "accepted" }),
           username_lower: username.toLowerCase(),
-          username: formatUsername(username),
+          username: displayedUser,
           post_path: `${this.url}/${postNumber}`,
           post_number: postNumber,
           user_path: User.create({ username }).path,

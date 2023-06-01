@@ -444,7 +444,7 @@ SQL
 
     def accepted_answer
       if info = accepted_answer_post_info
-        { post_number: info[0], username: info[1], excerpt: info[2] }
+        { post_number: info[0], username: info[1], excerpt: info[2], name: info[3] }
       end
     end
 
@@ -454,7 +454,7 @@ SQL
         Post
           .where(id: accepted_answer_post_id, topic_id: object.topic.id)
           .joins(:user)
-          .pluck("post_number", "username", "cooked")
+          .pluck("post_number", "username", "cooked", "name")
           .first
 
       if postInfo
@@ -463,6 +463,8 @@ SQL
         else
           nil
         end
+
+        postInfo[3] = SiteSetting.display_name_on_posts ? postInfo[3] : nil
         postInfo
       end
     end
