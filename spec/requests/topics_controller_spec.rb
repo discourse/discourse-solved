@@ -64,6 +64,32 @@ RSpec.describe TopicsController do
 
       expect(response.body).to include('"text":"This is a quoted text."')
     end
+
+    it "should include user name in output with the corresponding site setting" do
+      SiteSetting.display_name_on_posts = true
+      p2.custom_fields["is_accepted_answer"] = true
+      p2.save_custom_fields
+      topic.custom_fields["accepted_answer_post_id"] = p2.id
+      topic.save_custom_fields
+
+      get "/t/#{topic.slug}/#{topic.id}.json"
+
+      expect(response.parsed_body["accepted_answer"]["name"]).to eq(p2.user.name)
+      expect(response.parsed_body["accepted_answer"]["username"]).to eq(p2.user.username)
+    end
+
+    it "should not include user name when site setting is disabled" do
+      SiteSetting.display_name_on_posts = false
+      p2.custom_fields["is_accepted_answer"] = true
+      p2.save_custom_fields
+      topic.custom_fields["accepted_answer_post_id"] = p2.id
+      topic.save_custom_fields
+
+      get "/t/#{topic.slug}/#{topic.id}.json"
+
+      expect(response.parsed_body["accepted_answer"]["name"]).to eq(nil)
+      expect(response.parsed_body["accepted_answer"]["username"]).to eq(p2.user.username)
+    end
   end
 
   context "with solved enabled for topics with specific tags" do
