@@ -77,6 +77,7 @@ RSpec.describe TopicsController do
       expect(response.parsed_body["accepted_answer"]["name"]).to eq(p2.user.name)
       expect(response.parsed_body["accepted_answer"]["username"]).to eq(p2.user.username)
 
+      # enable_names is default ON, this ensures disabling it also disables names here
       SiteSetting.enable_names = false
       get "/t/#{topic.slug}/#{topic.id}.json"
       expect(response.parsed_body["accepted_answer"]["name"]).to eq(nil)
