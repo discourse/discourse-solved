@@ -76,6 +76,11 @@ RSpec.describe TopicsController do
 
       expect(response.parsed_body["accepted_answer"]["name"]).to eq(p2.user.name)
       expect(response.parsed_body["accepted_answer"]["username"]).to eq(p2.user.username)
+
+      SiteSetting.enable_names = false
+      get "/t/#{topic.slug}/#{topic.id}.json"
+      expect(response.parsed_body["accepted_answer"]["name"]).to eq(nil)
+      expect(response.parsed_body["accepted_answer"]["username"]).to eq(p2.user.username)
     end
 
     it "should not include user name when site setting is disabled" do
