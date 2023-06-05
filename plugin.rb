@@ -464,7 +464,13 @@ SQL
           nil
         end
 
-        postInfo[3] = SiteSetting.display_name_on_posts ? postInfo[3] : nil
+        postInfo[3] = (
+          if SiteSetting.enable_names && SiteSetting.display_name_on_posts
+            postInfo[3]
+          else
+            nil
+          end
+        )
         postInfo
       end
     end
