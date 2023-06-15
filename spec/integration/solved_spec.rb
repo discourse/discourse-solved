@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Managing Posts solved status" do
   let(:topic) { Fabricate(:topic) }
-  let(:user) { Fabricate(:trust_level_4) }
+  fab!(:user) { Fabricate(:trust_level_4) }
   let(:p1) { Fabricate(:post, topic: topic) }
 
   before { SiteSetting.allow_solved_on_all_topics = true }
@@ -38,6 +38,103 @@ RSpec.describe "Managing Posts solved status" do
 
       result = Search.execute("carrot")
       expect(result.posts.pluck(:id)).to eq([solved_post.id, normal_post.id])
+    end
+
+    describe "#advanced_search" do
+      fab!(:category_enabled) do
+        category = Fabricate(:category)
+        category_custom_field =
+          CategoryCustomField.new(
+            category_id: category.id,
+            name: ::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD,
+            value: "true",
+          )
+        category_custom_field.save
+        category
+      end
+      fab!(:category_disabled) do
+        category = Fabricate(:category)
+        category_custom_field =
+          CategoryCustomField.new(
+            category_id: category.id,
+            name: ::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD,
+            value: "false",
+          )
+        category_custom_field.save
+        category
+      end
+      fab!(:topic_unsolved) do
+        Fabricate(
+          :custom_topic,
+          user: user,
+          category: category_enabled,
+          custom_topic_name: ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD,
+        )
+      end
+      fab!(:topic_solved) do
+        Fabricate(
+          :custom_topic,
+          user: user,
+          category: category_enabled,
+          custom_topic_name: ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD,
+        )
+      end
+      fab!(:topic_disabled_1) do
+        Fabricate(
+          :custom_topic,
+          user: user,
+          category: category_disabled,
+          custom_topic_name: ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD,
+        )
+      end
+      fab!(:topic_disabled_2) do
+        Fabricate(
+          :custom_topic,
+          user: user,
+          category: category_disabled,
+          custom_topic_name: "another_custom_field",
+        )
+      end
+      fab!(:post_unsolved) { Fabricate(:post, topic: topic_unsolved) }
+      fab!(:post_solved) do
+        post = Fabricate(:post, topic: topic_solved)
+        DiscourseSolved.accept_answer!(post, Discourse.system_user)
+        post
+      end
+      fab!(:post_disabled_1) { Fabricate(:post, topic: topic_disabled_1) }
+      fab!(:post_disabled_2) { Fabricate(:post, topic: topic_disabled_2) }
+
+      before do
+        SearchIndexer.enable
+        Jobs.run_immediately!
+
+        SearchIndexer.index(topic_unsolved, force: true)
+        SearchIndexer.index(topic_solved, force: true)
+        SearchIndexer.index(topic_disabled_1, force: true)
+        SearchIndexer.index(topic_disabled_2, force: true)
+      end
+
+      after { SearchIndexer.disable }
+
+      describe "searches for unsolved topics" do
+        describe "when allow solved on all topics is disabled" do
+          before { SiteSetting.allow_solved_on_all_topics = false }
+
+          it "only returns posts where 'Allow topic owner and staff to mark a reply as the solution' is enabled and post is not solved" do
+            result = Search.execute("status:unsolved")
+            expect(result.posts.pluck(:id)).to match_array([post_unsolved.id])
+          end
+        end
+        describe "when allow solved on all topics is enabled" do
+          before { SiteSetting.allow_solved_on_all_topics = true }
+          it "only returns posts where the post is not solved" do
+            result = Search.execute("status:unsolved")
+            expect(result.posts.pluck(:id)).to match_array(
+              [post_unsolved.id, post_disabled_1.id, post_disabled_2.id],
+            )
+          end
+        end
+      end
     end
   end
 
