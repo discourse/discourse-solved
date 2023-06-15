@@ -588,7 +588,16 @@ SQL
     end
 
     Search.advanced_filter(/status:unsolved/) do |posts|
-      unless SiteSetting.allow_solved_on_all_topics
+      if SiteSetting.allow_solved_on_all_topics
+        posts.where(
+          "topics.id NOT IN (
+          SELECT tc.topic_id
+          FROM topic_custom_fields tc
+          WHERE tc.name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}' AND
+                          tc.value IS NOT NULL
+          )",
+        )
+      else
         posts.where(
           "topics.id NOT IN (
           SELECT tc.topic_id
@@ -602,15 +611,6 @@ SQL
             ON top.category_id = cc.category_id
             WHERE cc.name = '#{::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD}' AND
                           cc.value = 'true'
-          )",
-        )
-      else
-        posts.where(
-          "topics.id NOT IN (
-          SELECT tc.topic_id
-          FROM topic_custom_fields tc
-          WHERE tc.name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}' AND
-                          tc.value IS NOT NULL
           )",
         )
       end

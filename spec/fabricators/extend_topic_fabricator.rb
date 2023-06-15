@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Fabricator(:custom_topic, from: :topic) do
   transient :custom_topic_name
   transient :value
