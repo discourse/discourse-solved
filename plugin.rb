@@ -76,6 +76,7 @@ SQL
 
     AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD = "solved_auto_close_topic_timer_id"
     ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD = "accepted_answer_post_id"
+    ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD = "enable_accepted_answers"
 
     def self.accept_answer!(post, acting_user, topic: nil)
       topic ||= post.topic
@@ -502,9 +503,10 @@ SQL
     def self.reset_accepted_answer_cache
       @@allowed_accepted_cache["allowed"] = begin
         Set.new(
-          CategoryCustomField.where(name: "enable_accepted_answers", value: "true").pluck(
-            :category_id,
-          ),
+          CategoryCustomField.where(
+            name: ::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD,
+            value: "true",
+          ).pluck(:category_id),
         )
       end
     end
@@ -586,14 +588,32 @@ SQL
     end
 
     Search.advanced_filter(/status:unsolved/) do |posts|
-      posts.where(
-        "topics.id NOT IN (
-        SELECT tc.topic_id
-        FROM topic_custom_fields tc
-        WHERE tc.name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}' AND
-                        tc.value IS NOT NULL
-        )",
-      )
+      if SiteSetting.allow_solved_on_all_topics
+        posts.where(
+          "topics.id NOT IN (
+          SELECT tc.topic_id
+          FROM topic_custom_fields tc
+          WHERE tc.name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}' AND
+                          tc.value IS NOT NULL
+          )",
+        )
+      else
+        posts.where(
+          "topics.id NOT IN (
+          SELECT tc.topic_id
+          FROM topic_custom_fields tc
+          WHERE tc.name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}' AND
+                          tc.value IS NOT NULL
+          ) AND topics.id IN (
+            SELECT top.id 
+            FROM topics top
+            INNER JOIN category_custom_fields cc
+            ON top.category_id = cc.category_id
+            WHERE cc.name = '#{::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD}' AND
+                          cc.value = 'true'
+          )",
+        )
+      end
     end
   end
 
@@ -655,7 +675,7 @@ SQL
     TopicList.preloaded_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
   end
   if Site.respond_to? :preloaded_category_custom_fields
-    Site.preloaded_category_custom_fields << "enable_accepted_answers"
+    Site.preloaded_category_custom_fields << ::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD
   end
   if Search.respond_to? :preloaded_topic_custom_fields
     Search.preloaded_topic_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
@@ -696,7 +716,7 @@ SQL
         )
       CategoryCustomField.create!(
         category_id: solved_category.id,
-        name: "enable_accepted_answers",
+        name: ::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD,
         value: "true",
       )
       puts "discourse-solved enabled on category '#{solved_category.name}' (#{solved_category.id})."
@@ -706,7 +726,7 @@ SQL
       unless SiteSetting.allow_solved_on_all_topics
         solved_category_id =
           CategoryCustomField
-            .where(name: "enable_accepted_answers", value: "true")
+            .where(name: ::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD, value: "true")
             .first
             .category_id
 
