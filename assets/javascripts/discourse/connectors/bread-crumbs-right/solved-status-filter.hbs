@@ -1,10 +1,10 @@
-{{#if siteSettings.solved_enabled}}
+{{#if this.siteSettings.solved_enabled}}
   <ComboBox
     @class="solved-status-filter"
-    @content={{statuses}}
-    @value={{status}}
+    @content={{this.statuses}}
+    @value={{this.status}}
     @valueProperty="value"
     @options={{hash caretDownIcon="caret-right" caretUpIcon="caret-down"}}
-    @onChange={{(action "changeStatus")}}
+    @onChange={{this.changeStatus}}
   />
 {{/if}}
