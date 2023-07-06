@@ -1,51 +1,58 @@
 import I18n from "I18n";
 import { getOwner } from "discourse-common/lib/get-owner";
+import Component from "@glimmer/component";
+import { action } from "@ember/object";
+import { inject as service } from "@ember/service";
 
-export default {
-  shouldRender(args, component) {
-    const router = getOwner(this).lookup("router:main");
+const QUERY_PARAM_VALUES = {
+  solved: "yes",
+  unsolved: "no",
+  all: null,
+};
+
+const UX_VALUES = {
+  yes: "solved",
+  no: "unsolved",
+};
+
+export default class SolvedStatusFilter extends Component {
+  static shouldRender(args, helper) {
+    const router = getOwner(this).lookup("service:router");
 
     if (
-      !component.siteSettings.show_filter_by_solved_status ||
-      router.currentPath === "discovery.categories"
+      !helper.siteSettings.show_filter_by_solved_status ||
+      router.currentRouteName === "discovery.categories"
     ) {
       return false;
-    } else if (component.siteSettings.allow_solved_on_all_topics) {
+    } else if (helper.siteSettings.allow_solved_on_all_topics) {
       return true;
     } else {
-      const controller = getOwner(this).lookup(
-        "controller:navigation/category"
-      );
-      return controller && controller.get("category.enable_accepted_answers");
+      return args.currentCategory?.enable_accepted_answers;
     }
-  },
+  }
 
-  setupComponent(args, component) {
-    const statuses = ["all", "solved", "unsolved"].map((status) => {
+  @service router;
+  @service siteSettings;
+
+  get statuses() {
+    return ["all", "solved", "unsolved"].map((status) => {
       return {
         name: I18n.t(`solved.topic_status_filter.${status}`),
         value: status,
       };
     });
-    component.set("statuses", statuses);
+  }
 
-    const queryStrings = window.location.search;
-    if (queryStrings.match(/solved=yes/)) {
-      component.set("status", "solved");
-    } else if (queryStrings.match(/solved=no/)) {
-      component.set("status", "unsolved");
-    } else {
-      component.set("status", "all");
-    }
-  },
+  get status() {
+    const queryParamValue =
+      this.router.currentRoute.attributes?.modelParams?.solved;
+    return UX_VALUES[queryParamValue] || "all";
+  }
 
-  actions: {
-    changeStatus(newStatus) {
-      const router = getOwner(this).lookup("router:main");
-      if (newStatus && newStatus !== "all") {
-        newStatus = newStatus === "solved" ? "yes" : "no";
-      }
-      router.transitionTo({ queryParams: { solved: newStatus } });
-    },
-  },
-};
+  @action
+  changeStatus(newStatus) {
+    this.router.transitionTo({
+      queryParams: { solved: QUERY_PARAM_VALUES[newStatus] },
+    });
+  }
+}
