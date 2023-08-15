@@ -50,7 +50,8 @@ en:
         groups:
           solved: "Solved Event"
         event_details:
-          solved_accept_unaccept: "When an user marks a post as the accepted or unaccepted answer"
+          accepted_solution: "When an user marks a post as the accepted answer"
+          unaccepted_solution: "When an user marks a post as the unaccepted answer"
       api:
         scopes:
           descriptions:
