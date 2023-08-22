@@ -36,6 +36,8 @@ de:
       no_answer:
         title: Wurde deine Frage beantwortet?
         description: "Hebe die Antwort hervor und hilf anderen, indem du die Lösungsschaltfläche unter der richtigen Antwort verwendest."
+      notification:
+        title: "dein Beitrag wurde als Lösung markiert"
     topic_statuses:
       solved:
         help: "Dieses Thema hat eine Lösung"
@@ -49,6 +51,11 @@ de:
         solved_event:
           name: "Gelöstes Ereignis"
           details: "Wenn ein Benutzer einen Beitrag als akzeptierte oder nicht akzeptierte Antwort markiert."
+      api:
+        scopes:
+          descriptions:
+            solved:
+              answer: Eine Lösung akzeptieren/nicht mehr akzeptieren.
     discourse_automation:
       triggerables:
         first_accepted_solution:
