@@ -19,6 +19,7 @@ it:
     accept_solutions_topic_author: "Consenti all'autore dell'argomento di accettare una soluzione."
     solved_add_schema_markup: "Aggiungi il markup dello schema QAPage all'HTML."
     enable_solved_tags: "Etichette che consentiranno agli utenti di selezionare soluzioni."
+    prioritize_solved_topics_in_search: "Dai la priorità agli argomenti risolti nei risultati di ricerca."
   reports:
     accepted_solutions:
       title: "Soluzioni accettate"
@@ -30,7 +31,21 @@ it:
       others: "Nessuna soluzione accettata."
   badges:
     solved_1:
-      name: "Risolti!"
+      name: "Risolto!"
+      description: "Avere una risposta contrassegnata come Soluzione"
+      long_description: "Questo distintivo viene assegnato per avere una risposta contrassegnata come Soluzione a un argomento. :white_check_mark: Ottimo lavoro. :+1:"
+    solved_2:
+      name: "Consulente"
+      description: "Avere 10 risposte contrassegnate come Soluzioni"
+      long_description: "Questo distintivo viene assegnato se 10 delle tue risposte sono contrassegnate come soluzioni agli argomenti. :white_check_mark: Sei una vera risorsa per gli altri membri della community."
+    solved_3:
+      name: "Saputello"
+      description: "Avere 50 risposte contrassegnate come Soluzioni"
+      long_description: "Questo distintivo viene assegnato se 50 delle tue risposte sono contrassegnate come soluzioni agli argomenti. :white_check_mark: Sai davvero il fatto tuo. :clap:"
+    solved_4:
+      name: "Risolutore di problemi"
+      description: "Avere 150 risposte contrassegnate come Soluzioni"
+      long_description: "Questo distintivo viene assegnato se 150 delle tue risposte sono contrassegnate come soluzioni agli argomenti. :white_check_mark: Ottimo lavoro. :slightly_smiling_face: Sei ufficialmente un Risolutore di problemi. :brain:"
   discourse_automation:
     triggerables:
       first_accepted_solution:

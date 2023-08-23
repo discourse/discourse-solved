@@ -14,6 +14,7 @@ ja:
     solved:
       title: "解決済み"
       allow_accepted_answers: "トピックオーナーとスタッフが返信を解決策としてマークすることを許可する"
+      solved_topics_auto_close_hours: "トピックが解決済みとマークされたら、最後の返信から (n) 時間後にトピックを自動クローズします。"
       accept_answer: "この返信が問題を解決したか選択してください"
       accepted_description: "これは、このトピックについて受け入れられた解決策です。"
       has_no_accepted_answer: "このトピックには解決策がありません"
@@ -34,6 +35,8 @@ ja:
       no_answer:
         title: 質問の回答は得られましたか？
         description: "適切な返信の下にある解決策ボタンを使って回答をハイライトし、他のユーザーを助けましょう。"
+      notification:
+        title: "あなたの投稿が解決策としてマークされました"
     topic_statuses:
       solved:
         help: "このトピックには解決策があります"
@@ -47,6 +50,11 @@ ja:
         solved_event:
           name: "解決済みイベント"
           details: "ユーザーが投稿を受け入れられる回答または受け入れられない回答としてマークした場合。"
+      api:
+        scopes:
+          descriptions:
+            solved:
+              answer: 解決策に同意/非同意します。
     discourse_automation:
       triggerables:
         first_accepted_solution:

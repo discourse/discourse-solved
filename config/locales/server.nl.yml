@@ -19,6 +19,7 @@ nl:
     accept_solutions_topic_author: "Topicauteur toestaan een oplossing te accepteren."
     solved_add_schema_markup: "Voeg QAPage-schemaopmaak toe aan HTML."
     enable_solved_tags: "Tags waarbij gebruikers oplossingen kunnen selecteren."
+    prioritize_solved_topics_in_search: "Geef prioriteit aan opgeloste topics in zoekresultaten."
   reports:
     accepted_solutions:
       title: "Geaccepteerde oplossingen"

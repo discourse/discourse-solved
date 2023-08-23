@@ -19,6 +19,7 @@ es:
     accept_solutions_topic_author: "Permitir que el autor de un tema marque una respuesta como la solución."
     solved_add_schema_markup: "Añade el marcado del esquema de QAPage al HTML."
     enable_solved_tags: "Etiquetas que permitirán a los usuarios seleccionar soluciones."
+    prioritize_solved_topics_in_search: "Prioriza los temas resueltos en los resultados de búsqueda."
   reports:
     accepted_solutions:
       title: "Soluciones aceptadas"
@@ -30,7 +31,21 @@ es:
       others: "No hay soluciones aceptadas."
   badges:
     solved_1:
-      name: "Solucionado!"
+      name: "¡Solucionado!"
+      description: "Tener una respuesta marcada como Solución"
+      long_description: "Esta insignia se concede por tener una respuesta marcada como Solución a un tema :white_check_mark: Buen trabajo :+1:"
+    solved_2:
+      name: "Orientador"
+      description: "Tener 10 respuestas marcadas como Soluciones"
+      long_description: "Esta insignia se concede por tener 10 de tus respuestas marcadas como Soluciones a temas :white_check_mark: Eres un verdadero activo para tus compañeros de la comunidad."
+    solved_3:
+      name: "Sabelotodo"
+      description: "Tener 50 respuestas marcadas como Soluciones"
+      long_description: "Esta insignia se concede por tener 50 de tus respuestas marcadas como Soluciones a temas :white_check_mark: Realmente sabes lo que haces :clap:"
+    solved_4:
+      name: "Institución de soluciones"
+      description: "Tener 150 respuestas marcadas como Soluciones"
+      long_description: "Esta insignia se concede por tener 150 de tus respuestas marcadas como Soluciones a temas :white_check_mark: Excelente trabajo :slightly_smiling_face: Eres oficialmente una Institución de Soluciones :brain:"
   discourse_automation:
     triggerables:
       first_accepted_solution:

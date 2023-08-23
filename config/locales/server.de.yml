@@ -19,6 +19,7 @@ de:
     accept_solutions_topic_author: "Erlaube dem Themenverfasser, eine Lösung zu akzeptieren."
     solved_add_schema_markup: "Füge QAPage-Schema-Mark-up zu HTML hinzu."
     enable_solved_tags: "Schlagwörter, die es Benutzern ermöglichen, Lösungen auszuwählen."
+    prioritize_solved_topics_in_search: "Gelöste Themen in den Suchergebnissen priorisieren."
   reports:
     accepted_solutions:
       title: "Akzeptierte Lösungen"
@@ -31,6 +32,20 @@ de:
   badges:
     solved_1:
       name: "Gelöst!"
+      description: "Eine Antwort wurde als Lösung markiert"
+      long_description: "Dieses Abzeichen bekommst du, wenn deine Antwort als Lösung für ein Thema markiert wurde :white_check_mark: Gute Arbeit :+1:"
+    solved_2:
+      name: "Berater"
+      description: "10 Antworten wurden als Lösungen markiert"
+      long_description: "Dieses Abzeichen bekommst du, wenn 10 deiner Antworten als Lösungen für Themen markiert wurden :white_check_mark: Du bist wahrlich eine Bereicherung für die Mitglieder deiner Community."
+    solved_3:
+      name: "Kluges Köpfchen"
+      description: "50 Antworten wurden als Lösungen markiert"
+      long_description: "Dieses Abzeichen bekommst du, wenn 50 deiner Antworten als Lösungen für Themen markiert wurden :white_check_mark: Du weißt echt, wovon du sprichst :clap:"
+    solved_4:
+      name: "Anlaufstelle für Lösungen"
+      description: "150 Antworten wurden als Lösungen markiert"
+      long_description: "Dieses Abzeichen bekommst du, wenn 150 deiner Antworten als Lösungen für Themen markiert wurden :white_check_mark: Ausgezeichnete Arbeit :slightly_smiling_face: Du bist offiziell eine Anlaufstelle für Lösungen :brain:"
   discourse_automation:
     triggerables:
       first_accepted_solution:

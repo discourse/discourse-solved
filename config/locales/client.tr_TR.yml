@@ -14,7 +14,7 @@ tr_TR:
     solved:
       title: "Çözüldü"
       allow_accepted_answers: "Konu sahibinin ve personelin bir yanıtı çözüm olarak işaretlemesine izin verin"
-      solved_topics_auto_close_hours: "Konu çözüldü işaretlendikten (n) saat sonra otomatik olarak kapatılsın."
+      solved_topics_auto_close_hours: "Konu çözüldü olarak işaretlendiğinde, son yanıttan (n) saat sonra otomatik olarak kapatılsın."
       accept_answer: "Bu yanıtın sorunu çözüp çözmediğini seçin"
       accepted_description: "Bu, bu konu için kabul edilen çözümdür"
       has_no_accepted_answer: "Bu konunun çözümü yok"
@@ -36,6 +36,8 @@ tr_TR:
       no_answer:
         title: Sorunuz yanıtlandı mı?
         description: "Yanıtı vurgulayın ve doğru cevabın altındaki çözüm düğmesini kullanarak başkalarına yardımcı olun."
+      notification:
+        title: "gönderiniz çözüm olarak işaretlendi"
     topic_statuses:
       solved:
         help: "Bu konunun bir çözümü var"
@@ -49,6 +51,11 @@ tr_TR:
         solved_event:
           name: "Çözülmüş Olay"
           details: "Bir kullanıcı bir gönderiyi kabul edilen veya kabul edilmeyen yanıt olarak işaretlediğinde."
+      api:
+        scopes:
+          descriptions:
+            solved:
+              answer: Bir çözümü kabul edin/kabulünü kaldırın.
     discourse_automation:
       triggerables:
         first_accepted_solution:

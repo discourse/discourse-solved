@@ -36,6 +36,8 @@ fr:
       no_answer:
         title: Votre question a-t-elle reçu une réponse ?
         description: "Mettez la réponse en surbrillance et aidez les autres utilisateurs en utilisant le bouton de solution sous la réponse adéquate."
+      notification:
+        title: "votre message a été marqué comme solution"
     topic_statuses:
       solved:
         help: "Ce sujet a une solution"
@@ -49,6 +51,11 @@ fr:
         solved_event:
           name: "Événement résolu"
           details: "Lorsqu'un utilisateur marque un message comme étant une réponse acceptée ou non acceptée."
+      api:
+        scopes:
+          descriptions:
+            solved:
+              answer: Accepter/refuser une solution.
     discourse_automation:
       triggerables:
         first_accepted_solution:
