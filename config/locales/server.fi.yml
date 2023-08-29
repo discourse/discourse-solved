@@ -19,6 +19,7 @@ fi:
     accept_solutions_topic_author: "Salli ketjun luojan hyväksyä ratkaisu."
     solved_add_schema_markup: "Lisää QAPage-skeemamerkintä HTML:ään."
     enable_solved_tags: "Tunnisteet, joilla käyttäjät voivat valita ratkaisuja."
+    prioritize_solved_topics_in_search: "Priorisoi ratkaistut ketjut hakutuloksissa."
   reports:
     accepted_solutions:
       title: "Hyväksytyt ratkaisut"
@@ -31,6 +32,20 @@ fi:
   badges:
     solved_1:
       name: "Ratkaistu!"
+      description: "Vastauksesi on merkitty ratkaisuksi"
+      long_description: "Tämä kunniamerkki myönnetään vastauksesta, joka on merkitty ketjun ratkaisuksi. :white_check_mark: Hyvää työtä. :+1:"
+    solved_2:
+      name: "Opinto-ohjaaja"
+      description: "10 vastaustasi on merkitty ratkaisuksi"
+      long_description: "Tämä kunniamerkki myönnetään siitä, että 10 vastauksistasi on merkitty ketjujen ratkaisuiksi. :white_check_mark: Olet todellinen voimavara yhteisön jäsenille."
+    solved_3:
+      name: "Kaikkitietävä"
+      description: "50 vastaustasi on merkitty ratkaisuksi"
+      long_description: "Tämä kunniamerkki myönnetään siitä, että 50 vastauksistasi on merkitty ketjujen ratkaisuiksi. :white_check_mark: Tiedät todellakin, mistä puhut. :clap:"
+    solved_4:
+      name: "Ratkaisulaitos"
+      description: "150 vastaustasi on merkitty ratkaisuksi"
+      long_description: "Tämä kunniamerkki myönnetään siitä, että 150 vastauksistasi on merkitty ketjujen ratkaisuiksi. :white_check_mark: Erinomaista työtä. :slightly_smiling_face: Olet virallisesti ratkaisulaitos. :brain:"
   discourse_automation:
     triggerables:
       first_accepted_solution:
