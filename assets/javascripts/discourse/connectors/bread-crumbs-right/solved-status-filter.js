@@ -21,7 +21,8 @@ export default class SolvedStatusFilter extends Component {
 
     if (
       !helper.siteSettings.show_filter_by_solved_status ||
-      router.currentRouteName === "discovery.categories"
+      router.currentRouteName === "discovery.categories" ||
+      args.editingCategory
     ) {
       return false;
     } else if (helper.siteSettings.allow_solved_on_all_topics) {
