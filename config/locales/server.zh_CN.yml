@@ -19,6 +19,7 @@ zh_CN:
     accept_solutions_topic_author: "允许话题作者接受解决方案。"
     solved_add_schema_markup: "将 QAPage 架构标记添加到 HTML。"
     enable_solved_tags: "允许用户选择解决方案的标签。"
+    prioritize_solved_topics_in_search: "在搜索结果中优先显示已解决的话题。"
   reports:
     accepted_solutions:
       title: "已被接受的解决方案"
@@ -30,7 +31,21 @@ zh_CN:
       others: "没有被接受的解决方案。"
   badges:
     solved_1:
-      name: "已解决!"
+      name: "已解决！"
+      description: "有 1 条回复被标记为解决方案"
+      long_description: "此徽章是由于 1 条回复被标记为话题的解决方案而获得的。:white_check_mark: 干得好。:+1:"
+    solved_2:
+      name: "指导顾问"
+      description: "有 10 条回复被标记为解决方案"
+      long_description: "此徽章是由于 10 条回复被标记为话题的解决方案而获得的。:white_check_mark: 您对社区成员来说是真正的财富。"
+    solved_3:
+      name: "无所不知"
+      description: "有 50 条回复被标记为解决方案"
+      long_description: "此徽章是由于 50 条回复被标记为话题的解决方案而获得的。:white_check_mark: 您真的很懂行。:clap:"
+    solved_4:
+      name: "解决方案机构"
+      description: "有 150 条回复被标记为解决方案"
+      long_description: "此徽章是由于 150 条回复被标记为话题的解决方案而获得的。:white_check_mark: 太棒了。:slightly_smiling_face: 您正式成为一个解决方案机构。:brain:"
   discourse_automation:
     triggerables:
       first_accepted_solution:

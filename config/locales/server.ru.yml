@@ -19,6 +19,7 @@ ru:
     accept_solutions_topic_author: "Разрешать автору темы помечать ответ статусом 'Вопрос решён'"
     solved_add_schema_markup: "Добавить разметку схемы QAPage в HTML."
     enable_solved_tags: "Теги, которые позволят пользователям использовать функцию 'Вопрос решён'."
+    prioritize_solved_topics_in_search: "В результатах поиска отдавать приоритет решенным темам."
   reports:
     accepted_solutions:
       title: "Решённые вопросы"

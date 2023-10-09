@@ -19,6 +19,7 @@ ja:
     accept_solutions_topic_author: "トピック作成者が解決策を受け入れることを許可します。"
     solved_add_schema_markup: "QAPage スキーママークアップを HTML に追加します。"
     enable_solved_tags: "ユーザーが解決策を選択できるようにするタグ。"
+    prioritize_solved_topics_in_search: "検索結果では解決済みのトピックが優先されます。"
   reports:
     accepted_solutions:
       title: "受け入れられた解決策"
@@ -31,6 +32,20 @@ ja:
   badges:
     solved_1:
       name: "解決済み!"
+      description: "1 件の返信が解決策としてマークされた"
+      long_description: "このバッジは返信がトピックの解決策としてマークされた場合に付与されます。:white_check_mark: よくできました。:+1:"
+    solved_2:
+      name: "ガイダンスカウンセラー"
+      description: "10 件の返信が解決策としてマークされた"
+      long_description: "このバッジは、10 件の返信がトピックの解決策としてマークされた場合に付与されます。:white_check_mark: あなたは他のコミュニティーメンバーにとって貴重なアセットです。"
+    solved_3:
+      name: "なんでも知ってる"
+      description: "50 件の返信が解決策としてマークされた"
+      long_description: "このバッジは、50 件の返信がトピックの解決策としてマークされた場合に付与されます。:white_check_mark: あなたは本当に物知りです。:clap:"
+    solved_4:
+      name: "解決策の宝庫"
+      description: "150 件の返信が解決策としてマークされた"
+      long_description: "このバッジは、150 件の返信がトピックの解決策としてマークされた場合に付与されます。:white_check_mark: 優秀です。:slightly_smiling_face: あなたは誰もが認める解決策の宝庫です。:brain:"
   discourse_automation:
     triggerables:
       first_accepted_solution:

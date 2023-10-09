@@ -36,6 +36,8 @@ it:
       no_answer:
         title: La tua domanda ha avuto risposta?
         description: "Evidenzia la risposta e aiuta gli altri utilizzando il pulsante della soluzione sotto la risposta corretta."
+      notification:
+        title: "il tuo messaggio è stato contrassegnato come soluzione"
     topic_statuses:
       solved:
         help: "Questo argomento ha una soluzione"
@@ -49,6 +51,11 @@ it:
         solved_event:
           name: "Evento risolto"
           details: "Quando un utente contrassegna un messaggio come risposta accettata o non accettata."
+      api:
+        scopes:
+          descriptions:
+            solved:
+              answer: Accetta/Rifiuta una soluzione.
     discourse_automation:
       triggerables:
         first_accepted_solution:

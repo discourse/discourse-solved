@@ -19,6 +19,7 @@ ar:
     accept_solutions_topic_author: "السماح لكاتب الموضوع بقبول حل"
     solved_add_schema_markup: "إضافة علامات مخطط Qapage إلى HTML"
     enable_solved_tags: "الوسوم التي ستسمح للمستخدمين بتحديد الحلول"
+    prioritize_solved_topics_in_search: "منح الأولوية للموضوعات التي تم حلها في نتائج البحث."
   reports:
     accepted_solutions:
       title: "الحلول المقبولة"
@@ -31,6 +32,20 @@ ar:
   badges:
     solved_1:
       name: "تم الحل!"
+      description: "وضع علامة \"حل\" على أحد الردود"
+      long_description: "يتم منح هذه الشارة عند وضع علامة \"حل\" على أحد ردودك في أحد الموضوعات. :white_check_mark: أحسنت. :+1:"
+    solved_2:
+      name: "مستشار التوجيه"
+      description: "وضع علامة \"حل\" على 10 من ردودك"
+      long_description: "يتم منح هذه الشارة عند وضع علامة \"حل\" على 10 من ردودك على الموضوعات. :white_check_mark: أنت تمثِّل قيمة مضافة حقيقة لزملائك من أعضاء المجتمع."
+    solved_3:
+      name: "تعرف كل شيء"
+      description: "وضع علامة \"حل\" على 50 من ردودك"
+      long_description: "يتم منح هذه الشارة عند وضع علامة \"حل\" على 50 من ردودك على الموضوعات. :white_check_mark: أنت تتمتَّع حقًا ببعض المعرفة. :clap:"
+    solved_4:
+      name: "مؤسسة تقديم الحلول"
+      description: "وضع علامة \"حل\" على 150 من ردودك"
+      long_description: "يتم منح هذه الشارة عند وضع علامة \"حل\" على 150 من ردودك على الموضوعات. :white_check_mark: عمل رائع. :slightly_smiling_face: لقد أصبحت رسميًا مؤسسةً لتقديم الحلول. :brain:"
   discourse_automation:
     triggerables:
       first_accepted_solution:

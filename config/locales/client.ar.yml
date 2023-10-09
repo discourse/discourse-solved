@@ -14,6 +14,7 @@ ar:
     solved:
       title: "تم الحل"
       allow_accepted_answers: "السماح لصاحب الموضوع وفريق العمل بوضع علامة على أحد الردود على أنه الحل"
+      solved_topics_auto_close_hours: "إغلاق الموضوع تلقائيًا بعد مرور (n) من الساعات على آخر رد بمجرد وضع علامة على الموضوع على أنه محلول."
       accept_answer: "التحديد إذا كان هذا الرد يحل المشكلة"
       accepted_description: "هذا هو الحل المقبول لهذا الموضوع"
       has_no_accepted_answer: "لا يوجد حل لهذا الموضوع"
@@ -39,6 +40,8 @@ ar:
       no_answer:
         title: هل تمت الإجابة على سؤالك؟
         description: "ميِّز الإجابة وساعد الآخرين عن طريق استخدام زر الحل أسفل الرد الصحيح."
+      notification:
+        title: "تم وضع علامة \"حل\" على منشورك"
     topic_statuses:
       solved:
         help: "هناك حل لهذا الموضوع"
@@ -52,6 +55,11 @@ ar:
         solved_event:
           name: "حدث الحل"
           details: "عندما يضع المستخدم علامة على أحد المنشورات على أنه الإجابة المقبولة أو غير المقبولة"
+      api:
+        scopes:
+          descriptions:
+            solved:
+              answer: قبول/عدم قبول حل.
     discourse_automation:
       triggerables:
         first_accepted_solution:

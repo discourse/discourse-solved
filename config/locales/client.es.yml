@@ -36,6 +36,8 @@ es:
       no_answer:
         title: '¿Se ha respondido a tu pregunta?'
         description: "Destaca la respuesta y ayuda a los demás utilizando el botón de solución que hay debajo de la respuesta correcta."
+      notification:
+        title: "tu publicación se ha marcado como solución"
     topic_statuses:
       solved:
         help: "Este tema tiene una solución"
@@ -49,6 +51,11 @@ es:
         solved_event:
           name: "Evento resuelto"
           details: "Cuando un usuario marca o desmarca una publicación como la respuesta aceptada."
+      api:
+        scopes:
+          descriptions:
+            solved:
+              answer: Aceptar/No aceptar una solución.
     discourse_automation:
       triggerables:
         first_accepted_solution:

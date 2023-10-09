@@ -19,6 +19,7 @@ pt_BR:
     accept_solutions_topic_author: "Permitir que o(a) autor(a) do tópico aceite uma solução."
     solved_add_schema_markup: "Adicione uma marcação do esquema de QAPage ao HTML."
     enable_solved_tags: "Etiquetas que permitirão que usuários(as) escolham soluções."
+    prioritize_solved_topics_in_search: "Priorizar tópicos solucionados em resultados de pesquisa."
   reports:
     accepted_solutions:
       title: "Soluções aceitas"
@@ -31,6 +32,20 @@ pt_BR:
   badges:
     solved_1:
       name: "Resolvido!"
+      description: "Tem uma resposta marcada como solução"
+      long_description: "Este emblema é concedido por ter uma resposta marcada como solução para um tópico: :white_check_mark: Bom trabalho. :+1:"
+    solved_2:
+      name: "Conselhos e orientação"
+      description: "Tenha dez respostas marcadas como soluções"
+      long_description: "Este emblema é concedido por ter dez respostas suas marcadas como soluções para tópicos. :white_check_mark: Você é um recurso valioso para seus colegas que fazem parte da comunidade."
+    solved_3:
+      name: "Sagaz"
+      description: "Tenha 50 respostas marcadas como soluções"
+      long_description: "Este emblema é concedido por ter 50 respostas suas marcadas como soluções para tópicos. :white_check_mark: Você é um recurso valioso para seus colegas que fazem parte da comunidade. :clap:"
+    solved_4:
+      name: "Fábrica de soluções"
+      description: "Tenha 150 respostas marcadas como soluções"
+      long_description: "Este emblema é concedido por ter 150 respostas suas marcadas como soluções para tópicos. :white_check_mark: Ótimo trabalho. :slightly_smiling_face: Você é oficialmente uma Fábrica de soluções. :brain:"
   discourse_automation:
     triggerables:
       first_accepted_solution:

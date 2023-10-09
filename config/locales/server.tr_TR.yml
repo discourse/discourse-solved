@@ -19,6 +19,7 @@ tr_TR:
     accept_solutions_topic_author: "Konu yazarının bir çözümü kabul etmesine izin verin."
     solved_add_schema_markup: "HTML'ye QAPage şema işaretlemesi ekleyin."
     enable_solved_tags: "Kullanıcıların çözüm seçmesine olanak tanıyacak etiketler."
+    prioritize_solved_topics_in_search: "Arama sonuçlarında çözülmüş konulara öncelik verin."
   reports:
     accepted_solutions:
       title: "Kabul edilen çözümler"
