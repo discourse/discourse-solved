@@ -160,7 +160,7 @@ SQL
         topic.save!
         post.save!
 
-        if WebHook.active_web_hooks(:solved).exists?
+        if WebHook.active_web_hooks(:accepted_solution).exists?
           payload = WebHook.generate_payload(:post, post)
           WebHook.enqueue_solved_hooks(:accepted_solution, post, payload)
         end
@@ -201,7 +201,7 @@ SQL
 
         notification.destroy! if notification
 
-        if WebHook.active_web_hooks(:solved).exists?
+        if WebHook.active_web_hooks(:unaccepted_solution).exists?
           payload = WebHook.generate_payload(:post, post)
           WebHook.enqueue_solved_hooks(:unaccepted_solution, post, payload)
         end
@@ -420,7 +420,7 @@ SQL
 
   class ::WebHook
     def self.enqueue_solved_hooks(event, post, payload = nil)
-      if active_web_hooks("solved").exists? && post.present?
+      if active_web_hooks(event).exists? && post.present?
         payload ||= WebHook.generate_payload(:post, post)
 
         WebHook.enqueue_hooks(
@@ -605,7 +605,7 @@ SQL
           WHERE tc.name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}' AND
                           tc.value IS NOT NULL
           ) AND topics.id IN (
-            SELECT top.id 
+            SELECT top.id
             FROM topics top
             INNER JOIN category_custom_fields cc
             ON top.category_id = cc.category_id

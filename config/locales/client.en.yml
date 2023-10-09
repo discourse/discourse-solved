@@ -48,8 +48,9 @@ en:
     admin:
       web_hooks:
         solved_event:
-          name: "Solved Event"
-          details: "When a user marks a post as the accepted or unaccepted answer."
+          group_name: "Solved Event"
+          accepted_solution: "When an user marks a post as the accepted answer"
+          unaccepted_solution: "When an user marks a post as the unaccepted answer"
       api:
         scopes:
           descriptions:
