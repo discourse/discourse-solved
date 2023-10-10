@@ -49,8 +49,7 @@ it:
     admin:
       web_hooks:
         solved_event:
-          name: "Evento risolto"
-          details: "Quando un utente contrassegna un messaggio come risposta accettata o non accettata."
+          group_name: "Evento risolto"
       api:
         scopes:
           descriptions:

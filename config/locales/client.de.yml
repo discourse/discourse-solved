@@ -49,8 +49,7 @@ de:
     admin:
       web_hooks:
         solved_event:
-          name: "Gelöstes Ereignis"
-          details: "Wenn ein Benutzer einen Beitrag als akzeptierte oder nicht akzeptierte Antwort markiert."
+          group_name: "Gelöstes Ereignis"
       api:
         scopes:
           descriptions:

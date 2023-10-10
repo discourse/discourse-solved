@@ -49,8 +49,7 @@ fr:
     admin:
       web_hooks:
         solved_event:
-          name: "Événement résolu"
-          details: "Lorsqu'un utilisateur marque un message comme étant une réponse acceptée ou non acceptée."
+          group_name: "Événement résolu"
       api:
         scopes:
           descriptions:

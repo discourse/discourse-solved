@@ -49,8 +49,7 @@ pt_BR:
     admin:
       web_hooks:
         solved_event:
-          name: "Evento solucionado"
-          details: "Quando um(a) usuário(a) marca uma postagem como uma resposta aceita ou não aceita."
+          group_name: "Evento solucionado"
       api:
         scopes:
           descriptions:

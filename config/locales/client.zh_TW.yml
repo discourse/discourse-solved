@@ -45,8 +45,7 @@ zh_TW:
     admin:
       web_hooks:
         solved_event:
-          name: "已解決的事件"
-          details: "當使用者將一則貼文標記為接受或不接受的答案時。"
+          group_name: "已解決的事件"
     discourse_automation:
       triggerables:
         first_accepted_solution:

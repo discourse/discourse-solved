@@ -48,8 +48,7 @@ zh_CN:
     admin:
       web_hooks:
         solved_event:
-          name: "已解决的事件"
-          details: "当用户将帖子标记为被接受或遭拒的回答时。"
+          group_name: "已解决的事件"
       api:
         scopes:
           descriptions:

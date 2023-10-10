@@ -49,8 +49,7 @@ tr_TR:
     admin:
       web_hooks:
         solved_event:
-          name: "Çözülmüş Olay"
-          details: "Bir kullanıcı bir gönderiyi kabul edilen veya kabul edilmeyen yanıt olarak işaretlediğinde."
+          group_name: "Çözülmüş Olay"
       api:
         scopes:
           descriptions:

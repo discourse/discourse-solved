@@ -51,8 +51,7 @@ he:
     admin:
       web_hooks:
         solved_event:
-          name: "אירוע שנפתר"
-          details: "כאשר משתמש מסמן פוסט בתור התשובה המקובלת או הבלתי מקובלת."
+          group_name: "אירוע שנפתר"
       api:
         scopes:
           descriptions:

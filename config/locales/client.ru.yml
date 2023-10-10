@@ -51,8 +51,7 @@ ru:
     admin:
       web_hooks:
         solved_event:
-          name: "Событие решения вопроса"
-          details: "При пометке сообщения статусом 'Вопрос решён'."
+          group_name: "Событие решения вопроса"
       api:
         scopes:
           descriptions:
