@@ -48,8 +48,7 @@ ja:
     admin:
       web_hooks:
         solved_event:
-          name: "解決済みイベント"
-          details: "ユーザーが投稿を受け入れられる回答または受け入れられない回答としてマークした場合。"
+          group_name: "解決済みイベント"
       api:
         scopes:
           descriptions:

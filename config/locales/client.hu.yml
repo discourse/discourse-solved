@@ -46,8 +46,7 @@ hu:
     admin:
       web_hooks:
         solved_event:
-          name: "Megoldott esemény"
-          details: "Amikor egy felhasználó megjelöl egy bejegyzést elfogadott vagy el nem fogadott válaszként."
+          group_name: "Megoldott esemény"
     discourse_automation:
       triggerables:
         first_accepted_solution:

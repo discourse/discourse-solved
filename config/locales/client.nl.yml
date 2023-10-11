@@ -49,8 +49,7 @@ nl:
     admin:
       web_hooks:
         solved_event:
-          name: "Oplossingsgebeurtenis"
-          details: "Wanneer een gebruiker een bericht als geaccepteerd of niet-geaccepteerd antwoord markeert."
+          group_name: "Oplossingsgebeurtenis"
       api:
         scopes:
           descriptions:

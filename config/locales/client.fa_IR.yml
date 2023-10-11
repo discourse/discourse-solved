@@ -39,7 +39,7 @@ fa_IR:
     admin:
       web_hooks:
         solved_event:
-          name: "رویداد حل شده"
+          group_name: "رویداد حل شده"
       api:
         scopes:
           descriptions:

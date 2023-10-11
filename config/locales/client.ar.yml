@@ -53,8 +53,7 @@ ar:
     admin:
       web_hooks:
         solved_event:
-          name: "حدث الحل"
-          details: "عندما يضع المستخدم علامة على أحد المنشورات على أنه الإجابة المقبولة أو غير المقبولة"
+          group_name: "حدث الحل"
       api:
         scopes:
           descriptions:

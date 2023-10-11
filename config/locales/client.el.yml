@@ -39,8 +39,7 @@ el:
     admin:
       web_hooks:
         solved_event:
-          name: "Επιλύθηκε γεγονός"
-          details: "Όταν ένας χρήστης επισημαίνει μια ανάρτηση ως αποδεκτή ή μη αποδεκτή απάντηση."
+          group_name: "Επιλύθηκε γεγονός"
     discourse_automation:
       triggerables:
         first_accepted_solution:

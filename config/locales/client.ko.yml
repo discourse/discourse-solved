@@ -35,8 +35,7 @@ ko:
     admin:
       web_hooks:
         solved_event:
-          name: "해결 된 이벤트"
-          details: "사용자가 게시물을 수락 또는 수락되지 않은 답변으로 표시 한 경우"
+          group_name: "해결 된 이벤트"
     discourse_automation:
       triggerables:
         first_accepted_solution:

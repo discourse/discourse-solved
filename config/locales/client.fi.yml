@@ -49,8 +49,7 @@ fi:
     admin:
       web_hooks:
         solved_event:
-          name: "Ratkaistu tapahtuma"
-          details: "Kun käyttäjä merkitsee viestin hyväksytyksi tai hyväksymättömäksi vastaukseksi."
+          group_name: "Ratkaistu tapahtuma"
       api:
         scopes:
           descriptions:

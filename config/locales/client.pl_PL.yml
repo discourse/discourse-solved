@@ -51,8 +51,7 @@ pl_PL:
     admin:
       web_hooks:
         solved_event:
-          name: "Zdarzenie rozwiązania"
-          details: "Gdy użytkownik oznaczy post jako zaakceptowaną lub nieakceptowaną odpowiedź."
+          group_name: "Zdarzenie rozwiązania"
       api:
         scopes:
           descriptions:

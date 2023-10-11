@@ -47,8 +47,7 @@ sv:
     admin:
       web_hooks:
         solved_event:
-          name: "Löst händelse"
-          details: "När en användare markerar ett svarsinlägg som accepterat eller icke accepterat."
+          group_name: "Löst händelse"
     discourse_automation:
       triggerables:
         first_accepted_solution:

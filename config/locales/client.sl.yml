@@ -51,8 +51,7 @@ sl:
     admin:
       web_hooks:
         solved_event:
-          name: "Rešen dogodek"
-          details: "Ko uporabnik označi objavo kot sprejet ali nesprejet odgovor."
+          group_name: "Rešen dogodek"
       api:
         scopes:
           descriptions:

@@ -49,8 +49,7 @@ es:
     admin:
       web_hooks:
         solved_event:
-          name: "Evento resuelto"
-          details: "Cuando un usuario marca o desmarca una publicación como la respuesta aceptada."
+          group_name: "Evento resuelto"
       api:
         scopes:
           descriptions:

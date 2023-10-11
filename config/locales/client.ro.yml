@@ -41,8 +41,7 @@ ro:
     admin:
       web_hooks:
         solved_event:
-          name: "Eveniment rezolvat"
-          details: "Când un utilizator marchează o postare ca răspuns acceptat sau neacceptat."
+          group_name: "Eveniment rezolvat"
     discourse_automation:
       triggerables:
         first_accepted_solution:
