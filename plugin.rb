@@ -77,6 +77,7 @@ SQL
     AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD = "solved_auto_close_topic_timer_id"
     ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD = "accepted_answer_post_id"
     ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD = "enable_accepted_answers"
+    IS_ACCEPTED_ANSWER_CUSTOM_FIELD = "is_accepted_answer"
 
     def self.accept_answer!(post, acting_user, topic: nil)
       topic ||= post.topic
@@ -86,7 +87,7 @@ SQL
 
         if accepted_id > 0
           if p2 = Post.find_by(id: accepted_id)
-            p2.custom_fields.delete("is_accepted_answer")
+            p2.custom_fields.delete(IS_ACCEPTED_ANSWER_CUSTOM_FIELD)
             p2.save!
 
             if defined?(UserAction::SOLVED)
@@ -95,7 +96,7 @@ SQL
           end
         end
 
-        post.custom_fields["is_accepted_answer"] = "true"
+        post.custom_fields[IS_ACCEPTED_ANSWER_CUSTOM_FIELD] = "true"
         topic.custom_fields[ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD] = post.id
 
         if defined?(UserAction::SOLVED)
@@ -173,7 +174,7 @@ SQL
       topic ||= post.topic
 
       DistributedMutex.synchronize("discourse_solved_toggle_answer_#{topic.id}") do
-        post.custom_fields.delete("is_accepted_answer")
+        post.custom_fields.delete(IS_ACCEPTED_ANSWER_CUSTOM_FIELD)
         topic.custom_fields.delete(ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD)
 
         if timer_id = topic.custom_fields[AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD]
@@ -240,6 +241,7 @@ SQL
       guardian.ensure_can_accept_answer!(topic, post)
 
       DiscourseSolved.unaccept_answer!(post, topic: topic)
+
       render json: success_json
     end
 
@@ -257,12 +259,18 @@ SQL
 
   Discourse::Application.routes.append { mount ::DiscourseSolved::Engine, at: "solution" }
 
+  on(:post_destroyed) do |post|
+    if post.custom_fields[::DiscourseSolved::IS_ACCEPTED_ANSWER_CUSTOM_FIELD] == "true"
+      ::DiscourseSolved.unaccept_answer!(post)
+    end
+  end
+
   add_api_key_scope(
     :solved,
     { answer: { actions: %w[discourse_solved/answer#accept discourse_solved/answer#unaccept] } },
   )
 
-  topic_view_post_custom_fields_allowlister { ["is_accepted_answer"] }
+  topic_view_post_custom_fields_allowlister { [::DiscourseSolved::IS_ACCEPTED_ANSWER_CUSTOM_FIELD] }
 
   def get_schema_text(post)
     post.excerpt(nil, keep_onebox_body: true).presence ||
@@ -450,29 +458,27 @@ SQL
     end
 
     def accepted_answer_post_info
-      # TODO: we may already have it in the stream ... so bypass query here
-      postInfo =
-        Post
-          .where(id: accepted_answer_post_id, topic_id: object.topic.id)
-          .joins(:user)
-          .pluck("post_number", "username", "cooked", "name")
-          .first
+      post_info =
+        if post = object.posts.find { |p| p.post_number == accepted_answer_post_id }
+          [post.post_number, post.user.username, post.cooked, post.user.name]
+        else
+          Post
+            .where(id: accepted_answer_post_id, topic_id: object.topic.id)
+            .joins(:user)
+            .pluck("post_number", "username", "cooked", "name")
+            .first
+        end
 
-      if postInfo
-        postInfo[2] = if SiteSetting.solved_quote_length > 0
-          PrettyText.excerpt(postInfo[2], SiteSetting.solved_quote_length, keep_emoji_images: true)
+      if post_info
+        post_info[2] = if SiteSetting.solved_quote_length > 0
+          PrettyText.excerpt(post_info[2], SiteSetting.solved_quote_length, keep_emoji_images: true)
         else
           nil
         end
 
-        postInfo[3] = (
-          if SiteSetting.enable_names && SiteSetting.display_name_on_posts
-            postInfo[3]
-          else
-            nil
-          end
-        )
-        postInfo
+        post_info[3] = nil if !SiteSetting.enable_names || !SiteSetting.display_name_on_posts
+
+        post_info
       end
     end
 
@@ -543,32 +549,28 @@ SQL
   end
 
   require_dependency "post_serializer"
+
   class ::PostSerializer
     attributes :can_accept_answer, :can_unaccept_answer, :accepted_answer, :topic_accepted_answer
 
     def can_accept_answer
-      if topic = (topic_view && topic_view.topic) || object.topic
-        return scope.can_accept_answer?(topic, object) && object.post_number > 1 && !accepted_answer
-      end
-
-      false
+      scope.can_accept_answer?(topic, object) && object.post_number > 1 && !accepted_answer
     end
 
     def can_unaccept_answer
-      if topic = (topic_view && topic_view.topic) || object.topic
-        scope.can_accept_answer?(topic, object) &&
-          (post_custom_fields["is_accepted_answer"] == "true")
-      end
+      scope.can_accept_answer?(topic, object) && accepted_answer
     end
 
     def accepted_answer
-      post_custom_fields["is_accepted_answer"] == "true"
+      post_custom_fields[::DiscourseSolved::IS_ACCEPTED_ANSWER_CUSTOM_FIELD] == "true"
     end
 
     def topic_accepted_answer
-      if topic = (topic_view && topic_view.topic) || object.topic
-        topic.custom_fields[::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD].present?
-      end
+      topic&.custom_fields[::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD].present?
+    end
+
+    def topic
+      topic_view&.topic || object.topic
     end
   end
 
@@ -682,7 +684,7 @@ SQL
   end
 
   if CategoryList.respond_to?(:preloaded_topic_custom_fields)
-    CategoryList.preloaded_topic_custom_fields << "accepted_answer_post_id"
+    CategoryList.preloaded_topic_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
   end
 
   on(:filter_auto_bump_topics) { |_category, filters| filters.push(->(r) { r.where(<<~SQL) }) }
