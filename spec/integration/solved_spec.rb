@@ -181,7 +181,7 @@ RSpec.describe "Managing Posts solved status" do
 
       expect(topic.public_topic_timer.status_type).to eq(TopicTimer.types[:silent_close])
 
-      expect(topic.custom_fields[DiscourseSolved::AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD].to_i).to eq(
+      expect(topic.custom_fields["solved_auto_close_topic_timer_id"].to_i).to eq(
         topic.public_topic_timer.id,
       )
 
@@ -207,9 +207,9 @@ RSpec.describe "Managing Posts solved status" do
 
       expect(topic_2.public_topic_timer.status_type).to eq(TopicTimer.types[:silent_close])
 
-      expect(
-        topic_2.custom_fields[DiscourseSolved::AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD].to_i,
-      ).to eq(topic_2.public_topic_timer.id)
+      expect(topic_2.custom_fields["solved_auto_close_topic_timer_id"].to_i).to eq(
+        topic_2.public_topic_timer.id,
+      )
 
       expect(topic_2.public_topic_timer.execute_at).to eq_time(Time.zone.now + 4.hours)
 
@@ -266,6 +266,23 @@ RSpec.describe "Managing Posts solved status" do
 
       p1.reload
       expect(p1.custom_fields["is_accepted_answer"]).to eq("true")
+    end
+
+    it "removes the solution when the post is deleted" do
+      reply = Fabricate(:post, post_number: 2, topic: topic)
+
+      post "/solution/accept.json", params: { id: reply.id }
+      expect(response.status).to eq(200)
+
+      reply.reload
+      expect(reply.custom_fields["is_accepted_answer"]).to eq("true")
+      expect(reply.topic.custom_fields["accepted_answer_post_id"].to_i).to eq(reply.id)
+
+      PostDestroyer.new(Discourse.system_user, reply).destroy
+
+      reply.reload
+      expect(reply.custom_fields["is_accepted_answer"]).to eq(nil)
+      expect(reply.topic.custom_fields["accepted_answer_post_id"]).to eq(nil)
     end
 
     it "does not allow you to accept a whisper" do
