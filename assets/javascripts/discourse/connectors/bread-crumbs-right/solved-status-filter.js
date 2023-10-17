@@ -1,5 +1,5 @@
 import I18n from "I18n";
-import { getOwner } from "@ember/application";
+import { getOwnerWithFallback } from "discourse-common/lib/get-owner";
 import Component from "@glimmer/component";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
@@ -17,7 +17,7 @@ const UX_VALUES = {
 
 export default class SolvedStatusFilter extends Component {
   static shouldRender(args, helper) {
-    const router = getOwner(this).lookup("service:router");
+    const router = getOwnerWithFallback(this).lookup("service:router");
 
     if (
       !helper.siteSettings.show_filter_by_solved_status ||
