@@ -52,6 +52,8 @@ he:
       web_hooks:
         solved_event:
           group_name: "אירוע שנפתר"
+          accepted_solution: "כשמשתמש מסמן פוסט כתשובה מקובלת"
+          unaccepted_solution: "כשמשתמש מסמן פוסט כתשובה בלתי מקובלת"
       api:
         scopes:
           descriptions:
