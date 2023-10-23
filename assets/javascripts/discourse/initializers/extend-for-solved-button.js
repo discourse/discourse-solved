@@ -188,24 +188,6 @@ function initializeWithApi(api) {
       this.appEvents.trigger("post-stream:refresh", { id: p.id });
     });
   });
-
-  if (api.registerConnectorClass) {
-    api.registerConnectorClass("user-activity-bottom", "solved-list", {
-      shouldRender(args, component) {
-        return component.siteSettings.solved_enabled;
-      },
-    });
-    api.registerConnectorClass("user-summary-stat", "solved-count", {
-      shouldRender(args, component) {
-        return (
-          component.siteSettings.solved_enabled && args.model.solved_count > 0
-        );
-      },
-      setupComponent() {
-        this.set("classNames", ["linked-stat"]);
-      },
-    });
-  }
 }
 
 export default {

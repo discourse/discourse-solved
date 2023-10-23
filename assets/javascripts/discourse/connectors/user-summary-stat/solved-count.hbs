@@ -1,7 +1,11 @@
-<LinkTo @route="userActivity.solved">
-  <UserStat
-    @value={{model.solved_count}}
-    @label="solved.solution_summary"
-    @icon="check-square"
-  />
-</LinkTo>
+{{#if (and this.siteSettings.solved_enabled @outletArgs.solved_count)}}
+  <li class="user-summary-stat-outlet solved-count">
+    <LinkTo @route="userActivity.solved">
+      <UserStat
+        @value={{@outletArgs.model.solved_count}}
+        @label="solved.solution_summary"
+        @icon="check-square"
+      />
+    </LinkTo>
+  </li>
+{{/if}}
