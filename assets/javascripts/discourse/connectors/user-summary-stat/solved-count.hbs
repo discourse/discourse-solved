@@ -1,5 +1,5 @@
 {{#if (and this.siteSettings.solved_enabled @outletArgs.model.solved_count)}}
-  <li class="user-summary-stat-outlet solved-count">
+  <li class="user-summary-stat-outlet solved-count linked-stat">
     <LinkTo @route="userActivity.solved">
       <UserStat
         @value={{@outletArgs.model.solved_count}}
