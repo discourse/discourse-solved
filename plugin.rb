@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 # name: discourse-solved
-# about: Add a solved button to answers on Discourse
+# about: Allows users to accept solutions on topics in designated categories.
+# meta_topic_id: 30155
 # version: 0.1
 # authors: Sam Saffron
 # url: https://github.com/discourse/discourse-solved
