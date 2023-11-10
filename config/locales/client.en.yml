@@ -1,4 +1,9 @@
 en:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_solved: "Discourse Solved"
   js:
     notifications:
       alt:
