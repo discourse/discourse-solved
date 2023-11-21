@@ -303,10 +303,11 @@ SQL
       "text" => get_schema_text(first_post),
       "upvoteCount" => first_post.like_count,
       "answerCount" => 0,
-      "dateCreated" => topic.created_at,
+      "datePublished" => topic.created_at,
       "author" => {
         "@type" => "Person",
-        "name" => topic.user&.name,
+        "username" => topic.user&.username,
+        "url" => topic.user&.full_url
       },
     }
 
@@ -319,11 +320,12 @@ SQL
         "@type" => "Answer",
         "text" => get_schema_text(accepted_answer),
         "upvoteCount" => accepted_answer.like_count,
-        "dateCreated" => accepted_answer.created_at,
+        "datePublished" => accepted_answer.created_at,
         "url" => accepted_answer.full_url,
         "author" => {
           "@type" => "Person",
           "name" => accepted_answer.user&.username,
+          "url" => accepted_answer.user&.full_url
         },
       }
     else
