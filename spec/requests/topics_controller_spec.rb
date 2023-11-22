@@ -10,20 +10,21 @@ RSpec.describe TopicsController do
   def schema_json(answerCount)
     if answerCount > 0
       answer_json =
-        ',"acceptedAnswer":{"@type":"Answer","text":"%{answer_text}","upvoteCount":%{answer_likes},"dateCreated":"%{answered_at}","url":"%{answer_url}","author":{"@type":"Person","name":"%{username2}"}}' %
+        ',"acceptedAnswer":{"@type":"Answer","text":"%{answer_text}","upvoteCount":%{answer_likes},"datePublished":"%{answered_at}","url":"%{answer_url}","author":{"@type":"Person","name":"%{username2}","url":"%{user2_url}"}}' %
           {
             answer_text: p2.excerpt,
             answer_likes: p2.like_count,
             answered_at: p2.created_at.as_json,
             answer_url: p2.full_url,
             username2: p2.user&.username,
+            user2_url: p2.user&.full_url,
           }
     else
       answer_json = ""
     end
 
     # rubocop:todo Layout/LineLength
-    '<script type="application/ld+json">{"@context":"http://schema.org","@type":"QAPage","name":"%{title}","mainEntity":{"@type":"Question","name":"%{title}","text":"%{question_text}","upvoteCount":%{question_likes},"answerCount":%{answerCount},"dateCreated":"%{created_at}","author":{"@type":"Person","name":"%{username1}"}%{answer_json}}}</script>' %
+    '<script type="application/ld+json">{"@context":"http://schema.org","@type":"QAPage","name":"%{title}","mainEntity":{"@type":"Question","name":"%{title}","text":"%{question_text}","upvoteCount":%{question_likes},"answerCount":%{answerCount},"datePublished":"%{created_at}","author":{"@type":"Person","name":"%{username1}","url":"%{user1_url}"}%{answer_json}}}</script>' %
       # rubocop:enable Layout/LineLength
       {
         title: topic.title,
@@ -31,7 +32,8 @@ RSpec.describe TopicsController do
         question_likes: p1.like_count,
         answerCount: answerCount,
         created_at: topic.created_at.as_json,
-        username1: topic.user&.name,
+        username1: topic.user&.username,
+        user1_url: topic.user&.full_url,
         answer_json: answer_json,
       }
   end
