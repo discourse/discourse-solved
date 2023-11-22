@@ -306,8 +306,8 @@ SQL
       "datePublished" => topic.created_at,
       "author" => {
         "@type" => "Person",
-        "username" => topic.user&.username,
-        "url" => topic.user&.full_url
+        "name" => topic.user&.username,
+        "url" => topic.user&.full_url,
       },
     }
 
@@ -325,7 +325,7 @@ SQL
         "author" => {
           "@type" => "Person",
           "name" => accepted_answer.user&.username,
-          "url" => accepted_answer.user&.full_url
+          "url" => accepted_answer.user&.full_url,
         },
       }
     else
