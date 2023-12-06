@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe UserCardSerializer do
   let(:user) { Fabricate(:user) }
-  let(:serializer) { described_class.new(user, scope: Guardian.basic_user, root: false) }
+  let(:serializer) { described_class.new(user, scope: Guardian.new, root: false) }
   let(:json) { serializer.as_json }
 
   it "accepted_answers serializes number of accepted answers" do
