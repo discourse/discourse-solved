@@ -703,8 +703,10 @@ SQL
     category_id_changes = topic_changes.diff["category_id"].to_a
     tag_changes = topic_changes.diff["tags"].to_a
 
-    old_allowed = Guardian.new.allow_accepted_answers?(category_id_changes[0], tag_changes[0])
-    new_allowed = Guardian.new.allow_accepted_answers?(category_id_changes[1], tag_changes[1])
+    old_allowed =
+      Guardian.basic_user.allow_accepted_answers?(category_id_changes[0], tag_changes[0])
+    new_allowed =
+      Guardian.basic_user.allow_accepted_answers?(category_id_changes[1], tag_changes[1])
 
     options[:refresh_stream] = true if old_allowed != new_allowed
   end

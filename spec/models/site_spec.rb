@@ -5,7 +5,7 @@ require_dependency "site"
 
 describe Site do
   let(:category) { Fabricate(:category) }
-  let(:guardian) { Guardian.new }
+  let(:guardian) { Guardian.basic_user }
 
   before { SiteSetting.show_filter_by_solved_status = true }
 
