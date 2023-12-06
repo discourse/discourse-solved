@@ -5,7 +5,7 @@ require "rails_helper"
 describe TopicAnswerMixin do
   let(:topic) { Fabricate(:topic) }
   let(:post) { Fabricate(:post, topic: topic) }
-  let(:guardian) { Guardian.basic_user }
+  let(:guardian) { Guardian.new }
 
   before do
     topic.custom_fields["accepted_answer_post_id"] = post.id
