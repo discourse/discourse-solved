@@ -175,11 +175,7 @@ function initializeWithApi(api) {
 
     post.get("topic.postStream.posts").forEach((p) => {
       p.set("topic_accepted_answer", true);
-      this.appEvents.trigger(
-        "page:solution-toggled",
-        p,
-        p.topic_accepted_answer
-      );
+      this.appEvents.trigger("page:solution-toggled", p);
       this.appEvents.trigger("post-stream:refresh", { id: p.id });
     });
   });
@@ -190,11 +186,7 @@ function initializeWithApi(api) {
 
     post.get("topic.postStream.posts").forEach((p) => {
       p.set("topic_accepted_answer", false);
-      this.appEvents.trigger(
-        "page:solution-toggled",
-        p,
-        p.topic_accepted_answer
-      );
+      this.appEvents.trigger("page:solution-toggled", p);
       this.appEvents.trigger("post-stream:refresh", { id: p.id });
     });
   });
