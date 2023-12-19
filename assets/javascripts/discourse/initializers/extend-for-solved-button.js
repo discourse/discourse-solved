@@ -173,9 +173,10 @@ function initializeWithApi(api) {
     const post = this.model;
     acceptPost(post);
 
+    this.appEvents.trigger("discourse-solved:solution-toggled", post);
+
     post.get("topic.postStream.posts").forEach((p) => {
       p.set("topic_accepted_answer", true);
-      this.appEvents.trigger("discourse-solved:solution-toggled", p);
       this.appEvents.trigger("post-stream:refresh", { id: p.id });
     });
   });
@@ -184,9 +185,10 @@ function initializeWithApi(api) {
     const post = this.model;
     unacceptPost(post);
 
+    this.appEvents.trigger("discourse-solved:solution-toggled", post);
+
     post.get("topic.postStream.posts").forEach((p) => {
       p.set("topic_accepted_answer", false);
-      this.appEvents.trigger("discourse-solved:solution-toggled", p);
       this.appEvents.trigger("post-stream:refresh", { id: p.id });
     });
   });
