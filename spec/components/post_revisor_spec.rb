@@ -5,7 +5,7 @@ require "post_revisor"
 
 describe PostRevisor do
   fab!(:category) { Fabricate(:category_with_definition) }
-  fab!(:admin) { Fabricate(:admin) }
+  fab!(:admin) { Fabricate(:admin, refresh_auto_groups: true) }
 
   fab!(:category_solved) do
     category = Fabricate(:category_with_definition)
