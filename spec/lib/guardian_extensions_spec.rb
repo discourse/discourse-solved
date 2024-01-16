@@ -36,10 +36,10 @@ describe DiscourseSolved::GuardianExtensions do
       ).to eq(true)
     end
 
-    it "returns true if the user has the correct trust level" do
-      SiteSetting.accept_all_solutions_trust_level = TrustLevel[0]
+    it "returns true if the user is in a group allowed to accept solutions" do
+      SiteSetting.accept_all_solutions_allowed_groups = Group::AUTO_GROUPS[:trust_level_0]
       expect(guardian.can_accept_answer?(topic, post)).to eq(true)
-      SiteSetting.accept_all_solutions_trust_level = TrustLevel[4]
+      SiteSetting.accept_all_solutions_allowed_groups = Group::AUTO_GROUPS[:trust_level_4]
       expect(guardian.can_accept_answer?(topic, post)).to eq(false)
     end
 
