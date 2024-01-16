@@ -26,10 +26,14 @@ after_initialize do
 
   %w[
     ../app/lib/first_accepted_post_solution_validator.rb
+    ../app/lib/accepted_answer_cache.rb
+    ../app/lib/guardian_extensions.rb
     ../app/serializers/concerns/topic_answer_mixin.rb
   ].each { |path| load File.expand_path(path, __FILE__) }
 
   skip_db = defined?(GlobalSetting.skip_db?) && GlobalSetting.skip_db?
+
+  reloadable_patch { |plugin| Guardian.prepend(DiscourseSolved::GuardianExtensions) }
 
   # we got to do a one time upgrade
   if !skip_db && defined?(UserAction::SOLVED)
@@ -502,52 +506,7 @@ SQL
     protected
 
     def reset_accepted_cache
-      ::Guardian.reset_accepted_answer_cache
-    end
-  end
-
-  class ::Guardian
-    @@allowed_accepted_cache = DistributedCache.new("allowed_accepted")
-
-    def self.reset_accepted_answer_cache
-      @@allowed_accepted_cache["allowed"] = begin
-        Set.new(
-          CategoryCustomField.where(
-            name: ::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD,
-            value: "true",
-          ).pluck(:category_id),
-        )
-      end
-    end
-
-    def allow_accepted_answers?(category_id, tag_names = [])
-      return true if SiteSetting.allow_solved_on_all_topics
-
-      if SiteSetting.enable_solved_tags.present? && tag_names.present?
-        allowed_tags = SiteSetting.enable_solved_tags.split("|")
-        is_allowed = (tag_names & allowed_tags).present?
-
-        return true if is_allowed
-      end
-
-      return false if category_id.blank?
-      self.class.reset_accepted_answer_cache unless @@allowed_accepted_cache["allowed"]
-      @@allowed_accepted_cache["allowed"].include?(category_id)
-    end
-
-    def can_accept_answer?(topic, post)
-      return false if !authenticated?
-      return false if !topic || !post || post.whisper?
-      return false if !allow_accepted_answers?(topic.category_id, topic.tags.map(&:name))
-
-      return true if is_staff?
-      return true if current_user.trust_level >= SiteSetting.accept_all_solutions_trust_level
-
-      if respond_to? :can_perform_action_available_to_group_moderators?
-        return true if can_perform_action_available_to_group_moderators?(topic)
-      end
-
-      topic.user_id == current_user.id && !topic.closed && SiteSetting.accept_solutions_topic_author
+      ::DiscourseSolved::AcceptedAnswerCache.reset_accepted_answer_cache
     end
   end
 
