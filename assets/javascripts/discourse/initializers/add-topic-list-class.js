@@ -1,5 +1,5 @@
-import discourseComputed from "discourse-common/utils/decorators";
 import TopicListItem from "discourse/components/topic-list-item";
+import discourseComputed from "discourse-common/utils/decorators";
 
 export default {
   name: "add-topic-list-class",

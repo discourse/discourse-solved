@@ -1,15 +1,15 @@
-import I18n from "I18n";
+import { computed } from "@ember/object";
+import TopicStatusIcons from "discourse/helpers/topic-status-icons";
+import { ajax } from "discourse/lib/ajax";
+import { popupAjaxError } from "discourse/lib/ajax-error";
+import { withPluginApi } from "discourse/lib/plugin-api";
+import { formatUsername } from "discourse/lib/utilities";
 import Topic from "discourse/models/topic";
 import User from "discourse/models/user";
 import TopicStatus from "discourse/raw-views/topic-status";
-import TopicStatusIcons from "discourse/helpers/topic-status-icons";
-import { popupAjaxError } from "discourse/lib/ajax-error";
-import { withPluginApi } from "discourse/lib/plugin-api";
-import { ajax } from "discourse/lib/ajax";
 import PostCooked from "discourse/widgets/post-cooked";
-import { formatUsername } from "discourse/lib/utilities";
 import { iconHTML, iconNode } from "discourse-common/lib/icon-library";
-import { computed } from "@ember/object";
+import I18n from "I18n";
 
 function clearAccepted(topic) {
   const posts = topic.get("postStream.posts");

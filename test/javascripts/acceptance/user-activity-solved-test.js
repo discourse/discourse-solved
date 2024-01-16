@@ -1,6 +1,6 @@
-import { acceptance, query } from "discourse/tests/helpers/qunit-helpers";
-import { test } from "qunit";
 import { visit } from "@ember/test-helpers";
+import { test } from "qunit";
+import { acceptance, query } from "discourse/tests/helpers/qunit-helpers";
 import I18n from "I18n";
 
 acceptance(
