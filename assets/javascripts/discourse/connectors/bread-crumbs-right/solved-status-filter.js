@@ -1,8 +1,8 @@
-import I18n from "I18n";
-import { getOwnerWithFallback } from "discourse-common/lib/get-owner";
 import Component from "@glimmer/component";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
+import { getOwnerWithFallback } from "discourse-common/lib/get-owner";
+import I18n from "I18n";
 
 const QUERY_PARAM_VALUES = {
   solved: "yes",

@@ -6,7 +6,6 @@
 # version: 0.1
 # authors: Sam Saffron
 # url: https://github.com/discourse/discourse-solved
-# transpile_js: true
 
 enabled_site_setting :solved_enabled
 
@@ -569,7 +568,7 @@ SQL
     end
 
     def topic_accepted_answer
-      topic&.custom_fields[::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD].present?
+      topic&.custom_fields&.[](::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD).present?
     end
 
     def topic
