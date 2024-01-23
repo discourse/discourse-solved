@@ -5,6 +5,11 @@
 # https://translate.discourse.org/
 
 nl:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_solved: "Discourse opgelost"
   js:
     notifications:
       alt:
@@ -50,6 +55,8 @@ nl:
       web_hooks:
         solved_event:
           group_name: "Oplossingsgebeurtenis"
+          accepted_solution: "Wanneer een gebruiker een bericht als geaccepteerd antwoord markeert"
+          unaccepted_solution: "Wanneer een gebruiker een bericht als niet-geaccepteerd antwoord markeert"
       api:
         scopes:
           descriptions:

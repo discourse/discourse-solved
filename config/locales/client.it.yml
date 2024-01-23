@@ -5,6 +5,11 @@
 # https://translate.discourse.org/
 
 it:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_solved: "Risoluzione Discourse"
   js:
     notifications:
       alt:
@@ -50,6 +55,8 @@ it:
       web_hooks:
         solved_event:
           group_name: "Evento risolto"
+          accepted_solution: "Quando un utente contrassegna un messaggio come risposta accettata"
+          unaccepted_solution: "Quando un utente contrassegna un messaggio come risposta non accettata"
       api:
         scopes:
           descriptions:

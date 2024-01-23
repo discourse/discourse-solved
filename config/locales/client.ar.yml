@@ -5,6 +5,11 @@
 # https://translate.discourse.org/
 
 ar:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_solved: "حل Discourse"
   js:
     notifications:
       alt:
@@ -53,7 +58,9 @@ ar:
     admin:
       web_hooks:
         solved_event:
-          group_name: "حدث الحل"
+          group_name: "حدث تم حله"
+          accepted_solution: "عندما يضع مستخدم علامة على أحد المنشورات على أنه الإجابة المقبولة"
+          unaccepted_solution: "عندما يضع مستخدم علامة على أحد المنشورات على أنه الإجابة غير المقبولة"
       api:
         scopes:
           descriptions:

@@ -5,6 +5,11 @@
 # https://translate.discourse.org/
 
 ru:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_solved: "Discourse для Solved"
   js:
     notifications:
       alt:
@@ -52,6 +57,8 @@ ru:
       web_hooks:
         solved_event:
           group_name: "Событие решения вопроса"
+          accepted_solution: "Когда пользователь отмечает публикацию как принятый ответ"
+          unaccepted_solution: "Когда пользователь отмечает публикацию как непринятый ответ"
       api:
         scopes:
           descriptions:

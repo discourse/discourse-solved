@@ -5,6 +5,11 @@
 # https://translate.discourse.org/
 
 zh_CN:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_solved: "Discourse 已解决"
   js:
     notifications:
       alt:
@@ -49,6 +54,8 @@ zh_CN:
       web_hooks:
         solved_event:
           group_name: "已解决的事件"
+          accepted_solution: "当用户将帖子标记为被接受的回答时"
+          unaccepted_solution: "当用户将帖子标记为遭拒的回答时"
       api:
         scopes:
           descriptions:
