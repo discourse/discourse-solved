@@ -5,6 +5,11 @@
 # https://translate.discourse.org/
 
 fi:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_solved: "Discoursen ratkaistu"
   js:
     notifications:
       alt:
@@ -49,7 +54,9 @@ fi:
     admin:
       web_hooks:
         solved_event:
-          group_name: "Ratkaistu tapahtuma"
+          group_name: "Ratkaistu-tapahtuma"
+          accepted_solution: "Kun käyttäjä merkitsee viestin hyväksytyksi vastaukseksi"
+          unaccepted_solution: "Kun käyttäjä merkitsee viestin hyväksymättömäksi vastaukseksi"
       api:
         scopes:
           descriptions:

@@ -5,6 +5,11 @@
 # https://translate.discourse.org/
 
 tr_TR:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_solved: "Discourse Çözüldü"
   js:
     notifications:
       alt:
@@ -50,6 +55,8 @@ tr_TR:
       web_hooks:
         solved_event:
           group_name: "Çözülmüş Olay"
+          accepted_solution: "Bir kullanıcı bir gönderiyi kabul edilen yanıt olarak işaretlediğinde"
+          unaccepted_solution: "Bir kullanıcı bir gönderiyi kabul edilmeyen yanıt olarak işaretlediğinde"
       api:
         scopes:
           descriptions:
