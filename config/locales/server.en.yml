@@ -5,6 +5,7 @@ en:
     solved_enabled: "Enable solved plugin, allow users to select solutions for topics"
     allow_solved_on_all_topics: "Allow users to select solutions on all topics (when unchecked, solutions can be enabled per category or tag)"
     accept_all_solutions_trust_level: "Minimum trust level required to accept solutions on any topic (even when not OP)"
+    accept_all_solutions_allowed_groups: "Groups that are allowed to accept solutions on any topic (even when not OP)"
     empty_box_on_unsolved: "Display an empty box next to unsolved topics"
     solved_quote_length: "Number of characters to quote when displaying the solution under the first post"
     solved_topics_auto_close_hours: "Auto close topic (n) hours after the last reply once the topic has been marked as solved. Set to 0 to disable auto closing."
@@ -15,6 +16,9 @@ en:
     solved_add_schema_markup: "Add QAPage schema markup to HTML."
     enable_solved_tags: "Tags that will allow users to select solutions."
     prioritize_solved_topics_in_search: "Prioritize solved topics in search results."
+
+    keywords:
+      accept_all_solutions_allowed_groups: "accept_all_solutions_trust_level"
 
   reports:
     accepted_solutions:
