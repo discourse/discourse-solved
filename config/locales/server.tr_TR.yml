@@ -10,6 +10,7 @@ tr_TR:
     solved_enabled: "Çözüldü eklentisini etkinleştirin, kullanıcıların konularda yanıtları çözüldü olarak seçmesine izin verin"
     allow_solved_on_all_topics: "Kullanıcıların tüm konularda çözüm seçmesine izin verin (işaretli olmadığında, çözümler kategori veya etiket başına etkinleştirilebilir)"
     accept_all_solutions_trust_level: "Herhangi bir konudaki çözümleri kabul etmek için gereken asgari güven seviyesi (OP olmasa bile)"
+    accept_all_solutions_allowed_groups: "Herhangi bir konuda çözüm kabul etmesine izin verilen gruplar (OP olmasa bile)"
     empty_box_on_unsolved: "Çözülmemiş konuların yanında boş bir kutu görüntüle"
     solved_quote_length: "İlk gönderinin altındaki çözümü görüntülerken alıntı yapılacak karakter sayısı"
     solved_topics_auto_close_hours: "Konu, çözüldü olarak işaretlendiğinde son yanıttan (n) saat sonra konuyu otomatik kapat. Otomatik kapatmayı devre dışı bırakmak için 0 olarak ayarlayın."
@@ -20,6 +21,8 @@ tr_TR:
     solved_add_schema_markup: "HTML'ye QAPage şema işaretlemesi ekleyin."
     enable_solved_tags: "Kullanıcıların çözüm seçmesine olanak tanıyacak etiketler."
     prioritize_solved_topics_in_search: "Arama sonuçlarında çözülmüş konulara öncelik verin."
+    keywords:
+      accept_all_solutions_allowed_groups: "accept_all_solutions_trust_level"
   reports:
     accepted_solutions:
       title: "Kabul edilen çözümler"

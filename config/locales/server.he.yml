@@ -10,6 +10,7 @@ he:
     solved_enabled: "הפעלת תוסף הפתרונות, מאפשר למשתמשים לבחור פתרונות לנושאים"
     allow_solved_on_all_topics: "לאפשר למשתמשים לבחור פתרונות בכל הנושאים (כשלא מסומן, ניתן להפעיל פתרונות לפי קטגוריה או תגית)"
     accept_all_solutions_trust_level: "רמת האמון המזערית שנדרשת לקבלת פתרונות בכל נושא שהוא (אפילו לא בתור המפרסם המקורי)"
+    accept_all_solutions_allowed_groups: "קבוצות שמורשות לקבל פתרונות על כל נושא שהוא (אפילו לא בתור המפרסם המקורי)"
     empty_box_on_unsolved: "להציג תיבה ריקה ליד הנושאים שלא נפתרו"
     solved_quote_length: "מספר התווים לציטוט בעת הצגת הפתרון תחת הפוסט הראשון"
     solved_topics_auto_close_hours: "לסגור נושא אוטומטית (n) שעות לאחר התגובה האחרונה כאשר הנושא סומן כפתור. יש להגדיר כ־0 להשבתת הסגירה האוטומטית."
@@ -20,6 +21,8 @@ he:
     solved_add_schema_markup: "להוסיף סימון סכמת QAPage ל־HTML."
     enable_solved_tags: "תגיות שיאפשרו למשתמשים לבחור פתרונות."
     prioritize_solved_topics_in_search: "תעדוף נושאים שנפתרו בתוצאות החיפוש."
+    keywords:
+      accept_all_solutions_allowed_groups: "accept_all_solutions_trust_level (דרגת אמון לקבלת כל הפתרונות)"
   reports:
     accepted_solutions:
       title: "פתרונות מקובלים"

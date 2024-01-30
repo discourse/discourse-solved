@@ -9,7 +9,7 @@ ru:
     admin:
       site_settings:
         categories:
-          discourse_solved: "Discourse для Solved"
+          discourse_solved: "Плагин «Решённые» для Discourse"
   js:
     notifications:
       alt:

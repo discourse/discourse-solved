@@ -9,7 +9,7 @@ zh_CN:
     admin:
       site_settings:
         categories:
-          discourse_solved: "Discourse 已解决"
+          discourse_solved: "Discourse Solved"
   js:
     notifications:
       alt:
