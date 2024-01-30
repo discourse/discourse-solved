@@ -10,6 +10,7 @@ ar:
     solved_enabled: "تفعيل المكوِّن الإضافي للحل السماح للمستخدمين باختيار حلول لمواضيعهم"
     allow_solved_on_all_topics: "السماح للمستخدمين بتحديد الحلول في جميع الموضوعات (عند إلغاء التحديد، يمكن تفعيل الحلول لكل فئة أو وسم)"
     accept_all_solutions_trust_level: "الحد الأدنى من مستوى الثقة المطلوب لقبول الحلول في أي موضوع (حتى لو لم يكن الناشر الأصلي)"
+    accept_all_solutions_allowed_groups: "المجموعات المسموح لها بقبول الحلول في أي موضوع (حتى عندما لا تكون الناشر الأصلي)"
     empty_box_on_unsolved: "عرض مربع فارغ بجوار الموضوعات غير المحلولة"
     solved_quote_length: "عدد الأحرف التي يجب اقتباسها عند عرض الحل تحت المنشور الأول"
     solved_topics_auto_close_hours: "إغلاق الموضوع تلقائيًا بعد مرور (n) من الساعات على آخر رد بمجرد وضع علامة على الموضوع على أنه محلول. اضبط القيمة على 0 لإيقاف الإغلاق التلقائي."
@@ -20,6 +21,8 @@ ar:
     solved_add_schema_markup: "إضافة علامات مخطط Qapage إلى HTML"
     enable_solved_tags: "الوسوم التي ستسمح للمستخدمين بتحديد الحلول"
     prioritize_solved_topics_in_search: "منح الأولوية للموضوعات التي تم حلها في نتائج البحث."
+    keywords:
+      accept_all_solutions_allowed_groups: "accept_all_solutions_trust_level"
   reports:
     accepted_solutions:
       title: "الحلول المقبولة"

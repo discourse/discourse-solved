@@ -10,6 +10,7 @@ ja:
     solved_enabled: "解決済みプラグインを有効にし、ユーザーがトピックの解決策を選択できるようにする"
     allow_solved_on_all_topics: "すべてのトピックでユーザーが解決策を選択することを許可する（オフの場合、解決策はカテゴリごとまたはタグごとに有効にできます）"
     accept_all_solutions_trust_level: "すべてのトピックで解決策を受け入れるために必要な最低信頼レベル（OP でない場合でも）"
+    accept_all_solutions_allowed_groups: "すべてのトピックで解決策を受け入れることが許可されているグループ (OP でない場合でも)"
     empty_box_on_unsolved: "未解決のトピックの横に空のボックスを表示する"
     solved_quote_length: "最初の投稿の下に解決策を表示する場合に引用する文字数"
     solved_topics_auto_close_hours: "トピックが解決済みとマークされたら、最後の返信から（n）時間後にトピックを自動クローズします。自動クローズを無効にする場合は 0 に設定します。"
@@ -20,6 +21,8 @@ ja:
     solved_add_schema_markup: "QAPage スキーママークアップを HTML に追加します。"
     enable_solved_tags: "ユーザーが解決策を選択できるようにするタグ。"
     prioritize_solved_topics_in_search: "検索結果では解決済みのトピックが優先されます。"
+    keywords:
+      accept_all_solutions_allowed_groups: "accept_all_solutions_trust_level"
   reports:
     accepted_solutions:
       title: "受け入れられた解決策"

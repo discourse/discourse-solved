@@ -10,6 +10,7 @@ nl:
     solved_enabled: "Solved-plug-in inschakelen, gebruikers kunnen oplossingen voor topics selecteren"
     allow_solved_on_all_topics: "Sta gebruikers toe om oplossingen te selecteren voor alle topics (indien niet aangevinkt, kunnen oplossingen per categorie of tag worden ingeschakeld)"
     accept_all_solutions_trust_level: "Minimaal vertrouwensniveau dat vereist is om oplossingen te accepteren bij een topic (ook indien niet de oorspronkelijke auteur)"
+    accept_all_solutions_allowed_groups: "Groepen die oplossingen mogen accepteren bij een topic (ook indien niet de oorspronkelijke auteur)"
     empty_box_on_unsolved: "Leeg vak weergeven naast onopgeloste topics"
     solved_quote_length: "Aantal te citeren tekens bij weergeven van de oplossing onder het eerste bericht"
     solved_topics_auto_close_hours: "Topic (n) uur na het laatste antwoord automatisch sluiten zodra het topic als opgelost is gemarkeerd. Stel dit in op 0 om automatisch sluiten uit te schakelen."
@@ -20,6 +21,8 @@ nl:
     solved_add_schema_markup: "Voeg QAPage-schemaopmaak toe aan HTML."
     enable_solved_tags: "Tags waarbij gebruikers oplossingen kunnen selecteren."
     prioritize_solved_topics_in_search: "Geef prioriteit aan opgeloste topics in zoekresultaten."
+    keywords:
+      accept_all_solutions_allowed_groups: "accept_all_solutions_trust_level"
   reports:
     accepted_solutions:
       title: "Geaccepteerde oplossingen"

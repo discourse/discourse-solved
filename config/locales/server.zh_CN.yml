@@ -10,6 +10,7 @@ zh_CN:
     solved_enabled: "启用“已解决”插件，允许用户为话题选择解决方案"
     allow_solved_on_all_topics: "允许用户选择所有话题的解决方案（未选中时，可以按类别或标签启用解决方案）"
     accept_all_solutions_trust_level: "在任何话题中接受解决方案所需的最小信任级别（即使不是 OP）"
+    accept_all_solutions_allowed_groups: "能够接受任何话题解决方案的群组（即使不是 OP）"
     empty_box_on_unsolved: "在未解决的话题旁显示一个空框"
     solved_quote_length: "在第一个帖子下显示解决方案时引用的字符数量"
     solved_topics_auto_close_hours: "当话题被标记为已解决后，在最后一条回复 (n) 小时后自动关闭话题。设置为 0 将禁用自动关闭。"
@@ -20,6 +21,8 @@ zh_CN:
     solved_add_schema_markup: "将 QAPage 架构标记添加到 HTML。"
     enable_solved_tags: "允许用户选择解决方案的标签。"
     prioritize_solved_topics_in_search: "在搜索结果中优先显示已解决的话题。"
+    keywords:
+      accept_all_solutions_allowed_groups: "accept_all_solutions_trust_level"
   reports:
     accepted_solutions:
       title: "已被接受的解决方案"

@@ -10,6 +10,7 @@ de:
     solved_enabled: "Aktiviere das solved-Plug-in; erlaubt Benutzern, Lösungen für Themen auszuwählen"
     allow_solved_on_all_topics: "Benutzern erlauben, Lösungen für alle Themen auszuwählen (wenn diese Option nicht aktiviert ist, können Lösungen nach Kategorie oder Schlagwort aktiviert werden)"
     accept_all_solutions_trust_level: "Minimale Vertrauensstufe, die das Akzeptieren von Lösungen in jedem Thema erlaubt (auch wenn nicht selbst erstellt)"
+    accept_all_solutions_allowed_groups: "Gruppen, die Lösungen zu jedem Thema akzeptieren dürfen (auch wenn nicht selbst erstellt)"
     empty_box_on_unsolved: "Zeige eine leere Box neben ungelösten Themen"
     solved_quote_length: "Anzahl der Zeichen, die zitiert werden, wenn die Lösung unterhalb des ersten Beitrags angezeigt wird"
     solved_topics_auto_close_hours: "Thema automatisch (n) Stunden nach der letzten Antwort schließen, sobald das Thema als gelöst markiert wurde. Auf 0 setzen, um automatisches Schließen zu deaktivieren."
@@ -20,6 +21,8 @@ de:
     solved_add_schema_markup: "Füge QAPage-Schema-Mark-up zu HTML hinzu."
     enable_solved_tags: "Schlagwörter, die es Benutzern ermöglichen, Lösungen auszuwählen."
     prioritize_solved_topics_in_search: "Gelöste Themen in den Suchergebnissen priorisieren."
+    keywords:
+      accept_all_solutions_allowed_groups: "accept_all_solutions_trust_level"
   reports:
     accepted_solutions:
       title: "Akzeptierte Lösungen"
