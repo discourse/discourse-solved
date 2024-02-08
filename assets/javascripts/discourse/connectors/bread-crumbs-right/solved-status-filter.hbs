@@ -1,10 +1,12 @@
 {{#if this.siteSettings.solved_enabled}}
-  <ComboBox
+  <li>
+    <ComboBox
     @content={{this.statuses}}
     @value={{this.status}}
     @valueProperty="value"
     @options={{hash caretDownIcon="caret-right" caretUpIcon="caret-down"}}
     @onChange={{this.changeStatus}}
     class="solved-status-filter"
-  />
+    />
+  </li>
 {{/if}}
