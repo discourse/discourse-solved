@@ -10,6 +10,7 @@ cs:
     solved_enabled: "Zapnout plugin \"vyřešeno\", povolit uživatelům zvolit řešení témat"
     allow_solved_on_all_topics: "Povolit uživatelům výběr řešení pro všechna témata (pokud není zaškrtnuto, lze povolit řešení pro jednotlivé kategorie nebo tagy)."
     accept_all_solutions_trust_level: "Minimální důvěryhodnost požadovaná pro schválení řešení jakéhokoliv tématu (i když není OP)"
+    accept_all_solutions_allowed_groups: "Skupiny, které mohou přijímat řešení na jakékoli téma (i když nejsou autorem)"
     empty_box_on_unsolved: "Zobrazit prázdný box vedle nevyřešených témat"
     solved_quote_length: "Počet citovaných znaků daného řešení tématu pod prvním příspěvkem"
     solved_topics_auto_close_hours: "Automaticky zavřít téma (n) hodin po poslední odpovědi, jakmile bylo téma označeno jako vyřešené. Nastavením na 0 deaktivujete automatické zavírání."
@@ -20,6 +21,8 @@ cs:
     solved_add_schema_markup: "Přidání do HTML značky schématu QAPage."
     enable_solved_tags: "Štítky, které umožní uživatelům vybrat řešení."
     prioritize_solved_topics_in_search: "Upřednostnit ve výsledcích vyhledávání vyřešená témata."
+    keywords:
+      accept_all_solutions_allowed_groups: "accept_all_solutions_trust_level"
   reports:
     accepted_solutions:
       title: "Přijatá řešení"
