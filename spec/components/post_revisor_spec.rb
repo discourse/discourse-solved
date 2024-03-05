@@ -41,7 +41,7 @@ describe PostRevisor do
     fab!(:tag1) { Fabricate(:tag) }
     fab!(:tag2) { Fabricate(:tag) }
 
-    fab!(:topic) { Fabricate(:topic) }
+    fab!(:topic)
     let(:post) { Fabricate(:post, topic: topic) }
 
     it "sets the refresh option after adding an allowed tag" do
