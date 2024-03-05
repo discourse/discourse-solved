@@ -340,7 +340,7 @@ RSpec.describe "Managing Posts solved status" do
   end
 
   context "with group moderators" do
-    fab!(:group_user) { Fabricate(:group_user) }
+    fab!(:group_user)
     let(:user_gm) { group_user.user }
     let(:group) { group_user.group }
 

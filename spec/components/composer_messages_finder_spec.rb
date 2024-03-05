@@ -6,8 +6,8 @@ require "composer_messages_finder"
 
 describe ComposerMessagesFinder do
   describe ".check_topic_is_solved" do
-    fab!(:user) { Fabricate(:user) }
-    fab!(:topic) { Fabricate(:topic) }
+    fab!(:user)
+    fab!(:topic)
     fab!(:post) { Fabricate(:post, topic: topic, user: Fabricate(:user)) }
 
     before { SiteSetting.disable_solved_education_message = false }
