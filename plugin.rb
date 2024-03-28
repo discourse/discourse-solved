@@ -368,20 +368,29 @@ after_initialize do
           )",
         )
       else
+        tag_ids = Tag.where(name: SiteSetting.enable_solved_tags.split("|")).pluck(:id)
+
         posts.where(
           "topics.id NOT IN (
           SELECT tc.topic_id
           FROM topic_custom_fields tc
           WHERE tc.name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}' AND
                           tc.value IS NOT NULL
-          ) AND topics.id IN (
+          ) AND (topics.id IN (
             SELECT top.id
             FROM topics top
             INNER JOIN category_custom_fields cc
             ON top.category_id = cc.category_id
             WHERE cc.name = '#{::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD}' AND
                           cc.value = 'true'
-          )",
+          ) OR topics.id IN (
+            SELECT top.id
+            FROM topics top
+            INNER JOIN topic_tags tt
+            ON top.id = tt.topic_id
+            WHERE tt.tag_id IN (?)
+          ))",
+          tag_ids,
         )
       end
     end
