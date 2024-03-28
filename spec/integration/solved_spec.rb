@@ -63,12 +63,20 @@ RSpec.describe "Managing Posts solved status" do
         category_custom_field.save
         category
       end
+      fab!(:tag) { Fabricate(:tag, name: "tag1") }
       fab!(:topic_unsolved) do
         Fabricate(
           :custom_topic,
           user: user,
           category: category_enabled,
           custom_topic_name: ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD,
+        )
+      end
+      fab!(:topic_unsolved_2) do
+        Fabricate(
+          :topic,
+          user: user,
+          tags: [tag],
         )
       end
       fab!(:topic_solved) do
@@ -96,6 +104,7 @@ RSpec.describe "Managing Posts solved status" do
         )
       end
       fab!(:post_unsolved) { Fabricate(:post, topic: topic_unsolved) }
+      fab!(:post_unsolved_2) { Fabricate(:post, topic: topic_unsolved_2) }
       fab!(:post_solved) do
         post = Fabricate(:post, topic: topic_solved)
         DiscourseSolved.accept_answer!(post, Discourse.system_user)
@@ -105,10 +114,12 @@ RSpec.describe "Managing Posts solved status" do
       fab!(:post_disabled_2) { Fabricate(:post, topic: topic_disabled_2) }
 
       before do
+        SiteSetting.enable_solved_tags = tag.name
         SearchIndexer.enable
         Jobs.run_immediately!
 
         SearchIndexer.index(topic_unsolved, force: true)
+        SearchIndexer.index(topic_unsolved_2, force: true)
         SearchIndexer.index(topic_solved, force: true)
         SearchIndexer.index(topic_disabled_1, force: true)
         SearchIndexer.index(topic_disabled_2, force: true)
@@ -120,17 +131,23 @@ RSpec.describe "Managing Posts solved status" do
         describe "when allow solved on all topics is disabled" do
           before { SiteSetting.allow_solved_on_all_topics = false }
 
-          it "only returns posts where 'Allow topic owner and staff to mark a reply as the solution' is enabled and post is not solved" do
+          it "only returns unsolved posts from categories and tags where solving is enabled" do
             result = Search.execute("status:unsolved")
-            expect(result.posts.pluck(:id)).to match_array([post_unsolved.id])
+            expect(result.posts.pluck(:id)).to match_array([post_unsolved.id, post_unsolved_2.id])
+          end
+
+          it "returns the correct results when combining search with a tag" do
+            result = Search.execute("status:unsolved tag:tag1")
+            expect(result.posts.pluck(:id)).to match_array([post_unsolved_2.id])
           end
         end
+
         describe "when allow solved on all topics is enabled" do
           before { SiteSetting.allow_solved_on_all_topics = true }
           it "only returns posts where the post is not solved" do
             result = Search.execute("status:unsolved")
             expect(result.posts.pluck(:id)).to match_array(
-              [post_unsolved.id, post_disabled_1.id, post_disabled_2.id],
+              [post_unsolved.id, post_unsolved_2.id, post_disabled_1.id, post_disabled_2.id],
             )
           end
         end
