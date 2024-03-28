@@ -389,7 +389,8 @@ after_initialize do
             INNER JOIN topic_tags tt
             ON top.id = tt.topic_id
             WHERE tt.tag_id IN (?)
-          ))", tag_ids
+          ))",
+          tag_ids,
         )
       end
     end

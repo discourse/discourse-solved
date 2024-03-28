@@ -72,13 +72,7 @@ RSpec.describe "Managing Posts solved status" do
           custom_topic_name: ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD,
         )
       end
-      fab!(:topic_unsolved_2) do
-        Fabricate(
-          :topic,
-          user: user,
-          tags: [tag],
-        )
-      end
+      fab!(:topic_unsolved_2) { Fabricate(:topic, user: user, tags: [tag]) }
       fab!(:topic_solved) do
         Fabricate(
           :custom_topic,
