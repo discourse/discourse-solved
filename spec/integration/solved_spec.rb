@@ -63,7 +63,7 @@ RSpec.describe "Managing Posts solved status" do
         category_custom_field.save
         category
       end
-      fab!(:tag) { Fabricate(:tag, name: "tag1") }
+      fab!(:tag)
       fab!(:topic_unsolved) do
         Fabricate(
           :custom_topic,
@@ -136,8 +136,8 @@ RSpec.describe "Managing Posts solved status" do
             expect(result.posts.pluck(:id)).to match_array([post_unsolved.id, post_unsolved_2.id])
           end
 
-          it "returns the correct results when combining search with a tag" do
-            result = Search.execute("status:unsolved tag:tag1")
+          it "returns the filtered results when combining search with a tag" do
+            result = Search.execute("status:unsolved tag:#{tag.name}")
             expect(result.posts.pluck(:id)).to match_array([post_unsolved_2.id])
           end
         end
