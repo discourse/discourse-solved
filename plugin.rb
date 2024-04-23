@@ -622,4 +622,13 @@ after_initialize do
       end
     end
   end
+
+  if defined?(DiscourseAssign) && SiteSetting.assign_to_status_on_solved
+    on(:accepted_solution) do |post|
+      Assigner.new(post.topic, post.acting_user).assign(
+        post.acting_user,
+        status: SiteSetting.status_to_assign_on_solved,
+      )
+    end
+  end
 end

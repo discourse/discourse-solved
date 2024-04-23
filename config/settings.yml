@@ -32,6 +32,13 @@ discourse_solved:
     client: true
   notify_on_staff_accept_solved:
     default: false
+  prevent_assign_notification:
+    default: false
+  assign_to_status_on_solved:
+    default: false
+  status_to_assign_on_solved:
+    type: string
+    default: "Done"
   disable_solved_education_message:
     default: false
   accept_solutions_topic_author:
