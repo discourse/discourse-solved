@@ -32,13 +32,11 @@ discourse_solved:
     client: true
   notify_on_staff_accept_solved:
     default: false
-  prevent_assign_notification:
+  ignore_solved_topics_in_assigned_reminder:
     default: false
-  assign_to_status_on_solved:
-    default: false
-  status_to_assign_on_solved:
+  assignment_status_on_solve:
     type: string
-    default: "Done"
+    default: ""
   disable_solved_education_message:
     default: false
   accept_solutions_topic_author:

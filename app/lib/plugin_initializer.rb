@@ -17,7 +17,7 @@ module DiscourseSolved
   class AssignsRemainderForTopicsQuery < PluginInitializer
     def apply_plugin_api
       plugin.register_modifier(:assigns_reminder_assigned_topics_query) do |query|
-        next query if !SiteSetting.prevent_assign_notification
+        next query if !SiteSetting.ignore_solved_topics_in_assigned_reminder
         query.where(
           "topics.id NOT IN (
             SELECT topic_id
