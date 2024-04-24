@@ -367,7 +367,7 @@ RSpec.describe "Managing Posts solved status" do
     end
   end
 
-  context "with discourse-assign installed" , if: defined?(DiscourseAssign) do
+  context "with discourse-assign installed", if: defined?(DiscourseAssign) do
     let(:admin) { Fabricate(:admin) }
     before do
       SiteSetting.solved_enabled = true
@@ -380,15 +380,11 @@ RSpec.describe "Managing Posts solved status" do
 
     it "update all assignments to this status when a post is accepted" do
       Jobs.run_immediately!
-      assigner = Assigner.new(
-        p1.topic,
-        admin
-      )
+      assigner = Assigner.new(p1.topic, admin)
       result = assigner.assign(admin)
       expect(result[:success]).to eq(true)
 
       expect(p1.topic.assignment.status).to eq("New")
-
 
       # post "/solution/accept.json", params: { id: p1.id }
       # expect(response.status).to eq(200)
@@ -402,8 +398,6 @@ RSpec.describe "Managing Posts solved status" do
       # It runs inside of a  DistributedMutex.synchronize
 
       expect(p1.topic.assignment.reload.status).to eq("Done")
-
     end
-
   end
 end
