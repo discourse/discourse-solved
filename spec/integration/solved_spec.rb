@@ -366,4 +366,44 @@ RSpec.describe "Managing Posts solved status" do
       expect(response.status).to eq(200)
     end
   end
+
+  context "with discourse-assign installed" , if: defined?(DiscourseAssign) do
+    let(:admin) { Fabricate(:admin) }
+    before do
+      SiteSetting.solved_enabled = true
+      SiteSetting.assign_enabled = true
+      SiteSetting.enable_assign_status = true
+      SiteSetting.assigns_public = true
+      SiteSetting.assignment_status_on_solve = "Done"
+      sign_in(admin)
+    end
+
+    it "update all assignments to this status when a post is accepted" do
+      Jobs.run_immediately!
+      assigner = Assigner.new(
+        p1.topic,
+        admin
+      )
+      result = assigner.assign(admin)
+      expect(result[:success]).to eq(true)
+
+      expect(p1.topic.assignment.status).to eq("New")
+
+
+      # post "/solution/accept.json", params: { id: p1.id }
+      # expect(response.status).to eq(200)
+
+      DiscourseSolved.accept_answer!(p1, admin)
+
+      expect(p1.reload.custom_fields["is_accepted_answer"]).to eq("true")
+
+      # still does not trigger
+      # DiscourseEvent.trigger(:accepted_solution, p1)
+      # It runs inside of a  DistributedMutex.synchronize
+
+      expect(p1.topic.assignment.reload.status).to eq("Done")
+
+    end
+
+  end
 end
