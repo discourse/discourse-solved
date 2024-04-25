@@ -397,4 +397,30 @@ RSpec.describe "Managing Posts solved status" do
       expect(p1.topic.assignment.reload.status).to eq("Done")
     end
   end
+
+  context "with using assigns_reminder_assigned_topics_query modifier" do
+    class DummyClass
+      def test
+        DiscoursePluginRegistry.apply_modifier(:assigns_reminder_assigned_topics_query, Topic.all)
+      end
+    end
+
+    before { SiteSetting.ignore_solved_topics_in_assigned_reminder = true }
+
+    it "should not include solved topics in the query" do
+      topic = Fabricate(:topic)
+      topic2 = Fabricate(:topic)
+      topic3 = Fabricate(:topic)
+      post = Fabricate(:post, topic: topic)
+
+      DiscourseSolved.accept_answer!(post, Discourse.system_user)
+
+      topics = DummyClass.new.test.to_a
+
+      expect(topics).not_to include(topic)
+
+      expect(topics).to include(topic2)
+      expect(topics).to include(topic3)
+    end
+  end
 end

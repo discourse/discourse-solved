@@ -14,16 +14,15 @@ module DiscourseSolved
     end
   end
 
-  class AssignsRemainderForTopicsQuery < PluginInitializer
+  class AssignsReminderForTopicsQuery < PluginInitializer
     def apply_plugin_api
       plugin.register_modifier(:assigns_reminder_assigned_topics_query) do |query|
         next query if !SiteSetting.ignore_solved_topics_in_assigned_reminder
-        query.where(
-          "topics.id NOT IN (
-            SELECT topic_id
-            FROM topic_custom_fields
-            WHERE name = 'accepted_answer_post_id'
-          )",
+        query.where.not(
+          id:
+            TopicCustomField.where(
+              name: ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD,
+            ).pluck(:topic_id),
         )
       end
     end
