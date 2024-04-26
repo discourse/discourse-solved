@@ -416,7 +416,6 @@ RSpec.describe "Managing Posts solved status" do
         result3 = assigner3.assign(user)
         expect(result3[:success]).to eq(true)
 
-
         reminder = PendingAssignsReminder.new
         topics = reminder.send(:assigned_topics, user, order: :asc)
         expect(topics.to_a.length).to eq(3)
