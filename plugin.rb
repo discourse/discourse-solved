@@ -45,6 +45,8 @@ after_initialize do
   require_relative "app/lib/web_hook_extension"
   require_relative "app/serializers/concerns/topic_answer_mixin"
 
+  require_relative "app/lib/plugin_initializers/assigned_reminder_exclude_solved"
+  DiscourseSolved::AssignsReminderForTopicsQuery.new(self).apply_plugin_api
   module ::DiscourseSolved
     def self.accept_answer!(post, acting_user, topic: nil)
       topic ||= post.topic
@@ -583,6 +585,16 @@ after_initialize do
               ],
             },
             required: true
+    end
+  end
+
+  if defined?(DiscourseAssign)
+    on(:accepted_solution) do |post|
+      next if SiteSetting.assignment_status_on_solve.blank?
+      Assigner.new(post.topic, post.acting_user).assign(
+        post.acting_user,
+        status: SiteSetting.assignment_status_on_solve,
+      )
     end
   end
 end

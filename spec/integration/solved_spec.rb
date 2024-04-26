@@ -428,4 +428,62 @@ RSpec.describe "Managing Posts solved status" do
       expect(response.status).to eq(200)
     end
   end
+
+  context "with discourse-assign installed", if: defined?(DiscourseAssign) do
+    let(:admin) { Fabricate(:admin) }
+    fab!(:group)
+    before do
+      SiteSetting.solved_enabled = true
+      SiteSetting.assign_enabled = true
+      SiteSetting.enable_assign_status = true
+      SiteSetting.assign_allowed_on_groups = "#{group.id}"
+      SiteSetting.assigns_public = true
+      SiteSetting.assignment_status_on_solve = "Done"
+      SiteSetting.ignore_solved_topics_in_assigned_reminder = false
+      group.add(p1.acting_user)
+      group.add(user)
+
+      sign_in(user)
+    end
+    describe "updating assignment status on solve when assignment_status_on_solve is set" do
+      it "update all assignments to this status when a post is accepted" do
+        assigner = Assigner.new(p1.topic, user)
+        result = assigner.assign(user)
+        expect(result[:success]).to eq(true)
+
+        expect(p1.topic.assignment.status).to eq("New")
+        DiscourseSolved.accept_answer!(p1, user)
+
+        expect(p1.reload.custom_fields["is_accepted_answer"]).to eq("true")
+        expect(p1.topic.assignment.reload.status).to eq("Done")
+      end
+
+      describe "assigned topic reminder"
+      it "excludes solved topics when ignore_solved_topics_in_assigned_reminder is false" do
+        other_topic = Fabricate(:topic, title: "Topic that should be there")
+        post = Fabricate(:post, topic: other_topic, user: user)
+
+        other_topic2 = Fabricate(:topic, title: "Topic that should be there2")
+        post2 = Fabricate(:post, topic: other_topic2, user: user)
+
+        Assigner.new(post.topic, user).assign(user)
+        Assigner.new(post2.topic, user).assign(user)
+
+        reminder = PendingAssignsReminder.new
+        topics = reminder.send(:assigned_topics, user, order: :asc)
+        expect(topics.to_a.length).to eq(2)
+
+        DiscourseSolved.accept_answer!(post2, Discourse.system_user)
+        topics = reminder.send(:assigned_topics, user, order: :asc)
+        expect(topics.to_a.length).to eq(2)
+        expect(topics).to include(other_topic2)
+
+        SiteSetting.ignore_solved_topics_in_assigned_reminder = true
+        topics = reminder.send(:assigned_topics, user, order: :asc)
+        expect(topics.to_a.length).to eq(1)
+        expect(topics).not_to include(other_topic2)
+        expect(topics).to include(other_topic)
+      end
+    end
+  end
 end
