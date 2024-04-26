@@ -383,39 +383,40 @@ RSpec.describe "Managing Posts solved status" do
 
       sign_in(user)
     end
+    describe "when a post is accepted" do
+      it "update all assignments to this status when a post is accepted" do
+        assigner = Assigner.new(p1.topic, user)
+        result = assigner.assign(user)
+        expect(result[:success]).to eq(true)
 
-    it "update all assignments to this status when a post is accepted" do
-      assigner = Assigner.new(p1.topic, user)
-      result = assigner.assign(user)
-      expect(result[:success]).to eq(true)
+        expect(p1.topic.assignment.status).to eq("New")
+        DiscourseSolved.accept_answer!(p1, user)
 
-      expect(p1.topic.assignment.status).to eq("New")
-      DiscourseSolved.accept_answer!(p1, user)
+        expect(p1.reload.custom_fields["is_accepted_answer"]).to eq("true")
+        expect(p1.topic.assignment.reload.status).to eq("Done")
+      end
 
-      expect(p1.reload.custom_fields["is_accepted_answer"]).to eq("true")
-      expect(p1.topic.assignment.reload.status).to eq("Done")
-    end
+      it "should not include solved topics in the query" do
+        other_topic = Fabricate(:topic, title: "Topic that should be there")
+        post = Fabricate(:post, topic: other_topic, user: user)
 
-    it "should not include solved topics in the query" do
-      other_topic = Fabricate(:topic, title: "Topic that should be there")
-      post = Fabricate(:post, topic: other_topic, user: user)
+        assigner1 = Assigner.new(p1.topic, user)
+        result1 = assigner1.assign(user)
+        expect(result1[:success]).to eq(true)
 
-      assigner1 = Assigner.new(p1.topic, user)
-      result1 = assigner1.assign(user)
-      expect(result1[:success]).to eq(true)
+        assigner2 = Assigner.new(post.topic, user)
+        result2 = assigner2.assign(user)
+        expect(result2[:success]).to eq(true)
 
-      assigner2 = Assigner.new(post.topic, user)
-      result2 = assigner2.assign(user)
-      expect(result2[:success]).to eq(true)
+        DiscourseSolved.accept_answer!(p1, Discourse.system_user)
 
-      DiscourseSolved.accept_answer!(p1, Discourse.system_user)
+        reminder = PendingAssignsReminder.new
+        reminder.remind(user)
+        topics = reminder.send(:assigned_topics, user, order: :asc)
 
-      reminder = PendingAssignsReminder.new
-      reminder.remind(user)
-      topics = reminder.send(:assigned_topics, user, order: :asc)
-
-      expect(topics).not_to include(topic)
-      expect(topics).to include(other_topic)
+        expect(topics).not_to include(topic)
+        expect(topics).to include(other_topic)
+      end
     end
   end
 end
