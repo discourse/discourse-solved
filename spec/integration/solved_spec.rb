@@ -370,7 +370,6 @@ RSpec.describe "Managing Posts solved status" do
   context "with discourse-assign installed", if: defined?(DiscourseAssign) do
     let(:admin) { Fabricate(:admin) }
     fab!(:group)
-
     before do
       SiteSetting.solved_enabled = true
       SiteSetting.assign_enabled = true
@@ -396,31 +395,27 @@ RSpec.describe "Managing Posts solved status" do
       expect(p1.reload.custom_fields["is_accepted_answer"]).to eq("true")
       expect(p1.topic.assignment.reload.status).to eq("Done")
     end
-  end
-
-  context "with using assigns_reminder_assigned_topics_query modifier" do
-    class DummyClass
-      def test
-        DiscoursePluginRegistry.apply_modifier(:assigns_reminder_assigned_topics_query, Topic.all)
-      end
-    end
-
-    before { SiteSetting.ignore_solved_topics_in_assigned_reminder = true }
 
     it "should not include solved topics in the query" do
-      topic = Fabricate(:topic)
-      topic2 = Fabricate(:topic)
-      topic3 = Fabricate(:topic)
-      post = Fabricate(:post, topic: topic)
+      other_topic = Fabricate(:topic, title: "Topic that should be there")
+      post = Fabricate(:post, topic: other_topic, user: user)
 
-      DiscourseSolved.accept_answer!(post, Discourse.system_user)
+      assigner1 = Assigner.new(p1.topic, user)
+      result1 = assigner1.assign(user)
+      expect(result1[:success]).to eq(true)
 
-      topics = DummyClass.new.test.to_a
+      assigner2 = Assigner.new(post.topic, user)
+      result2 = assigner2.assign(user)
+      expect(result2[:success]).to eq(true)
+
+      DiscourseSolved.accept_answer!(p1, Discourse.system_user)
+
+      reminder = PendingAssignsReminder.new
+      reminder.remind(user)
+      topics = reminder.send(:assigned_topics, user, order: :asc)
 
       expect(topics).not_to include(topic)
-
-      expect(topics).to include(topic2)
-      expect(topics).to include(topic3)
+      expect(topics).to include(other_topic)
     end
   end
 end

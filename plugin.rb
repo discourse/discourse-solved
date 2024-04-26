@@ -47,7 +47,7 @@ after_initialize do
   require_relative "app/lib/web_hook_extension"
   require_relative "app/serializers/concerns/topic_answer_mixin"
 
-  require_relative "app/lib/plugin_initializer"
+  require_relative "app/lib/plugin_initializers/assigned_reminder_exclude_solved"
   DiscourseSolved::AssignsReminderForTopicsQuery.new(self).apply_plugin_api
   module ::DiscourseSolved
     def self.accept_answer!(post, acting_user, topic: nil)
