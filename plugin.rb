@@ -9,11 +9,9 @@
 
 enabled_site_setting :solved_enabled
 
-if respond_to?(:register_svg_icon)
-  register_svg_icon "far fa-check-square"
-  register_svg_icon "check-square"
-  register_svg_icon "far fa-square"
-end
+register_svg_icon "far fa-check-square"
+register_svg_icon "check-square"
+register_svg_icon "far fa-square"
 
 register_asset "stylesheets/solutions.scss"
 register_asset "stylesheets/mobile/solutions.scss", :mobile
@@ -59,24 +57,20 @@ after_initialize do
             p2.custom_fields.delete(IS_ACCEPTED_ANSWER_CUSTOM_FIELD)
             p2.save!
 
-            if defined?(UserAction::SOLVED)
-              UserAction.where(action_type: UserAction::SOLVED, target_post_id: p2.id).destroy_all
-            end
+            UserAction.where(action_type: UserAction::SOLVED, target_post_id: p2.id).destroy_all
           end
         end
 
         post.custom_fields[IS_ACCEPTED_ANSWER_CUSTOM_FIELD] = "true"
         topic.custom_fields[ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD] = post.id
 
-        if defined?(UserAction::SOLVED)
-          UserAction.log_action!(
-            action_type: UserAction::SOLVED,
-            user_id: post.user_id,
-            acting_user_id: acting_user.id,
-            target_post_id: post.id,
-            target_topic_id: post.topic_id,
-          )
-        end
+        UserAction.log_action!(
+          action_type: UserAction::SOLVED,
+          user_id: post.user_id,
+          acting_user_id: acting_user.id,
+          target_post_id: post.id,
+          target_topic_id: post.topic_id,
+        )
 
         notification_data = {
           message: "solved.accepted_notification",
@@ -156,9 +150,7 @@ after_initialize do
         post.save!
 
         # TODO remove_action! does not allow for this type of interface
-        if defined?(UserAction::SOLVED)
-          UserAction.where(action_type: UserAction::SOLVED, target_post_id: post.id).destroy_all
-        end
+        UserAction.where(action_type: UserAction::SOLVED, target_post_id: post.id).destroy_all
 
         # yank notification
         notification =
@@ -191,12 +183,10 @@ after_initialize do
     ::TopicViewSerializer.prepend(DiscourseSolved::TopicViewSerializerExtension)
     ::Category.prepend(DiscourseSolved::CategoryExtension)
     ::PostSerializer.prepend(DiscourseSolved::PostSerializerExtension)
-    ::UserSummary.prepend(DiscourseSolved::UserSummaryExtension) if defined?(::UserAction::SOLVED)
-    if respond_to?(:register_topic_list_preload_user_ids)
-      ::Topic.attr_accessor(:accepted_answer_user_id)
-      ::TopicPostersSummary.alias_method(:old_user_ids, :user_ids)
-      ::TopicPostersSummary.prepend(DiscourseSolved::TopicPostersSummaryExtension)
-    end
+    ::UserSummary.prepend(DiscourseSolved::UserSummaryExtension)
+    ::Topic.attr_accessor(:accepted_answer_user_id)
+    ::TopicPostersSummary.alias_method(:old_user_ids, :user_ids)
+    ::TopicPostersSummary.prepend(DiscourseSolved::TopicPostersSummaryExtension)
     [
       ::TopicListItemSerializer,
       ::SearchTopicListItemSerializer,
@@ -207,7 +197,7 @@ after_initialize do
   end
 
   # we got to do a one time upgrade
-  if !::DiscourseSolved.skip_db? && defined?(UserAction::SOLVED)
+  if !::DiscourseSolved.skip_db?
     unless Discourse.redis.get("solved_already_upgraded")
       unless UserAction.where(action_type: UserAction::SOLVED).exists?
         Rails.logger.info("Upgrading storage for solved")
@@ -272,47 +262,44 @@ after_initialize do
     DiscourseSolved::BeforeHeadClose.new(controller).html
   end
 
-  if Report.respond_to?(:add_report)
-    Report.add_report("accepted_solutions") do |report|
-      report.data = []
+  Report.add_report("accepted_solutions") do |report|
+    report.data = []
 
-      accepted_solutions =
-        TopicCustomField.where(name: ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD)
+    accepted_solutions =
+      TopicCustomField.where(name: ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD)
 
-      category_id, include_subcategories = report.add_category_filter
-      if category_id
-        if include_subcategories
-          accepted_solutions =
-            accepted_solutions.joins(:topic).where(
-              "topics.category_id IN (?)",
-              Category.subcategory_ids(category_id),
-            )
-        else
-          accepted_solutions =
-            accepted_solutions.joins(:topic).where("topics.category_id = ?", category_id)
-        end
+    category_id, include_subcategories = report.add_category_filter
+    if category_id
+      if include_subcategories
+        accepted_solutions =
+          accepted_solutions.joins(:topic).where(
+            "topics.category_id IN (?)",
+            Category.subcategory_ids(category_id),
+          )
+      else
+        accepted_solutions =
+          accepted_solutions.joins(:topic).where("topics.category_id = ?", category_id)
       end
-
-      accepted_solutions
-        .where("topic_custom_fields.created_at >= ?", report.start_date)
-        .where("topic_custom_fields.created_at <= ?", report.end_date)
-        .group("DATE(topic_custom_fields.created_at)")
-        .order("DATE(topic_custom_fields.created_at)")
-        .count
-        .each { |date, count| report.data << { x: date, y: count } }
-      report.total = accepted_solutions.count
-      report.prev30Days =
-        accepted_solutions
-          .where("topic_custom_fields.created_at >= ?", report.start_date - 30.days)
-          .where("topic_custom_fields.created_at <= ?", report.start_date)
-          .count
     end
+
+    accepted_solutions
+      .where("topic_custom_fields.created_at >= ?", report.start_date)
+      .where("topic_custom_fields.created_at <= ?", report.end_date)
+      .group("DATE(topic_custom_fields.created_at)")
+      .order("DATE(topic_custom_fields.created_at)")
+      .count
+      .each { |date, count| report.data << { x: date, y: count } }
+    report.total = accepted_solutions.count
+    report.prev30Days =
+      accepted_solutions
+        .where("topic_custom_fields.created_at >= ?", report.start_date - 30.days)
+        .where("topic_custom_fields.created_at <= ?", report.start_date)
+        .count
   end
 
-  if respond_to?(:register_modifier)
-    register_modifier(:search_rank_sort_priorities) do |priorities, _search|
-      if SiteSetting.prioritize_solved_topics_in_search
-        condition = <<~SQL
+  register_modifier(:search_rank_sort_priorities) do |priorities, _search|
+    if SiteSetting.prioritize_solved_topics_in_search
+      condition = <<~SQL
           EXISTS (
             SELECT 1 
               FROM topic_custom_fields
@@ -322,16 +309,13 @@ after_initialize do
           )
         SQL
 
-        priorities.push([condition, 1.1])
-      else
-        priorities
-      end
+      priorities.push([condition, 1.1])
+    else
+      priorities
     end
   end
 
-  if defined?(::UserAction::SOLVED)
-    add_to_serializer(:user_summary, :solved_count) { object.solved_count }
-  end
+  add_to_serializer(:user_summary, :solved_count) { object.solved_count }
   add_to_serializer(:post, :can_accept_answer) do
     scope.can_accept_answer?(topic, object) && object.post_number > 1 && !accepted_answer
   end
@@ -392,40 +376,26 @@ after_initialize do
     scope
   end
 
-  if respond_to? :register_custom_filter_by_status
-    register_custom_filter_by_status("solved", &solved_callback)
-    register_custom_filter_by_status("unsolved", &unsolved_callback)
-  end
+  register_custom_filter_by_status("solved", &solved_callback)
+  register_custom_filter_by_status("unsolved", &unsolved_callback)
 
-  if respond_to? :register_search_advanced_filter
-    register_search_advanced_filter(/status:solved/, &solved_callback)
-    register_search_advanced_filter(/status:unsolved/, &unsolved_callback)
-  end
+  register_search_advanced_filter(/status:solved/, &solved_callback)
+  register_search_advanced_filter(/status:unsolved/, &unsolved_callback)
 
-  if TopicQuery.respond_to? :add_custom_filter
-    TopicQuery.add_custom_filter(:solved) do |results, topic_query|
-      if topic_query.options[:solved] == "yes"
-        solved_callback.call(results)
-      elsif topic_query.options[:solved] == "no"
-        unsolved_callback.call(results)
-      else
-        results
-      end
+  TopicQuery.add_custom_filter(:solved) do |results, topic_query|
+    if topic_query.options[:solved] == "yes"
+      solved_callback.call(results)
+    elsif topic_query.options[:solved] == "no"
+      unsolved_callback.call(results)
+    else
+      results
     end
   end
 
-  if TopicList.respond_to? :preloaded_custom_fields
-    TopicList.preloaded_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
-  end
-  if Site.respond_to? :preloaded_category_custom_fields
-    Site.preloaded_category_custom_fields << ::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD
-  end
-  if Search.respond_to? :preloaded_topic_custom_fields
-    Search.preloaded_topic_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
-  end
-  if CategoryList.respond_to? :preloaded_topic_custom_fields
-    CategoryList.preloaded_topic_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
-  end
+  TopicList.preloaded_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
+  Site.preloaded_category_custom_fields << ::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD
+  Search.preloaded_topic_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
+  CategoryList.preloaded_topic_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
 
   on(:filter_auto_bump_topics) do |_category, filters|
     filters.push(
@@ -520,7 +490,7 @@ after_initialize do
     AND di.period_type = :period_type
     AND di.solutions <> x.solutions
   "
-  add_directory_column("solutions", query: query) if respond_to?(:add_directory_column)
+  add_directory_column("solutions", query: query)
 
   add_to_class(:composer_messages_finder, :check_topic_is_solved) do
     return if !SiteSetting.solved_enabled || SiteSetting.disable_solved_education_message
@@ -537,88 +507,82 @@ after_initialize do
     }
   end
 
-  if defined?(UserAction::SOLVED)
-    add_to_serializer(:user_card, :accepted_answers) do
-      UserAction.where(user_id: object.id).where(action_type: UserAction::SOLVED).count
-    end
+  add_to_serializer(:user_card, :accepted_answers) do
+    UserAction.where(user_id: object.id).where(action_type: UserAction::SOLVED).count
   end
 
-  if respond_to?(:register_topic_list_preload_user_ids)
-    register_topic_list_preload_user_ids do |topics, user_ids, topic_list|
-      answer_post_ids =
-        TopicCustomField
-          .select("value::INTEGER")
-          .where(name: ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD)
-          .where(topic_id: topics.map(&:id))
-      answer_user_ids = Post.where(id: answer_post_ids).pluck(:topic_id, :user_id).to_h
-      topics.each { |topic| topic.accepted_answer_user_id = answer_user_ids[topic.id] }
-      user_ids.concat(answer_user_ids.values)
-    end
+  register_topic_list_preload_user_ids do |topics, user_ids, topic_list|
+    answer_post_ids =
+      TopicCustomField
+        .select("value::INTEGER")
+        .where(name: ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD)
+        .where(topic_id: topics.map(&:id))
+    answer_user_ids = Post.where(id: answer_post_ids).pluck(:topic_id, :user_id).to_h
+    topics.each { |topic| topic.accepted_answer_user_id = answer_user_ids[topic.id] }
+    user_ids.concat(answer_user_ids.values)
   end
 
   if defined?(DiscourseAutomation)
-    if respond_to?(:add_triggerable_to_scriptable)
-      on(:accepted_solution) do |post|
-        # testing directly automation is prone to issues
-        # we prefer to abstract logic in service object and test this
-        next if Rails.env.test?
+    on(:accepted_solution) do |post|
+      # testing directly automation is prone to issues
+      # we prefer to abstract logic in service object and test this
+      next if Rails.env.test?
 
-        name = "first_accepted_solution"
-        DiscourseAutomation::Automation
-          .where(trigger: name, enabled: true)
-          .find_each do |automation|
-            maximum_trust_level = automation.trigger_field("maximum_trust_level")&.dig("value")
-            if FirstAcceptedPostSolutionValidator.check(post, trust_level: maximum_trust_level)
-              automation.trigger!(
-                "kind" => name,
-                "accepted_post_id" => post.id,
-                "usernames" => [post.user.username],
-                "placeholders" => {
-                  "post_url" => Discourse.base_url + post.url,
-                },
-              )
-            end
-          end
-      end
-
-      add_triggerable_to_scriptable(:first_accepted_solution, :send_pms)
-
-      DiscourseAutomation::Triggerable.add(:first_accepted_solution) do
-        placeholder :post_url
-
-        field :maximum_trust_level,
-              component: :choices,
-              extra: {
-                content: [
-                  {
-                    id: 1,
-                    name:
-                      "discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl1",
-                  },
-                  {
-                    id: 2,
-                    name:
-                      "discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl2",
-                  },
-                  {
-                    id: 3,
-                    name:
-                      "discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl3",
-                  },
-                  {
-                    id: 4,
-                    name:
-                      "discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl4",
-                  },
-                  {
-                    id: "any",
-                    name:
-                      "discourse_automation.triggerables.first_accepted_solution.max_trust_level.any",
-                  },
-                ],
+      name = "first_accepted_solution"
+      DiscourseAutomation::Automation
+        .where(trigger: name, enabled: true)
+        .find_each do |automation|
+          maximum_trust_level = automation.trigger_field("maximum_trust_level")&.dig("value")
+          if FirstAcceptedPostSolutionValidator.check(post, trust_level: maximum_trust_level)
+            automation.trigger!(
+              "kind" => name,
+              "accepted_post_id" => post.id,
+              "usernames" => [post.user.username],
+              "placeholders" => {
+                "post_url" => Discourse.base_url + post.url,
               },
-              required: true
-      end
+            )
+          end
+        end
+    end
+
+    add_triggerable_to_scriptable(:first_accepted_solution, :send_pms)
+
+    DiscourseAutomation::Triggerable.add(:first_accepted_solution) do
+      placeholder :post_url
+
+      field :maximum_trust_level,
+            component: :choices,
+            extra: {
+              content: [
+                {
+                  id: 1,
+                  name:
+                    "discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl1",
+                },
+                {
+                  id: 2,
+                  name:
+                    "discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl2",
+                },
+                {
+                  id: 3,
+                  name:
+                    "discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl3",
+                },
+                {
+                  id: 4,
+                  name:
+                    "discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl4",
+                },
+                {
+                  id: "any",
+                  name:
+                    "discourse_automation.triggerables.first_accepted_solution.max_trust_level.any",
+                },
+              ],
+            },
+            required: true
     end
   end
 end
