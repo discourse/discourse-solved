@@ -310,15 +310,16 @@ after_initialize do
   end
 
   if respond_to?(:register_modifier)
-    register_modifier(:search_rank_sort_priorities) do |priorities, search|
+    register_modifier(:search_rank_sort_priorities) do |priorities, _search|
       if SiteSetting.prioritize_solved_topics_in_search
         condition = <<~SQL
-          EXISTS
-            (
-              SELECT 1 FROM topic_custom_fields f
-              WHERE topics.id = f.topic_id
-              AND f.name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
-            )
+          EXISTS (
+            SELECT 1 
+              FROM topic_custom_fields
+             WHERE topic_id = topics.id
+               AND name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
+               AND value IS NOT NULL
+          )
         SQL
 
         priorities.push([condition, 1.1])
@@ -344,82 +345,72 @@ after_initialize do
     topic&.custom_fields&.[](::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD).present?
   end
 
-  #TODO Remove when plugin is 1.0
-  if Search.respond_to? :advanced_filter
-    Search.advanced_filter(/status:solved/) do |posts|
-      posts.where(
-        "topics.id IN (
-        SELECT tc.topic_id
-        FROM topic_custom_fields tc
-        WHERE tc.name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}' AND
-                        tc.value IS NOT NULL
-        )",
+  solved_callback = ->(scope) do
+    sql = <<~SQL
+      topics.id IN (
+        SELECT topic_id
+          FROM topic_custom_fields
+         WHERE name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}' 
+           AND value IS NOT NULL
       )
-    end
+    SQL
 
-    Search.advanced_filter(/status:unsolved/) do |posts|
-      if SiteSetting.allow_solved_on_all_topics
-        posts.where(
-          "topics.id NOT IN (
-          SELECT tc.topic_id
-          FROM topic_custom_fields tc
-          WHERE tc.name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}' AND
-                          tc.value IS NOT NULL
-          )",
-        )
-      else
-        tag_ids = Tag.where(name: SiteSetting.enable_solved_tags.split("|")).pluck(:id)
-
-        posts.where(
-          "topics.id NOT IN (
-          SELECT tc.topic_id
-          FROM topic_custom_fields tc
-          WHERE tc.name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}' AND
-                          tc.value IS NOT NULL
-          ) AND (topics.id IN (
-            SELECT top.id
-            FROM topics top
-            INNER JOIN category_custom_fields cc
-            ON top.category_id = cc.category_id
-            WHERE cc.name = '#{::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD}' AND
-                          cc.value = 'true'
-          ) OR topics.id IN (
-            SELECT top.id
-            FROM topics top
-            INNER JOIN topic_tags tt
-            ON top.id = tt.topic_id
-            WHERE tt.tag_id IN (?)
-          ))",
-          tag_ids,
-        )
-      end
-    end
+    scope.where(sql)
   end
 
-  if Discourse.has_needed_version?(Discourse::VERSION::STRING, "1.8.0.beta6")
+  unsolved_callback = ->(scope) do
+    scope = scope.where <<~SQL
+      topics.id NOT IN (
+        SELECT topic_id
+          FROM topic_custom_fields
+         WHERE name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}' 
+           AND value IS NOT NULL
+      )
+    SQL
+
+    if !SiteSetting.allow_solved_on_all_topics
+      tag_ids = Tag.where(name: SiteSetting.enable_solved_tags.split("|")).pluck(:id)
+
+      scope = scope.where <<~SQL, tag_ids
+        topics.id IN (
+          SELECT t.id
+            FROM topics t
+            JOIN category_custom_fields cc 
+              ON t.category_id = cc.category_id
+             AND cc.name = '#{::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD}' 
+             AND cc.value = 'true'
+        ) 
+        OR 
+        topics.id IN (
+          SELECT topic_id 
+            FROM topic_tags 
+           WHERE tag_id IN (?)
+        )
+      SQL
+    end
+
+    scope
+  end
+
+  if respond_to? :register_custom_filter_by_status
+    register_custom_filter_by_status("solved", &solved_callback)
+    register_custom_filter_by_status("unsolved", &unsolved_callback)
+  end
+
+  if respond_to? :register_search_advanced_filter
+    register_search_advanced_filter(/status:solved/, &solved_callback)
+    register_search_advanced_filter(/status:unsolved/, &unsolved_callback)
+  end
+
+  if TopicQuery.respond_to? :add_custom_filter
     TopicQuery.add_custom_filter(:solved) do |results, topic_query|
       if topic_query.options[:solved] == "yes"
-        results =
-          results.where(
-            "topics.id IN (
-          SELECT tc.topic_id
-          FROM topic_custom_fields tc
-          WHERE tc.name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}' AND
-                          tc.value IS NOT NULL
-          )",
-          )
+        solved_callback.call(results)
       elsif topic_query.options[:solved] == "no"
-        results =
-          results.where(
-            "topics.id NOT IN (
-          SELECT tc.topic_id
-          FROM topic_custom_fields tc
-          WHERE tc.name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}' AND
-                          tc.value IS NOT NULL
-          )",
-          )
+        unsolved_callback.call(results)
+      else
+        results
       end
-      results
     end
   end
 
@@ -432,19 +423,27 @@ after_initialize do
   if Search.respond_to? :preloaded_topic_custom_fields
     Search.preloaded_topic_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
   end
-
-  if CategoryList.respond_to?(:preloaded_topic_custom_fields)
+  if CategoryList.respond_to? :preloaded_topic_custom_fields
     CategoryList.preloaded_topic_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
   end
 
-  on(:filter_auto_bump_topics) { |_category, filters| filters.push(->(r) { r.where(<<~SQL) }) }
-        NOT EXISTS(
-          SELECT 1 FROM topic_custom_fields
-          WHERE topic_id = topics.id
-          AND name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
-          AND value IS NOT NULL
-        )
-      SQL
+  on(:filter_auto_bump_topics) do |_category, filters|
+    filters.push(
+      ->(r) do
+        sql = <<~SQL
+          NOT EXISTS (
+            SELECT 1 
+              FROM topic_custom_fields
+             WHERE topic_id = topics.id
+               AND name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
+               AND value IS NOT NULL
+          )
+        SQL
+
+        r.where(sql)
+      end,
+    )
+  end
 
   on(:before_post_publish_changes) do |post_changes, topic_changes, options|
     category_id_changes = topic_changes.diff["category_id"].to_a

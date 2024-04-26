@@ -9,6 +9,68 @@ RSpec.describe "Managing Posts solved status" do
 
   before { SiteSetting.allow_solved_on_all_topics = true }
 
+  describe "customer filters" do
+    before do
+      SiteSetting.allow_solved_on_all_topics = false
+      SiteSetting.enable_solved_tags = solvable_tag.name
+    end
+
+    fab!(:solvable_category) do
+      category = Fabricate(:category)
+
+      CategoryCustomField.create(
+        category_id: category.id,
+        name: ::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD,
+        value: "true",
+      )
+
+      category
+    end
+
+    fab!(:solvable_tag) { Fabricate(:tag) }
+
+    fab!(:solved_in_category) do
+      Fabricate(
+        :custom_topic,
+        category: solvable_category,
+        custom_topic_name: ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD,
+        value: "42",
+      )
+    end
+
+    fab!(:solved_in_tag) do
+      Fabricate(
+        :custom_topic,
+        tags: [solvable_tag],
+        custom_topic_name: ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD,
+        value: "42",
+      )
+    end
+
+    fab!(:unsolved_in_category) { Fabricate(:topic, category: solvable_category) }
+    fab!(:unsolved_in_tag) { Fabricate(:topic, tags: [solvable_tag]) }
+
+    fab!(:unsolved_topic) { Fabricate(:topic) }
+
+    it "can filter by solved status" do
+      expect(
+        TopicsFilter
+          .new(guardian: Guardian.new)
+          .filter_from_query_string("status:solved")
+          .pluck(:id),
+      ).to contain_exactly(solved_in_category.id, solved_in_tag.id)
+    end
+
+    it "can filter by unsolved status" do
+      expect(
+        TopicsFilter
+          .new(guardian: Guardian.new)
+          .filter_from_query_string("status:unsolved")
+          .pluck(:id),
+      ).to contain_exactly(unsolved_in_category.id, unsolved_in_tag.id)
+    end
+  end
+
   describe "search" do
     before { SearchIndexer.enable }
 
