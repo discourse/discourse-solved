@@ -383,7 +383,7 @@ RSpec.describe "Managing Posts solved status" do
 
       sign_in(user)
     end
-    describe "when a post is accepted" do
+    describe "updating assignment status on solve when assignment_status_on_solve is set" do
       it "update all assignments to this status when a post is accepted" do
         assigner = Assigner.new(p1.topic, user)
         result = assigner.assign(user)
