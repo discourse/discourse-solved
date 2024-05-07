@@ -475,36 +475,30 @@ RSpec.describe "Managing Posts solved status" do
       end
 
       it "does not update the assignee when a post is accepted" do
-        # Bill asks a question.
-        # Roy responds and assigns to himself.
-        # Jojo responds with an answer.
-        # Bill thanks Jojo and marks her response as the solution.
-        # topic should still be assigneed to Roy
+        user_1 = Fabricate(:user)
+        user_2 = Fabricate(:user)
+        user_3 = Fabricate(:user)
+        group.add(user_1)
+        group.add(user_2)
+        group.add(user_3)
 
-        bill = Fabricate(:user)
-        roy = Fabricate(:user)
-        jojo = Fabricate(:user)
-        group.add(roy)
-        group.add(jojo)
-        group.add(bill)
+        topic_question = Fabricate(:topic, user: user_1)
+        post_question = Fabricate(:post, topic: topic_question, user: user_1)
 
-        topic_question = Fabricate(:topic, user: bill) # Bill asks a question.
-        post_question = Fabricate(:post, topic: topic_question, user: bill)
-
-        roy_response = Fabricate(:post, topic: topic_question, user: roy) # Roy responds...
-        assigner = Assigner.new(topic_question, roy)
-        result = assigner.assign(roy) # ...and assigns to himself.
+        user_2_response = Fabricate(:post, topic: topic_question, user: user_2)
+        assigner = Assigner.new(topic_question, user_2)
+        result = assigner.assign(user_2)
         expect(result[:success]).to eq(true)
 
-        post_response = Fabricate(:post, topic: topic_question, user: jojo) # Jojo responds with an answer.
+        post_response = Fabricate(:post, topic: topic_question, user: user_3)
 
-        DiscourseSolved.accept_answer!(post_response, bill) # Bill thanks Jojo and marks her response as the solution.
+        DiscourseSolved.accept_answer!(post_response, user_1)
 
-        expect(topic_question.assignment.assigned_to_id).to eq(roy.id) # topic should still be assigneed to Roy
+        expect(topic_question.assignment.assigned_to_id).to eq(user_2.id)
 
-        DiscourseSolved.unaccept_answer!(post_response) # Unaccept the answer
+        DiscourseSolved.unaccept_answer!(post_response)
 
-        expect(topic_question.assignment.assigned_to_id).to eq(roy.id) # topic should still be assigneed to Roy
+        expect(topic_question.assignment.assigned_to_id).to eq(user_2.id)
       end
 
       describe "assigned topic reminder"
