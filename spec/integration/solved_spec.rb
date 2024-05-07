@@ -439,6 +439,7 @@ RSpec.describe "Managing Posts solved status" do
       SiteSetting.assign_allowed_on_groups = "#{group.id}"
       SiteSetting.assigns_public = true
       SiteSetting.assignment_status_on_solve = "Done"
+      SiteSetting.assignment_status_on_unsolve = "New"
       SiteSetting.ignore_solved_topics_in_assigned_reminder = false
       group.add(p1.acting_user)
       group.add(user)
@@ -456,6 +457,54 @@ RSpec.describe "Managing Posts solved status" do
 
         expect(p1.reload.custom_fields["is_accepted_answer"]).to eq("true")
         expect(p1.topic.assignment.reload.status).to eq("Done")
+      end
+
+      it "update all assignments to this status when a post is unaccepted" do
+        assigner = Assigner.new(p1.topic, user)
+        result = assigner.assign(user)
+        expect(result[:success]).to eq(true)
+
+        DiscourseSolved.accept_answer!(p1, user)
+
+        expect(p1.topic.assignment.status).to eq("Done")
+
+        DiscourseSolved.unaccept_answer!(p1)
+
+        expect(p1.reload.custom_fields["is_accepted_answer"]).to eq(nil)
+        expect(p1.reload.topic.assignment.reload.status).to eq("New")
+      end
+
+      it "does not update the assignee when a post is accepted" do
+        # Bill asks a question.
+        # Roy responds and assigns to himself.
+        # Jojo responds with an answer.
+        # Bill thanks Jojo and marks her response as the solution.
+        # topic should still be assigneed to Roy
+
+        bill = Fabricate(:user)
+        roy = Fabricate(:user)
+        jojo = Fabricate(:user)
+        group.add(roy)
+        group.add(jojo)
+        group.add(bill)
+
+        topic_question = Fabricate(:topic, user: bill) # Bill asks a question.
+        post_question = Fabricate(:post, topic: topic_question, user: bill)
+
+        roy_response = Fabricate(:post, topic: topic_question, user: roy) # Roy responds...
+        assigner = Assigner.new(topic_question, roy)
+        result = assigner.assign(roy) # ...and assigns to himself.
+        expect(result[:success]).to eq(true)
+
+        post_response = Fabricate(:post, topic: topic_question, user: jojo) # Jojo responds with an answer.
+
+        DiscourseSolved.accept_answer!(post_response, bill) # Bill thanks Jojo and marks her response as the solution.
+
+        expect(topic_question.assignment.assigned_to_id).to eq(roy.id) # topic should still be assigneed to Roy
+
+        DiscourseSolved.unaccept_answer!(post_response) # Unaccept the answer
+
+        expect(topic_question.assignment.assigned_to_id).to eq(roy.id) # topic should still be assigneed to Roy
       end
 
       describe "assigned topic reminder"

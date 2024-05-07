@@ -303,7 +303,7 @@ after_initialize do
     if SiteSetting.prioritize_solved_topics_in_search
       condition = <<~SQL
           EXISTS (
-            SELECT 1 
+            SELECT 1
               FROM topic_custom_fields
              WHERE topic_id = topics.id
                AND name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
@@ -336,7 +336,7 @@ after_initialize do
       topics.id IN (
         SELECT topic_id
           FROM topic_custom_fields
-         WHERE name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}' 
+         WHERE name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
            AND value IS NOT NULL
       )
     SQL
@@ -349,7 +349,7 @@ after_initialize do
       topics.id NOT IN (
         SELECT topic_id
           FROM topic_custom_fields
-         WHERE name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}' 
+         WHERE name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
            AND value IS NOT NULL
       )
     SQL
@@ -361,15 +361,15 @@ after_initialize do
         topics.id IN (
           SELECT t.id
             FROM topics t
-            JOIN category_custom_fields cc 
+            JOIN category_custom_fields cc
               ON t.category_id = cc.category_id
-             AND cc.name = '#{::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD}' 
+             AND cc.name = '#{::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD}'
              AND cc.value = 'true'
-        ) 
-        OR 
+        )
+        OR
         topics.id IN (
-          SELECT topic_id 
-            FROM topic_tags 
+          SELECT topic_id
+            FROM topic_tags
            WHERE tag_id IN (?)
         )
       SQL
@@ -404,7 +404,7 @@ after_initialize do
       ->(r) do
         sql = <<~SQL
           NOT EXISTS (
-            SELECT 1 
+            SELECT 1
               FROM topic_custom_fields
              WHERE topic_id = topics.id
                AND name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
@@ -591,9 +591,18 @@ after_initialize do
   if defined?(DiscourseAssign)
     on(:accepted_solution) do |post|
       next if SiteSetting.assignment_status_on_solve.blank?
-      Assigner.new(post.topic, post.acting_user).assign(
-        post.acting_user,
+      assigned_user = User.find_by(id: post.topic.assignment.assigned_to_id)
+      Assigner.new(post.topic, assigned_user).assign(
+        assigned_user,
         status: SiteSetting.assignment_status_on_solve,
+      )
+    end
+    on(:unaccepted_solution) do |post|
+      next if SiteSetting.assignment_status_on_unsolve.blank?
+      assigned_user = User.find_by(id: post.topic.assignment.assigned_to_id)
+      Assigner.new(post.topic, assigned_user).assign(
+        assigned_user,
+        status: SiteSetting.assignment_status_on_unsolve,
       )
     end
   end
