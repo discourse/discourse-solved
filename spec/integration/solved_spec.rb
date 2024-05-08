@@ -439,6 +439,7 @@ RSpec.describe "Managing Posts solved status" do
       SiteSetting.assign_allowed_on_groups = "#{group.id}"
       SiteSetting.assigns_public = true
       SiteSetting.assignment_status_on_solve = "Done"
+      SiteSetting.assignment_status_on_unsolve = "New"
       SiteSetting.ignore_solved_topics_in_assigned_reminder = false
       group.add(p1.acting_user)
       group.add(user)
@@ -456,6 +457,50 @@ RSpec.describe "Managing Posts solved status" do
 
         expect(p1.reload.custom_fields["is_accepted_answer"]).to eq("true")
         expect(p1.topic.assignment.reload.status).to eq("Done")
+      end
+
+      it "update all assignments to this status when a post is unaccepted" do
+        assigner = Assigner.new(p1.topic, user)
+        result = assigner.assign(user)
+        expect(result[:success]).to eq(true)
+
+        DiscourseSolved.accept_answer!(p1, user)
+
+        expect(p1.reload.topic.assignment.reload.status).to eq("Done")
+
+        DiscourseSolved.unaccept_answer!(p1)
+
+        expect(p1.reload.custom_fields["is_accepted_answer"]).to eq(nil)
+        expect(p1.reload.topic.assignment.reload.status).to eq("New")
+      end
+
+      it "does not update the assignee when a post is accepted" do
+        user_1 = Fabricate(:user)
+        user_2 = Fabricate(:user)
+        user_3 = Fabricate(:user)
+        group.add(user_1)
+        group.add(user_2)
+        group.add(user_3)
+
+        topic_question = Fabricate(:topic, user: user_1)
+        post_question = Fabricate(:post, topic: topic_question, user: user_1)
+
+        user_2_response = Fabricate(:post, topic: topic_question, user: user_2)
+        assigner = Assigner.new(topic_question, user_2)
+        result = assigner.assign(user_2)
+        expect(result[:success]).to eq(true)
+
+        post_response = Fabricate(:post, topic: topic_question, user: user_3)
+        Assigner.new(post_response, user_3).assign(user_3)
+
+        DiscourseSolved.accept_answer!(post_response, user_1)
+
+        expect(topic_question.assignment.assigned_to_id).to eq(user_2.id)
+        expect(post_response.assignment.assigned_to_id).to eq(user_3.id)
+        DiscourseSolved.unaccept_answer!(post_response)
+
+        expect(topic_question.assignment.assigned_to_id).to eq(user_2.id)
+        expect(post_response.assignment.assigned_to_id).to eq(user_3.id)
       end
 
       describe "assigned topic reminder"
