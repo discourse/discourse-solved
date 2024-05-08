@@ -466,7 +466,7 @@ RSpec.describe "Managing Posts solved status" do
 
         DiscourseSolved.accept_answer!(p1, user)
 
-        expect(p1.topic.assignment.status).to eq("Done")
+        expect(p1.reload.topic.assignment.reload.status).to eq("Done")
 
         DiscourseSolved.unaccept_answer!(p1)
 
@@ -491,14 +491,16 @@ RSpec.describe "Managing Posts solved status" do
         expect(result[:success]).to eq(true)
 
         post_response = Fabricate(:post, topic: topic_question, user: user_3)
+        Assigner.new(post_response, user_3).assign(user_3)
 
         DiscourseSolved.accept_answer!(post_response, user_1)
 
         expect(topic_question.assignment.assigned_to_id).to eq(user_2.id)
-
+        expect(post_response.assignment.assigned_to_id).to eq(user_3.id)
         DiscourseSolved.unaccept_answer!(post_response)
 
         expect(topic_question.assignment.assigned_to_id).to eq(user_2.id)
+        expect(post_response.assignment.assigned_to_id).to eq(user_3.id)
       end
 
       describe "assigned topic reminder"

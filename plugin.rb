@@ -591,19 +591,47 @@ after_initialize do
   if defined?(DiscourseAssign)
     on(:accepted_solution) do |post|
       next if SiteSetting.assignment_status_on_solve.blank?
-      assigned_user = User.find_by(id: post.topic.assignment.assigned_to_id)
-      Assigner.new(post.topic, assigned_user).assign(
-        assigned_user,
-        status: SiteSetting.assignment_status_on_solve,
-      )
+      assignements = Assignment.where(topic: post.topic)
+      assignements.each do |assignment|
+        assigned_user = User.find_by(id: assignment.assigned_to_id)
+        target_id = assignment.target_id
+
+        target =
+          case assignment.target_type
+          when "Post"
+            Post.find_by(id: target_id)
+          when "Topic"
+            Topic.find_by(id: target_id)
+          else
+            post.topic
+          end
+
+        Assigner.new(target, assigned_user).assign(
+          assigned_user,
+          status: SiteSetting.assignment_status_on_solve,
+        )
+      end
     end
     on(:unaccepted_solution) do |post|
       next if SiteSetting.assignment_status_on_unsolve.blank?
-      assigned_user = User.find_by(id: post.topic.assignment.assigned_to_id)
-      Assigner.new(post.topic, assigned_user).assign(
-        assigned_user,
-        status: SiteSetting.assignment_status_on_unsolve,
-      )
+      assignements = Assignment.where(topic: post.topic)
+      assignements.each do |assignment|
+        assigned_user = User.find_by(id: assignment.assigned_to_id)
+        target_id = assignment.target_id
+        target =
+          case assignment.target_type
+          when "Post"
+            Post.find_by(id: target_id)
+          when "Topic"
+            Topic.find_by(id: target_id)
+          else
+            post.topic
+          end
+        Assigner.new(target, assigned_user).assign(
+          assigned_user,
+          status: SiteSetting.assignment_status_on_unsolve,
+        )
+      end
     end
   end
 end
