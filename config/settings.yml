@@ -12,6 +12,7 @@ discourse_solved:
     hidden: true
   accept_all_solutions_allowed_groups:
     default: "14" # auto group trust_level_4
+    mandatory_values: "1|2" # auto group admins, moderators
     type: group_list
     client: false
     allow_any: false
