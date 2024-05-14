@@ -10,7 +10,6 @@ cs:
     solved_enabled: "Zapnout plugin \"vyřešeno\", povolit uživatelům zvolit řešení témat"
     allow_solved_on_all_topics: "Povolit uživatelům výběr řešení pro všechna témata (pokud není zaškrtnuto, lze povolit řešení pro jednotlivé kategorie nebo tagy)."
     accept_all_solutions_trust_level: "Minimální důvěryhodnost požadovaná pro schválení řešení jakéhokoliv tématu (i když není OP)"
-    accept_all_solutions_allowed_groups: "Skupiny, které mohou přijímat řešení na jakékoli téma (i když nejsou autorem)"
     empty_box_on_unsolved: "Zobrazit prázdný box vedle nevyřešených témat"
     solved_quote_length: "Počet citovaných znaků daného řešení tématu pod prvním příspěvkem"
     solved_topics_auto_close_hours: "Automaticky zavřít téma (n) hodin po poslední odpovědi, jakmile bylo téma označeno jako vyřešené. Nastavením na 0 deaktivujete automatické zavírání."
