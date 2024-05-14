@@ -10,7 +10,6 @@ pl_PL:
     solved_enabled: "Aktywuj wtyczkę solved, zezwól użytkownikom wybierać rozwiązania w tematach"
     allow_solved_on_all_topics: "Zezwalaj użytkownikom na wybieranie rozwiązań dotyczących wszystkich tematów (jeśli to pole nie jest zaznaczone, rozwiązania można włączać dla poszczególnych kategorii lub tagów)"
     accept_all_solutions_trust_level: "Minimalny poziom zaufania wymagany do zaakceptowania rozwiązania w każdym temacie (nawet jeśli nie jest się jego autorem)"
-    accept_all_solutions_allowed_groups: "Grupy, które mogą akceptować rozwiązania w dowolnym temacie (nawet jeśli nie są OP'em)"
     empty_box_on_unsolved: "Wyświetl puste pole obok nierozwiązanych tematów"
     solved_quote_length: "Liczba znaków do wyświetlenia przy wyświetlaniu rozwiązania pod pierwszym wpisem"
     solved_topics_auto_close_hours: "Zamknij temat automatycznie po (n) godzinach od ostatniej odpowiedzi, gdy temat został oznaczony jako rozwiązany. Ustaw na 0, aby wyłączyć automatyczne zamykanie."

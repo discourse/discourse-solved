@@ -10,7 +10,6 @@ pt_BR:
     solved_enabled: "Ativar plugin solucionado, permite que usuários(a) selecionem soluções para tópicos"
     allow_solved_on_all_topics: "Permite que os(as) usuários(as) escolham soluções em todos os tópicos (quando esta opção estiver desmarcada, as soluções podem ser ativadas por categoria ou etiqueta)"
     accept_all_solutions_trust_level: "Nível mínimo de confiança requerido para aceitar soluções em qualquer tópico (mesmo quando não for OP)"
-    accept_all_solutions_allowed_groups: "Grupos com permissão para aceitar soluções em qualquer tópico (mesmo quando não for OP)"
     empty_box_on_unsolved: "Apresentar uma caixa vazia próximo a tópicos não solucionados"
     solved_quote_length: "Número de caracteres para citar ao exibir a solução abaixo da primeira postagem"
     solved_topics_auto_close_hours: "Fechar tópico automaticamente (n) horas após a última resposta, uma vez que o tópico foi marcado como solucionado. Defina como 0 para desativar o fechamento automático."
