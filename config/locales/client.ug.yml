@@ -4,18 +4,18 @@
 # To work with us on translations, join this project:
 # https://translate.discourse.org/
 
-te:
+ug:
   js:
     notifications:
       alt:
         solved:
-          accepted_notification: "ఆమోదించబడిన"
+          accepted_notification: "قوشۇلدى"
     solved:
       topic_status_filter:
-        all: "అన్నీ"
+        all: "ھەممىسى"
     discourse_automation:
       triggerables:
         first_accepted_solution:
           fields:
             maximum_trust_level:
-              label: నమ్మకం స్థాయి
+              label: ئىشەنچ دەرىجىسى
