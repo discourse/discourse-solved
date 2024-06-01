@@ -25,7 +25,10 @@ export default class SolvedStatusFilter extends Component {
       args.editingCategory
     ) {
       return false;
-    } else if (helper.siteSettings.allow_solved_on_all_topics) {
+    } else if (
+      helper.siteSettings.allow_solved_on_all_topics ||
+      router.currentRouteName === "tag.show"
+    ) {
       return true;
     } else {
       return args.currentCategory?.enable_accepted_answers;
@@ -45,8 +48,7 @@ export default class SolvedStatusFilter extends Component {
   }
 
   get status() {
-    const queryParamValue =
-      this.router.currentRoute.attributes?.modelParams?.solved;
+    const queryParamValue = this.router.currentRoute.queryParams?.solved;
     return UX_VALUES[queryParamValue] || "all";
   }
 
