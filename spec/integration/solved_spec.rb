@@ -446,6 +446,7 @@ RSpec.describe "Managing Posts solved status" do
 
       sign_in(user)
     end
+
     describe "updating assignment status on solve when assignment_status_on_solve is set" do
       it "update all assignments to this status when a post is accepted" do
         assigner = Assigner.new(p1.topic, user)
@@ -483,11 +484,11 @@ RSpec.describe "Managing Posts solved status" do
         group.add(user_3)
 
         topic_question = Fabricate(:topic, user: user_1)
-        post_question = Fabricate(:post, topic: topic_question, user: user_1)
 
-        user_2_response = Fabricate(:post, topic: topic_question, user: user_2)
-        assigner = Assigner.new(topic_question, user_2)
-        result = assigner.assign(user_2)
+        Fabricate(:post, topic: topic_question, user: user_1)
+        Fabricate(:post, topic: topic_question, user: user_2)
+
+        result = Assigner.new(topic_question, user_2).assign(user_2)
         expect(result[:success]).to eq(true)
 
         post_response = Fabricate(:post, topic: topic_question, user: user_3)
@@ -503,32 +504,50 @@ RSpec.describe "Managing Posts solved status" do
         expect(post_response.assignment.assigned_to_id).to eq(user_3.id)
       end
 
-      describe "assigned topic reminder"
-      it "excludes solved topics when ignore_solved_topics_in_assigned_reminder is false" do
-        other_topic = Fabricate(:topic, title: "Topic that should be there")
-        post = Fabricate(:post, topic: other_topic, user: user)
+      describe "assigned topic reminder" do
+        it "excludes solved topics when ignore_solved_topics_in_assigned_reminder is false" do
+          other_topic = Fabricate(:topic, title: "Topic that should be there")
+          post = Fabricate(:post, topic: other_topic, user: user)
 
-        other_topic2 = Fabricate(:topic, title: "Topic that should be there2")
-        post2 = Fabricate(:post, topic: other_topic2, user: user)
+          other_topic2 = Fabricate(:topic, title: "Topic that should be there2")
+          post2 = Fabricate(:post, topic: other_topic2, user: user)
 
-        Assigner.new(post.topic, user).assign(user)
-        Assigner.new(post2.topic, user).assign(user)
+          Assigner.new(post.topic, user).assign(user)
+          Assigner.new(post2.topic, user).assign(user)
 
-        reminder = PendingAssignsReminder.new
-        topics = reminder.send(:assigned_topics, user, order: :asc)
-        expect(topics.to_a.length).to eq(2)
+          reminder = PendingAssignsReminder.new
+          topics = reminder.send(:assigned_topics, user, order: :asc)
+          expect(topics.to_a.length).to eq(2)
 
-        DiscourseSolved.accept_answer!(post2, Discourse.system_user)
-        topics = reminder.send(:assigned_topics, user, order: :asc)
-        expect(topics.to_a.length).to eq(2)
-        expect(topics).to include(other_topic2)
+          DiscourseSolved.accept_answer!(post2, Discourse.system_user)
+          topics = reminder.send(:assigned_topics, user, order: :asc)
+          expect(topics.to_a.length).to eq(2)
+          expect(topics).to include(other_topic2)
 
-        SiteSetting.ignore_solved_topics_in_assigned_reminder = true
-        topics = reminder.send(:assigned_topics, user, order: :asc)
-        expect(topics.to_a.length).to eq(1)
-        expect(topics).not_to include(other_topic2)
-        expect(topics).to include(other_topic)
+          SiteSetting.ignore_solved_topics_in_assigned_reminder = true
+          topics = reminder.send(:assigned_topics, user, order: :asc)
+          expect(topics.to_a.length).to eq(1)
+          expect(topics).not_to include(other_topic2)
+          expect(topics).to include(other_topic)
+        end
       end
+    end
+  end
+
+  describe "#unaccept_answer!" do
+    it "works even when the topic has been deleted" do
+      user = Fabricate(:user, trust_level: 1)
+      topic = Fabricate(:topic, user:)
+      reply = Fabricate(:post, topic:, user:, post_number: 2)
+
+      DiscourseSolved.accept_answer!(reply, user)
+
+      topic.trash!(Discourse.system_user)
+      reply.reload
+
+      expect(reply.topic).to eq(nil)
+
+      expect { DiscourseSolved.unaccept_answer!(reply) }.not_to raise_error
     end
   end
 end

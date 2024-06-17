@@ -137,6 +137,9 @@ after_initialize do
 
     def self.unaccept_answer!(post, topic: nil)
       topic ||= post.topic
+      topic ||= Topic.unscoped.find_by(id: post.topic_id)
+
+      return if topic.nil?
 
       DistributedMutex.synchronize("discourse_solved_toggle_answer_#{topic.id}") do
         post.custom_fields.delete(IS_ACCEPTED_ANSWER_CUSTOM_FIELD)
