@@ -9,7 +9,7 @@ ar:
     admin:
       site_settings:
         categories:
-          discourse_solved: "حل Discourse"
+          discourse_solved: "حل بواسطة Discourse"
   js:
     notifications:
       alt:
