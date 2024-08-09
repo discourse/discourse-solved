@@ -28,7 +28,7 @@ module DiscourseSolved
       if current_user.in_any_groups?(SiteSetting.accept_all_solutions_allowed_groups_map)
         return true
       end
-      return true if can_perform_action_available_to_group_moderators?(topic)
+      return true if is_category_group_moderator?(topic.category)
 
       topic.user_id == current_user.id && !topic.closed && SiteSetting.accept_solutions_topic_author
     end
