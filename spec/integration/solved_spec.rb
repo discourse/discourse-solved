@@ -414,12 +414,13 @@ RSpec.describe "Managing Posts solved status" do
 
   context "with group moderators" do
     fab!(:group_user)
+    let!(:category_moderation_group) do
+      Fabricate(:category_moderation_group, category: p1.topic.category, group: group_user.group)
+    end
     let(:user_gm) { group_user.user }
-    let(:group) { group_user.group }
 
     before do
       SiteSetting.enable_category_group_moderation = true
-      p1.topic.category.update!(reviewable_by_group_id: group.id)
       sign_in(user_gm)
     end
 
