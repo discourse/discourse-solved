@@ -46,7 +46,8 @@ describe DiscourseSolved::GuardianExtensions do
     it "returns true if the user is a category group moderator for the topic" do
       group = Fabricate(:group)
       group.add(user)
-      category = Fabricate(:category, reviewable_by_group_id: group.id)
+      category = Fabricate(:category)
+      Fabricate(:category_moderation_group, category:, group:)
       topic.update!(category: category)
       SiteSetting.enable_category_group_moderation = true
       expect(guardian.can_accept_answer?(topic, post)).to eq(true)
