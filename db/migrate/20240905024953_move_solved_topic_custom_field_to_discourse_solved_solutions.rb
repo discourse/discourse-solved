@@ -48,42 +48,6 @@ class MoveSolvedTopicCustomFieldToDiscourseSolvedSolutions < ActiveRecord::Migra
   end
 
   def down
-    execute <<-SQL
-      INSERT INTO topic_custom_fields (
-        topic_id,
-        name,
-        value,
-        created_at,
-        updated_at
-      ) SELECT DISTINCT
-        topic_id,
-        'solved_auto_close_topic_timer_id',
-        CAST(topic_timer_id AS TEXT),
-        created_at,
-        updated_at
-      FROM discourse_solved_solutions tc
-      WHERE tc.topic_timer_id IS NOT NULL
-    SQL
-
-    execute <<-SQL
-      INSERT INTO post_custom_fields (
-        post_id,
-        name,
-        value,
-        created_at,
-        updated_at
-      ) SELECT DISTINCT
-        answer_post_id,
-        'is_accepted_answer',
-        'true',
-        created_at,
-        updated_at
-      FROM discourse_solved_solutions
-    SQL
-
-    remove_index :discourse_solved_solutions, :topic_id
-    remove_index :discourse_solved_solutions, :answer_post_id
-
-    drop_table :discourse_solved_solutions
+    raise ActiveRecord::IrreversibleMigration
   end
 end
