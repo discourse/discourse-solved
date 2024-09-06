@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class MoveSolvedTopicCustomFieldToDiscourseSolvedSolutions < ActiveRecord::Migration[7.1]
+  disable_ddl_transaction!
+
   def up
     create_table :discourse_solved_solutions do |t|
       t.integer :topic_id, null: false
@@ -8,9 +10,6 @@ class MoveSolvedTopicCustomFieldToDiscourseSolvedSolutions < ActiveRecord::Migra
       t.integer :topic_timer_id, null: true
       t.timestamps
     end
-
-    add_index :discourse_solved_solutions, :topic_id, unique: true
-    add_index :discourse_solved_solutions, :answer_post_id, unique: true
 
     execute <<-SQL
       INSERT INTO discourse_solved_solutions (
@@ -35,6 +34,9 @@ class MoveSolvedTopicCustomFieldToDiscourseSolvedSolutions < ActiveRecord::Migra
       WHERE tc.name = 'accepted_answer_post_id'
       AND ua.action_type = #{UserAction::SOLVED}
     SQL
+
+    add_index :discourse_solved_solutions, :topic_id, unique: true, algorithm: :concurrently
+    add_index :discourse_solved_solutions, :answer_post_id, unique: true, algorithm: :concurrently
 
     execute <<-SQL
       DELETE FROM post_custom_fields
