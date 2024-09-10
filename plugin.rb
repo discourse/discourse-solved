@@ -51,14 +51,12 @@ after_initialize do
       topic ||= post.topic
 
       DistributedMutex.synchronize("discourse_solved_toggle_answer_#{topic.id}") do
-        old_solution = topic.solution
-
-        if old_solution.present?
+        if topic.solution.present?
           UserAction.where(
             action_type: UserAction::SOLVED,
-            target_post_id: old_solution.answer_post_id,
+            target_post_id: topic.solution.answer_post_id,
           ).destroy_all
-          old_solution.destroy!
+          topic.solution.destroy!
         end
 
         solution = DiscourseSolved::Solution.create(topic:, post:, accepter_user_id: acting_user.id)
