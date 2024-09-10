@@ -6,7 +6,7 @@ class MoveSolvedTopicCustomFieldToDiscourseSolvedSolutions < ActiveRecord::Migra
     create_table :discourse_solved_solutions do |t|
       t.integer :topic_id, null: false
       t.integer :answer_post_id, null: false
-      t.integer :accepter_user_id, null: true
+      t.integer :accepter_user_id
       t.integer :topic_timer_id, null: true
       t.timestamps
     end
