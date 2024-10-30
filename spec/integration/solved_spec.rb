@@ -532,6 +532,27 @@ RSpec.describe "Managing Posts solved status" do
           expect(topics).to include(other_topic)
         end
       end
+
+      describe "assigned count for user" do
+        it "does not count solved topics using assignment_status_on_solve status" do
+          SiteSetting.ignore_solved_topics_in_assigned_reminder = true
+
+          other_topic = Fabricate(:topic, title: "Topic that should be there")
+          post = Fabricate(:post, topic: other_topic, user: user)
+
+          other_topic2 = Fabricate(:topic, title: "Topic that should be there2")
+          post2 = Fabricate(:post, topic: other_topic2, user: user)
+
+          Assigner.new(post.topic, user).assign(user)
+          Assigner.new(post2.topic, user).assign(user)
+          
+          reminder = PendingAssignsReminder.new
+          expect(reminder.send(:assigned_count_for, user)).to eq(2)
+
+          DiscourseSolved.accept_answer!(post2, Discourse.system_user)
+          expect(reminder.send(:assigned_count_for, user)).to eq(1)
+        end
+      end
     end
   end
 

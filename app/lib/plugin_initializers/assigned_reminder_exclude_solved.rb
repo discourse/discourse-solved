@@ -27,4 +27,14 @@ module DiscourseSolved
       end
     end
   end
+
+  class AssignedCountForUserQuery < PluginInitializer
+    def apply_plugin_api
+      plugin.register_modifier(:assigned_count_for_user_query) do |query, user|
+        next query if !SiteSetting.ignore_solved_topics_in_assigned_reminder
+        next query if SiteSetting.assignment_status_on_solve.blank?
+        query.where.not(status: SiteSetting.assignment_status_on_solve)
+      end
+    end
+  end
 end

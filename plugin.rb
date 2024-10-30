@@ -47,6 +47,7 @@ after_initialize do
 
   require_relative "app/lib/plugin_initializers/assigned_reminder_exclude_solved"
   DiscourseSolved::AssignsReminderForTopicsQuery.new(self).apply_plugin_api
+  DiscourseSolved::AssignedCountForUserQuery.new(self).apply_plugin_api
   module ::DiscourseSolved
     def self.accept_answer!(post, acting_user, topic: nil)
       topic ||= post.topic
