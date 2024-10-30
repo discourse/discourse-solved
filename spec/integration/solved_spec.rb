@@ -545,7 +545,7 @@ RSpec.describe "Managing Posts solved status" do
 
           Assigner.new(post.topic, user).assign(user)
           Assigner.new(post2.topic, user).assign(user)
-          
+
           reminder = PendingAssignsReminder.new
           expect(reminder.send(:assigned_count_for, user)).to eq(2)
 
