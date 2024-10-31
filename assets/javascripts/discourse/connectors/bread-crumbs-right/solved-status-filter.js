@@ -1,7 +1,6 @@
 import Component from "@glimmer/component";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
-import { getOwnerWithFallback } from "discourse-common/lib/get-owner";
 import I18n from "I18n";
 
 const QUERY_PARAM_VALUES = {
@@ -16,17 +15,17 @@ const UX_VALUES = {
 };
 
 export default class SolvedStatusFilter extends Component {
-  static shouldRender(args, helper) {
-    const router = getOwnerWithFallback(this).lookup("service:router");
+  static shouldRender(args, context, owner) {
+    const router = owner.lookup("service:router");
 
     if (
-      !helper.siteSettings.show_filter_by_solved_status ||
+      !context.siteSettings.show_filter_by_solved_status ||
       router.currentRouteName === "discovery.categories" ||
       args.editingCategory
     ) {
       return false;
     } else if (
-      helper.siteSettings.allow_solved_on_all_topics ||
+      context.siteSettings.allow_solved_on_all_topics ||
       router.currentRouteName === "tag.show"
     ) {
       return true;
