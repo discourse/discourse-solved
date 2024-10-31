@@ -1,75 +1,31 @@
 import { computed } from "@ember/object";
+import {
+  POST_MENU_ADMIN_BUTTON_KEY,
+  POST_MENU_COPY_LINK_BUTTON_KEY,
+  POST_MENU_DELETE_BUTTON_KEY,
+  POST_MENU_LIKE_BUTTON_KEY,
+  POST_MENU_SHARE_BUTTON_KEY,
+  POST_MENU_SHOW_MORE_BUTTON_KEY,
+} from "discourse/components/post/menu";
 import TopicStatusIcons from "discourse/helpers/topic-status-icons";
-import { ajax } from "discourse/lib/ajax";
-import { popupAjaxError } from "discourse/lib/ajax-error";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { formatUsername } from "discourse/lib/utilities";
 import Topic from "discourse/models/topic";
 import User from "discourse/models/user";
 import TopicStatus from "discourse/raw-views/topic-status";
 import PostCooked from "discourse/widgets/post-cooked";
+import { withSilencedDeprecations } from "discourse-common/lib/deprecated";
 import { iconHTML, iconNode } from "discourse-common/lib/icon-library";
 import I18n from "I18n";
-
-function clearAccepted(topic) {
-  const posts = topic.get("postStream.posts");
-  posts.forEach((post) => {
-    if (post.get("post_number") > 1) {
-      post.setProperties({
-        accepted_answer: false,
-        can_accept_answer: true,
-        can_unaccept_answer: false,
-        topic_accepted_answer: false,
-      });
-    }
-  });
-}
-
-function unacceptPost(post) {
-  if (!post.can_unaccept_answer) {
-    return;
-  }
-  const topic = post.topic;
-
-  post.setProperties({
-    can_accept_answer: true,
-    can_unaccept_answer: false,
-    accepted_answer: false,
-  });
-  topic.set("accepted_answer", undefined);
-
-  ajax("/solution/unaccept", {
-    type: "POST",
-    data: { id: post.id },
-  }).catch(popupAjaxError);
-}
-
-function acceptPost(post) {
-  const topic = post.topic;
-
-  clearAccepted(topic);
-
-  post.setProperties({
-    can_unaccept_answer: true,
-    can_accept_answer: false,
-    accepted_answer: true,
-  });
-
-  topic.set("accepted_answer", {
-    username: post.username,
-    name: post.name,
-    post_number: post.post_number,
-    excerpt: post.cooked,
-  });
-
-  ajax("/solution/accept", {
-    type: "POST",
-    data: { id: post.id },
-  }).catch(popupAjaxError);
-}
+import SolvedAcceptAnswerButton, {
+  acceptAnswer,
+} from "../components/solved-accept-answer-button";
+import SolvedUnacceptAnswerButton, {
+  unacceptAnswer,
+} from "../components/solved-unaccept-answer-button";
 
 function initializeWithApi(api) {
-  const currentUser = api.getCurrentUser();
+  customizePostMenu(api);
 
   TopicStatusIcons.addObject([
     "has_accepted_answer",
@@ -87,6 +43,101 @@ function initializeWithApi(api) {
   if (api.addDiscoveryQueryParam) {
     api.addDiscoveryQueryParam("solved", { replace: true, refreshModel: true });
   }
+
+  api.decorateWidget("post-contents:after-cooked", (dec) => {
+    if (dec.attrs.post_number === 1) {
+      const postModel = dec.getModel();
+      if (postModel) {
+        const topic = postModel.topic;
+        if (topic.accepted_answer) {
+          const hasExcerpt = !!topic.accepted_answer.excerpt;
+
+          const withExcerpt = `
+            <aside class='quote accepted-answer' data-post="${
+              topic.get("accepted_answer").post_number
+            }" data-topic="${topic.id}">
+              <div class='title'>
+                ${topic.acceptedAnswerHtml} <div class="quote-controls"><\/div>
+              </div>
+              <blockquote>
+                ${topic.accepted_answer.excerpt}
+              </blockquote>
+            </aside>`;
+
+          const withoutExcerpt = `
+            <aside class='quote accepted-answer'>
+              <div class='title title-only'>
+                ${topic.acceptedAnswerHtml}
+              </div>
+            </aside>`;
+
+          const cooked = new PostCooked(
+            { cooked: hasExcerpt ? withExcerpt : withoutExcerpt },
+            dec
+          );
+          return dec.rawHtml(cooked.init());
+        }
+      }
+    }
+  });
+
+  api.attachWidgetAction("post", "acceptAnswer", function () {
+    acceptAnswer(this.model, this.appEvents);
+  });
+
+  api.attachWidgetAction("post", "unacceptAnswer", function () {
+    unacceptAnswer(this.model, this.appEvents);
+  });
+}
+
+function customizePostMenu(api) {
+  const transformerRegistered = api.registerValueTransformer(
+    "post-menu-buttons",
+    ({ value: dag, context: { post } }) => {
+      if (post.can_accept_answer) {
+        dag.add(
+          "solved-accept-answer",
+          SolvedAcceptAnswerButton,
+          post.topic_accepted_answer
+            ? {
+                before: [
+                  POST_MENU_ADMIN_BUTTON_KEY,
+                  POST_MENU_SHOW_MORE_BUTTON_KEY,
+                ],
+                after: POST_MENU_DELETE_BUTTON_KEY,
+              }
+            : {
+                before: [
+                  POST_MENU_LIKE_BUTTON_KEY,
+                  POST_MENU_COPY_LINK_BUTTON_KEY,
+                  POST_MENU_SHARE_BUTTON_KEY,
+                  POST_MENU_SHOW_MORE_BUTTON_KEY,
+                ],
+              }
+        );
+      } else if (post.accepted_answer) {
+        dag.add("solved-unaccept-answer", SolvedUnacceptAnswerButton, {
+          before: [
+            POST_MENU_LIKE_BUTTON_KEY,
+            POST_MENU_COPY_LINK_BUTTON_KEY,
+            POST_MENU_SHARE_BUTTON_KEY,
+            POST_MENU_SHOW_MORE_BUTTON_KEY,
+          ],
+        });
+      }
+
+      return dag;
+    }
+  );
+
+  const silencedKey =
+    transformerRegistered && "discourse.post-menu-widget-overrides";
+
+  withSilencedDeprecations(silencedKey, () => customizeWidgetPostMenu(api));
+}
+
+function customizeWidgetPostMenu(api) {
+  const currentUser = api.getCurrentUser();
 
   api.addPostMenuButton("solved", (attrs) => {
     if (attrs.can_accept_answer) {
@@ -130,67 +181,6 @@ function initializeWithApi(api) {
         };
       }
     }
-  });
-
-  api.decorateWidget("post-contents:after-cooked", (dec) => {
-    if (dec.attrs.post_number === 1) {
-      const postModel = dec.getModel();
-      if (postModel) {
-        const topic = postModel.topic;
-        if (topic.accepted_answer) {
-          const hasExcerpt = !!topic.accepted_answer.excerpt;
-
-          const withExcerpt = `
-            <aside class='quote accepted-answer' data-post="${
-              topic.get("accepted_answer").post_number
-            }" data-topic="${topic.id}">
-              <div class='title'>
-                ${topic.acceptedAnswerHtml} <div class="quote-controls"><\/div>
-              </div>
-              <blockquote>
-                ${topic.accepted_answer.excerpt}
-              </blockquote>
-            </aside>`;
-
-          const withoutExcerpt = `
-            <aside class='quote accepted-answer'>
-              <div class='title title-only'>
-                ${topic.acceptedAnswerHtml}
-              </div>
-            </aside>`;
-
-          const cooked = new PostCooked(
-            { cooked: hasExcerpt ? withExcerpt : withoutExcerpt },
-            dec
-          );
-          return dec.rawHtml(cooked.init());
-        }
-      }
-    }
-  });
-
-  api.attachWidgetAction("post", "acceptAnswer", function () {
-    const post = this.model;
-    acceptPost(post);
-
-    this.appEvents.trigger("discourse-solved:solution-toggled", post);
-
-    post.get("topic.postStream.posts").forEach((p) => {
-      p.set("topic_accepted_answer", true);
-      this.appEvents.trigger("post-stream:refresh", { id: p.id });
-    });
-  });
-
-  api.attachWidgetAction("post", "unacceptAnswer", function () {
-    const post = this.model;
-    unacceptPost(post);
-
-    this.appEvents.trigger("discourse-solved:solution-toggled", post);
-
-    post.get("topic.postStream.posts").forEach((p) => {
-      p.set("topic_accepted_answer", false);
-      this.appEvents.trigger("post-stream:refresh", { id: p.id });
-    });
   });
 }
 
@@ -252,7 +242,7 @@ export default {
       }),
     });
 
-    withPluginApi("0.1", initializeWithApi);
+    withPluginApi("1.34.0", initializeWithApi);
 
     withPluginApi("0.8.10", (api) => {
       api.replaceIcon(
