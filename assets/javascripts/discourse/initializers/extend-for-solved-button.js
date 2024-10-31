@@ -94,11 +94,19 @@ function customizePostMenu(api) {
   const transformerRegistered = api.registerValueTransformer(
     "post-menu-buttons",
     ({ value: dag, context: { post } }) => {
+      let solvedButton;
+
       if (post.can_accept_answer) {
+        solvedButton = SolvedAcceptAnswerButton;
+      } else if (post.accepted_answer) {
+        solvedButton = SolvedUnacceptAnswerButton;
+      }
+
+      solvedButton &&
         dag.add(
-          "solved-accept-answer",
-          SolvedAcceptAnswerButton,
-          post.topic_accepted_answer
+          "solved",
+          solvedButton,
+          post.topic_accepted_answer && !post.accepted_answer
             ? {
                 before: [
                   POST_MENU_ADMIN_BUTTON_KEY,
@@ -108,6 +116,7 @@ function customizePostMenu(api) {
               }
             : {
                 before: [
+                  "assign", // button added by the assign plugin
                   POST_MENU_LIKE_BUTTON_KEY,
                   POST_MENU_COPY_LINK_BUTTON_KEY,
                   POST_MENU_SHARE_BUTTON_KEY,
@@ -115,16 +124,6 @@ function customizePostMenu(api) {
                 ],
               }
         );
-      } else if (post.accepted_answer) {
-        dag.add("solved-unaccept-answer", SolvedUnacceptAnswerButton, {
-          before: [
-            POST_MENU_LIKE_BUTTON_KEY,
-            POST_MENU_COPY_LINK_BUTTON_KEY,
-            POST_MENU_SHARE_BUTTON_KEY,
-            POST_MENU_SHOW_MORE_BUTTON_KEY,
-          ],
-        });
-      }
 
       return dag;
     }
