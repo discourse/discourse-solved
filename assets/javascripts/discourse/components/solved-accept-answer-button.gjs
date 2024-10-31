@@ -6,7 +6,7 @@ import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 
 export default class SolvedAcceptAnswerButton extends Component {
-  static collapsedByDefault(args) {
+  static hidden(args) {
     return args.post.topic_accepted_answer;
   }
 
