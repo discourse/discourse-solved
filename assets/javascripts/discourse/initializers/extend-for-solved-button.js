@@ -124,8 +124,6 @@ function customizePostMenu(api) {
                 ],
               }
         );
-
-      return dag;
     }
   );
 
