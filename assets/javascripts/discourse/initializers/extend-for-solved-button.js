@@ -1,12 +1,4 @@
 import { computed } from "@ember/object";
-import {
-  POST_MENU_ADMIN_BUTTON_KEY,
-  POST_MENU_COPY_LINK_BUTTON_KEY,
-  POST_MENU_DELETE_BUTTON_KEY,
-  POST_MENU_LIKE_BUTTON_KEY,
-  POST_MENU_SHARE_BUTTON_KEY,
-  POST_MENU_SHOW_MORE_BUTTON_KEY,
-} from "discourse/components/post/menu";
 import TopicStatusIcons from "discourse/helpers/topic-status-icons";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { formatUsername } from "discourse/lib/utilities";
@@ -93,7 +85,15 @@ function initializeWithApi(api) {
 function customizePostMenu(api) {
   const transformerRegistered = api.registerValueTransformer(
     "post-menu-buttons",
-    ({ value: dag, context: { post } }) => {
+    ({
+      value: dag,
+      context: {
+        post,
+        firstButtonKey,
+        secondLastHiddenButtonKey,
+        lastHiddenButtonKey,
+      },
+    }) => {
       let solvedButton;
 
       if (post.can_accept_answer) {
@@ -108,19 +108,13 @@ function customizePostMenu(api) {
           solvedButton,
           post.topic_accepted_answer && !post.accepted_answer
             ? {
-                before: [
-                  POST_MENU_ADMIN_BUTTON_KEY,
-                  POST_MENU_SHOW_MORE_BUTTON_KEY,
-                ],
-                after: POST_MENU_DELETE_BUTTON_KEY,
+                before: lastHiddenButtonKey,
+                after: secondLastHiddenButtonKey,
               }
             : {
                 before: [
                   "assign", // button added by the assign plugin
-                  POST_MENU_LIKE_BUTTON_KEY,
-                  POST_MENU_COPY_LINK_BUTTON_KEY,
-                  POST_MENU_SHARE_BUTTON_KEY,
-                  POST_MENU_SHOW_MORE_BUTTON_KEY,
+                  firstButtonKey,
                 ],
               }
         );
