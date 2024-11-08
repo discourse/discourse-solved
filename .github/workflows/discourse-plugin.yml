@@ -8,4 +8,4 @@ on:
 
 jobs:
   ci:
-    uses: discourse/.github/.github/workflows/discourse-plugin.yml@v1
+    uses: discourse/.github/.github/workflows/discourse-plugin.yml@eslint-upgrade
