@@ -1,5 +1,8 @@
-{{#if show}}
-  <TopicNavigationPopup @popupId="solved-notice" @dismissDuration={{oneWeek}}>
+{{#if this.show}}
+  <TopicNavigationPopup
+    @popupId="solved-notice"
+    @dismissDuration={{this.oneWeek}}
+  >
     <h3>{{i18n "solved.no_answer.title"}}</h3>
     <p>{{i18n "solved.no_answer.description"}}</p>
   </TopicNavigationPopup>
