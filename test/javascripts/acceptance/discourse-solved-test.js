@@ -29,14 +29,15 @@ acceptance("Discourse Solved Plugin", function (needs) {
   test("A topic with an accepted answer shows an excerpt of the answer, if provided", async function (assert) {
     await visit("/t/with-excerpt/11");
 
-    assert.ok(
-      queryAll('.quote blockquote:contains("this is an excerpt")').length === 1
+    assert.strictEqual(
+      queryAll('.quote blockquote:contains("this is an excerpt")').length,
+      1
     );
 
     await visit("/t/without-excerpt/12");
 
-    assert.notOk(queryAll(".quote blockquote").length === 1);
-    assert.ok(queryAll(".quote .title.title-only").length === 1);
+    assert.notStrictEqual(queryAll(".quote blockquote").length, 1);
+    assert.strictEqual(queryAll(".quote .title.title-only").length, 1);
   });
 
   test("Full page search displays solved status", async function (assert) {
@@ -45,7 +46,7 @@ acceptance("Discourse Solved Plugin", function (needs) {
     await fillIn(".search-query", "discourse");
     await click(".search-cta");
 
-    assert.ok(queryAll(".fps-topic").length === 1, "has one post");
+    assert.strictEqual(queryAll(".fps-topic").length, 1, "has one post");
 
     assert.ok(queryAll(".topic-status .solved").length, "shows the right icon");
   });
