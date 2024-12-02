@@ -4,42 +4,8 @@ import { service } from "@ember/service";
 import DButton from "discourse/components/d-button";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
-import dIcon from "discourse-common/helpers/d-icon";
-import i18n from "discourse-common/helpers/i18n";
-
-export default class SolvedUnacceptAnswerButton extends Component {
-  @service appEvents;
-
-  @action
-  unacceptAnswer() {
-    unacceptAnswer(this.args.post, this.appEvents);
-  }
-
-  <template>
-    <span class="extra-buttons">
-      {{#if @post.can_unaccept_answer}}
-        <DButton
-          class="post-action-menu__solved-accepted accepted fade-out"
-          ...attributes
-          @action={{this.unacceptAnswer}}
-          @icon="check-square"
-          @label="solved.solution"
-          @title="solved.unaccept_answer"
-        />
-      {{else}}
-        <span
-          class="accepted-text"
-          title={{i18n "solved.accepted_description"}}
-        >
-          <span>{{dIcon "check"}}</span>
-          <span class="accepted-label">
-            {{i18n "solved.solution"}}
-          </span>
-        </span>
-      {{/if}}
-    </span>
-  </template>
-}
+import icon from "discourse-common/helpers/d-icon";
+import { i18n } from "discourse-i18n";
 
 export function unacceptAnswer(post, appEvents) {
   // TODO (glimmer-post-menu): Remove this exported function and move the code into the button action after the widget code is removed
@@ -71,4 +37,38 @@ function unacceptPost(post) {
     type: "POST",
     data: { id: post.id },
   }).catch(popupAjaxError);
+}
+
+export default class SolvedUnacceptAnswerButton extends Component {
+  @service appEvents;
+
+  @action
+  unacceptAnswer() {
+    unacceptAnswer(this.args.post, this.appEvents);
+  }
+
+  <template>
+    <span class="extra-buttons">
+      {{#if @post.can_unaccept_answer}}
+        <DButton
+          class="post-action-menu__solved-accepted accepted fade-out"
+          ...attributes
+          @action={{this.unacceptAnswer}}
+          @icon="check-square"
+          @label="solved.solution"
+          @title="solved.unaccept_answer"
+        />
+      {{else}}
+        <span
+          class="accepted-text"
+          title={{i18n "solved.accepted_description"}}
+        >
+          <span>{{icon "check"}}</span>
+          <span class="accepted-label">
+            {{i18n "solved.solution"}}
+          </span>
+        </span>
+      {{/if}}
+    </span>
+  </template>
 }
