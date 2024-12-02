@@ -8,7 +8,7 @@ import TopicStatus from "discourse/raw-views/topic-status";
 import PostCooked from "discourse/widgets/post-cooked";
 import { withSilencedDeprecations } from "discourse-common/lib/deprecated";
 import { iconHTML, iconNode } from "discourse-common/lib/icon-library";
-import I18n from "I18n";
+import { i18n } from "discourse-i18n";
 import SolvedAcceptAnswerButton, {
   acceptAnswer,
 } from "../components/solved-accept-answer-button";
@@ -161,11 +161,11 @@ function customizeWidgetPostMenu(api) {
             return h(
               "span.accepted-text",
               {
-                title: I18n.t("solved.accepted_description"),
+                title: i18n("solved.accepted_description"),
               },
               [
                 h("span", iconNode("check")),
-                h("span.accepted-label", I18n.t("solved.solution")),
+                h("span.accepted-label", i18n("solved.solution")),
               ]
             );
           },
@@ -194,7 +194,7 @@ export default {
             ? name
             : formatUsername(username);
 
-        return I18n.t("solved.accepted_html", {
+        return i18n("solved.accepted_html", {
           icon: iconHTML("check-square", { class: "accepted" }),
           username_lower: username.toLowerCase(),
           username: displayedUser,
@@ -213,7 +213,7 @@ export default {
           results.push({
             openTag: "span",
             closeTag: "span",
-            title: I18n.t("topic_statuses.solved.help"),
+            title: i18n("topic_statuses.solved.help"),
             icon: "far-check-square",
             key: "solved",
           });
@@ -225,7 +225,7 @@ export default {
           results.push({
             openTag: "span",
             closeTag: "span",
-            title: I18n.t("solved.has_no_accepted_answer"),
+            title: i18n("solved.has_no_accepted_answer"),
             icon: "far-square",
           });
         }
@@ -246,11 +246,11 @@ export default {
       api.addAdvancedSearchOptions({
         statusOptions: [
           {
-            name: I18n.t("search.advanced.statuses.solved"),
+            name: i18n("search.advanced.statuses.solved"),
             value: "solved",
           },
           {
-            name: I18n.t("search.advanced.statuses.unsolved"),
+            name: i18n("search.advanced.statuses.unsolved"),
             value: "unsolved",
           },
         ],
