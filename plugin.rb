@@ -9,9 +9,9 @@
 
 enabled_site_setting :solved_enabled
 
-register_svg_icon "far fa-check-square"
-register_svg_icon "check-square"
-register_svg_icon "far fa-square"
+register_svg_icon "far-square-check"
+register_svg_icon "square-check"
+register_svg_icon "far-square"
 
 register_asset "stylesheets/solutions.scss"
 register_asset "stylesheets/mobile/solutions.scss", :mobile
