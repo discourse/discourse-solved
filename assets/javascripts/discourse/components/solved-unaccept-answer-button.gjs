@@ -54,7 +54,7 @@ export default class SolvedUnacceptAnswerButton extends Component {
           class="post-action-menu__solved-accepted accepted fade-out"
           ...attributes
           @action={{this.unacceptAnswer}}
-          @icon="check-square"
+          @icon="square-check"
           @label="solved.solution"
           @title="solved.unaccept_answer"
         />

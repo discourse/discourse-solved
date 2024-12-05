@@ -17,7 +17,7 @@ SQL
 
 Badge.seed(:name) do |badge|
   badge.name = "Solved 1"
-  badge.default_icon = "check-square"
+  badge.default_icon = "square-check"
   badge.badge_type_id = BadgeType::Bronze
   badge.default_badge_grouping_id = BadgeGrouping::Community
   badge.query = first_solution_query
@@ -51,7 +51,7 @@ end
 ].each do |name, level, count|
   Badge.seed(:name) do |badge|
     badge.name = name
-    badge.default_icon = "check-square"
+    badge.default_icon = "square-check"
     badge.badge_type_id = level
     badge.default_badge_grouping_id = BadgeGrouping::Community
     badge.query = solved_query_with_count(count)
