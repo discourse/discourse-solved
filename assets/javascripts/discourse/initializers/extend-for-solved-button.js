@@ -21,7 +21,7 @@ function initializeWithApi(api) {
 
   TopicStatusIcons.addObject([
     "has_accepted_answer",
-    "far-check-square",
+    "far-square-check",
     "solved",
   ]);
 
@@ -136,7 +136,7 @@ function customizeWidgetPostMenu(api) {
 
       return {
         action: "acceptAnswer",
-        icon: "far-check-square",
+        icon: "far-square-check",
         className: "unaccepted",
         title: "solved.accept_answer",
         label: isOp ? "solved.solution" : null,
@@ -146,7 +146,7 @@ function customizeWidgetPostMenu(api) {
       if (attrs.can_unaccept_answer) {
         return {
           action: "unacceptAnswer",
-          icon: "check-square",
+          icon: "square-check",
           title: "solved.unaccept_answer",
           className: "accepted fade-out",
           position: "first",
@@ -195,7 +195,7 @@ export default {
             : formatUsername(username);
 
         return i18n("solved.accepted_html", {
-          icon: iconHTML("check-square", { class: "accepted" }),
+          icon: iconHTML("square-check", { class: "accepted" }),
           username_lower: username.toLowerCase(),
           username: displayedUser,
           post_path: `${this.url}/${postNumber}`,
@@ -214,7 +214,7 @@ export default {
             openTag: "span",
             closeTag: "span",
             title: i18n("topic_statuses.solved.help"),
-            icon: "far-check-square",
+            icon: "far-square-check",
             key: "solved",
           });
         } else if (
@@ -238,7 +238,7 @@ export default {
     withPluginApi("0.8.10", (api) => {
       api.replaceIcon(
         "notification.solved.accepted_notification",
-        "check-square"
+        "square-check"
       );
     });
 
