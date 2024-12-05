@@ -27,7 +27,7 @@ export default class SolvedAcceptAnswerButton extends Component {
       class="post-action-menu__solved-unaccepted unaccepted"
       ...attributes
       @action={{this.acceptAnswer}}
-      @icon="far-check-square"
+      @icon="far-square-check"
       @label={{if this.showLabel "solved.solution"}}
       @title="solved.accept_answer"
     />
