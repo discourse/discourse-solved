@@ -5,6 +5,11 @@
 # https://translate.discourse.org/
 
 hu:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_solved: "Discourse Megoldott"
   js:
     notifications:
       alt:
@@ -31,10 +36,13 @@ hu:
         solved: "megoldott"
         unsolved: "megoldatlan"
       no_solved_topics_title: "Még egy témát sem oldott meg"
+      no_solved_topics_title_others: "%{username} még nem oldott meg témát"
       no_solved_topics_body: "Ha hasznos választ ad egy témára, előfordulhat, hogy a téma tulajdonosa vagy a stáb az Ön válaszát választják megoldásként."
       no_answer:
         title: Megválaszolták a kérdését?
         description: "Emelje ki a választ, és segítsen másoknak is a helyes válasz alatti megoldás gomb segítségével."
+      notification:
+        title: "hozzászólásod megoldásként lett megjelölve"
     topic_statuses:
       solved:
         help: "Ez a téma tartalmaz egy megoldást"
@@ -47,6 +55,13 @@ hu:
       web_hooks:
         solved_event:
           group_name: "Megoldott esemény"
+          accepted_solution: "Amikor egy felhasználó egy hozzászólást elfogadott válaszként jelöl meg"
+          unaccepted_solution: "Amikor egy felhasználó egy hozzászólást nem elfogadott válaszként jelöl meg"
+      api:
+        scopes:
+          descriptions:
+            solved:
+              answer: Megoldás elfogadása/elutasítása.
     discourse_automation:
       triggerables:
         first_accepted_solution:
