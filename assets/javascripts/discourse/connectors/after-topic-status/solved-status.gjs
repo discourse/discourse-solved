@@ -8,14 +8,14 @@ export default class SolvedStatus extends Component {
   @service siteSettings;
 
   <template>
-    {{~#if @topic.has_accepted_answer~}}
+    {{~#if @outletArgs.topic.has_accepted_answer~}}
       <span
         title={{i18n "topic_statuses.solved.help"}}
         class="topic-status"
       >{{icon "far-square-check"}}</span>
     {{~else if
       (and
-        @topic.can_have_answer
+        @outletArgs.topic.can_have_answer
         this.siteSettings.solved_enabled
         this.siteSettings.empty_box_on_unsolved
       )
