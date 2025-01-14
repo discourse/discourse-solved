@@ -1,10 +1,9 @@
 import { computed } from "@ember/object";
-import TopicStatusIcons from "discourse/helpers/topic-status-icons";
+import discourseComputed from "discourse/lib/decorators";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { formatUsername } from "discourse/lib/utilities";
 import Topic from "discourse/models/topic";
 import User from "discourse/models/user";
-import TopicStatus from "discourse/raw-views/topic-status";
 import PostCooked from "discourse/widgets/post-cooked";
 import { withSilencedDeprecations } from "discourse-common/lib/deprecated";
 import { iconHTML, iconNode } from "discourse-common/lib/icon-library";
@@ -18,12 +17,6 @@ import SolvedUnacceptAnswerButton, {
 
 function initializeWithApi(api) {
   customizePostMenu(api);
-
-  TopicStatusIcons.addObject([
-    "has_accepted_answer",
-    "far-square-check",
-    "solved",
-  ]);
 
   api.includePostAttributes(
     "can_accept_answer",
@@ -205,32 +198,54 @@ export default {
       }),
     });
 
-    TopicStatus.reopen({
-      statuses: computed(function () {
-        const results = this._super(...arguments);
+    withPluginApi("2.0.0", (api) => {
+      withSilencedDeprecations("discourse.hbr-topic-list-overrides", () => {
+        let topicStatusIcons;
+        try {
+          topicStatusIcons =
+            require("discourse/helpers/topic-status-icons").default;
+        } catch {}
 
-        if (this.topic.has_accepted_answer) {
-          results.push({
-            openTag: "span",
-            closeTag: "span",
-            title: i18n("topic_statuses.solved.help"),
-            icon: "far-square-check",
-            key: "solved",
-          });
-        } else if (
-          this.topic.can_have_answer &&
-          this.siteSettings.solved_enabled &&
-          this.siteSettings.empty_box_on_unsolved
-        ) {
-          results.push({
-            openTag: "span",
-            closeTag: "span",
-            title: i18n("solved.has_no_accepted_answer"),
-            icon: "far-square",
-          });
-        }
-        return results;
-      }),
+        topicStatusIcons?.addObject([
+          "has_accepted_answer",
+          "far-square-check",
+          "solved",
+        ]);
+
+        api.modifyClass(
+          "raw-view:topic-status",
+          (Superclass) =>
+            class extends Superclass {
+              @discourseComputed("topic.{has_accepted_answer,can_have_answer}")
+              statuses() {
+                const results = super.statuses;
+
+                if (this.topic.has_accepted_answer) {
+                  results.push({
+                    openTag: "span",
+                    closeTag: "span",
+                    title: i18n("topic_statuses.solved.help"),
+                    icon: "far-square-check",
+                    key: "solved",
+                  });
+                } else if (
+                  this.topic.can_have_answer &&
+                  this.siteSettings.solved_enabled &&
+                  this.siteSettings.empty_box_on_unsolved
+                ) {
+                  results.push({
+                    openTag: "span",
+                    closeTag: "span",
+                    title: i18n("solved.has_no_accepted_answer"),
+                    icon: "far-square",
+                  });
+                }
+
+                return results;
+              }
+            }
+        );
+      });
     });
 
     withPluginApi("1.34.0", initializeWithApi);
