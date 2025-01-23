@@ -216,11 +216,16 @@ export default {
           "raw-view:topic-status",
           (Superclass) =>
             class extends Superclass {
-              @discourseComputed("topic.{has_accepted_answer,can_have_answer}")
+              @discourseComputed(
+                "topic.{has_accepted_answer,accepted_answer,can_have_answer}"
+              )
               statuses() {
                 const results = super.statuses;
 
-                if (this.topic.has_accepted_answer) {
+                if (
+                  this.topic.has_accepted_answer ||
+                  this.topic.accepted_answer
+                ) {
                   results.push({
                     openTag: "span",
                     closeTag: "span",
@@ -228,11 +233,7 @@ export default {
                     icon: "far-square-check",
                     key: "solved",
                   });
-                } else if (
-                  this.topic.can_have_answer &&
-                  this.siteSettings.solved_enabled &&
-                  this.siteSettings.empty_box_on_unsolved
-                ) {
+                } else if (this.topic.can_have_answer) {
                   results.push({
                     openTag: "span",
                     closeTag: "span",
