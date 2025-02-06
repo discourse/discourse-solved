@@ -25,6 +25,11 @@ describe DiscourseSolved::GuardianExtensions do
       expect(guardian.can_accept_answer?(topic, post)).to eq(false)
     end
 
+    it "returns false for private messages" do
+      topic.update!(user:, category_id: nil, archetype: Archetype.private_message)
+      expect(guardian.can_accept_answer?(topic, post)).to eq(false)
+    end
+
     it "returns false if accepted answers are not allowed" do
       SiteSetting.allow_solved_on_all_topics = false
       expect(guardian.can_accept_answer?(topic, post)).to eq(false)

@@ -272,19 +272,20 @@ after_initialize do
     report.data = []
 
     accepted_solutions =
-      TopicCustomField.where(name: ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD)
+      TopicCustomField
+        .joins(:topic)
+        .where("topics.archetype <> ?", Archetype.private_message)
+        .where(name: ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD)
 
     category_id, include_subcategories = report.add_category_filter
     if category_id
       if include_subcategories
         accepted_solutions =
-          accepted_solutions.joins(:topic).where(
-            "topics.category_id IN (?)",
-            Category.subcategory_ids(category_id),
-          )
+          accepted_solutions
+            .where("topics.category_id IN (?)", Category.subcategory_ids(category_id))
       else
         accepted_solutions =
-          accepted_solutions.joins(:topic).where("topics.category_id = ?", category_id)
+          accepted_solutions.where("topics.category_id = ?", category_id)
       end
     end
 
@@ -345,7 +346,7 @@ after_initialize do
       )
     SQL
 
-    scope.where(sql)
+    scope.where(sql).where("topics.archetype <> ?", Archetype.private_message)
   end
 
   unsolved_callback = ->(scope) do
@@ -379,7 +380,7 @@ after_initialize do
       SQL
     end
 
-    scope
+    scope.where("topics.archetype <> ?", Archetype.private_message)
   end
 
   register_custom_filter_by_status("solved", &solved_callback)
@@ -396,6 +397,12 @@ after_initialize do
     else
       results
     end
+  end
+
+  register_modifier(:user_action_stream_builder) do |builder|
+    builder
+      .where("t.deleted_at IS NULL")
+      .where("t.archetype <> ?", Archetype.private_message)
   end
 
   TopicList.preloaded_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
@@ -477,26 +484,36 @@ after_initialize do
     end
   end
 
-  query =
-    "
-    WITH x AS (SELECT
-      u.id user_id,
-      COUNT(DISTINCT ua.id) AS solutions
+  query = <<~SQL
+    WITH x AS (
+      SELECT u.id user_id, COUNT(DISTINCT ua.id) AS solutions
       FROM users AS u
-      LEFT OUTER JOIN user_actions AS ua ON ua.user_id = u.id AND ua.action_type = #{UserAction::SOLVED} AND COALESCE(ua.created_at, :since) > :since
-      WHERE u.active
+      LEFT JOIN user_actions AS ua 
+         ON ua.user_id = u.id 
+        AND ua.action_type = #{UserAction::SOLVED} 
+        AND COALESCE(ua.created_at, :since) > :since
+      JOIN topics AS t 
+         ON t.id = ua.target_topic_id
+        AND t.archetype <> 'private_message'
+        AND t.deleted_at IS NULL
+      JOIN posts AS p 
+         ON p.id = ua.target_post_id
+        AND p.deleted_at IS NULL
+      WHERE u.id > 0
+        AND u.active
         AND u.silenced_till IS NULL
-        AND u.id > 0
+        AND u.suspended_till IS NULL
       GROUP BY u.id
     )
-    UPDATE directory_items di SET
-      solutions = x.solutions
+    UPDATE directory_items di 
+    SET solutions = x.solutions
     FROM x
     WHERE x.user_id = di.user_id
-    AND di.period_type = :period_type
-    AND di.solutions <> x.solutions
-  "
-  add_directory_column("solutions", query: query)
+      AND di.period_type = :period_type
+      AND di.solutions <> x.solutions
+  SQL
+
+  add_directory_column("solutions", query:)
 
   add_to_class(:composer_messages_finder, :check_topic_is_solved) do
     return if !SiteSetting.solved_enabled || SiteSetting.disable_solved_education_message
@@ -514,7 +531,13 @@ after_initialize do
   end
 
   add_to_serializer(:user_card, :accepted_answers) do
-    UserAction.where(user_id: object.id).where(action_type: UserAction::SOLVED).count
+    UserAction
+      .where(user_id: object.id)
+      .where(action_type: UserAction::SOLVED)
+      .joins("JOIN topics ON topics.id = user_actions.target_topic_id")
+      .where("topics.archetype <> ?", Archetype.private_message)
+      .where("topics.deleted_at IS NULL")
+      .count
   end
 
   register_topic_list_preload_user_ids do |topics, user_ids, topic_list|
