@@ -1,5 +1,5 @@
 import { later } from "@ember/runloop";
-import { isTesting } from "discourse-common/config/environment";
+import { isTesting } from "discourse/lib/environment";
 
 const ONE_WEEK = 7 * 24 * 60 * 60 * 1000; // milliseconds
 const MAX_DURATION_WITH_NO_ANSWER = ONE_WEEK;

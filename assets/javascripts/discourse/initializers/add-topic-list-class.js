@@ -1,7 +1,7 @@
 import TopicListItem from "discourse/components/topic-list-item";
+import discourseComputed from "discourse/lib/decorators";
+import { withSilencedDeprecations } from "discourse/lib/deprecated";
 import { withPluginApi } from "discourse/lib/plugin-api";
-import { withSilencedDeprecations } from "discourse-common/lib/deprecated";
-import discourseComputed from "discourse-common/utils/decorators";
 
 export default {
   name: "add-topic-list-class",
