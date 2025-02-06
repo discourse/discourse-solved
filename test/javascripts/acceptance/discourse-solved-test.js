@@ -1,11 +1,11 @@
 import { click, fillIn, visit } from "@ember/test-helpers";
 import { test } from "qunit";
+import { cloneJSON } from "discourse/lib/object";
 import pretender, {
   fixturesByUrl,
   response,
 } from "discourse/tests/helpers/create-pretender";
 import { acceptance } from "discourse/tests/helpers/qunit-helpers";
-import { cloneJSON } from "discourse-common/lib/object";
 import { postStreamWithAcceptedAnswerExcerpt } from "../helpers/discourse-solved-helpers";
 
 acceptance("Discourse Solved Plugin", function (needs) {
