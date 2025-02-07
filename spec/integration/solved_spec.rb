@@ -601,13 +601,11 @@ RSpec.describe "Managing Posts solved status" do
       t2.convert_to_private_message(Discourse.system_user)
 
       expect(
-        UserAction
-          .stream(
-            user_id: user.id,
-            action_types: [::UserAction::SOLVED],
-            guardian: user.guardian
-          )
-          .map(&:post_id)
+        UserAction.stream(
+          user_id: user.id,
+          action_types: [::UserAction::SOLVED],
+          guardian: user.guardian,
+        ).map(&:post_id),
       ).to contain_exactly p3.id
     end
   end

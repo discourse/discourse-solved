@@ -281,11 +281,12 @@ after_initialize do
     if category_id
       if include_subcategories
         accepted_solutions =
-          accepted_solutions
-            .where("topics.category_id IN (?)", Category.subcategory_ids(category_id))
+          accepted_solutions.where(
+            "topics.category_id IN (?)",
+            Category.subcategory_ids(category_id),
+          )
       else
-        accepted_solutions =
-          accepted_solutions.where("topics.category_id = ?", category_id)
+        accepted_solutions = accepted_solutions.where("topics.category_id = ?", category_id)
       end
     end
 
@@ -400,9 +401,7 @@ after_initialize do
   end
 
   register_modifier(:user_action_stream_builder) do |builder|
-    builder
-      .where("t.deleted_at IS NULL")
-      .where("t.archetype <> ?", Archetype.private_message)
+    builder.where("t.deleted_at IS NULL").where("t.archetype <> ?", Archetype.private_message)
   end
 
   TopicList.preloaded_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
