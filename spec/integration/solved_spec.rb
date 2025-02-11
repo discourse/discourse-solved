@@ -47,6 +47,16 @@ RSpec.describe "Managing Posts solved status" do
       )
     end
 
+    fab!(:solved_pm) do
+      Fabricate(
+        :custom_topic,
+        category_id: nil,
+        archetype: Archetype.private_message,
+        custom_topic_name: ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD,
+        value: "42",
+      )
+    end
+
     fab!(:unsolved_in_category) { Fabricate(:topic, category: solvable_category) }
     fab!(:unsolved_in_tag) { Fabricate(:topic, tags: [solvable_tag]) }
 
@@ -570,6 +580,33 @@ RSpec.describe "Managing Posts solved status" do
       expect(reply.topic).to eq(nil)
 
       expect { DiscourseSolved.unaccept_answer!(reply) }.not_to raise_error
+    end
+  end
+
+  describe "user actions stream modifier" do
+    it "correctly list solutions" do
+      t1 = Fabricate(:topic)
+      t2 = Fabricate(:topic)
+      t3 = Fabricate(:topic)
+
+      p1 = Fabricate(:post, topic: t1, user:)
+      p2 = Fabricate(:post, topic: t2, user:)
+      p3 = Fabricate(:post, topic: t3, user:)
+
+      DiscourseSolved.accept_answer!(p1, Discourse.system_user)
+      DiscourseSolved.accept_answer!(p2, Discourse.system_user)
+      DiscourseSolved.accept_answer!(p3, Discourse.system_user)
+
+      t1.trash!(Discourse.system_user)
+      t2.convert_to_private_message(Discourse.system_user)
+
+      expect(
+        UserAction.stream(
+          user_id: user.id,
+          action_types: [::UserAction::SOLVED],
+          guardian: user.guardian,
+        ).map(&:post_id),
+      ).to contain_exactly p3.id
     end
   end
 end
