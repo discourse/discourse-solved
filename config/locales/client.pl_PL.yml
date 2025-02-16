@@ -1,62 +1,67 @@
-# WARNING: Never edit this file.
-# It will be overwritten when translations are pulled from Crowdin.
-#
-# To work with us on translations, join this project:
-# https://translate.discourse.org/
-
-pl_PL:
+pl:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_solved: "Discourse Rozwiązane"
   js:
     notifications:
       alt:
         solved:
-          accepted_notification: "przyjęty"
+          accepted_notification: "zaakceptowano"
     solutions: "Rozwiązania"
+
     solved:
-      title: "Rozwiązany"
-      allow_accepted_answers: "Pozwól użytkownikom na akceptowanie rozwiązań"
-      solved_topics_auto_close_hours: "Zamknij temat automatycznie po (n) godzinach od ostatniej odpowiedzi, gdy temat został oznaczony jako rozwiązany."
-      accept_answer: "Zaznacz, jeśli ta odpowiedź rozwiązuje Twój problem"
-      accepted_description: "To zaakceptowane rozwiązanie tego tematu."
+      title: "Rozwiązane"
+      allow_accepted_answers: "Zezwól właścicielowi tematu i administracji na oznaczanie odpowiedzi jako rozwiązania"
+      solved_topics_auto_close_hours: "Automatycznie zamknij temat po (n) godzinach od ostatniej odpowiedzi, gdy temat zostanie oznaczony jako rozwiązany."
+      accept_answer: "Wybierz, jeśli ta odpowiedź rozwiązuje problem"
+      accepted_description: "To jest zaakceptowane rozwiązanie tego tematu"
       has_no_accepted_answer: "Ten temat nie ma rozwiązania"
-      unaccept_answer: "Odznacz jeśli ta odpowiedź nie rozwiązuje już problemu"
-      accepted_answer: "Zaakceptowana odpowiedź"
+      unaccept_answer: "Odznacz, jeśli ta odpowiedź nie rozwiązuje już problemu"
+      accepted_answer: "Rozwiązanie"
       solution: "Rozwiązanie"
       solution_summary:
         one: "rozwiązanie"
-        few: "rozwiązania"
-        many: "rozwiązania"
         other: "rozwiązania"
-      accepted_html: "%{icon} Rozwiązany <span class='by'>przez <a href data-user-card='%{username_lower}'>%{username}</a></span> w <a href='%{post_path}' class='back'>poście #%{post_number}</a>"
+      accepted_html: "%{icon} Rozwiązane <span class='by'>przez <a href data-user-card='%{username_lower}'>%{username}</a></span> w <a href='%{post_path}' class='back'>poście #%{post_number}</a>"
       accepted_notification: "<p><span>%{username}</span> %{description}</p>"
       topic_status_filter:
         all: "wszystkie"
-        solved: "rozwiązano"
-        unsolved: "nierozwiązano"
+        solved: "rozwiązane"
+        unsolved: "nierozwiązane"
       no_solved_topics_title: "Nie rozwiązałeś jeszcze żadnych tematów"
       no_solved_topics_title_others: "%{username} nie rozwiązał jeszcze żadnych tematów"
-      no_solved_topics_body: "Gdy udzielisz pomocnej odpowiedzi na dany temat, Twoja odpowiedź może zostać wybrana jako rozwiązanie przez właściciela tematu lub personel."
+      no_solved_topics_body: "Gdy udzielisz pomocnej odpowiedzi w temacie, właściciel tematu lub administracja może ją oznaczyć jako rozwiązanie."
+
       no_answer:
-        title: Czy odpowiedź na twoje pytanie została udzielona?
-        description: "Podświetl odpowiedź i pomóż innym, korzystając z przycisku rozwiązania pod prawidłową odpowiedzią."
+        title: Czy Twoje pytanie zostało odpowiedziane?
+        description: "Podkreśl odpowiedź i pomóż innym, używając przycisku rozwiązania pod poprawną odpowiedzią."
       notification:
-        title: "twój post został oznaczony jako rozwiązanie"
+        title: "Twój post został oznaczony jako rozwiązanie"
+
     topic_statuses:
       solved:
-        help: "Ten temat ma zaakceptowane rozwiązanie"
+        help: "Ten temat ma rozwiązanie"
+
     search:
       advanced:
         statuses:
           solved: "są rozwiązane"
           unsolved: "są nierozwiązane"
+
     admin:
       web_hooks:
         solved_event:
-          group_name: "Zdarzenie rozwiązania"
+          group_name: "Wydarzenie Rozwiązania"
+          accepted_solution: "Gdy użytkownik oznaczy post jako zaakceptowaną odpowiedź"
+          unaccepted_solution: "Gdy użytkownik odznaczy post jako zaakceptowaną odpowiedź"
       api:
         scopes:
           descriptions:
             solved:
-              answer: Zaakceptuj/Odrzuć rozwiązanie.
+              answer: Akceptuj/Odznacz rozwiązanie.
+
     discourse_automation:
       triggerables:
         first_accepted_solution:
@@ -68,5 +73,5 @@ pl_PL:
             any: Dowolny
           fields:
             maximum_trust_level:
-              label: Poziom zaufania
-              description: Użytkownicy poniżej tego poziomu zaufania uruchomią tę automatyzację
+              label: Poziom Zaufania
+              description: Użytkownicy poniżej tego poziomu zaufania wyzwolą tę automatyzację
