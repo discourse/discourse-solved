@@ -1,9 +1,3 @@
-# WARNING: Never edit this file.
-# It will be overwritten when translations are pulled from Crowdin.
-#
-# To work with us on translations, join this project:
-# https://translate.discourse.org/
-
 ur:
   site_settings:
     solved_enabled: "سَولوڈ پلگ اِن فعال کریں، صارفین کو ٹاپک کے حل منتخب کرنے کی اجازت دیں"

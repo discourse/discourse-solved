@@ -1,10 +1,4 @@
-# WARNING: Never edit this file.
-# It will be overwritten when translations are pulled from Crowdin.
-#
-# To work with us on translations, join this project:
-# https://translate.discourse.org/
-
-zh_TW:
+zh-TW:
   accepted_answer: "接受的答案"
   site_settings:
     solved_enabled: "啟用已解決的插件，允許用戶為主題選擇解決方案"

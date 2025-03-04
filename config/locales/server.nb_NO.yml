@@ -1,10 +1,4 @@
-# WARNING: Never edit this file.
-# It will be overwritten when translations are pulled from Crowdin.
-#
-# To work with us on translations, join this project:
-# https://translate.discourse.org/
-
-nb_NO:
+nb:
   site_settings:
     solved_enabled: "Skru på løsnings-programtillegget, tillat brukere å velge løsninger på emner"
     accept_all_solutions_trust_level: "Laveste tilltisnivå som kreves for å godta løsninger for ethvert emne (selv når du ikke er OP)"

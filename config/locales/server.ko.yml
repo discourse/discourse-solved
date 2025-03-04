@@ -1,9 +1,3 @@
-# WARNING: Never edit this file.
-# It will be overwritten when translations are pulled from Crowdin.
-#
-# To work with us on translations, join this project:
-# https://translate.discourse.org/
-
 ko:
   site_settings:
     solved_enabled: "해결 된 플러그인 사용, 사용자가 주제에 대한 솔루션을 선택할 수 있도록 허용"
