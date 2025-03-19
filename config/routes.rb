@@ -5,4 +5,4 @@ DiscourseSolved::Engine.routes.draw do
   post "/unaccept" => "answer#unaccept"
 end
 
-Discourse::Application.routes.append { mount ::DiscourseSolved::Engine, at: "solution" }
+Discourse::Application.routes.draw { mount ::DiscourseSolved::Engine, at: "solution" }
