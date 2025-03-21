@@ -17,13 +17,13 @@ module DiscourseSolved
       end
       unsolved_callback = ->(scope) do
         scope = scope.where <<~SQL
-      topics.id NOT IN (
-        SELECT topic_id
-          FROM topic_custom_fields
-         WHERE name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
-           AND value IS NOT NULL
-      )
-    SQL
+          topics.id NOT IN (
+            SELECT topic_id
+              FROM topic_custom_fields
+             WHERE name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
+               AND value IS NOT NULL
+          )
+        SQL
 
         if !SiteSetting.allow_solved_on_all_topics
           tag_ids = Tag.where(name: SiteSetting.enable_solved_tags.split("|")).pluck(:id)

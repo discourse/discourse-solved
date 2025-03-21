@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ::DiscourseSolved
+module DiscourseSolved
   module TopicAnswerMixin
     def self.included(klass)
       klass.attributes :has_accepted_answer, :can_have_answer
