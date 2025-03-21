@@ -65,18 +65,21 @@ RSpec.describe TopicsController do
 
     it "should include user name in output with the corresponding site setting" do
       SiteSetting.display_name_on_posts = true
-      Fabricate(:solved_topic, topic: topic, answer_post: p2)
+      accepter = Fabricate(:user)
+      Fabricate(:solved_topic, topic: topic, answer_post: p2, accepter:)
 
       get "/t/#{topic.slug}/#{topic.id}.json"
 
       expect(response.parsed_body["accepted_answer"]["name"]).to eq(p2.user.name)
       expect(response.parsed_body["accepted_answer"]["username"]).to eq(p2.user.username)
+      expect(response.parsed_body["accepted_answer"]["accepter_name"]).to eq(accepter.name)
+      expect(response.parsed_body["accepted_answer"]["accepter_username"]).to eq(accepter.username)
 
       # enable_names is default ON, this ensures disabling it also disables names here
       SiteSetting.enable_names = false
       get "/t/#{topic.slug}/#{topic.id}.json"
       expect(response.parsed_body["accepted_answer"]["name"]).to eq(nil)
-      expect(response.parsed_body["accepted_answer"]["username"]).to eq(p2.user.username)
+      expect(response.parsed_body["accepted_answer"]["accepter_name"]).to eq(nil)
     end
 
     it "should not include user name when site setting is disabled" do

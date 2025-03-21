@@ -6,43 +6,46 @@ module DiscourseSolved::TopicViewSerializerExtension
   prepended { attributes :accepted_answer }
 
   def include_accepted_answer?
-    SiteSetting.solved_enabled? && accepted_answer_post_id
+    SiteSetting.solved_enabled? && object.topic.solved.present?
   end
 
   def accepted_answer
-    if info = accepted_answer_post_info
-      { post_number: info[0], username: info[1], excerpt: info[2], name: info[3] }
-    end
+    accepted_answer_post_info
   end
 
   private
 
   def accepted_answer_post_info
-    post_info =
-      if post = object.posts.find { |p| p.post_number == accepted_answer_post_id }
-        [post.post_number, post.user.username, post.cooked, post.user.name]
-      else
-        Post
-          .where(id: accepted_answer_post_id, topic_id: object.topic.id)
-          .joins(:user)
-          .pluck("post_number", "username", "cooked", "name")
-          .first
-      end
+    solved = object.topic.solved
+    answer_post = solved.answer_post
+    answer_post_user = answer_post.user
+    accepter = solved.accepter
 
-    if post_info
-      post_info[2] = if SiteSetting.solved_quote_length > 0
-        PrettyText.excerpt(post_info[2], SiteSetting.solved_quote_length, keep_emoji_images: true)
+    excerpt =
+      if SiteSetting.solved_quote_length > 0
+        PrettyText.excerpt(
+          answer_post.cooked,
+          SiteSetting.solved_quote_length,
+          keep_emoji_images: true,
+        )
       else
         nil
       end
 
-      post_info[3] = nil if !SiteSetting.enable_names || !SiteSetting.display_name_on_posts
+    accepted_answer = {
+      post_number: answer_post.post_number,
+      username: answer_post_user.username,
+      name: answer_post_user.name,
+      accepter_username: accepter.username,
+      accepter_name: accepter.name,
+      excerpt:,
+    }
 
-      post_info
+    if !SiteSetting.enable_names || !SiteSetting.display_name_on_posts
+      accepted_answer[:name] = nil
+      accepted_answer[:accepter_name] = nil
     end
-  end
 
-  def accepted_answer_post_id
-    object.topic.solved&.answer_post_id
+    accepted_answer
   end
 end
