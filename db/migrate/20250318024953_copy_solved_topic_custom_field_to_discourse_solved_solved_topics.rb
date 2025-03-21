@@ -30,7 +30,7 @@ class CopySolvedTopicCustomFieldToDiscourseSolvedSolvedTopics < ActiveRecord::Mi
           AND tc2.name = 'solved_auto_close_topic_timer_id'
         LEFT JOIN user_actions ua
           ON ua.target_topic_id = tc.topic_id
-          AND ua.action_type = #{UserAction::SOLVED}
+          AND ua.action_type = 15
         WHERE tc.name = 'accepted_answer_post_id'
           AND tc.id > :last_id
         ORDER BY tc.topic_id, ua.created_at DESC

@@ -19,11 +19,6 @@ register_asset "stylesheets/mobile/solutions.scss", :mobile
 module ::DiscourseSolved
   PLUGIN_NAME = "discourse-solved"
   ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD = "enable_accepted_answers"
-
-  # throw these
-  AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD = "solved_auto_close_topic_timer_id"
-  ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD = "accepted_answer_post_id"
-  IS_ACCEPTED_ANSWER_CUSTOM_FIELD = "is_accepted_answer"
 end
 
 require_relative "lib/discourse_solved/engine.rb"
@@ -170,13 +165,18 @@ after_initialize do
   end
 
   # TODO: Preload fields in
-  # - TopicList - answer_post_id
-  # - Search - answer_post_id
   # - CategoryList - answer_post_id ?? for what
-  # topic_view_post_custom_fields_allowlister { [::DiscourseSolved::IS_ACCEPTED_ANSWER_CUSTOM_FIELD] }
-  # TopicList.preloaded_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
-  # Search.preloaded_topic_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
   # CategoryList.preloaded_topic_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
+
+  # - TopicList - answer_post_id
+  register_category_list_topics_preloader_associations(:solved) if SiteSetting.solved_enabled
+  register_topic_preloader_associations(:solved) if SiteSetting.solved_enabled
+
+  # - Search - answer_post_id
+  Search.on_preload do |results|
+    next unless SiteSetting.solved_enabled
+    results.posts = results.posts.includes(topic: :solved)
+  end
   Site.preloaded_category_custom_fields << ::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD
 
   add_api_key_scope(

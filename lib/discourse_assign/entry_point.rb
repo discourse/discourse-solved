@@ -8,9 +8,7 @@ module DiscourseAssign
     def self.inject(plugin)
       plugin.register_modifier(:assigns_reminder_assigned_topics_query) do |query|
         next query if !SiteSetting.ignore_solved_topics_in_assigned_reminder
-        # TODO: this line was modified for the custom fields migration,
-        # but returning this huge array is not good at all.
-        query.where.not(id: DiscourseSolved::SolvedTopic.pluck(:topic_id))
+        query.where.not(id: DiscourseSolved::SolvedTopic.select(:topic_id))
       end
 
       plugin.register_modifier(:assigned_count_for_user_query) do |query, user|

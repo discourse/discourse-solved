@@ -11,6 +11,7 @@ module DiscourseSolved
 
     validates :topic_id, presence: true
     validates :answer_post_id, presence: true
+    validates :accepter_user_id, presence: true
   end
 end
 
