@@ -1,19 +1,11 @@
 # frozen_string_literal: true
 #
-class CopySolvedTopicCustomFieldToDiscourseSolvedTopics < ActiveRecord::Migration[7.2]
+class CopySolvedTopicCustomFieldToDiscourseSolvedSolvedTopics < ActiveRecord::Migration[7.2]
   disable_ddl_transaction!
 
   BATCH_SIZE = 5000
 
   def up
-    create_table :discourse_solved_solved_topics do |t|
-      t.integer :topic_id, null: false
-      t.integer :answer_post_id, null: false
-      t.integer :accepter_user_id, null: false
-      t.integer :topic_timer_id
-      t.timestamps
-    end
-
     last_id = 0
     loop do
       rows = DB.query(<<~SQL, last_id: last_id, batch_size: BATCH_SIZE)
