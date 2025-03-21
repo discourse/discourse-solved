@@ -118,23 +118,23 @@ after_initialize do
 
       DistributedMutex.synchronize("discourse_solved_toggle_answer_#{topic.id}") do
         solved = topic.solved
-        solved.topic_timer.destroy! if solved.topic_timer
 
-        UserAction.where(action_type: UserAction::SOLVED, target_post_id: post.id).destroy_all
-
-        Notification.find_by(
-          notification_type: Notification.types[:custom],
-          user_id: post.user_id,
-          topic_id: post.topic_id,
-          post_number: post.post_number,
-        )&.destroy!
+        ActiveRecord::Base.transaction do
+          UserAction.where(action_type: UserAction::SOLVED, target_post_id: post.id).destroy_all
+          Notification.find_by(
+            notification_type: Notification.types[:custom],
+            user_id: post.user_id,
+            topic_id: post.topic_id,
+            post_number: post.post_number,
+          )&.destroy!
+          solved.topic_timer.destroy! if solved.topic_timer
+          solved.destroy!
+        end
 
         if WebHook.active_web_hooks(:unaccepted_solution).exists?
           payload = WebHook.generate_payload(:post, post)
           WebHook.enqueue_solved_hooks(:unaccepted_solution, post, payload)
         end
-
-        solved.destroy!
         DiscourseEvent.trigger(:unaccepted_solution, post)
       end
     end
@@ -164,19 +164,9 @@ after_initialize do
     ].each { |klass| klass.include(DiscourseSolved::TopicAnswerMixin) }
   end
 
-  # TODO: Preload fields in
-  # - CategoryList - answer_post_id ?? for what
-  # CategoryList.preloaded_topic_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
-
-  # - TopicList - answer_post_id
   register_category_list_topics_preloader_associations(:solved) if SiteSetting.solved_enabled
   register_topic_preloader_associations(:solved) if SiteSetting.solved_enabled
-
-  # - Search - answer_post_id
-  Search.on_preload do |results|
-    next unless SiteSetting.solved_enabled
-    results.posts = results.posts.includes(topic: :solved)
-  end
+  Search.custom_topic_eager_load { [:solved] } if SiteSetting.solved_enabled
   Site.preloaded_category_custom_fields << ::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD
 
   add_api_key_scope(

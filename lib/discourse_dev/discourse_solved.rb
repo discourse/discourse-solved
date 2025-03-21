@@ -11,24 +11,24 @@ module DiscourseDev
 
           solved_category =
             DiscourseDev::Record.random(
-              Category.where(
+              ::Category.where(
                 read_restricted: false,
                 id: records.pluck(:id),
                 parent_category_id: nil,
               ),
             )
-          CategoryCustomField.create!(
+          ::CategoryCustomField.create!(
             category_id: solved_category.id,
             name: ::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD,
             value: "true",
           )
           puts "discourse-solved enabled on category '#{solved_category.name}' (#{solved_category.id})."
         elsif type == :topic
-          topics = Topic.where(id: records.pluck(:id))
+          topics = ::Topic.where(id: records.pluck(:id))
 
           unless SiteSetting.allow_solved_on_all_topics
             solved_category_id =
-              CategoryCustomField
+              ::CategoryCustomField
                 .where(name: ::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD, value: "true")
                 .first
                 .category_id
