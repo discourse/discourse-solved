@@ -6,7 +6,7 @@ class CopySolvedTopicCustomFieldToDiscourseSolvedTopics < ActiveRecord::Migratio
   BATCH_SIZE = 5000
 
   def up
-    create_table :discourse_solved_topics do |t|
+    create_table :discourse_solved_solved_topics do |t|
       t.integer :topic_id, null: false
       t.integer :answer_post_id, null: false
       t.integer :accepter_user_id, null: false
@@ -17,7 +17,7 @@ class CopySolvedTopicCustomFieldToDiscourseSolvedTopics < ActiveRecord::Migratio
     last_id = 0
     loop do
       rows = DB.query(<<~SQL, last_id: last_id, batch_size: BATCH_SIZE)
-        INSERT INTO discourse_solved_topics (
+        INSERT INTO discourse_solved_solved_topics (
           topic_id,
           answer_post_id,
           topic_timer_id,

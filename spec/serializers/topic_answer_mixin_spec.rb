@@ -7,10 +7,7 @@ describe DiscourseSolved::TopicAnswerMixin do
   let(:post) { Fabricate(:post, topic: topic) }
   let(:guardian) { Guardian.new }
 
-  before do
-    topic.custom_fields["accepted_answer_post_id"] = post.id
-    topic.save_custom_fields
-  end
+  before { Fabricate(:solved_topic, topic: topic, answer_post: post) }
 
   it "should have true for `has_accepted_answer` field in each serializer" do
     [
