@@ -1,12 +1,12 @@
-import { htmlSafe } from "@ember/template";
 import Component from "@glimmer/component";
 import { service } from "@ember/service";
-import { i18n } from "discourse-i18n";
-import User from "discourse/models/user";
+import { htmlSafe } from "@ember/template";
+import { not } from "truth-helpers";
+import concatClass from "discourse/helpers/concat-class";
 import { iconHTML } from "discourse/lib/icon-library";
 import { formatUsername } from "discourse/lib/utilities";
-import concatClass from "discourse/helpers/concat-class";
-import { not } from "truth-helpers";
+import User from "discourse/models/user";
+import { i18n } from "discourse-i18n";
 
 export default class SolvedPost extends Component {
   static shouldRender(args) {
@@ -79,7 +79,7 @@ export default class SolvedPost extends Component {
              data-post={{this.answerPostNumber}}
              data-topic={{this.topicId}}>
         <div
-          class={{concatClass "title" (if (not this.hasExcerpt) "title-only") }}
+          class={{concatClass "title" (unless this.hasExcerpt "title-only") }}
         >
           <div class="accepted-answer--solver">
             {{htmlSafe this.title}}
