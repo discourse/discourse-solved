@@ -423,6 +423,7 @@ RSpec.describe "Managing Posts solved status" do
 
         expect(p1.topic.assignment.status).to eq("New")
         DiscourseSolved.accept_answer!(p1, user)
+        topic.reload
 
         expect(topic.solved.answer_post_id).to eq(p1.id)
         expect(p1.topic.assignment.reload.status).to eq("Done")

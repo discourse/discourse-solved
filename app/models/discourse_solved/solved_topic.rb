@@ -13,3 +13,21 @@ module DiscourseSolved
     validates :answer_post_id, presence: true
   end
 end
+
+# == Schema Information
+#
+# Table name: discourse_solved_solved_topics
+#
+#  id               :bigint           not null, primary key
+#  topic_id         :integer          not null
+#  answer_post_id   :integer          not null
+#  accepter_user_id :integer          not null
+#  topic_timer_id   :integer
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#
+# Indexes
+#
+#  index_discourse_solved_solved_topics_on_answer_post_id  (answer_post_id) UNIQUE
+#  index_discourse_solved_solved_topics_on_topic_id        (topic_id) UNIQUE
+#
