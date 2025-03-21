@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe FirstAcceptedPostSolutionValidator do
+describe DiscourseSolved::FirstAcceptedPostSolutionValidator do
   fab!(:user_tl1) { Fabricate(:user, trust_level: TrustLevel[1], refresh_auto_groups: true) }
 
   context "when user is under max trust level" do

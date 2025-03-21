@@ -16,38 +16,19 @@ register_svg_icon "far-square"
 register_asset "stylesheets/solutions.scss"
 register_asset "stylesheets/mobile/solutions.scss", :mobile
 
+module ::DiscourseSolved
+  PLUGIN_NAME = "discourse-solved"
+  AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD = "solved_auto_close_topic_timer_id"
+  ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD = "accepted_answer_post_id"
+  ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD = "enable_accepted_answers"
+  IS_ACCEPTED_ANSWER_CUSTOM_FIELD = "is_accepted_answer"
+end
+
+require_relative "lib/discourse_solved/engine.rb"
+
 after_initialize do
-  module ::DiscourseSolved
-    PLUGIN_NAME = "discourse-solved"
-    AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD = "solved_auto_close_topic_timer_id"
-    ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD = "accepted_answer_post_id"
-    ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD = "enable_accepted_answers"
-    IS_ACCEPTED_ANSWER_CUSTOM_FIELD = "is_accepted_answer"
-
-    class Engine < ::Rails::Engine
-      engine_name PLUGIN_NAME
-      isolate_namespace DiscourseSolved
-    end
-  end
-
   SeedFu.fixture_paths << Rails.root.join("plugins", "discourse-solved", "db", "fixtures").to_s
 
-  require_relative "app/controllers/answer_controller"
-  require_relative "app/lib/first_accepted_post_solution_validator"
-  require_relative "app/lib/accepted_answer_cache"
-  require_relative "app/lib/guardian_extensions"
-  require_relative "app/lib/before_head_close"
-  require_relative "app/lib/category_extension"
-  require_relative "app/lib/post_serializer_extension"
-  require_relative "app/lib/topic_posters_summary_extension"
-  require_relative "app/lib/topic_view_serializer_extension"
-  require_relative "app/lib/user_summary_extension"
-  require_relative "app/lib/web_hook_extension"
-  require_relative "app/serializers/concerns/topic_answer_mixin"
-
-  require_relative "app/lib/plugin_initializers/assigned_reminder_exclude_solved"
-  DiscourseSolved::AssignsReminderForTopicsQuery.new(self).apply_plugin_api
-  DiscourseSolved::AssignedCountForUserQuery.new(self).apply_plugin_api
   module ::DiscourseSolved
     def self.accept_answer!(post, acting_user, topic: nil)
       topic ||= post.topic
@@ -183,7 +164,7 @@ after_initialize do
     end
   end
 
-  reloadable_patch do |plugin|
+  reloadable_patch do
     ::Guardian.prepend(DiscourseSolved::GuardianExtensions)
     ::WebHook.prepend(DiscourseSolved::WebHookExtension)
     ::TopicViewSerializer.prepend(DiscourseSolved::TopicViewSerializerExtension)
@@ -199,7 +180,7 @@ after_initialize do
       ::SuggestedTopicSerializer,
       ::UserSummarySerializer::TopicSerializer,
       ::ListableTopicSerializer,
-    ].each { |klass| klass.include(TopicAnswerMixin) }
+    ].each { |klass| klass.include(DiscourseSolved::TopicAnswerMixin) }
   end
 
   # we got to do a one time upgrade
@@ -240,25 +221,16 @@ after_initialize do
     end
   end
 
-  DiscourseSolved::Engine.routes.draw do
-    post "/accept" => "answer#accept"
-    post "/unaccept" => "answer#unaccept"
-  end
-
-  Discourse::Application.routes.append { mount ::DiscourseSolved::Engine, at: "solution" }
-
-  on(:post_destroyed) do |post|
-    if post.custom_fields[::DiscourseSolved::IS_ACCEPTED_ANSWER_CUSTOM_FIELD] == "true"
-      ::DiscourseSolved.unaccept_answer!(post)
-    end
-  end
+  topic_view_post_custom_fields_allowlister { [::DiscourseSolved::IS_ACCEPTED_ANSWER_CUSTOM_FIELD] }
+  TopicList.preloaded_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
+  Site.preloaded_category_custom_fields << ::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD
+  Search.preloaded_topic_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
+  CategoryList.preloaded_topic_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
 
   add_api_key_scope(
     :solved,
     { answer: { actions: %w[discourse_solved/answer#accept discourse_solved/answer#unaccept] } },
   )
-
-  topic_view_post_custom_fields_allowlister { [::DiscourseSolved::IS_ACCEPTED_ANSWER_CUSTOM_FIELD] }
 
   register_html_builder("server:before-head-close-crawler") do |controller|
     DiscourseSolved::BeforeHeadClose.new(controller).html
@@ -308,14 +280,14 @@ after_initialize do
   register_modifier(:search_rank_sort_priorities) do |priorities, _search|
     if SiteSetting.prioritize_solved_topics_in_search
       condition = <<~SQL
-          EXISTS (
-            SELECT 1
-              FROM topic_custom_fields
-             WHERE topic_id = topics.id
-               AND name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
-               AND value IS NOT NULL
-          )
-        SQL
+        EXISTS (
+          SELECT 1
+            FROM topic_custom_fields
+           WHERE topic_id = topics.id
+             AND name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
+             AND value IS NOT NULL
+        )
+      SQL
 
       priorities.push([condition, 1.1])
     else
@@ -323,6 +295,19 @@ after_initialize do
     end
   end
 
+  register_modifier(:user_action_stream_builder) do |builder|
+    builder.where("t.deleted_at IS NULL").where("t.archetype <> ?", Archetype.private_message)
+  end
+
+  add_to_serializer(:user_card, :accepted_answers) do
+    UserAction
+      .where(user_id: object.id)
+      .where(action_type: UserAction::SOLVED)
+      .joins("JOIN topics ON topics.id = user_actions.target_topic_id")
+      .where("topics.archetype <> ?", Archetype.private_message)
+      .where("topics.deleted_at IS NULL")
+      .count
+  end
   add_to_serializer(:user_summary, :solved_count) { object.solved_count }
   add_to_serializer(:post, :can_accept_answer) do
     scope.can_accept_answer?(topic, object) && object.post_number > 1 && !accepted_answer
@@ -337,77 +322,11 @@ after_initialize do
     topic&.custom_fields&.[](::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD).present?
   end
 
-  solved_callback = ->(scope) do
-    sql = <<~SQL
-      topics.id IN (
-        SELECT topic_id
-          FROM topic_custom_fields
-         WHERE name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
-           AND value IS NOT NULL
-      )
-    SQL
-
-    scope.where(sql).where("topics.archetype <> ?", Archetype.private_message)
-  end
-
-  unsolved_callback = ->(scope) do
-    scope = scope.where <<~SQL
-      topics.id NOT IN (
-        SELECT topic_id
-          FROM topic_custom_fields
-         WHERE name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
-           AND value IS NOT NULL
-      )
-    SQL
-
-    if !SiteSetting.allow_solved_on_all_topics
-      tag_ids = Tag.where(name: SiteSetting.enable_solved_tags.split("|")).pluck(:id)
-
-      scope = scope.where <<~SQL, tag_ids
-        topics.id IN (
-          SELECT t.id
-            FROM topics t
-            JOIN category_custom_fields cc
-              ON t.category_id = cc.category_id
-             AND cc.name = '#{::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD}'
-             AND cc.value = 'true'
-        )
-        OR
-        topics.id IN (
-          SELECT topic_id
-            FROM topic_tags
-           WHERE tag_id IN (?)
-        )
-      SQL
-    end
-
-    scope.where("topics.archetype <> ?", Archetype.private_message)
-  end
-
-  register_custom_filter_by_status("solved", &solved_callback)
-  register_custom_filter_by_status("unsolved", &unsolved_callback)
-
-  register_search_advanced_filter(/status:solved/, &solved_callback)
-  register_search_advanced_filter(/status:unsolved/, &unsolved_callback)
-
-  TopicQuery.add_custom_filter(:solved) do |results, topic_query|
-    if topic_query.options[:solved] == "yes"
-      solved_callback.call(results)
-    elsif topic_query.options[:solved] == "no"
-      unsolved_callback.call(results)
-    else
-      results
+  on(:post_destroyed) do |post|
+    if post.custom_fields[::DiscourseSolved::IS_ACCEPTED_ANSWER_CUSTOM_FIELD] == "true"
+      ::DiscourseSolved.unaccept_answer!(post)
     end
   end
-
-  register_modifier(:user_action_stream_builder) do |builder|
-    builder.where("t.deleted_at IS NULL").where("t.archetype <> ?", Archetype.private_message)
-  end
-
-  TopicList.preloaded_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
-  Site.preloaded_category_custom_fields << ::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD
-  Search.preloaded_topic_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
-  CategoryList.preloaded_topic_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
 
   on(:filter_auto_bump_topics) do |_category, filters|
     filters.push(
@@ -437,65 +356,19 @@ after_initialize do
     options[:refresh_stream] = true if old_allowed != new_allowed
   end
 
-  on(:after_populate_dev_records) do |records, type|
-    next unless SiteSetting.solved_enabled
-
-    if type == :category
-      next if SiteSetting.allow_solved_on_all_topics
-
-      solved_category =
-        DiscourseDev::Record.random(
-          Category.where(read_restricted: false, id: records.pluck(:id), parent_category_id: nil),
-        )
-      CategoryCustomField.create!(
-        category_id: solved_category.id,
-        name: ::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD,
-        value: "true",
-      )
-      puts "discourse-solved enabled on category '#{solved_category.name}' (#{solved_category.id})."
-    elsif type == :topic
-      topics = Topic.where(id: records.pluck(:id))
-
-      unless SiteSetting.allow_solved_on_all_topics
-        solved_category_id =
-          CategoryCustomField
-            .where(name: ::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD, value: "true")
-            .first
-            .category_id
-
-        unless topics.exists?(category_id: solved_category_id)
-          topics.last.update(category_id: solved_category_id)
-        end
-
-        topics = topics.where(category_id: solved_category_id)
-      end
-
-      solved_topic = DiscourseDev::Record.random(topics)
-      post = nil
-
-      if solved_topic.posts_count > 1
-        post = DiscourseDev::Record.random(solved_topic.posts.where.not(post_number: 1))
-      else
-        post = DiscourseDev::Post.new(solved_topic, 1).create!
-      end
-
-      DiscourseSolved.accept_answer!(post, post.topic.user, topic: post.topic)
-    end
-  end
-
   query = <<~SQL
     WITH x AS (
       SELECT u.id user_id, COUNT(DISTINCT ua.id) AS solutions
       FROM users AS u
-      LEFT JOIN user_actions AS ua 
-         ON ua.user_id = u.id 
-        AND ua.action_type = #{UserAction::SOLVED} 
+      LEFT JOIN user_actions AS ua
+         ON ua.user_id = u.id
+        AND ua.action_type = #{UserAction::SOLVED}
         AND COALESCE(ua.created_at, :since) > :since
-      JOIN topics AS t 
+      JOIN topics AS t
          ON t.id = ua.target_topic_id
         AND t.archetype <> 'private_message'
         AND t.deleted_at IS NULL
-      JOIN posts AS p 
+      JOIN posts AS p
          ON p.id = ua.target_post_id
         AND p.deleted_at IS NULL
       WHERE u.id > 0
@@ -504,7 +377,7 @@ after_initialize do
         AND u.suspended_till IS NULL
       GROUP BY u.id
     )
-    UPDATE directory_items di 
+    UPDATE directory_items di
     SET solutions = x.solutions
     FROM x
     WHERE x.user_id = di.user_id
@@ -529,16 +402,6 @@ after_initialize do
     }
   end
 
-  add_to_serializer(:user_card, :accepted_answers) do
-    UserAction
-      .where(user_id: object.id)
-      .where(action_type: UserAction::SOLVED)
-      .joins("JOIN topics ON topics.id = user_actions.target_topic_id")
-      .where("topics.archetype <> ?", Archetype.private_message)
-      .where("topics.deleted_at IS NULL")
-      .count
-  end
-
   register_topic_list_preload_user_ids do |topics, user_ids, topic_list|
     answer_post_ids =
       TopicCustomField
@@ -550,92 +413,9 @@ after_initialize do
     user_ids.concat(answer_user_ids.values)
   end
 
-  if defined?(DiscourseAutomation)
-    on(:accepted_solution) do |post|
-      # testing directly automation is prone to issues
-      # we prefer to abstract logic in service object and test this
-      next if Rails.env.test?
+  DiscourseSolved::RegisterFilters.register(self)
 
-      name = "first_accepted_solution"
-      DiscourseAutomation::Automation
-        .where(trigger: name, enabled: true)
-        .find_each do |automation|
-          maximum_trust_level = automation.trigger_field("maximum_trust_level")&.dig("value")
-          if FirstAcceptedPostSolutionValidator.check(post, trust_level: maximum_trust_level)
-            automation.trigger!(
-              "kind" => name,
-              "accepted_post_id" => post.id,
-              "usernames" => [post.user.username],
-              "placeholders" => {
-                "post_url" => Discourse.base_url + post.url,
-              },
-            )
-          end
-        end
-    end
-
-    add_triggerable_to_scriptable(:first_accepted_solution, :send_pms)
-
-    DiscourseAutomation::Triggerable.add(:first_accepted_solution) do
-      placeholder :post_url
-
-      field :maximum_trust_level,
-            component: :choices,
-            extra: {
-              content: [
-                {
-                  id: 1,
-                  name:
-                    "discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl1",
-                },
-                {
-                  id: 2,
-                  name:
-                    "discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl2",
-                },
-                {
-                  id: 3,
-                  name:
-                    "discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl3",
-                },
-                {
-                  id: 4,
-                  name:
-                    "discourse_automation.triggerables.first_accepted_solution.max_trust_level.tl4",
-                },
-                {
-                  id: "any",
-                  name:
-                    "discourse_automation.triggerables.first_accepted_solution.max_trust_level.any",
-                },
-              ],
-            },
-            required: true
-    end
-  end
-
-  if defined?(DiscourseAssign)
-    on(:accepted_solution) do |post|
-      next if SiteSetting.assignment_status_on_solve.blank?
-      assignments = Assignment.includes(:target).where(topic: post.topic)
-      assignments.each do |assignment|
-        assigned_user = User.find_by(id: assignment.assigned_to_id)
-        Assigner.new(assignment.target, assigned_user).assign(
-          assigned_user,
-          status: SiteSetting.assignment_status_on_solve,
-        )
-      end
-    end
-    on(:unaccepted_solution) do |post|
-      next if SiteSetting.assignment_status_on_unsolve.blank?
-      assignments = Assignment.includes(:target).where(topic: post.topic)
-      assignments.each do |assignment|
-        assigned_user = User.find_by(id: assignment.assigned_to_id)
-        Assigner.new(assignment.target, assigned_user).assign(
-          assigned_user,
-          status: SiteSetting.assignment_status_on_unsolve,
-        )
-      end
-    end
-  end
+  DiscourseDev::DiscourseSolved.populate(self)
+  DiscourseAutomation::EntryPoint.inject(self) if defined?(DiscourseAutomation)
+  DiscourseAssign::EntryPoint.inject(self) if defined?(DiscourseAssign)
 end
