@@ -33,6 +33,7 @@ en:
       no_solved_topics_title: "You haven’t solved any topics yet"
       no_solved_topics_title_others: "%{username} has not solved any topics yet"
       no_solved_topics_body: "When you provide a helpful reply to a topic, your reply might be selected as the solution by the topic owner or staff."
+      marked_solved_by: "Marked as solved by <a href data-user-card='%{username_lower}'>%{username}</a></span>"
 
       no_answer:
         title: Has your question been answered?
