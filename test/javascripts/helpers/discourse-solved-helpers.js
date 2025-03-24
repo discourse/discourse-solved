@@ -199,6 +199,12 @@ export const postStreamWithAcceptedAnswerExcerpt = (excerpt) => {
     featured_link: null,
     topic_timer: null,
     message_bus_last_id: 0,
-    accepted_answer: { post_number: 2, username: "kzh", excerpt },
+    accepted_answer: {
+      post_number: 2,
+      username: "kzh",
+      excerpt,
+      accepter_username: "tomtom",
+      accepter_name: "Tomtom",
+    },
   };
 };

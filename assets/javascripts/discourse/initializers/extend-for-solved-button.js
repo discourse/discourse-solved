@@ -1,12 +1,16 @@
+import { computed } from "@ember/object";
 import discourseComputed from "discourse/lib/decorators";
 import { withSilencedDeprecations } from "discourse/lib/deprecated";
-import { iconNode } from "discourse/lib/icon-library";
+import { iconHTML, iconNode } from "discourse/lib/icon-library";
 import { withPluginApi } from "discourse/lib/plugin-api";
+import { formatUsername } from "discourse/lib/utilities";
+import Topic from "discourse/models/topic";
+import User from "discourse/models/user";
+import PostCooked from "discourse/widgets/post-cooked";
 import { i18n } from "discourse-i18n";
 import SolvedAcceptAnswerButton, {
   acceptAnswer,
 } from "../components/solved-accept-answer-button";
-import SolvedPost from "../components/solved-post";
 import SolvedUnacceptAnswerButton, {
   unacceptAnswer,
 } from "../components/solved-unaccept-answer-button";
@@ -25,10 +29,39 @@ function initializeWithApi(api) {
     api.addDiscoveryQueryParam("solved", { replace: true, refreshModel: true });
   }
 
-  api.renderBeforeWrapperOutlet("post-menu", SolvedPost);
+  api.decorateWidget("post-contents:after-cooked", (dec) => {
+    if (dec.attrs.post_number === 1) {
+      const postModel = dec.getModel();
+      if (postModel) {
+        const topic = postModel.topic;
+        if (topic.accepted_answer) {
+          const hasExcerpt = !!topic.accepted_answer.excerpt;
+          const excerpt = hasExcerpt
+            ? ` <blockquote> ${topic.accepted_answer.excerpt} </blockquote> `
+            : "";
+          const solvedQuote = `
+            <aside class='quote accepted-answer' data-post="${topic.get("accepted_answer").post_number}" data-topic="${topic.id}">
+              <div class='title ${hasExcerpt ? "" : "title-only"}'>
+                <div class="accepted-answer--solver">
+                  ${topic.solvedByHtml}
+                <\/div>
+                <div class="accepted-answer--accepter">
+                  ${topic.accepterHtml}
+                <\/div>
+                <div class="quote-controls"><\/div>
+              </div>
+              ${excerpt}
+            </aside>`;
+
+          const cooked = new PostCooked({ cooked: solvedQuote }, dec);
+          return dec.rawHtml(cooked.init());
+        }
+      }
+    }
+  });
 
   api.attachWidgetAction("post", "acceptAnswer", function () {
-    acceptAnswer(this.model, this.appEvents);
+    acceptAnswer(this.model, this.appEvents, this.currentUser);
   });
 
   api.attachWidgetAction("post", "unacceptAnswer", function () {
@@ -132,6 +165,45 @@ function customizeWidgetPostMenu(api) {
 export default {
   name: "extend-for-solved-button",
   initialize() {
+    Topic.reopen({
+      // keeping this here cause there is complex localization
+      solvedByHtml: computed("accepted_answer", "id", function () {
+        const username = this.get("accepted_answer.username");
+        const name = this.get("accepted_answer.name");
+        const postNumber = this.get("accepted_answer.post_number");
+
+        if (!username || !postNumber) {
+          return "";
+        }
+
+        const displayedUser =
+          this.siteSettings.display_name_on_posts && name
+            ? name
+            : formatUsername(username);
+
+        return i18n("solved.accepted_html", {
+          icon: iconHTML("square-check", { class: "accepted" }),
+          username_lower: username.toLowerCase(),
+          username: displayedUser,
+          post_path: `${this.url}/${postNumber}`,
+          post_number: postNumber,
+          user_path: User.create({ username }).path,
+        });
+      }),
+      accepterHtml: computed("accepted_answer", function () {
+        const username = this.get("accepted_answer.accepter_username");
+        const name = this.get("accepted_answer.accepter_name");
+        const formattedUsername =
+          this.siteSettings.display_name_on_posts && name
+            ? name
+            : formatUsername(username);
+        return i18n("solved.marked_solved_by", {
+          username: formattedUsername,
+          username_lower: username.toLowerCase(),
+        });
+      }),
+    });
+
     withPluginApi("2.0.0", (api) => {
       withSilencedDeprecations("discourse.hbr-topic-list-overrides", () => {
         let topicStatusIcons;
