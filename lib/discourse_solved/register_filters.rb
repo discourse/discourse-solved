@@ -4,24 +4,16 @@ module DiscourseSolved
   class RegisterFilters
     def self.register(plugin)
       solved_callback = ->(scope) do
-        sql = <<~SQL
-      topics.id IN (
-        SELECT topic_id
-          FROM topic_custom_fields
-         WHERE name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
-           AND value IS NOT NULL
-      )
-    SQL
-
-        scope.where(sql).where("topics.archetype <> ?", Archetype.private_message)
+        scope.joins(
+          "INNER JOIN discourse_solved_solved_topics ON discourse_solved_solved_topics.topic_id = topics.id",
+        ).where("topics.archetype <> ?", Archetype.private_message)
       end
+
       unsolved_callback = ->(scope) do
-        scope = scope.where <<~SQL
+        scope = scope.where(<<~SQL)
           topics.id NOT IN (
             SELECT topic_id
-              FROM topic_custom_fields
-             WHERE name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
-               AND value IS NOT NULL
+            FROM discourse_solved_solved_topics
           )
         SQL
 
@@ -29,21 +21,21 @@ module DiscourseSolved
           tag_ids = Tag.where(name: SiteSetting.enable_solved_tags.split("|")).pluck(:id)
 
           scope = scope.where <<~SQL, tag_ids
-        topics.id IN (
-          SELECT t.id
-            FROM topics t
-            JOIN category_custom_fields cc
-              ON t.category_id = cc.category_id
-             AND cc.name = '#{::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD}'
-             AND cc.value = 'true'
-        )
-        OR
-        topics.id IN (
-          SELECT topic_id
-            FROM topic_tags
-           WHERE tag_id IN (?)
-        )
-      SQL
+            topics.id IN (
+              SELECT t.id
+                FROM topics t
+                JOIN category_custom_fields cc
+                  ON t.category_id = cc.category_id
+                 AND cc.name = '#{::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD}'
+                 AND cc.value = 'true'
+            )
+            OR
+            topics.id IN (
+              SELECT topic_id
+                FROM topic_tags
+               WHERE tag_id IN (?)
+            )
+          SQL
         end
 
         scope.where("topics.archetype <> ?", Archetype.private_message)

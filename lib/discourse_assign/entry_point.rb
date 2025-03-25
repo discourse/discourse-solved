@@ -2,15 +2,13 @@
 
 module DiscourseAssign
   class EntryPoint
+    # TODO: These four plugin api usages should ideally be in the assign plugin, not the solved plugin.
+    # They have been moved here from plugin.rb as part of the custom fields migration.
+
     def self.inject(plugin)
       plugin.register_modifier(:assigns_reminder_assigned_topics_query) do |query|
         next query if !SiteSetting.ignore_solved_topics_in_assigned_reminder
-        query.where.not(
-          id:
-            TopicCustomField.where(
-              name: ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD,
-            ).pluck(:topic_id),
-        )
+        query.where.not(id: DiscourseSolved::SolvedTopic.select(:topic_id))
       end
 
       plugin.register_modifier(:assigned_count_for_user_query) do |query, user|

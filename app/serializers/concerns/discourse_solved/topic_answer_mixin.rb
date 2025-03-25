@@ -7,7 +7,7 @@ module DiscourseSolved
     end
 
     def has_accepted_answer
-      object.custom_fields[::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD].present?
+      object&.solved.present?
     end
 
     def include_has_accepted_answer?

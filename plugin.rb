@@ -18,10 +18,7 @@ register_asset "stylesheets/mobile/solutions.scss", :mobile
 
 module ::DiscourseSolved
   PLUGIN_NAME = "discourse-solved"
-  AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD = "solved_auto_close_topic_timer_id"
-  ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD = "accepted_answer_post_id"
   ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD = "enable_accepted_answers"
-  IS_ACCEPTED_ANSWER_CUSTOM_FIELD = "is_accepted_answer"
 end
 
 require_relative "lib/discourse_solved/engine.rb"
@@ -34,27 +31,25 @@ after_initialize do
       topic ||= post.topic
 
       DistributedMutex.synchronize("discourse_solved_toggle_answer_#{topic.id}") do
-        accepted_id = topic.custom_fields[ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD].to_i
+        solved = topic.solved
 
-        if accepted_id > 0
-          if p2 = Post.find_by(id: accepted_id)
-            p2.custom_fields.delete(IS_ACCEPTED_ANSWER_CUSTOM_FIELD)
-            p2.save!
-
-            UserAction.where(action_type: UserAction::SOLVED, target_post_id: p2.id).destroy_all
-          end
+        if previous_accepted_post_id = solved&.answer_post_id
+          UserAction.where(
+            action_type: UserAction::SOLVED,
+            target_post_id: previous_accepted_post_id,
+          ).destroy_all
+        else
+          UserAction.log_action!(
+            action_type: UserAction::SOLVED,
+            user_id: post.user_id,
+            acting_user_id: acting_user.id,
+            target_post_id: post.id,
+            target_topic_id: post.topic_id,
+          )
         end
 
-        post.custom_fields[IS_ACCEPTED_ANSWER_CUSTOM_FIELD] = "true"
-        topic.custom_fields[ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD] = post.id
-
-        UserAction.log_action!(
-          action_type: UserAction::SOLVED,
-          user_id: post.user_id,
-          acting_user_id: acting_user.id,
-          target_post_id: post.id,
-          target_topic_id: post.topic_id,
-        )
+        solved ||=
+          DiscourseSolved::SolvedTopic.new(topic:, answer_post: post, accepter: acting_user)
 
         notification_data = {
           message: "solved.accepted_notification",
@@ -99,14 +94,12 @@ after_initialize do
               based_on_last_post: true,
               duration_minutes: auto_close_hours * 60,
             )
-
-          topic.custom_fields[AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD] = topic_timer.id
+          solved.topic_timer = topic_timer
 
           MessageBus.publish("/topic/#{topic.id}", reload_topic: true)
         end
 
-        topic.save!
-        post.save!
+        solved.save!
 
         if WebHook.active_web_hooks(:accepted_solution).exists?
           payload = WebHook.generate_payload(:post, post)
@@ -120,41 +113,28 @@ after_initialize do
     def self.unaccept_answer!(post, topic: nil)
       topic ||= post.topic
       topic ||= Topic.unscoped.find_by(id: post.topic_id)
-
       return if topic.nil?
+      return if topic.solved.nil?
 
       DistributedMutex.synchronize("discourse_solved_toggle_answer_#{topic.id}") do
-        post.custom_fields.delete(IS_ACCEPTED_ANSWER_CUSTOM_FIELD)
-        topic.custom_fields.delete(ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD)
+        solved = topic.solved
 
-        if timer_id = topic.custom_fields[AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD]
-          topic_timer = TopicTimer.find_by(id: timer_id)
-          topic_timer.destroy! if topic_timer
-          topic.custom_fields.delete(AUTO_CLOSE_TOPIC_TIMER_CUSTOM_FIELD)
-        end
-
-        topic.save!
-        post.save!
-
-        # TODO remove_action! does not allow for this type of interface
-        UserAction.where(action_type: UserAction::SOLVED, target_post_id: post.id).destroy_all
-
-        # yank notification
-        notification =
+        ActiveRecord::Base.transaction do
+          UserAction.where(action_type: UserAction::SOLVED, target_post_id: post.id).destroy_all
           Notification.find_by(
             notification_type: Notification.types[:custom],
             user_id: post.user_id,
             topic_id: post.topic_id,
             post_number: post.post_number,
-          )
-
-        notification.destroy! if notification
+          )&.destroy!
+          solved.topic_timer.destroy! if solved.topic_timer
+          solved.destroy!
+        end
 
         if WebHook.active_web_hooks(:unaccepted_solution).exists?
           payload = WebHook.generate_payload(:post, post)
           WebHook.enqueue_solved_hooks(:unaccepted_solution, post, payload)
         end
-
         DiscourseEvent.trigger(:unaccepted_solution, post)
       end
     end
@@ -168,6 +148,7 @@ after_initialize do
     ::Guardian.prepend(DiscourseSolved::GuardianExtensions)
     ::WebHook.prepend(DiscourseSolved::WebHookExtension)
     ::TopicViewSerializer.prepend(DiscourseSolved::TopicViewSerializerExtension)
+    ::Topic.prepend(DiscourseSolved::TopicExtension)
     ::Category.prepend(DiscourseSolved::CategoryExtension)
     ::PostSerializer.prepend(DiscourseSolved::PostSerializerExtension)
     ::UserSummary.prepend(DiscourseSolved::UserSummaryExtension)
@@ -183,49 +164,10 @@ after_initialize do
     ].each { |klass| klass.include(DiscourseSolved::TopicAnswerMixin) }
   end
 
-  # we got to do a one time upgrade
-  if !::DiscourseSolved.skip_db?
-    unless Discourse.redis.get("solved_already_upgraded")
-      unless UserAction.where(action_type: UserAction::SOLVED).exists?
-        Rails.logger.info("Upgrading storage for solved")
-        sql = <<~SQL
-          INSERT INTO user_actions(action_type,
-                                   user_id,
-                                   target_topic_id,
-                                   target_post_id,
-                                   acting_user_id,
-                                   created_at,
-                                   updated_at)
-          SELECT :solved,
-                 p.user_id,
-                 p.topic_id,
-                 p.id,
-                 t.user_id,
-                 pc.created_at,
-                 pc.updated_at
-          FROM
-            post_custom_fields pc
-          JOIN
-            posts p ON p.id = pc.post_id
-          JOIN
-            topics t ON t.id = p.topic_id
-          WHERE
-            pc.name = 'is_accepted_answer' AND
-            pc.value = 'true' AND
-            p.user_id IS NOT NULL
-        SQL
-
-        DB.exec(sql, solved: UserAction::SOLVED)
-      end
-      Discourse.redis.set("solved_already_upgraded", "true")
-    end
-  end
-
-  topic_view_post_custom_fields_allowlister { [::DiscourseSolved::IS_ACCEPTED_ANSWER_CUSTOM_FIELD] }
-  TopicList.preloaded_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
+  register_category_list_topics_preloader_associations(:solved) if SiteSetting.solved_enabled
+  register_topic_preloader_associations(:solved) if SiteSetting.solved_enabled
+  Search.custom_topic_eager_load { [:solved] } if SiteSetting.solved_enabled
   Site.preloaded_category_custom_fields << ::DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD
-  Search.preloaded_topic_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
-  CategoryList.preloaded_topic_custom_fields << ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD
 
   add_api_key_scope(
     :solved,
@@ -244,10 +186,10 @@ after_initialize do
     report.data = []
 
     accepted_solutions =
-      TopicCustomField
-        .joins(:topic)
-        .where("topics.archetype <> ?", Archetype.private_message)
-        .where(name: ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD)
+      DiscourseSolved::SolvedTopic.joins(:topic).where(
+        "topics.archetype <> ?",
+        Archetype.private_message,
+      )
 
     category_id, include_subcategories = report.add_category_filter
     if category_id
@@ -263,17 +205,17 @@ after_initialize do
     end
 
     accepted_solutions
-      .where("topic_custom_fields.created_at >= ?", report.start_date)
-      .where("topic_custom_fields.created_at <= ?", report.end_date)
-      .group("DATE(topic_custom_fields.created_at)")
-      .order("DATE(topic_custom_fields.created_at)")
+      .where("discourse_solved_solved_topics.created_at >= ?", report.start_date)
+      .where("discourse_solved_solved_topics.created_at <= ?", report.end_date)
+      .group("DATE(discourse_solved_solved_topics.created_at)")
+      .order("DATE(discourse_solved_solved_topics.created_at)")
       .count
       .each { |date, count| report.data << { x: date, y: count } }
     report.total = accepted_solutions.count
     report.prev30Days =
       accepted_solutions
-        .where("topic_custom_fields.created_at >= ?", report.start_date - 30.days)
-        .where("topic_custom_fields.created_at <= ?", report.start_date)
+        .where("discourse_solved_solved_topics.created_at >= ?", report.start_date - 30.days)
+        .where("discourse_solved_solved_topics.created_at <= ?", report.start_date)
         .count
   end
 
@@ -282,10 +224,8 @@ after_initialize do
       condition = <<~SQL
         EXISTS (
           SELECT 1
-            FROM topic_custom_fields
-           WHERE topic_id = topics.id
-             AND name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
-             AND value IS NOT NULL
+            FROM discourse_solved_solved_topics
+           WHERE discourse_solved_solved_topics.topic_id = topics.id
         )
       SQL
 
@@ -315,18 +255,10 @@ after_initialize do
   add_to_serializer(:post, :can_unaccept_answer) do
     scope.can_accept_answer?(topic, object) && accepted_answer
   end
-  add_to_serializer(:post, :accepted_answer) do
-    post_custom_fields[::DiscourseSolved::IS_ACCEPTED_ANSWER_CUSTOM_FIELD] == "true"
-  end
-  add_to_serializer(:post, :topic_accepted_answer) do
-    topic&.custom_fields&.[](::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD).present?
-  end
+  add_to_serializer(:post, :accepted_answer) { topic&.solved&.answer_post_id == object.id }
+  add_to_serializer(:post, :topic_accepted_answer) { topic&.solved&.present? }
 
-  on(:post_destroyed) do |post|
-    if post.custom_fields[::DiscourseSolved::IS_ACCEPTED_ANSWER_CUSTOM_FIELD] == "true"
-      ::DiscourseSolved.unaccept_answer!(post)
-    end
-  end
+  on(:post_destroyed) { |post| ::DiscourseSolved.unaccept_answer!(post) }
 
   on(:filter_auto_bump_topics) do |_category, filters|
     filters.push(
@@ -334,10 +266,8 @@ after_initialize do
         sql = <<~SQL
           NOT EXISTS (
             SELECT 1
-              FROM topic_custom_fields
-             WHERE topic_id = topics.id
-               AND name = '#{::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD}'
-               AND value IS NOT NULL
+              FROM discourse_solved_solved_topics
+             WHERE discourse_solved_solved_topics.topic_id = topics.id
           )
         SQL
 
@@ -390,7 +320,7 @@ after_initialize do
   add_to_class(:composer_messages_finder, :check_topic_is_solved) do
     return if !SiteSetting.solved_enabled || SiteSetting.disable_solved_education_message
     return if !replying? || @topic.blank? || @topic.private_message?
-    return if @topic.custom_fields[::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD].blank?
+    return if @topic.solved.nil?
 
     {
       id: "solved_topic",
@@ -402,15 +332,17 @@ after_initialize do
     }
   end
 
-  register_topic_list_preload_user_ids do |topics, user_ids, topic_list|
-    answer_post_ids =
-      TopicCustomField
-        .select("value::INTEGER")
-        .where(name: ::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD)
+  register_topic_list_preload_user_ids do |topics, user_ids|
+    # [{ topic_id => answer_user_id }, ... ]
+    topics_with_answer_poster =
+      DiscourseSolved::SolvedTopic
+        .joins(:answer_post)
         .where(topic_id: topics.map(&:id))
-    answer_user_ids = Post.where(id: answer_post_ids).pluck(:topic_id, :user_id).to_h
-    topics.each { |topic| topic.accepted_answer_user_id = answer_user_ids[topic.id] }
-    user_ids.concat(answer_user_ids.values)
+        .pluck(:topic_id, "posts.user_id")
+        .to_h
+
+    topics.each { |topic| topic.accepted_answer_user_id = topics_with_answer_poster[topic.id] }
+    user_ids.concat(topics_with_answer_poster.values)
   end
 
   DiscourseSolved::RegisterFilters.register(self)

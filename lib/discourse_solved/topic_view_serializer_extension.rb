@@ -43,12 +43,6 @@ module DiscourseSolved::TopicViewSerializerExtension
   end
 
   def accepted_answer_post_id
-    id = object.topic.custom_fields[::DiscourseSolved::ACCEPTED_ANSWER_POST_ID_CUSTOM_FIELD]
-    # a bit messy but race conditions can give us an array here, avoid
-    begin
-      id && id.to_i
-    rescue StandardError
-      nil
-    end
+    object.topic.solved&.answer_post_id
   end
 end
