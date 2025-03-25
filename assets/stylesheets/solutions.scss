@@ -65,11 +65,16 @@ $solved-color: green;
 aside.quote.accepted-answer {
   .title {
     display: flex;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
 
-    &.title-only {
-      padding: 12px;
-    }
+  .accepted-answer--solver-accepter {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    min-width: 0;
+    gap: 0.25em;
   }
 
   .accepted-answer--solver {
@@ -78,19 +83,14 @@ aside.quote.accepted-answer {
 
   .accepted-answer--accepter {
     font-size: var(--font-down-1);
-    margin-left: auto;
+    width: 100%;
+    flex-basis: auto;
     margin-top: auto;
-  }
+    margin-bottom: auto;
+    margin-right: 0.25em;
 
-  @media screen and (max-width: 768px) {
-    .accepted-answer--accepter {
-      width: 100%;
-      margin-top: 0.25em;
-      order: 3;
-    }
-
-    .quote-controls {
-      order: 2;
+    @media (min-width: 480px) {
+      width: auto;
     }
   }
 }
