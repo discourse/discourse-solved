@@ -37,6 +37,7 @@ class CopySolvedTopicCustomFieldToDiscourseSolvedSolvedTopics < ActiveRecord::Mi
         WHERE tc.name = 'accepted_answer_post_id'
           AND tc.id > :last_id
           AND tc.id <= :last_id + :batch_size
+        ON CONFLICT DO NOTHING
       SQL
 
       last_id += BATCH_SIZE

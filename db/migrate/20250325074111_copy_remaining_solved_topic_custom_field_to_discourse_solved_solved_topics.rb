@@ -39,7 +39,7 @@ class CopyRemainingSolvedTopicCustomFieldToDiscourseSolvedSolvedTopics < ActiveR
         WHERE tc.name = 'accepted_answer_post_id'
           AND tc.id > :last_id
           AND tc.id <= :last_id + :batch_size
-        ON CONFLICT (topic_id) DO NOTHING
+        ON CONFLICT DO NOTHING
       SQL
 
       last_id += BATCH_SIZE
