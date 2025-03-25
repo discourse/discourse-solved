@@ -40,6 +40,7 @@ he:
       no_solved_topics_title: "עדיין לא פתרת אף נושא"
       no_solved_topics_title_others: "אין נושאים שנפתרו על ידי %{username} עדיין"
       no_solved_topics_body: "לאחר שכתבת תגובה מועילה לנושא, התגובה שלך עשויה להיבחר כפתרון על ידי בעלי הנושא או הסגל."
+      marked_solved_by: "סומן כפתור על ידי <a href data-user-card='%{username_lower}'>%{username}</a></span>"
       no_answer:
         title: התשובה שלך נענתה?
         description: "ניתן להדגיש את התשובה ולסייע לאחרים על ידי לחיצה על כפתור הפתרון שלהלן מתחת לתגובה הנכונה."
