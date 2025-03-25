@@ -6,7 +6,10 @@ class CopySolvedTopicCustomFieldToDiscourseSolvedSolvedTopics < ActiveRecord::Mi
   BATCH_SIZE = 10_000
 
   def up
-    max_id = DB.query_single("SELECT MAX(id) FROM topic_custom_fields").first
+    max_id =
+      DB.query_single(
+        "SELECT MAX(id) FROM topic_custom_fields WHERE topic_custom_fields.name = 'accepted_answer_post_id'",
+      ).first
     return unless max_id
 
     last_id = 0
