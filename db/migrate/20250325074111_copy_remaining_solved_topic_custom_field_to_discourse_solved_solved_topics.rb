@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 #
-class CopyRemainingSolvedTopicCustomFieldToDiscourseSolvedSolvedTopics < ActiveRecord::Migration[7.2]
+class CopyRemainingSolvedTopicCustomFieldToDiscourseSolvedSolvedTopics < ActiveRecord::Migration[
+  7.2
+]
   disable_ddl_transaction!
 
   BATCH_SIZE = 5000

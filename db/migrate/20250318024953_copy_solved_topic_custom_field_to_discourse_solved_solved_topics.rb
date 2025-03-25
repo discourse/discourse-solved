@@ -3,7 +3,7 @@
 class CopySolvedTopicCustomFieldToDiscourseSolvedSolvedTopics < ActiveRecord::Migration[7.2]
   disable_ddl_transaction!
 
-  BATCH_SIZE = 10000
+  BATCH_SIZE = 10_000
 
   def up
     max_id = DB.query_single("SELECT MAX(id) FROM topic_custom_fields").first
