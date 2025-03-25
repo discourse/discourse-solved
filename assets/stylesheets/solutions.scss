@@ -62,8 +62,37 @@ $solved-color: green;
   font-size: 13px;
 }
 
-aside.quote .title.title-only {
-  padding: 12px;
+aside.quote.accepted-answer {
+  .title {
+    display: flex;
+    flex-wrap: wrap;
+
+    &.title-only {
+      padding: 12px;
+    }
+  }
+
+  .accepted-answer--solver {
+    margin-right: auto;
+  }
+
+  .accepted-answer--accepter {
+    font-size: var(--font-down-1);
+    margin-left: auto;
+    margin-top: auto;
+  }
+
+  @media screen and (max-width: 768px) {
+    .accepted-answer--accepter {
+      width: 100%;
+      margin-top: 0.25em;
+      order: 3;
+    }
+
+    .quote-controls {
+      order: 2;
+    }
+  }
 }
 
 .user-card-metadata-outlet.accepted-answers {

@@ -19,7 +19,7 @@ export default class SolvedAcceptAnswerButton extends Component {
 
   @action
   acceptAnswer() {
-    acceptAnswer(this.args.post, this.appEvents);
+    acceptAnswer(this.args.post, this.appEvents, this.currentUser);
   }
 
   <template>
@@ -34,9 +34,9 @@ export default class SolvedAcceptAnswerButton extends Component {
   </template>
 }
 
-export function acceptAnswer(post, appEvents) {
+export function acceptAnswer(post, appEvents, acceptingUser) {
   // TODO (glimmer-post-menu): Remove this exported function and move the code into the button action after the widget code is removed
-  acceptPost(post);
+  acceptPost(post, acceptingUser);
 
   appEvents.trigger("discourse-solved:solution-toggled", post);
 
@@ -46,7 +46,7 @@ export function acceptAnswer(post, appEvents) {
   });
 }
 
-function acceptPost(post) {
+function acceptPost(post, acceptingUser) {
   const topic = post.topic;
 
   clearAccepted(topic);
@@ -62,6 +62,8 @@ function acceptPost(post) {
     name: post.name,
     post_number: post.post_number,
     excerpt: post.cooked,
+    accepter_username: acceptingUser.username,
+    accepter_name: acceptingUser.name,
   });
 
   ajax("/solution/accept", {

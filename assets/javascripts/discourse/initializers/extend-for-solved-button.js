@@ -36,30 +36,24 @@ function initializeWithApi(api) {
         const topic = postModel.topic;
         if (topic.accepted_answer) {
           const hasExcerpt = !!topic.accepted_answer.excerpt;
-
-          const withExcerpt = `
-            <aside class='quote accepted-answer' data-post="${
-              topic.get("accepted_answer").post_number
-            }" data-topic="${topic.id}">
-              <div class='title'>
-                ${topic.acceptedAnswerHtml} <div class="quote-controls"><\/div>
+          const excerpt = hasExcerpt
+            ? ` <blockquote> ${topic.accepted_answer.excerpt} </blockquote> `
+            : "";
+          const solvedQuote = `
+            <aside class='quote accepted-answer' data-post="${topic.get("accepted_answer").post_number}" data-topic="${topic.id}">
+              <div class='title ${hasExcerpt ? "" : "title-only"}'>
+                <div class="accepted-answer--solver">
+                  ${topic.solvedByHtml}
+                <\/div>
+                <div class="accepted-answer--accepter">
+                  ${topic.accepterHtml}
+                <\/div>
+                <div class="quote-controls"><\/div>
               </div>
-              <blockquote>
-                ${topic.accepted_answer.excerpt}
-              </blockquote>
+              ${excerpt}
             </aside>`;
 
-          const withoutExcerpt = `
-            <aside class='quote accepted-answer'>
-              <div class='title title-only'>
-                ${topic.acceptedAnswerHtml}
-              </div>
-            </aside>`;
-
-          const cooked = new PostCooked(
-            { cooked: hasExcerpt ? withExcerpt : withoutExcerpt },
-            dec
-          );
+          const cooked = new PostCooked({ cooked: solvedQuote }, dec);
           return dec.rawHtml(cooked.init());
         }
       }
@@ -67,7 +61,7 @@ function initializeWithApi(api) {
   });
 
   api.attachWidgetAction("post", "acceptAnswer", function () {
-    acceptAnswer(this.model, this.appEvents);
+    acceptAnswer(this.model, this.appEvents, this.currentUser);
   });
 
   api.attachWidgetAction("post", "unacceptAnswer", function () {
@@ -173,7 +167,7 @@ export default {
   initialize() {
     Topic.reopen({
       // keeping this here cause there is complex localization
-      acceptedAnswerHtml: computed("accepted_answer", "id", function () {
+      solvedByHtml: computed("accepted_answer", "id", function () {
         const username = this.get("accepted_answer.username");
         const name = this.get("accepted_answer.name");
         const postNumber = this.get("accepted_answer.post_number");
@@ -194,6 +188,18 @@ export default {
           post_path: `${this.url}/${postNumber}`,
           post_number: postNumber,
           user_path: User.create({ username }).path,
+        });
+      }),
+      accepterHtml: computed("accepted_answer", function () {
+        const username = this.get("accepted_answer.accepter_username");
+        const name = this.get("accepted_answer.accepter_name");
+        const formattedUsername =
+          this.siteSettings.display_name_on_posts && name
+            ? name
+            : formatUsername(username);
+        return i18n("solved.marked_solved_by", {
+          username: formattedUsername,
+          username_lower: username.toLowerCase(),
         });
       }),
     });
