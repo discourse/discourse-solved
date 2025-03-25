@@ -42,12 +42,14 @@ function initializeWithApi(api) {
           const solvedQuote = `
             <aside class='quote accepted-answer' data-post="${topic.get("accepted_answer").post_number}" data-topic="${topic.id}">
               <div class='title ${hasExcerpt ? "" : "title-only"}'>
-                <div class="accepted-answer--solver">
-                  ${topic.solvedByHtml}
-                <\/div>
-                <div class="accepted-answer--accepter">
-                  ${topic.accepterHtml}
-                <\/div>
+                <div class="accepted-answer--solver-accepter">
+                  <div class="accepted-answer--solver">
+                    ${topic.solvedByHtml}
+                  <\/div>
+                  <div class="accepted-answer--accepter">
+                    ${topic.accepterHtml}
+                  <\/div>
+                </div>
                 <div class="quote-controls"><\/div>
               </div>
               ${excerpt}
