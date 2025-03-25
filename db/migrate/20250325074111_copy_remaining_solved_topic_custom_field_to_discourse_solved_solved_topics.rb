@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 #
-class CopySolvedTopicCustomFieldToDiscourseSolvedSolvedTopics < ActiveRecord::Migration[7.2]
+class CopyRemainingSolvedTopicCustomFieldToDiscourseSolvedSolvedTopics < ActiveRecord::Migration[
+  7.2
+]
   disable_ddl_transaction!
 
-  BATCH_SIZE = 10_000
+  BATCH_SIZE = 5000
 
   def up
     max_id =
