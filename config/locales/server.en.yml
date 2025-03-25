@@ -19,6 +19,7 @@ en:
     solved_add_schema_markup: "Add QAPage schema markup to HTML."
     enable_solved_tags: "Tags that will allow users to select solutions."
     prioritize_solved_topics_in_search: "Prioritize solved topics in search results."
+    show_who_marked_solved: "Show who marked the topic as solved. This is indicated in the topic's first post, and the answer post in a tooltip."
 
     keywords:
       accept_all_solutions_allowed_groups: "accept_all_solutions_trust_level"

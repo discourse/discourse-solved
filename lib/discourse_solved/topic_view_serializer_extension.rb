@@ -36,10 +36,13 @@ module DiscourseSolved::TopicViewSerializerExtension
       post_number: answer_post.post_number,
       username: answer_post_user.username,
       name: answer_post_user.name,
-      accepter_username: accepter.username,
-      accepter_name: accepter.name,
       excerpt:,
     }
+
+    if SiteSetting.show_who_marked_solved
+      accepted_answer[:accepter_name] = accepter.name
+      accepted_answer[:accepter_username] = accepter.username
+    end
 
     if !SiteSetting.enable_names || !SiteSetting.display_name_on_posts
       accepted_answer[:name] = nil

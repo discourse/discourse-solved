@@ -193,6 +193,9 @@ export default {
       accepterHtml: computed("accepted_answer", function () {
         const username = this.get("accepted_answer.accepter_username");
         const name = this.get("accepted_answer.accepter_name");
+        if (!this.siteSettings.show_who_marked_solved) {
+          return "";
+        }
         const formattedUsername =
           this.siteSettings.display_name_on_posts && name
             ? name
