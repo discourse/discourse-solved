@@ -6,7 +6,8 @@ module DiscourseSolved::TopicViewSerializerExtension
   prepended { attributes :accepted_answer }
 
   def include_accepted_answer?
-    SiteSetting.solved_enabled? && object.topic.solved.present?
+    SiteSetting.solved_enabled? && object.topic.solved.present? &&
+      object.topic.solved.answer_post.present?
   end
 
   def accepted_answer
