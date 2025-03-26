@@ -4,8 +4,6 @@ class RemoveDuplicatesFromDiscourseSolvedSolvedTopics < ActiveRecord::Migration[
   disable_ddl_transaction!
 
   def up
-    puts "before"
-    puts DiscourseSolved::SolvedTopic.count
     # remove duplicates on answer_post_id based on earliest created_at
     DB.exec(<<~SQL)
       DELETE FROM discourse_solved_solved_topics
@@ -27,9 +25,6 @@ class RemoveDuplicatesFromDiscourseSolvedSolvedTopics < ActiveRecord::Migration[
         ) t WHERE row_num = 1
       )
     SQL
-
-    puts "done"
-    puts DiscourseSolved::SolvedTopic.count
   end
 
   def down
