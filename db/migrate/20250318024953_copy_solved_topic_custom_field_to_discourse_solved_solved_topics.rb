@@ -23,23 +23,31 @@ class CopySolvedTopicCustomFieldToDiscourseSolvedSolvedTopics < ActiveRecord::Mi
           created_at,
           updated_at
         )
-        SELECT DISTINCT ON (tc.topic_id)
+        SELECT
           tc.topic_id,
-          CAST(tc.value AS INTEGER),
-          CAST(tc2.value AS INTEGER),
-          COALESCE(ua.acting_user_id, -1),
+          tc.answer_post_id,
+          tc.topic_timer_id,
+          tc.accepter_user_id,
           tc.created_at,
           tc.updated_at
-        FROM topic_custom_fields tc
-        LEFT JOIN topic_custom_fields tc2
-          ON tc2.topic_id = tc.topic_id
-          AND tc2.name = 'solved_auto_close_topic_timer_id'
-        LEFT JOIN user_actions ua
-          ON ua.target_topic_id = tc.topic_id
-          AND ua.action_type = 15
-        WHERE tc.name = 'accepted_answer_post_id'
-          AND tc.id > :last_id
-          AND tc.id <= :last_id + :batch_size
+        FROM (
+          SELECT
+            tc.topic_id,
+            CAST(tc.value AS INTEGER) AS answer_post_id,
+            CAST(tc2.value AS INTEGER) AS topic_timer_id,
+            COALESCE(ua.acting_user_id, -1) AS accepter_user_id,
+            tc.created_at,
+            tc.updated_at,
+            ROW_NUMBER() OVER (PARTITION BY tc.topic_id ORDER BY tc.created_at ASC) AS rn_topic,
+            ROW_NUMBER() OVER (PARTITION BY CAST(tc.value AS INTEGER) ORDER BY tc.created_at ASC) AS rn_answer
+          FROM topic_custom_fields tc
+          LEFT JOIN topic_custom_fields tc2 ON tc2.topic_id = tc.topic_id AND tc2.name = 'solved_auto_close_topic_timer_id'
+          LEFT JOIN user_actions ua ON ua.target_topic_id = tc.topic_id AND ua.action_type = 15
+          WHERE tc.name = 'accepted_answer_post_id'
+            AND tc.id > :last_id
+            AND tc.id <= :last_id + :batch_size
+        ) tc
+        WHERE tc.rn_topic = 1 AND tc.rn_answer = 1
         ON CONFLICT DO NOTHING
       SQL
 
