@@ -12,6 +12,7 @@ describe "About page", type: :system do
     SiteSetting.solved_enabled = true
     SiteSetting.allow_solved_on_all_topics = true
     SiteSetting.accept_all_solutions_allowed_groups = Group::AUTO_GROUPS[:everyone]
+    SiteSetting.show_who_marked_solved = true
   end
 
   it "accepts post as solution and shows in OP" do
