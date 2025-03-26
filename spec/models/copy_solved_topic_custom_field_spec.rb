@@ -8,26 +8,24 @@ RSpec.describe CopySolvedTopicCustomFieldToDiscourseSolvedSolvedTopics, type: :m
   describe "handling duplicates" do
     it "ensures only unique topic_id and answer_post_id are inserted" do
       topic = Fabricate(:topic)
+      topic1 = Fabricate(:topic)
       post1 = Fabricate(:post, topic: topic)
-      Fabricate(
-        :topic_custom_field,
-        topic: topic,
+      TopicCustomField.create!(
+        topic_id: topic.id,
         name: "accepted_answer_post_id",
         value: post1.id.to_s,
       )
       # explicit duplicate
-      Fabricate(
-        :topic_custom_field,
-        topic: topic,
+      TopicCustomField.create!(
+        topic_id: topic1.id,
         name: "accepted_answer_post_id",
         value: post1.id.to_s,
       )
 
       second_topic = Fabricate(:topic)
       post2 = Fabricate(:post, topic: second_topic)
-      Fabricate(
-        :topic_custom_field,
-        topic: second_topic,
+      TopicCustomField.create!(
+        topic_id: second_topic.id,
         name: "accepted_answer_post_id",
         value: post2.id.to_s,
       )
