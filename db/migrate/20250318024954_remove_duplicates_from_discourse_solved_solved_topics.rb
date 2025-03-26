@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class RemoveDuplicatesFromDiscourseSolvedSolvedTopics < ActiveRecord::Migration[7.2]
-  disable_ddl_transaction!
-
   def up
     # remove duplicates on answer_post_id based on earliest created_at
     DB.exec(<<~SQL)
