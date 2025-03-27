@@ -19,7 +19,16 @@ export default class SolvedAcceptAnswerButton extends Component {
 
   @action
   acceptAnswer() {
-    acceptAnswer(this.args.post, this.appEvents, this.currentUser);
+    const post = this.args.post;
+
+    acceptPost(post, this.currentUser);
+
+    this.appEvents.trigger("discourse-solved:solution-toggled", post);
+
+    post.get("topic.postStream.posts").forEach((p) => {
+      p.set("topic_accepted_answer", true);
+      this.appEvents.trigger("post-stream:refresh", { id: p.id });
+    });
   }
 
   <template>
@@ -34,17 +43,6 @@ export default class SolvedAcceptAnswerButton extends Component {
   </template>
 }
 
-export function acceptAnswer(post, appEvents, acceptingUser) {
-  // TODO (glimmer-post-menu): Remove this exported function and move the code into the button action after the widget code is removed
-  acceptPost(post, acceptingUser);
-
-  appEvents.trigger("discourse-solved:solution-toggled", post);
-
-  post.get("topic.postStream.posts").forEach((p) => {
-    p.set("topic_accepted_answer", true);
-    appEvents.trigger("post-stream:refresh", { id: p.id });
-  });
-}
 
 function acceptPost(post, acceptingUser) {
   const topic = post.topic;
