@@ -241,11 +241,9 @@ after_initialize do
 
   add_to_serializer(:user_card, :accepted_answers) do
     DiscourseSolved::SolvedTopic
-      .joins(:topic, :answer_post)
-      .where("topics.archetype <> ?", Archetype.private_message)
-      .where(user_id: object.id)
-      .where("topics.deleted_at IS NULL")
-      .where("posts.deleted_at IS NULL")
+      .joins(answer_post: :user, topic: {})
+      .where(posts: { user_id: object.id, deleted_at: nil })
+      .where(topics: { archetype: Archetype.default, deleted_at: nil })
       .count
   end
   add_to_serializer(:user_summary, :solved_count) { object.solved_count }
