@@ -43,7 +43,6 @@ export default class SolvedAcceptAnswerButton extends Component {
   </template>
 }
 
-
 function acceptPost(post, acceptingUser) {
   const topic = post.topic;
 

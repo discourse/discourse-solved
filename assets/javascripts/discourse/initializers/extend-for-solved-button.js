@@ -1,7 +1,7 @@
 import { computed } from "@ember/object";
 import discourseComputed from "discourse/lib/decorators";
 import { withSilencedDeprecations } from "discourse/lib/deprecated";
-import { iconHTML, iconNode } from "discourse/lib/icon-library";
+import { iconHTML } from "discourse/lib/icon-library";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { formatUsername } from "discourse/lib/utilities";
 import Topic from "discourse/models/topic";
