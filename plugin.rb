@@ -240,12 +240,12 @@ after_initialize do
   end
 
   add_to_serializer(:user_card, :accepted_answers) do
-    UserAction
-      .where(user_id: object.id)
-      .where(action_type: UserAction::SOLVED)
-      .joins("JOIN topics ON topics.id = user_actions.target_topic_id")
+    DiscourseSolved::SolvedTopic
+      .joins(:topic, :answer_post)
       .where("topics.archetype <> ?", Archetype.private_message)
+      .where(user_id: object.id)
       .where("topics.deleted_at IS NULL")
+      .where("posts.deleted_at IS NULL")
       .count
   end
   add_to_serializer(:user_summary, :solved_count) { object.solved_count }
@@ -288,24 +288,23 @@ after_initialize do
 
   query = <<~SQL
     WITH x AS (
-      SELECT u.id user_id, COUNT(DISTINCT ua.id) AS solutions
-      FROM users AS u
-      LEFT JOIN user_actions AS ua
-         ON ua.user_id = u.id
-        AND ua.action_type = #{UserAction::SOLVED}
-        AND COALESCE(ua.created_at, :since) > :since
+      SELECT p.user_id, COUNT(DISTINCT st.id) AS solutions
+      FROM discourse_solved_solved_topics AS st
+      JOIN posts AS p
+         ON p.id = st.answer_post_id
+        AND COALESCE(p.created_at, :since) > :since
+        AND p.deleted_at IS NULL
       JOIN topics AS t
-         ON t.id = ua.target_topic_id
+         ON t.id = st.topic_id
         AND t.archetype <> 'private_message'
         AND t.deleted_at IS NULL
-      JOIN posts AS p
-         ON p.id = ua.target_post_id
-        AND p.deleted_at IS NULL
+      JOIN users AS u
+         ON u.id = p.user_id
       WHERE u.id > 0
         AND u.active
         AND u.silenced_till IS NULL
         AND u.suspended_till IS NULL
-      GROUP BY u.id
+      GROUP BY p.user_id
     )
     UPDATE directory_items di
     SET solutions = x.solutions
