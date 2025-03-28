@@ -1,7 +1,7 @@
 import { computed } from "@ember/object";
 import discourseComputed from "discourse/lib/decorators";
 import { withSilencedDeprecations } from "discourse/lib/deprecated";
-import { iconHTML, iconNode } from "discourse/lib/icon-library";
+import { iconHTML } from "discourse/lib/icon-library";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { formatUsername } from "discourse/lib/utilities";
 import Topic from "discourse/models/topic";
@@ -72,7 +72,7 @@ function initializeWithApi(api) {
 }
 
 function customizePostMenu(api) {
-  const transformerRegistered = api.registerValueTransformer(
+  api.registerValueTransformer(
     "post-menu-buttons",
     ({
       value: dag,
@@ -109,59 +109,6 @@ function customizePostMenu(api) {
         );
     }
   );
-
-  const silencedKey =
-    transformerRegistered && "discourse.post-menu-widget-overrides";
-
-  withSilencedDeprecations(silencedKey, () => customizeWidgetPostMenu(api));
-}
-
-function customizeWidgetPostMenu(api) {
-  const currentUser = api.getCurrentUser();
-
-  api.addPostMenuButton("solved", (attrs) => {
-    if (attrs.can_accept_answer) {
-      const isOp = currentUser?.id === attrs.topicCreatedById;
-
-      return {
-        action: "acceptAnswer",
-        icon: "far-square-check",
-        className: "unaccepted",
-        title: "solved.accept_answer",
-        label: isOp ? "solved.solution" : null,
-        position: attrs.topic_accepted_answer ? "second-last-hidden" : "first",
-      };
-    } else if (attrs.accepted_answer) {
-      if (attrs.can_unaccept_answer) {
-        return {
-          action: "unacceptAnswer",
-          icon: "square-check",
-          title: "solved.unaccept_answer",
-          className: "accepted fade-out",
-          position: "first",
-          label: "solved.solution",
-        };
-      } else {
-        return {
-          className: "hidden",
-          disabled: "true",
-          position: "first",
-          beforeButton(h) {
-            return h(
-              "span.accepted-text",
-              {
-                title: i18n("solved.accepted_description"),
-              },
-              [
-                h("span", iconNode("check")),
-                h("span.accepted-label", i18n("solved.solution")),
-              ]
-            );
-          },
-        };
-      }
-    }
-  });
 }
 
 export default {

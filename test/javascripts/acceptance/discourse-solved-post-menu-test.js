@@ -10,7 +10,6 @@ acceptance(
     needs.user({ admin: true });
 
     needs.settings({
-      glimmer_post_menu_mode: "enabled",
       solved_enabled: true,
       allow_solved_on_all_topics: true,
     });
