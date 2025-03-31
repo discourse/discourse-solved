@@ -40,6 +40,6 @@ acceptance("Discourse Solved Plugin", function (needs) {
     await click(".search-cta");
 
     assert.dom(".fps-topic").exists({ count: 1 }, "has one post");
-    assert.dom(".topic-status .solved").exists("shows the right icon");
+    assert.dom(".topic-statuses .solved").exists("shows the right icon");
   });
 });
