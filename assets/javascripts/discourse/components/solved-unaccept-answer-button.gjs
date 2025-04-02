@@ -10,18 +10,6 @@ import { formatUsername } from "discourse/lib/utilities";
 import { i18n } from "discourse-i18n";
 import DTooltip from "float-kit/components/d-tooltip";
 
-export function unacceptAnswer(post, appEvents) {
-  // TODO (glimmer-post-menu): Remove this exported function and move the code into the button action after the widget code is removed
-  unacceptPost(post);
-
-  appEvents.trigger("discourse-solved:solution-toggled", post);
-
-  post.get("topic.postStream.posts").forEach((p) => {
-    p.set("topic_accepted_answer", false);
-    appEvents.trigger("post-stream:refresh", { id: p.id });
-  });
-}
-
 function unacceptPost(post) {
   if (!post.can_unaccept_answer) {
     return;
@@ -48,7 +36,16 @@ export default class SolvedUnacceptAnswerButton extends Component {
 
   @action
   unacceptAnswer() {
-    unacceptAnswer(this.args.post, this.appEvents);
+    const post = this.args.post;
+
+    unacceptPost(post);
+
+    this.appEvents.trigger("discourse-solved:solution-toggled", post);
+
+    post.get("topic.postStream.posts").forEach((p) => {
+      p.set("topic_accepted_answer", false);
+      this.appEvents.trigger("post-stream:refresh", { id: p.id });
+    });
   }
 
   get solvedBy() {
