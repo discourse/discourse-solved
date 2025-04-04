@@ -5,8 +5,9 @@ module DiscourseSolved::UserSummaryExtension
 
   def solved_count
     DiscourseSolved::SolvedTopic
-      .joins("JOIN posts ON posts.id = discourse_solved_solved_topics.answer_post_id")
-      .where(posts: { user_id: @user.id })
+      .joins(answer_post: :user, topic: {})
+      .where(posts: { user_id: @user.id, deleted_at: nil })
+      .where(topics: { archetype: Archetype.default, deleted_at: nil })
       .count
   end
 end
