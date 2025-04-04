@@ -13,7 +13,10 @@ module DiscourseAutomation
           .where(trigger: name, enabled: true)
           .find_each do |automation|
             maximum_trust_level = automation.trigger_field("maximum_trust_level")&.dig("value")
-            if FirstAcceptedPostSolutionValidator.check(post, trust_level: maximum_trust_level)
+            if DiscourseSolved::FirstAcceptedPostSolutionValidator.check(
+                 post,
+                 trust_level: maximum_trust_level,
+               )
               automation.trigger!(
                 "kind" => name,
                 "accepted_post_id" => post.id,
