@@ -540,6 +540,26 @@ RSpec.describe "Managing Posts solved status" do
     end
   end
 
+  describe "#accept_answer!" do
+    it "marks the post as the accepted answer correctly" do
+      user = Fabricate(:user, trust_level: 1)
+      topic = Fabricate(:topic, user:)
+      reply1 = Fabricate(:post, topic:, user:, post_number: 2)
+      reply2 = Fabricate(:post, topic:, user:, post_number: 3)
+
+      DiscourseSolved.accept_answer!(reply1, user)
+      topic.reload
+
+      expect(topic.solved.answer_post_id).to eq(reply1.id)
+      expect(topic.solved.topic_timer).to eq(topic.public_topic_timer)
+
+      DiscourseSolved.accept_answer!(reply2, user)
+      topic.reload
+
+      expect(topic.solved.answer_post_id).to eq(reply2.id)
+    end
+  end
+
   describe "user actions stream modifier" do
     it "correctly list solutions" do
       t1 = Fabricate(:topic)
