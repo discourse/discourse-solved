@@ -295,7 +295,7 @@ after_initialize do
       FROM discourse_solved_solved_topics AS st
       JOIN posts AS p
          ON p.id = st.answer_post_id
-        AND COALESCE(p.created_at, :since) > :since
+        AND COALESCE(st.created_at, :since) > :since
         AND p.deleted_at IS NULL
       JOIN topics AS t
          ON t.id = st.topic_id

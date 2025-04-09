@@ -6,10 +6,10 @@ describe DirectoryItem, type: :model do
     fab!(:admin)
 
     fab!(:topic1) { Fabricate(:topic, archetype: "regular", user:) }
-    fab!(:topic_post1) { Fabricate(:post, topic: topic1, user:) }
+    fab!(:topic_post1) { Fabricate(:post, topic: topic1, user:, created_at: 10.years.ago) }
 
     fab!(:topic2) { Fabricate(:topic, archetype: "regular", user:) }
-    fab!(:topic_post2) { Fabricate(:post, topic: topic2, user:) }
+    fab!(:topic_post2) { Fabricate(:post, topic: topic2, user:, created_at: 10.years.ago) }
 
     fab!(:pm) { Fabricate(:topic, archetype: "private_message", user:, category_id: nil) }
     fab!(:pm_post) { Fabricate(:post, topic: pm, user:) }
@@ -97,7 +97,7 @@ describe DirectoryItem, type: :model do
       expect(
         DirectoryItem.find_by(
           user_id: user.id,
-          period_type: DirectoryItem.period_types[:all],
+          period_type: DirectoryItem.period_types[:daily],
         ).solutions,
       ).to eq(1)
     end
