@@ -1,6 +1,4 @@
 import { computed } from "@ember/object";
-import discourseComputed from "discourse/lib/decorators";
-import { withSilencedDeprecations } from "discourse/lib/deprecated";
 import { iconHTML } from "discourse/lib/icon-library";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { formatUsername } from "discourse/lib/utilities";
@@ -154,57 +152,6 @@ export default {
           username_lower: username.toLowerCase(),
         });
       }),
-    });
-
-    withPluginApi("2.0.0", (api) => {
-      withSilencedDeprecations("discourse.hbr-topic-list-overrides", () => {
-        let topicStatusIcons;
-        try {
-          topicStatusIcons =
-            require("discourse/helpers/topic-status-icons").default;
-        } catch {}
-
-        topicStatusIcons?.addObject([
-          "has_accepted_answer",
-          "far-square-check",
-          "solved",
-        ]);
-
-        api.modifyClass(
-          "raw-view:topic-status",
-          (Superclass) =>
-            class extends Superclass {
-              @discourseComputed(
-                "topic.{has_accepted_answer,accepted_answer,can_have_answer}"
-              )
-              statuses() {
-                const results = super.statuses;
-
-                if (
-                  this.topic.has_accepted_answer ||
-                  this.topic.accepted_answer
-                ) {
-                  results.push({
-                    openTag: "span",
-                    closeTag: "span",
-                    title: i18n("topic_statuses.solved.help"),
-                    icon: "far-square-check",
-                    key: "solved",
-                  });
-                } else if (this.topic.can_have_answer) {
-                  results.push({
-                    openTag: "span",
-                    closeTag: "span",
-                    title: i18n("solved.has_no_accepted_answer"),
-                    icon: "far-square",
-                  });
-                }
-
-                return results;
-              }
-            }
-        );
-      });
     });
 
     withPluginApi("1.34.0", initializeWithApi);
