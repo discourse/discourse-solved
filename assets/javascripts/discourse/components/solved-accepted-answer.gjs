@@ -75,7 +75,7 @@ export default class SolvedAcceptedAnswer extends Component {
       data-post={{this.topic.accepted_answer.post_number}}
       data-topic={{this.topic.id}}
     >
-      <div class={{concatClass "title" (if this.hasExcerpt "title-only")}}>
+      <div class={{concatClass "title" (unless this.hasExcerpt "title-only")}}>
         <div class="accepted-answer--solver-accepter">
           <div class="accepted-answer--solver">
             {{this.htmlSolvedBy}}
