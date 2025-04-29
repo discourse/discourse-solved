@@ -107,6 +107,7 @@ export default class SolvedAcceptedAnswer extends Component {
       data-topic={{this.topic.id}}
       data-expanded={{this.expanded}}
     >
+      {{! template-lint-disable no-invalid-interactive }}
       <div
         class={{concatClass
           "title"
