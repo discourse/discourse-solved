@@ -15,22 +15,28 @@ describe "About page", type: :system do
     SiteSetting.show_who_marked_solved = true
   end
 
-  it "accepts post as solution and shows in OP" do
-    sign_in(accepter)
+  %w[enabled disabled].each do |value|
+    before { SiteSetting.glimmer_post_stream_mode = value }
 
-    topic_page.visit_topic(topic, post_number: 2)
+    context "when glimmer_post_stream_mode=#{value}" do
+      it "accepts post as solution and shows in OP" do
+        sign_in(accepter)
 
-    expect(topic_page).to have_css(".post-action-menu__solved-unaccepted")
+        topic_page.visit_topic(topic, post_number: 2)
 
-    find(".post-action-menu__solved-unaccepted").click
+        expect(topic_page).to have_css(".post-action-menu__solved-unaccepted")
 
-    expect(topic_page).to have_css(".post-action-menu__solved-accepted")
-    expect(topic_page.find(".title .accepted-answer--solver")).to have_content(
-      "Solved by #{solver.username}",
-    )
-    expect(topic_page.find(".title .accepted-answer--accepter")).to have_content(
-      "Marked as solved by #{accepter.username}",
-    )
-    expect(topic_page.find("blockquote")).to have_content("The answer is 42")
+        find(".post-action-menu__solved-unaccepted").click
+
+        expect(topic_page).to have_css(".post-action-menu__solved-accepted")
+        expect(topic_page.find(".title .accepted-answer--solver")).to have_content(
+          "Solved by #{solver.username}",
+        )
+        expect(topic_page.find(".title .accepted-answer--accepter")).to have_content(
+          "Marked as solved by #{accepter.username}",
+        )
+        expect(topic_page.find("blockquote")).to have_content("The answer is 42")
+      end
+    end
   end
 end

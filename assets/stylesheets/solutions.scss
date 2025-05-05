@@ -58,10 +58,14 @@ $solved-color: var(--success);
 }
 
 aside.quote.accepted-answer {
-  .title {
+  > .title {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+
+    &.quote__title--can-toggle-content {
+      cursor: pointer;
+    }
   }
 
   .accepted-answer--solver-accepter {
