@@ -1,12 +1,6 @@
 import Component from "@glimmer/component";
-import { computed } from "@ember/object";
 import { withSilencedDeprecations } from "discourse/lib/deprecated";
-import { iconHTML } from "discourse/lib/icon-library";
 import { withPluginApi } from "discourse/lib/plugin-api";
-import { formatUsername } from "discourse/lib/utilities";
-import Topic from "discourse/models/topic";
-import User from "discourse/models/user";
-import PostCooked from "discourse/widgets/post-cooked";
 import RenderGlimmer from "discourse/widgets/render-glimmer";
 import { i18n } from "discourse-i18n";
 import SolvedAcceptAnswerButton from "../components/solved-accept-answer-button";
