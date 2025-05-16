@@ -352,4 +352,26 @@ after_initialize do
   DiscourseDev::DiscourseSolved.populate(self)
   DiscourseAutomation::EntryPoint.inject(self) if defined?(DiscourseAutomation)
   DiscourseAssign::EntryPoint.inject(self) if defined?(DiscourseAssign)
+
+  # Register a modifier to control rate limiting for solution acceptance
+  # Parameters:
+  # - default_value: The default rate limiting state (true to apply rate limiting, false to skip it)
+  # - user: The current user object, used to determine whether to apply rate limiting
+  register_modifier(:solved_answers_controller_run_rate_limiter) do |default_value, user|
+    get_setting = ->(name, default) do
+      SiteSetting.respond_to?(name) ? SiteSetting.public_send(name) : default
+    end
+
+    user_level = user.respond_to?(:trust_level) ? user.trust_level : 0
+
+    min_bypass_level = get_setting.call(:solved_min_trust_level_for_bypass, 3)
+
+    bypass_enabled = get_setting.call(:solved_bypass_rate_limit, false)
+
+    if bypass_enabled && user_level >= min_bypass_level
+      false
+    else
+      default_value
+    end
+  end
 end
