@@ -8,7 +8,7 @@ describe DiscourseSolved::AnswerController do
   fab!(:staff_user) { Fabricate(:admin) }
   fab!(:category)
   fab!(:topic) { Fabricate(:topic, category: category) }
-  fab!(:post) { Fabricate(:post, topic: topic) }
+  fab!(:p) { Fabricate(:post, topic: topic) }
   fab!(:solution_post) { Fabricate(:post, topic: topic) }
 
   before do
@@ -17,21 +17,15 @@ describe DiscourseSolved::AnswerController do
     category.custom_fields[DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD] = "true"
     category.save_custom_fields
 
-    # Make the topic's first post's user the topic creator
-    # This ensures the guardian will allow the acceptance
-    topic.user_id = user.id
-    topic.save!
-
-    # Make solution_post's user different from the topic creator
-    solution_post.user_id = Fabricate(:user).id
-    solution_post.save!
-
     # Give permission to accept solutions
     user.update!(trust_level: 1)
     high_trust_user.update!(trust_level: 3)
   end
 
   describe "#accept" do
+    # 确保当前用户是话题创建者，以便他们可以接受答案
+    before { topic.update!(user_id: user.id) }
+
     context "with rate limiting enabled" do
       it "applies rate limits to regular users" do
         sign_in(user)
@@ -81,6 +75,9 @@ describe DiscourseSolved::AnswerController do
       end
 
       it "does not apply rate limits to high trust users" do
+        # 让high_trust_user成为话题创建者，这样他就有权限接受答案
+        topic.update!(user_id: high_trust_user.id)
+
         sign_in(high_trust_user)
 
         # First request should succeed without rate limiting
@@ -95,6 +92,9 @@ describe DiscourseSolved::AnswerController do
       end
 
       it "respects min trust level setting changes" do
+        # 让high_trust_user成为话题创建者，这样他就有权限接受答案
+        topic.update!(user_id: high_trust_user.id)
+
         SiteSetting.solved_min_trust_level_for_bypass = 4
 
         sign_in(high_trust_user) # TL3 user
@@ -115,6 +115,9 @@ describe DiscourseSolved::AnswerController do
       before do
         SiteSetting.solved_bypass_rate_limit = false
         SiteSetting.solved_min_trust_level_for_bypass = 3
+
+        # 让high_trust_user成为话题创建者，这样他就有权限接受答案
+        topic.update!(user_id: high_trust_user.id)
       end
 
       it "applies rate limits to all non-staff users" do
@@ -135,6 +138,9 @@ describe DiscourseSolved::AnswerController do
 
   describe "#unaccept" do
     before do
+      # 让用户成为话题创建者，这样他就有权限接受/取消接受答案
+      topic.update!(user_id: user.id)
+
       # Set up an accepted solution first
       sign_in(user)
       post "/solution/accept.json", params: { id: solution_post.id }
@@ -160,8 +166,7 @@ describe DiscourseSolved::AnswerController do
 
       it "does not apply rate limits to high trust users" do
         # Give topic ownership to high trust user so they can unaccept
-        topic.user_id = high_trust_user.id
-        topic.save!
+        topic.update!(user_id: high_trust_user.id)
 
         sign_in(high_trust_user)
 
