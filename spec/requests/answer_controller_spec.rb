@@ -4,7 +4,6 @@ require "rails_helper"
 
 describe DiscourseSolved::AnswerController do
   fab!(:user)
-  fab!(:high_trust_user) { Fabricate(:user, trust_level: 3) }
   fab!(:staff_user) { Fabricate(:admin) }
   fab!(:category)
   fab!(:topic) { Fabricate(:topic, category: category) }
@@ -19,7 +18,6 @@ describe DiscourseSolved::AnswerController do
 
     # Give permission to accept solutions
     user.update!(trust_level: 1)
-    high_trust_user.update!(trust_level: 3)
   end
 
   describe "#accept" do
@@ -54,84 +52,27 @@ describe DiscourseSolved::AnswerController do
       end
     end
 
-    context "with bypass settings" do
-      before do
-        SiteSetting.solved_bypass_rate_limit = true
-        SiteSetting.solved_min_trust_level_for_bypass = 3
-      end
-
-      it "applies rate limits to low trust users" do
+    context "with plugin modifier" do
+      it "allows plugins to bypass rate limiting via modifier" do
         sign_in(user)
 
-        # First request should succeed
-        post "/solution/accept.json", params: { id: solution_post.id }
-        expect(response.status).to eq(200)
-
-        # Try to make too many requests in a short time
-        RateLimiter.any_instance.expects(:performed!).raises(RateLimiter::LimitExceeded.new(60))
-
-        post "/solution/accept.json", params: { id: solution_post.id }
-        expect(response.status).to eq(429) # Rate limited status
-      end
-
-      it "does not apply rate limits to high trust users" do
-        # 让high_trust_user成为话题创建者，这样他就有权限接受答案
-        topic.update!(user_id: high_trust_user.id)
-
-        sign_in(high_trust_user)
-
-        # First request should succeed without rate limiting
-        post "/solution/accept.json", params: { id: solution_post.id }
-        expect(response.status).to eq(200)
-
-        # Should be able to make another request without rate limiting
-        RateLimiter.any_instance.expects(:performed!).never
-
-        post "/solution/accept.json", params: { id: solution_post.id }
-        expect(response.status).to eq(200)
-      end
-
-      it "respects min trust level setting changes" do
-        # 让high_trust_user成为话题创建者，这样他就有权限接受答案
-        topic.update!(user_id: high_trust_user.id)
-
-        SiteSetting.solved_min_trust_level_for_bypass = 4
-
-        sign_in(high_trust_user) # TL3 user
+        # Example of how plugins can customize rate limiting behavior
+        DiscoursePluginRegistry.register_modifier(
+          :solved_answers_controller_run_rate_limiter,
+        ) do |_, _|
+          false # Skip rate limiting completely
+        end
 
         # First request should succeed
         post "/solution/accept.json", params: { id: solution_post.id }
         expect(response.status).to eq(200)
 
-        # Now rate limiting should apply since TL3 < TL4 requirement
-        RateLimiter.any_instance.expects(:performed!).raises(RateLimiter::LimitExceeded.new(60))
-
-        post "/solution/accept.json", params: { id: solution_post.id }
-        expect(response.status).to eq(429) # Rate limited status
-      end
-    end
-
-    context "with bypass disabled" do
-      before do
-        SiteSetting.solved_bypass_rate_limit = false
-        SiteSetting.solved_min_trust_level_for_bypass = 3
-
-        # 让high_trust_user成为话题创建者，这样他就有权限接受答案
-        topic.update!(user_id: high_trust_user.id)
-      end
-
-      it "applies rate limits to all non-staff users" do
-        sign_in(high_trust_user) # TL3 user
-
-        # First request should succeed
+        # Second request should also succeed because rate limiting is bypassed
         post "/solution/accept.json", params: { id: solution_post.id }
         expect(response.status).to eq(200)
 
-        # Rate limiting should apply despite high trust level because bypass is disabled
-        RateLimiter.any_instance.expects(:performed!).raises(RateLimiter::LimitExceeded.new(60))
-
-        post "/solution/accept.json", params: { id: solution_post.id }
-        expect(response.status).to eq(429) # Rate limited status
+        # Clean up
+        DiscoursePluginRegistry.unregister_modifier(:solved_answers_controller_run_rate_limiter)
       end
     end
   end
@@ -148,34 +89,14 @@ describe DiscourseSolved::AnswerController do
       sign_out
     end
 
-    context "with bypass settings" do
-      before do
-        SiteSetting.solved_bypass_rate_limit = true
-        SiteSetting.solved_min_trust_level_for_bypass = 3
-      end
+    it "applies rate limits to regular users" do
+      sign_in(user)
 
-      it "applies rate limits to low trust users" do
-        sign_in(user)
+      # Try to make too many requests in a short time
+      RateLimiter.any_instance.expects(:performed!).raises(RateLimiter::LimitExceeded.new(60))
 
-        # Try to make too many requests in a short time
-        RateLimiter.any_instance.expects(:performed!).raises(RateLimiter::LimitExceeded.new(60))
-
-        post "/solution/unaccept.json", params: { id: solution_post.id }
-        expect(response.status).to eq(429) # Rate limited status
-      end
-
-      it "does not apply rate limits to high trust users" do
-        # Give topic ownership to high trust user so they can unaccept
-        topic.update!(user_id: high_trust_user.id)
-
-        sign_in(high_trust_user)
-
-        # Should be able to unaccept without rate limiting
-        RateLimiter.any_instance.expects(:performed!).never
-
-        post "/solution/unaccept.json", params: { id: solution_post.id }
-        expect(response.status).to eq(200)
-      end
+      post "/solution/unaccept.json", params: { id: solution_post.id }
+      expect(response.status).to eq(429) # Rate limited status
     end
   end
 end

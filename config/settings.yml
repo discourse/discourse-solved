@@ -59,13 +59,3 @@ discourse_solved:
   enable_solved_tags:
     type: tag_list
     default: ""
-  solved_bypass_rate_limit:
-    default: false
-    client: false
-    description: "Allow high trust level users to bypass rate limiting for accepting solutions"
-  solved_min_trust_level_for_bypass:
-    default: 3
-    client: false
-    min: 0
-    max: 4
-    description: "Minimum trust level required to bypass rate limiting"
