@@ -55,10 +55,12 @@ describe DiscourseSolved::AnswerController do
         sign_in(user)
 
         # Register a modifier that disables rate limiting
+        plugin_instance = DiscoursePluginRegistry.new
         DiscoursePluginRegistry.register_modifier(
-          :solved_answers_controller_run_rate_limiter,
+          plugin_instance,
+          :solved_answers_controller_run_rate_limiter
         ) do |_, _|
-          false # Skip rate limiting
+          false
         end
 
         # Multiple requests should succeed without rate limiting
