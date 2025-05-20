@@ -51,31 +51,29 @@ describe DiscourseSolved::AnswerController do
     end
 
     context "with plugin modifier" do
-      it "allows plugins to bypass rate limiting" do
-        sign_in(user)
-
-        # Register a modifier that disables rate limiting
-        plugin_instance = DiscoursePluginRegistry.new
-        DiscoursePluginRegistry.register_modifier(
-          plugin_instance,
-          :solved_answers_controller_run_rate_limiter
-        ) do |_, _|
-          false
-        end
-
-        # Multiple requests should succeed without rate limiting
-        post "/solution/accept.json", params: { id: solution_post.id }
-        expect(response.status).to eq(200)
-
-        post "/solution/accept.json", params: { id: solution_post.id }
-        expect(response.status).to eq(200)
-
-        # Clean up
-        DiscoursePluginRegistry.unregister_modifier(:solved_answers_controller_run_rate_limiter)
-      end
-    end
+     it "allows plugins to bypass rate limiting" do
+       sign_in(user)
+       # Store the block in a variable so we can reference it for unregistration
+       block = ->(_, _) { false }
+       # Register modifier with proper parameters - plugin instance (self) and name
+       DiscoursePluginRegistry.register_modifier(
+         self,
+         :solved_answers_controller_run_rate_limiter,
+         &block
+       )
+       post "/solution/accept.json", params: { id: solution_post.id }
+       expect(response.status).to eq(200)
+       post "/solution/accept.json", params: { id: solution_post.id }
+       expect(response.status).to eq(200)
+       # Unregister with the same plugin instance and block
+       DiscoursePluginRegistry.unregister_modifier(
+         self, # plugin_instance parameter
+         :solved_answers_controller_run_rate_limiter, # name parameter
+         &block # same block used for registration
+       )
+     end
+   end
   end
-
   describe "#unaccept" do
     before do
       # Setup an accepted solution
