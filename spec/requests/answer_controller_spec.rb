@@ -45,20 +45,12 @@ describe DiscourseSolved::AnswerController do
     context "with plugin modifier" do
       it "allows plugins to bypass rate limiting" do
         sign_in(user)
-        # Create a mock plugin instance with enabled? method
-        plugin_instance = Object.new
-        def plugin_instance.enabled?
-          true
-        end
-
-        # Store the block in a variable so we can reference it for unregistration
-        block = ->(_, _) { false }
-
-        # Register modifier with proper parameters - using mock plugin instance instead of self
-        DiscoursePluginRegistry.register_modifier(
-          plugin_instance,
+        # Create a plugin instance and register a modifier
+        plugin_instance = Plugin::Instance.new
+        modifier_block = Proc.new { |_, _| false }
+        plugin_instance.register_modifier(
           :solved_answers_controller_run_rate_limiter,
-          &block
+          &modifier_block
         )
 
         post "/solution/accept.json", params: { id: solution_post.id }
@@ -66,11 +58,11 @@ describe DiscourseSolved::AnswerController do
         post "/solution/accept.json", params: { id: solution_post.id }
         expect(response.status).to eq(200)
 
-        # Unregister with the same plugin instance and block
+        # Unregister the modifier using DiscoursePluginRegistry
         DiscoursePluginRegistry.unregister_modifier(
-          plugin_instance, # Using the same mock plugin instance
+          plugin_instance,
           :solved_answers_controller_run_rate_limiter,
-          &block
+          &modifier_block
         )
       end
     end
