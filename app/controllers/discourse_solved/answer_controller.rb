@@ -35,6 +35,13 @@ class DiscourseSolved::AnswerController < ::ApplicationController
 
   def limit_accepts
     return if current_user.staff?
+    run_rate_limiter =
+      DiscoursePluginRegistry.apply_modifier(
+        :solved_answers_controller_run_rate_limiter,
+        true,
+        current_user,
+      )
+    return if !run_rate_limiter
     RateLimiter.new(nil, "accept-hr-#{current_user.id}", 20, 1.hour).performed!
     RateLimiter.new(nil, "accept-min-#{current_user.id}", 4, 30.seconds).performed!
   end
