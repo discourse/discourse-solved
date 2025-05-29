@@ -1,7 +1,7 @@
 {
   "private": true,
   "devDependencies": {
-    "@discourse/lint-configs": "2.20.0",
+    "@discourse/lint-configs": "2.21.0",
     "ember-template-lint": "7.7.0",
     "eslint": "9.27.0",
     "prettier": "3.5.3",

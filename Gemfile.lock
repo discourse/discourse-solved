@@ -38,7 +38,7 @@ GEM
     rack (3.1.15)
     rainbow (3.1.1)
     regexp_parser (2.10.0)
-    rubocop (1.75.7)
+    rubocop (1.75.8)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
