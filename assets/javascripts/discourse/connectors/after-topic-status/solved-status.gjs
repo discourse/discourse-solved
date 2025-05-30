@@ -21,4 +21,5 @@ const SolvedStatus = <template>
     >{{icon "far-square"}}</span>
   {{~/if~}}
 </template>;
+
 export default SolvedStatus;
