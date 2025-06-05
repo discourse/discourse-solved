@@ -1,7 +1,9 @@
 import Component from "@glimmer/component";
+import { hash } from "@ember/helper";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
 import { i18n } from "discourse-i18n";
+import ComboBox from "select-kit/components/combo-box";
 
 const QUERY_PARAM_VALUES = {
   solved: "yes",
@@ -57,4 +59,19 @@ export default class SolvedStatusFilter extends Component {
       queryParams: { solved: QUERY_PARAM_VALUES[newStatus] },
     });
   }
+
+  <template>
+    {{#if this.siteSettings.solved_enabled}}
+      <li>
+        <ComboBox
+          @content={{this.statuses}}
+          @value={{this.status}}
+          @valueProperty="value"
+          @options={{hash caretDownIcon="caret-right" caretUpIcon="caret-down"}}
+          @onChange={{this.changeStatus}}
+          class="solved-status-filter"
+        />
+      </li>
+    {{/if}}
+  </template>
 }
