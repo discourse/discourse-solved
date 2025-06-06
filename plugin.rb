@@ -292,20 +292,21 @@ after_initialize do
   query = <<~SQL
     WITH x AS (
       SELECT users.id AS user_id,
-             COUNT(DISTINCT CASE WHEN
+             COUNT(DISTINCT st.topic_id) FILTER (WHERE
                st.topic_id IS NOT NULL AND
                t.id IS NOT NULL AND
                t.archetype <> 'private_message' AND
                t.deleted_at IS NULL AND
                p.deleted_at IS NULL
-             THEN st.topic_id ELSE NULL END) AS solutions
+             ) AS solutions
       FROM users
       LEFT JOIN posts p ON p.user_id = users.id
       LEFT JOIN discourse_solved_solved_topics st
              ON st.answer_post_id = p.id
              AND st.created_at >= :since
       LEFT JOIN topics t ON t.id = st.topic_id
-      WHERE users.active
+      WHERE users.id > 0
+        AND users.active
         AND users.silenced_till IS NULL
         AND users.suspended_till IS NULL
       GROUP BY users.id
