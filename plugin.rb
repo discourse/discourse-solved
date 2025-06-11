@@ -290,33 +290,34 @@ after_initialize do
   end
 
   query = <<~SQL
+    UPDATE directory_items di
+       SET solutions = 0
+     WHERE di.period_type = :period_type AND di.solutions IS NOT NULL;
+
     WITH x AS (
-      SELECT users.id AS user_id,
-             COUNT(DISTINCT st.topic_id) FILTER (WHERE
-               st.topic_id IS NOT NULL AND
-               t.id IS NOT NULL AND
-               t.archetype <> 'private_message' AND
-               t.deleted_at IS NULL AND
-               p.deleted_at IS NULL
-             ) AS solutions
-      FROM users
-      LEFT JOIN posts p ON p.user_id = users.id
-      LEFT JOIN discourse_solved_solved_topics st
-             ON st.answer_post_id = p.id
-             AND st.created_at >= :since
-      LEFT JOIN topics t ON t.id = st.topic_id
-      WHERE users.id > 0
-        AND users.active
-        AND users.silenced_till IS NULL
-        AND users.suspended_till IS NULL
-      GROUP BY users.id
+      SELECT p.user_id, COUNT(DISTINCT st.id) AS solutions
+      FROM discourse_solved_solved_topics AS st
+      JOIN posts AS p
+         ON p.id = st.answer_post_id
+        AND COALESCE(st.created_at, :since) > :since
+        AND p.deleted_at IS NULL
+      JOIN topics AS t
+         ON t.id = st.topic_id
+        AND t.archetype <> 'private_message'
+        AND t.deleted_at IS NULL
+      JOIN users AS u
+         ON u.id = p.user_id
+      WHERE u.id > 0
+        AND u.active
+        AND u.silenced_till IS NULL
+        AND u.suspended_till IS NULL
+      GROUP BY p.user_id
     )
     UPDATE directory_items di
-    SET solutions = x.solutions
-    FROM x
-    WHERE x.user_id = di.user_id
-      AND di.period_type = :period_type
-      AND di.solutions <> x.solutions
+       SET solutions = x.solutions
+      FROM x
+     WHERE x.user_id = di.user_id
+       AND di.period_type = :period_type;
   SQL
 
   add_directory_column("solutions", query:)
