@@ -290,6 +290,10 @@ after_initialize do
   end
 
   query = <<~SQL
+    UPDATE directory_items di
+       SET solutions = 0
+     WHERE di.period_type = :period_type AND di.solutions IS NOT NULL;
+
     WITH x AS (
       SELECT p.user_id, COUNT(DISTINCT st.id) AS solutions
       FROM discourse_solved_solved_topics AS st
@@ -310,11 +314,10 @@ after_initialize do
       GROUP BY p.user_id
     )
     UPDATE directory_items di
-    SET solutions = x.solutions
-    FROM x
-    WHERE x.user_id = di.user_id
-      AND di.period_type = :period_type
-      AND di.solutions <> x.solutions
+       SET solutions = x.solutions
+      FROM x
+     WHERE x.user_id = di.user_id
+       AND di.period_type = :period_type;
   SQL
 
   add_directory_column("solutions", query:)

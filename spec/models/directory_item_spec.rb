@@ -101,5 +101,32 @@ describe DirectoryItem, type: :model do
         ).solutions,
       ).to eq(1)
     end
+
+    context "when refreshing across dates" do
+      it "updates the user's solution count from 1 to 0" do
+        freeze_time 40.days.ago
+        DiscourseSolved.accept_answer!(topic_post1, Discourse.system_user)
+
+        DirectoryItem.refresh!
+
+        expect(
+          DirectoryItem.find_by(
+            user_id: user.id,
+            period_type: DirectoryItem.period_types[:monthly],
+          ).solutions,
+        ).to eq(1)
+
+        unfreeze_time
+
+        DirectoryItem.refresh!
+
+        expect(
+          DirectoryItem.find_by(
+            user_id: user.id,
+            period_type: DirectoryItem.period_types[:monthly],
+          ).solutions,
+        ).to eq(0)
+      end
+    end
   end
 end
