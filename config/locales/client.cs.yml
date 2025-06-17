@@ -40,6 +40,7 @@ cs:
       no_solved_topics_title: "Zatím jste nevyřešili žádná témata"
       no_solved_topics_title_others: "%{username} zatím nevyřešil/a žádná témata"
       no_solved_topics_body: "Pokud na téma poskytnete užitečnou odpověď, vaše odpověď může být zvolena jako řešení vlastníkem tématu nebo redakcí."
+      marked_solved_by: "<a href data-user-card='%{username_lower}'>%{username}</a></span> označil/a jako vyřešené"
       no_answer:
         title: Byla vaše otázka zodpovězena?
         description: "Pomozte ostatním tím, že zvýrazníte odpověď použitím tlačítka Řešení pod správnou odpovědí."
