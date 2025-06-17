@@ -24,6 +24,7 @@ cs:
     solved_add_schema_markup: "Přidání do HTML značky schématu QAPage."
     enable_solved_tags: "Štítky, které umožní uživatelům vybrat řešení."
     prioritize_solved_topics_in_search: "Upřednostnit ve výsledcích vyhledávání vyřešená témata."
+    show_who_marked_solved: "Zobrazit, kdo označil téma jako vyřešené. Toto je uvedeno v prvním příspěvku tématu a v bublině u příspěvku s odpovědí."
     keywords:
       accept_all_solutions_allowed_groups: "accept_all_solutions_trust_level"
   reports:
