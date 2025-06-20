@@ -31,7 +31,12 @@ function customizePost(api) {
         return args.post.post_number === 1 && args.post.topic.accepted_answer;
       }
 
-      <template><SolvedAcceptedAnswer @post={{@outletArgs.post}} /></template>
+      <template>
+        <SolvedAcceptedAnswer
+          @post={{@post}}
+          @decoratorState={{@decoratorState}}
+        />
+      </template>
     }
   );
 

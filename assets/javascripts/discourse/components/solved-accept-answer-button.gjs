@@ -27,6 +27,7 @@ export default class SolvedAcceptAnswerButton extends Component {
 
     post.get("topic.postStream.posts").forEach((p) => {
       p.set("topic_accepted_answer", true);
+      // TODO (glimmer-post-stream) the Glimmer Post Stream does not listen to this event
       this.appEvents.trigger("post-stream:refresh", { id: p.id });
     });
   }

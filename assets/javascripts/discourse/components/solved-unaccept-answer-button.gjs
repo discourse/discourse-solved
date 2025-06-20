@@ -44,6 +44,7 @@ export default class SolvedUnacceptAnswerButton extends Component {
 
     post.get("topic.postStream.posts").forEach((p) => {
       p.set("topic_accepted_answer", false);
+      // TODO (glimmer-post-stream) the Glimmer Post Stream does not listen to this event
       this.appEvents.trigger("post-stream:refresh", { id: p.id });
     });
   }

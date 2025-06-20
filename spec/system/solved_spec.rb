@@ -29,6 +29,8 @@ describe "About page", type: :system do
         find(".post-action-menu__solved-unaccepted").click
 
         expect(topic_page).to have_css(".post-action-menu__solved-accepted")
+
+        expect(topic_page).to have_css("aside.accepted-answer.quote[data-expanded='false']")
         expect(topic_page.find(".title .accepted-answer--solver")).to have_content(
           "Solved by #{solver.username}",
         )
@@ -36,6 +38,10 @@ describe "About page", type: :system do
           "Marked as solved by #{accepter.username}",
         )
         expect(topic_page.find("blockquote")).to have_content("The answer is 42")
+
+        # ensure the quoted post can be expanded
+        topic_page.find("aside.accepted-answer.quote button.quote-toggle").click
+        expect(topic_page).to have_css("aside.accepted-answer.quote[data-expanded='true']")
       end
     end
   end
