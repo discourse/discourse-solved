@@ -1,4 +1,5 @@
 import Component from "@glimmer/component";
+import { tracked } from "@glimmer/tracking";
 import { withSilencedDeprecations } from "discourse/lib/deprecated";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import RenderGlimmer from "discourse/widgets/render-glimmer";
@@ -24,6 +25,15 @@ function customizePost(api) {
     "topic_accepted_answer"
   );
 
+  api.modifyClass(
+    "model:topic",
+    (Superclass) =>
+      class extends Superclass {
+        @tracked accepted_answer;
+        @tracked has_accepted_answer;
+      }
+  );
+
   api.renderAfterWrapperOutlet(
     "post-content-cooked-html",
     class extends Component {
@@ -31,7 +41,12 @@ function customizePost(api) {
         return args.post.post_number === 1 && args.post.topic.accepted_answer;
       }
 
-      <template><SolvedAcceptedAnswer @post={{@outletArgs.post}} /></template>
+      <template>
+        <SolvedAcceptedAnswer
+          @post={{@post}}
+          @decoratorState={{@decoratorState}}
+        />
+      </template>
     }
   );
 

@@ -1,14 +1,7 @@
 import Component from "@glimmer/component";
-import { tracked } from "@glimmer/tracking";
-import { on } from "@ember/modifier";
-import { action } from "@ember/object";
 import { service } from "@ember/service";
 import { htmlSafe } from "@ember/template";
-import AsyncContent from "discourse/components/async-content";
-import PostCookedHtml from "discourse/components/post/cooked-html";
-import concatClass from "discourse/helpers/concat-class";
-import icon from "discourse/helpers/d-icon";
-import { ajax } from "discourse/lib/ajax";
+import PostQuotedContent from "discourse/components/post/quoted-content";
 import { iconHTML } from "discourse/lib/icon-library";
 import { formatUsername } from "discourse/lib/utilities";
 import { i18n } from "discourse-i18n";
@@ -17,7 +10,9 @@ export default class SolvedAcceptedAnswer extends Component {
   @service siteSettings;
   @service store;
 
-  @tracked expanded = false;
+  get topic() {
+    return this.args.post.topic;
+  }
 
   get acceptedAnswer() {
     return this.topic.accepted_answer;
@@ -27,49 +22,45 @@ export default class SolvedAcceptedAnswer extends Component {
     return `accepted-answer-${this.topic.id}-${this.acceptedAnswer.post_number}`;
   }
 
-  get topic() {
-    return this.args.post.topic;
-  }
-
   get hasExcerpt() {
     return !!this.acceptedAnswer.excerpt;
   }
 
-  get htmlAccepter() {
-    const username = this.acceptedAnswer.accepter_username;
-    const name = this.acceptedAnswer.accepter_name;
+  get collapsedContent() {
+    if (!this.hasExcerpt) {
+      return null;
+    }
 
+    return htmlSafe(this.acceptedAnswer.excerpt);
+  }
+
+  get htmlAccepter() {
     if (!this.siteSettings.show_who_marked_solved) {
       return;
     }
 
-    const formattedUsername =
-      this.siteSettings.display_name_on_posts && name
-        ? name
-        : formatUsername(username);
+    const { accepter_username, accepter_name } = this.acceptedAnswer;
+    const displayName = this.#getDisplayName(accepter_username, accepter_name);
+
+    if (!displayName) {
+      return;
+    }
 
     return htmlSafe(
       i18n("solved.marked_solved_by", {
-        username: formattedUsername,
-        username_lower: username.toLowerCase(),
+        username: displayName,
+        username_lower: accepter_username.toLowerCase(),
       })
     );
   }
 
   get htmlSolvedBy() {
-    const username = this.acceptedAnswer.username;
-    const name = this.acceptedAnswer.name;
-    const postNumber = this.acceptedAnswer.post_number;
-
+    const { username, name, post_number: postNumber } = this.acceptedAnswer;
     if (!username || !postNumber) {
       return;
     }
 
-    const displayedUser =
-      this.siteSettings.display_name_on_posts && name
-        ? name
-        : formatUsername(username);
-
+    const displayedUser = this.#getDisplayName(username, name);
     const data = {
       icon: iconHTML("square-check", { class: "accepted" }),
       username_lower: username.toLowerCase(),
@@ -82,40 +73,28 @@ export default class SolvedAcceptedAnswer extends Component {
     return htmlSafe(i18n("solved.accepted_html", data));
   }
 
-  @action
-  toggleExpandedPost() {
-    if (!this.hasExcerpt) {
-      return;
+  #getDisplayName(username, name) {
+    if (!username) {
+      return null;
     }
 
-    this.expanded = !this.expanded;
-  }
-
-  @action
-  async loadExpandedAcceptedAnswer(postNumber) {
-    const acceptedAnswer = await ajax(
-      `/posts/by_number/${this.topic.id}/${postNumber}`
-    );
-
-    return this.store.createRecord("post", acceptedAnswer);
+    return this.siteSettings.display_name_on_posts && name
+      ? name
+      : formatUsername(username);
   }
 
   <template>
-    <aside
-      class="quote accepted-answer"
-      data-post={{this.acceptedAnswer.post_number}}
-      data-topic={{this.topic.id}}
-      data-expanded={{this.expanded}}
+    <PostQuotedContent
+      class="accepted-answer"
+      @collapsedContent={{this.collapsedContent}}
+      @decoratorState={{@decoratorState}}
+      @id={{this.quoteId}}
+      @post={{@post}}
+      @quotedPostNumber={{this.acceptedAnswer.post_number}}
+      @quotedTopicId={{this.topic.id}}
+      @quotedUsername={{this.acceptedAnswer.username}}
     >
-      {{! template-lint-disable no-invalid-interactive }}
-      <div
-        class={{concatClass
-          "title"
-          (unless this.hasExcerpt "title-only")
-          (if this.hasExcerpt "quote__title--can-toggle-content")
-        }}
-        {{on "click" this.toggleExpandedPost}}
-      >
+      <:title>
         <div class="accepted-answer--solver-accepter">
           <div class="accepted-answer--solver">
             {{this.htmlSolvedBy}}
@@ -124,43 +103,7 @@ export default class SolvedAcceptedAnswer extends Component {
             {{this.htmlAccepter}}
           </div>
         </div>
-        {{#if this.hasExcerpt}}
-          <div class="quote-controls">
-            <button
-              aria-controls={{this.quoteId}}
-              aria-expanded={{this.expanded}}
-              class="quote-toggle btn-flat"
-              type="button"
-            >
-              {{icon
-                (if this.expanded "chevron-up" "chevron-down")
-                title="post.expand_collapse"
-              }}
-            </button>
-          </div>
-        {{/if}}
-      </div>
-      {{#if this.hasExcerpt}}
-        <blockquote id={{this.quoteId}}>
-          {{#if this.expanded}}
-            <AsyncContent
-              @asyncData={{this.loadExpandedAcceptedAnswer}}
-              @context={{this.acceptedAnswer.post_number}}
-            >
-              <:content as |expandedAnswer|>
-                <div class="expanded-quote" data-post-id={{expandedAnswer.id}}>
-                  <PostCookedHtml
-                    @post={{expandedAnswer}}
-                    @streamElement={{false}}
-                  />
-                </div>
-              </:content>
-            </AsyncContent>
-          {{else}}
-            {{htmlSafe this.acceptedAnswer.excerpt}}
-          {{/if}}
-        </blockquote>
-      {{/if}}
-    </aside>
+      </:title>
+    </PostQuotedContent>
   </template>
 }
