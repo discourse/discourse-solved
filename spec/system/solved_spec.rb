@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 describe "About page", type: :system do
   fab!(:admin)
   fab!(:solver) { Fabricate(:user) }
@@ -16,32 +15,31 @@ describe "About page", type: :system do
   end
 
   %w[enabled disabled].each do |value|
-    before { SiteSetting.glimmer_post_stream_mode = value }
-
     context "when glimmer_post_stream_mode=#{value}" do
+      before { SiteSetting.glimmer_post_stream_mode = value }
+
       it "accepts post as solution and shows in OP" do
         sign_in(accepter)
-
         topic_page.visit_topic(topic, post_number: 2)
 
         expect(topic_page).to have_css(".post-action-menu__solved-unaccepted")
-
         find(".post-action-menu__solved-unaccepted").click
 
         expect(topic_page).to have_css(".post-action-menu__solved-accepted")
 
-        expect(topic_page).to have_css("aside.accepted-answer.quote[data-expanded='false']")
+        accepted_answer_quote = topic_page.find("aside.accepted-answer.quote")
+        expect(accepted_answer_quote["data-expanded"]).to eq("false")
+        expect(accepted_answer_quote.find("blockquote")).to have_content("The answer is 42")
+
         expect(topic_page.find(".title .accepted-answer--solver")).to have_content(
           "Solved by #{solver.username}",
         )
         expect(topic_page.find(".title .accepted-answer--accepter")).to have_content(
           "Marked as solved by #{accepter.username}",
         )
-        expect(topic_page.find("blockquote")).to have_content("The answer is 42")
 
-        # ensure the quoted post can be expanded
-        topic_page.find("aside.accepted-answer.quote button.quote-toggle").click
-        expect(topic_page).to have_css("aside.accepted-answer.quote[data-expanded='true']")
+        accepted_answer_quote.find("button.quote-toggle").click
+        expect(accepted_answer_quote["data-expanded"]).to eq("true")
       end
     end
   end
