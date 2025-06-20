@@ -1,4 +1,5 @@
 import Component from "@glimmer/component";
+import { tracked } from "@glimmer/tracking";
 import { withSilencedDeprecations } from "discourse/lib/deprecated";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import RenderGlimmer from "discourse/widgets/render-glimmer";
@@ -22,6 +23,15 @@ function customizePost(api) {
     "can_unaccept_answer",
     "accepted_answer",
     "topic_accepted_answer"
+  );
+
+  api.modifyClass(
+    "model:topic",
+    (Superclass) =>
+      class extends Superclass {
+        @tracked accepted_answer;
+        @tracked has_accepted_answer;
+      }
   );
 
   api.renderAfterWrapperOutlet(

@@ -22,7 +22,7 @@ function unacceptPost(post) {
     accepted_answer: false,
   });
 
-  topic.set("accepted_answer", undefined);
+  topic.accepted_answer = undefined;
 
   ajax("/solution/unaccept", {
     type: "POST",
