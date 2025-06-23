@@ -9,6 +9,7 @@ import PostCookedHtml from "discourse/components/post/cooked-html";
 import concatClass from "discourse/helpers/concat-class";
 import icon from "discourse/helpers/d-icon";
 import { ajax } from "discourse/lib/ajax";
+import escape from "discourse/lib/escape";
 import { iconHTML } from "discourse/lib/icon-library";
 import { formatUsername } from "discourse/lib/utilities";
 import { i18n } from "discourse-i18n";
@@ -45,7 +46,7 @@ export default class SolvedAcceptedAnswer extends Component {
 
     const formattedUsername =
       this.siteSettings.display_name_on_posts && name
-        ? name
+        ? escape(name)
         : formatUsername(username);
 
     return htmlSafe(
@@ -67,7 +68,7 @@ export default class SolvedAcceptedAnswer extends Component {
 
     const displayedUser =
       this.siteSettings.display_name_on_posts && name
-        ? name
+        ? escape(name)
         : formatUsername(username);
 
     const data = {

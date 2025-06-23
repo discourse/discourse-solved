@@ -3,7 +3,7 @@
 describe "About page", type: :system do
   fab!(:admin)
   fab!(:solver) { Fabricate(:user) }
-  fab!(:accepter) { Fabricate(:user) }
+  fab!(:accepter) { Fabricate(:user, name: "<b>DERP<b>") }
   fab!(:topic) { Fabricate(:post, user: admin).topic }
   fab!(:post1) { Fabricate(:post, topic:, user: solver, cooked: "The answer is 42") }
   let(:topic_page) { PageObjects::Pages::Topic.new }
@@ -16,7 +16,10 @@ describe "About page", type: :system do
   end
 
   %w[enabled disabled].each do |value|
-    before { SiteSetting.glimmer_post_stream_mode = value }
+    before do
+      SiteSetting.glimmer_post_stream_mode = value
+      SiteSetting.display_name_on_posts = true
+    end
 
     context "when glimmer_post_stream_mode=#{value}" do
       it "accepts post as solution and shows in OP" do
@@ -30,10 +33,10 @@ describe "About page", type: :system do
 
         expect(topic_page).to have_css(".post-action-menu__solved-accepted")
         expect(topic_page.find(".title .accepted-answer--solver")).to have_content(
-          "Solved by #{solver.username}",
+          "Solved by #{solver.name}",
         )
         expect(topic_page.find(".title .accepted-answer--accepter")).to have_content(
-          "Marked as solved by #{accepter.username}",
+          "Marked as solved by #{accepter.name}",
         )
         expect(topic_page.find("blockquote")).to have_content("The answer is 42")
       end

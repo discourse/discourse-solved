@@ -6,6 +6,7 @@ import DButton from "discourse/components/d-button";
 import icon from "discourse/helpers/d-icon";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
+import escape from "discourse/lib/escape";
 import { formatUsername } from "discourse/lib/utilities";
 import { i18n } from "discourse-i18n";
 import DTooltip from "float-kit/components/d-tooltip";
@@ -57,7 +58,7 @@ export default class SolvedUnacceptAnswerButton extends Component {
     const name = this.args.post.topic.accepted_answer.accepter_name;
     const displayedName =
       this.siteSettings.display_name_on_posts && name
-        ? name
+        ? escape(name)
         : formatUsername(username);
     if (this.args.post.topic.accepted_answer.accepter_username) {
       return i18n("solved.marked_solved_by", {
