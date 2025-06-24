@@ -21,12 +21,12 @@ export default class SolvedAcceptAnswerButton extends Component {
   }
 
   @action
-  acceptAnswer() {
+  async acceptAnswer() {
     const post = this.args.post;
 
     this.saving = true;
     try {
-      acceptPost(post, this.currentUser);
+      await acceptPost(post, this.currentUser);
     } finally {
       this.saving = false;
     }

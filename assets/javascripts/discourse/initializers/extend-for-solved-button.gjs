@@ -63,7 +63,9 @@ function customizePost(api) {
     "post-content-cooked-html",
     class extends Component {
       static shouldRender(args) {
-        return args.post.post_number === 1 && args.post.topic.accepted_answer;
+        return (
+          args.post?.post_number === 1 && args.post?.topic?.accepted_answer
+        );
       }
 
       <template>

@@ -41,6 +41,25 @@ describe "About page", type: :system do
         accepted_answer_quote.find("button.quote-toggle").click
         expect(accepted_answer_quote["data-expanded"]).to eq("true")
       end
+
+      it "accepts and unaccepts post as solution" do
+        sign_in(accepter)
+        topic_page.visit_topic(topic, post_number: 2)
+
+        expect(topic_page).to have_css(".post-action-menu__solved-unaccepted")
+        find(".post-action-menu__solved-unaccepted").click
+        expect(topic_page).to have_css(".post-action-menu__solved-accepted")
+
+        expect(topic_page).to have_css(".accepted-answer.quote")
+        expect(topic_page).to have_css(".title .accepted-answer--solver")
+        expect(topic_page).to have_css(".title .accepted-answer--accepter")
+
+        find(".post-action-menu__solved-accepted").click
+        expect(topic_page).to have_css(".post-action-menu__solved-unaccepted")
+        expect(topic_page).not_to have_css(".accepted-answer.quote")
+        expect(topic_page).not_to have_css(".title .accepted-answer--solver")
+        expect(topic_page).not_to have_css(".title .accepted-answer--accepter")
+      end
     end
   end
 end

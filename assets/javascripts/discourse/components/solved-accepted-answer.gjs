@@ -2,6 +2,7 @@ import Component from "@glimmer/component";
 import { service } from "@ember/service";
 import { htmlSafe } from "@ember/template";
 import PostQuotedContent from "discourse/components/post/quoted-content";
+import concatClass from "discourse/helpers/concat-class";
 import { iconHTML } from "discourse/lib/icon-library";
 import { formatUsername } from "discourse/lib/utilities";
 import { i18n } from "discourse-i18n";
@@ -84,26 +85,31 @@ export default class SolvedAcceptedAnswer extends Component {
   }
 
   <template>
-    <PostQuotedContent
-      class="accepted-answer"
-      @collapsedContent={{this.collapsedContent}}
-      @decoratorState={{@decoratorState}}
-      @id={{this.quoteId}}
-      @post={{@post}}
-      @quotedPostNumber={{this.acceptedAnswer.post_number}}
-      @quotedTopicId={{this.topic.id}}
-      @quotedUsername={{this.acceptedAnswer.username}}
-    >
-      <:title>
-        <div class="accepted-answer--solver-accepter">
-          <div class="accepted-answer--solver">
-            {{this.htmlSolvedBy}}
+    {{#if this.acceptedAnswer}}
+      <PostQuotedContent
+        class={{concatClass
+          "accepted-answer"
+          (unless this.collapsedContent "title-only")
+        }}
+        @collapsedContent={{this.collapsedContent}}
+        @decoratorState={{@decoratorState}}
+        @id={{this.quoteId}}
+        @post={{@post}}
+        @quotedPostNumber={{this.acceptedAnswer.post_number}}
+        @quotedTopicId={{this.topic.id}}
+        @quotedUsername={{this.acceptedAnswer.username}}
+      >
+        <:title>
+          <div class="accepted-answer--solver-accepter">
+            <div class="accepted-answer--solver">
+              {{this.htmlSolvedBy}}
+            </div>
+            <div class="accepted-answer--accepter">
+              {{this.htmlAccepter}}
+            </div>
           </div>
-          <div class="accepted-answer--accepter">
-            {{this.htmlAccepter}}
-          </div>
-        </div>
-      </:title>
-    </PostQuotedContent>
+        </:title>
+      </PostQuotedContent>
+    {{/if}}
   </template>
 }
