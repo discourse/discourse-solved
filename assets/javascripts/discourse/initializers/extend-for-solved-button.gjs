@@ -47,6 +47,7 @@ function initializeWithApi(api) {
           });
 
           this.accepted_answer = acceptedAnswer;
+          this.has_accepted_answer = !!acceptedAnswer;
         }
       }
   );
