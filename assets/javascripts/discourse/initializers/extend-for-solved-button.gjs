@@ -11,19 +11,11 @@ import SolvedUnacceptAnswerButton from "../components/solved-unaccept-answer-but
 function initializeWithApi(api) {
   customizePost(api);
   customizePostMenu(api);
+  handleMessages(api);
 
   if (api.addDiscoveryQueryParam) {
     api.addDiscoveryQueryParam("solved", { replace: true, refreshModel: true });
   }
-}
-
-function customizePost(api) {
-  api.addTrackedPostProperties(
-    "can_accept_answer",
-    "can_unaccept_answer",
-    "accepted_answer",
-    "topic_accepted_answer"
-  );
 
   api.modifyClass(
     "model:topic",
@@ -31,7 +23,40 @@ function customizePost(api) {
       class extends Superclass {
         @tracked accepted_answer;
         @tracked has_accepted_answer;
+
+        setAcceptedSolution(acceptedAnswer) {
+          this.postStream?.posts?.forEach((post) => {
+            if (!acceptedAnswer) {
+              post.setProperties({
+                accepted_answer: false,
+                topic_accepted_answer: false,
+              });
+            } else if (post.post_number > 1) {
+              post.setProperties(
+                acceptedAnswer.post_number === post.post_number
+                  ? {
+                      accepted_answer: true,
+                      topic_accepted_answer: true,
+                    }
+                  : {
+                      accepted_answer: false,
+                      topic_accepted_answer: true,
+                    }
+              );
+            }
+          });
+
+          this.accepted_answer = acceptedAnswer;
+        }
       }
+  );
+}
+
+function customizePost(api) {
+  api.addTrackedPostProperties(
+    "can_accept_answer",
+    "accepted_answer",
+    "topic_accepted_answer"
   );
 
   api.renderAfterWrapperOutlet(
@@ -84,10 +109,10 @@ function customizePostMenu(api) {
     }) => {
       let solvedButton;
 
-      if (post.can_accept_answer) {
-        solvedButton = SolvedAcceptAnswerButton;
-      } else if (post.accepted_answer) {
+      if (post.accepted_answer) {
         solvedButton = SolvedUnacceptAnswerButton;
+      } else if (post.can_accept_answer) {
+        solvedButton = SolvedAcceptAnswerButton;
       }
 
       solvedButton &&
@@ -110,19 +135,32 @@ function customizePostMenu(api) {
   );
 }
 
+function handleMessages(api) {
+  const handleMessages = async (controller, message) => {
+    const topic = controller.model;
+
+    if (topic) {
+      topic.setAcceptedSolution(message.accepted_answer);
+    }
+  };
+
+  api.registerCustomPostMessageCallback("accepted_solution", handleMessages);
+  api.registerCustomPostMessageCallback("unaccepted_solution", handleMessages);
+}
+
 export default {
   name: "extend-for-solved-button",
   initialize() {
-    withPluginApi("1.34.0", initializeWithApi);
+    withPluginApi(initializeWithApi);
 
-    withPluginApi("0.8.10", (api) => {
+    withPluginApi((api) => {
       api.replaceIcon(
         "notification.solved.accepted_notification",
         "square-check"
       );
     });
 
-    withPluginApi("0.11.0", (api) => {
+    withPluginApi((api) => {
       api.addAdvancedSearchOptions({
         statusOptions: [
           {
@@ -137,7 +175,7 @@ export default {
       });
     });
 
-    withPluginApi("0.11.7", (api) => {
+    withPluginApi((api) => {
       api.addSearchSuggestion("status:solved");
       api.addSearchSuggestion("status:unsolved");
     });
