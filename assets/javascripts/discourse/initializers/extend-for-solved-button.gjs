@@ -136,7 +136,7 @@ function customizePostMenu(api) {
 }
 
 function handleMessages(api) {
-  const handleMessages = async (controller, message) => {
+  const callback = async (controller, message) => {
     const topic = controller.model;
 
     if (topic) {
@@ -144,8 +144,8 @@ function handleMessages(api) {
     }
   };
 
-  api.registerCustomPostMessageCallback("accepted_solution", handleMessages);
-  api.registerCustomPostMessageCallback("unaccepted_solution", handleMessages);
+  api.registerCustomPostMessageCallback("accepted_solution", callback);
+  api.registerCustomPostMessageCallback("unaccepted_solution", callback);
 }
 
 export default {
