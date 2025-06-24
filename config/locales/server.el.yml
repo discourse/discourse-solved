@@ -5,6 +5,7 @@
 # https://translate.discourse.org/
 
 el:
+  accepted_answer: "Αποδεκτή Απάντηση"
   site_settings:
     solved_enabled: "Ενεργοποιήστε το πρόσθετο solved, επιτρέψτε στους χρήστες να επιλέγουν λύσεις για θέματα"
     accept_all_solutions_trust_level: "Απαιτείται ελάχιστο επίπεδο εμπιστοσύνης για αποδοχή λύσεων σε οποιοδήποτε θέμα (ακόμα και όταν δεν είναι OP)"
@@ -23,3 +24,7 @@ el:
   badges:
     solved_1:
       name: "Λύθηκε!"
+  discourse_automation:
+    triggerables:
+      first_accepted_solution:
+        title: Πρώτη αποδεκτή λύση
