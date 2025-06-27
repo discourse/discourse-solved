@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-describe "About page", type: :system do
+describe "Solved", type: :system do
   fab!(:admin)
   fab!(:solver) { Fabricate(:user) }
   fab!(:accepter) { Fabricate(:user) }
   fab!(:topic) { Fabricate(:post, user: admin).topic }
-  fab!(:post1) { Fabricate(:post, topic:, user: solver, cooked: "The answer is 42") }
+  fab!(:solver_post) { Fabricate(:post, topic:, user: solver, cooked: "The answer is 42") }
   let(:topic_page) { PageObjects::Pages::Topic.new }
 
   before do
@@ -38,5 +38,14 @@ describe "About page", type: :system do
         expect(topic_page.find("blockquote")).to have_content("The answer is 42")
       end
     end
+  end
+
+  it "shows the solved post in user activity at /my/activity/solved" do
+    Fabricate(:solved_topic, topic:, answer_post: solver_post, accepter:)
+
+    sign_in(solver)
+    visit "/my/activity/solved"
+
+    expect(page.find(".post-list")).to have_content(solver_post.cooked)
   end
 end
