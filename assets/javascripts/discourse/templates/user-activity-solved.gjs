@@ -1,19 +1,16 @@
 import RouteTemplate from "ember-route-template";
 import UserStream from "discourse/components/user-stream";
+import EmptyState from "discourse/components/empty-state";
 
 export default RouteTemplate(
   <template>
     {{#if @controller.model.stream.noContent}}
-      <div class="empty-state">
-        <span class="empty-state-title">
-          {{@controller.model.emptyState.title}}
-        </span>
-        <div class="empty-state-body">
-          {{{@controller.model.emptyState.body}}}
-        </div>
-      </div>
+      <EmptyState
+        @title={{@controller.model.emptyState.title}}
+        @body={{@controller.model.emptyState.body}}
+      />
+    {{else}}
+      <UserStream @stream={{@controller.model.stream}} />
     {{/if}}
-
-    <UserStream @stream={{@controller.model.stream}} />
   </template>
 );
