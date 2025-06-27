@@ -77,7 +77,9 @@ describe DiscourseSolved::SolvedTopicsController do
         fab!(:private_topic) { Fabricate(:topic, category: private_category) }
         fab!(:private_post) { Fabricate(:post, topic: private_topic) }
         fab!(:private_answer_post) { Fabricate(:post, topic: private_topic, user: user) }
-        fab!(:private_solved_topic) { Fabricate(:solved_topic, topic: private_topic, answer_post: private_answer_post) }
+        fab!(:private_solved_topic) do
+          Fabricate(:solved_topic, topic: private_topic, answer_post: private_answer_post)
+        end
 
         it "respects category permissions" do
           sign_in(another_user)
