@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 describe DiscourseSolved::FirstAcceptedPostSolutionValidator do
   fab!(:user_tl1) { Fabricate(:user, trust_level: TrustLevel[1], refresh_auto_groups: true) }
 
@@ -51,6 +49,13 @@ describe DiscourseSolved::FirstAcceptedPostSolutionValidator do
     it "validates the post" do
       post_1 = create_post(user: user_tl1)
       expect(described_class.check(post_1, trust_level: "any")).to eq(true)
+    end
+
+    it "invalidates if post user already has an accepted post" do
+      accepted_post = create_post(user: user_tl1)
+      DiscourseSolved.accept_answer!(accepted_post, Discourse.system_user)
+      post_1 = create_post(user: user_tl1)
+      expect(described_class.check(post_1, trust_level: "any")).to eq(false)
     end
   end
 

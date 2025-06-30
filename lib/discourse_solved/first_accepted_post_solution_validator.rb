@@ -5,15 +5,15 @@ module DiscourseSolved
     def self.check(post, trust_level:)
       return false if post.archetype != Archetype.default
       return false if !post&.user&.human?
-      return true if trust_level == "any"
 
-      return false if TrustLevel.compare(post&.user&.trust_level, trust_level.to_i)
-
-      if !UserAction.where(user_id: post&.user_id, action_type: UserAction::SOLVED).exists?
-        return true
+      if trust_level != "any" && TrustLevel.compare(post&.user&.trust_level, trust_level.to_i)
+        return false
       end
 
-      false
+      !DiscourseSolved::SolvedTopic
+        .joins(:answer_post)
+        .where("posts.user_id = ?", post.user_id)
+        .exists?
     end
   end
 end
