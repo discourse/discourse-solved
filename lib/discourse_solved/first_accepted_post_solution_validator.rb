@@ -6,8 +6,8 @@ module DiscourseSolved
       return false if post.archetype != Archetype.default
       return false if !post&.user&.human?
 
-      if trust_level != "any"
-        return false if TrustLevel.compare(post&.user&.trust_level, trust_level.to_i)
+      if trust_level != "any" && TrustLevel.compare(post&.user&.trust_level, trust_level.to_i)
+        return false
       end
 
       !DiscourseSolved::SolvedTopic
