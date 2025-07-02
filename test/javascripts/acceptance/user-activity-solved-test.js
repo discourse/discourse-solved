@@ -9,8 +9,8 @@ acceptance(
     needs.user();
 
     needs.pretender((server, helper) => {
-      server.get("/user_actions.json", () =>
-        helper.response({ user_actions: [] })
+      server.get("/solution/by_user.json", () =>
+        helper.response({ user_solved_posts: [] })
       );
     });
 
