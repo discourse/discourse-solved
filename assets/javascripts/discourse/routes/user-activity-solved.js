@@ -6,17 +6,16 @@ import { ajax } from "discourse/lib/ajax";
 import DiscourseRoute from "discourse/routes/discourse";
 import { i18n } from "discourse-i18n";
 
-class SolvedPostsStream extends EmberObject {
+class SolvedPostsStream {
   @tracked content = [];
   @tracked loading = false;
   @tracked loaded = false;
   @tracked itemsLoaded = 0;
   @tracked canLoadMore = true;
 
-  constructor(args) {
-    super(args);
-    this.username = args.username;
-    this.siteCategories = args.siteCategories;
+  constructor({ username, siteCategories }) {
+    this.username = username;
+    this.siteCategories = siteCategories;
   }
 
   get noContent() {
@@ -28,7 +27,7 @@ class SolvedPostsStream extends EmberObject {
       return Promise.resolve();
     }
 
-    this.set("loading", true);
+    this.loading = true;
 
     const limit = 20;
     return ajax(
@@ -38,7 +37,7 @@ class SolvedPostsStream extends EmberObject {
         const userSolvedPosts = result.user_solved_posts || [];
 
         if (userSolvedPosts.length === 0) {
-          this.set("canLoadMore", false);
+          this.canLoadMore = false;
           return;
         }
 
@@ -56,24 +55,16 @@ class SolvedPostsStream extends EmberObject {
           return post;
         });
 
-        // Add to existing content
-        if (this.content.pushObjects) {
-          this.content.pushObjects(posts);
-        } else {
-          this.content = this.content.concat(posts);
-        }
-
-        this.set("itemsLoaded", this.itemsLoaded + userSolvedPosts.length);
+        this.content = [...this.content, ...posts];
+        this.itemsLoaded = this.itemsLoaded + userSolvedPosts.length;
 
         if (userSolvedPosts.length < limit) {
-          this.set("canLoadMore", false);
+          this.canLoadMore = false;
         }
       })
       .finally(() => {
-        this.setProperties({
-          loaded: true,
-          loading: false,
-        });
+        this.loaded = true;
+        this.loading = false;
       });
   }
 }
