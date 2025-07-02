@@ -12,7 +12,7 @@ module DiscourseSolved
 
       !DiscourseSolved::SolvedTopic
         .joins(:answer_post)
-        .where("posts.user_id = ?", post.user_id)
+        .where("posts.user_id = ? AND posts.id != ?", post.user_id, post.id)
         .exists?
     end
   end
