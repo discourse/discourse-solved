@@ -33,7 +33,7 @@ acceptance(
           username: "charlie",
         })
       );
-      assert.dom(".empty-state .empty-state__body").hasNoText();
+      assert.dom(".empty-state .empty-state__body").doesNotExist();
     });
   }
 );
