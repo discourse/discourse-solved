@@ -18,22 +18,22 @@ acceptance(
       await visit(`/u/eviltrout/activity/solved`);
 
       assert
-        .dom(".empty-state .empty-state-title")
+        .dom(".empty-state .empty-state__title")
         .hasText(i18n("solved.no_solved_topics_title"));
       assert
-        .dom(".empty-state .empty-state-body")
+        .dom(".empty-state .empty-state__body")
         .hasText(i18n("solved.no_solved_topics_body"));
     });
 
     test("When looking at another user's activity", async function (assert) {
       await visit(`/u/charlie/activity/solved`);
 
-      assert.dom(".empty-state .empty-state-title").hasText(
+      assert.dom(".empty-state .empty-state__title").hasText(
         i18n("solved.no_solved_topics_title_others", {
           username: "charlie",
         })
       );
-      assert.dom(".empty-state .empty-state-body").hasNoText();
+      assert.dom(".empty-state .empty-state__body").hasNoText();
     });
   }
 );
