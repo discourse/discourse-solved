@@ -128,14 +128,17 @@ export default class SolvedAcceptedAnswer extends Component {
           <div class="quote-controls">
             <button
               aria-controls={{this.quoteId}}
-              aria-expanded={{this.expanded}}
+              aria-expanded={{if this.expanded "true" "false"}}
               class="quote-toggle btn-flat"
               type="button"
-            >
-              {{icon
-                (if this.expanded "chevron-up" "chevron-down")
-                title="post.expand_collapse"
+              aria-label={{if
+                this.expanded
+                (i18n "post.collapse")
+                (i18n "expand")
               }}
+              title={{if this.expanded (i18n "post.collapse") (i18n "expand")}}
+            >
+              {{icon (if this.expanded "chevron-up" "chevron-down")}}
             </button>
           </div>
         {{/if}}
