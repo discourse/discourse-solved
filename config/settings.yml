@@ -1,6 +1,6 @@
 discourse_solved:
   solved_enabled:
-    default: true
+    default: false
     client: true
   show_who_marked_solved:
     default: false
@@ -59,4 +59,3 @@ discourse_solved:
   enable_solved_tags:
     type: tag_list
     default: ""
-

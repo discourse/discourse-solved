@@ -10,7 +10,10 @@ describe ComposerMessagesFinder do
     fab!(:topic)
     fab!(:post) { Fabricate(:post, topic: topic, user: Fabricate(:user)) }
 
-    before { SiteSetting.disable_solved_education_message = false }
+    before do
+      enable_current_plugin
+      SiteSetting.disable_solved_education_message = false
+    end
 
     it "does not show message without a topic id" do
       expect(

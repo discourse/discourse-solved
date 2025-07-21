@@ -6,7 +6,7 @@ describe TopicViewSerializer do
   fab!(:post2) { Fabricate(:post, topic:) }
   fab!(:user)
 
-  before { SiteSetting.solved_enabled = true }
+  before { enable_current_plugin }
 
   describe "#accepted_answer" do
     it "returns the accepted answer post when the topic has an accepted answer" do

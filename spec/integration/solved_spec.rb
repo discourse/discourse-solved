@@ -7,7 +7,10 @@ RSpec.describe "Managing Posts solved status" do
   fab!(:user) { Fabricate(:trust_level_4) }
   let(:p1) { Fabricate(:post, topic: topic) }
 
-  before { SiteSetting.allow_solved_on_all_topics = true }
+  before do
+    enable_current_plugin
+    SiteSetting.allow_solved_on_all_topics = true
+  end
 
   describe "customer filters" do
     before do

@@ -7,7 +7,10 @@ RSpec.describe ListController do
   fab!(:p2) { Fabricate(:post, topic: p1.topic) }
   fab!(:p3) { Fabricate(:post, topic: p1.topic) }
 
-  before { SiteSetting.allow_solved_on_all_topics = true }
+  before do
+    enable_current_plugin
+    SiteSetting.allow_solved_on_all_topics = true
+  end
 
   it "shows the user who posted the accepted answer second" do
     TopicFeaturedUsers.ensure_consistency!

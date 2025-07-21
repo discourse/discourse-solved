@@ -3,6 +3,8 @@
 describe UserSummary do
   fab!(:admin)
 
+  before { enable_current_plugin }
+
   describe "solved_count" do
     it "indicates the number of times a user's post is a topic's solution" do
       topic = Fabricate(:topic)

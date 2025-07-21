@@ -11,7 +11,7 @@ describe DiscourseSolved::AnswerController do
   fab!(:solution_post) { Fabricate(:post, topic: topic) }
 
   before do
-    SiteSetting.solved_enabled = true
+    enable_current_plugin
     SiteSetting.allow_solved_on_all_topics = true
     category.custom_fields[DiscourseSolved::ENABLE_ACCEPTED_ANSWERS_CUSTOM_FIELD] = "true"
     category.save_custom_fields

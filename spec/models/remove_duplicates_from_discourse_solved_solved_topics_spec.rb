@@ -6,6 +6,7 @@ RSpec.describe RemoveDuplicatesFromDiscourseSolvedSolvedTopics, type: :migration
   let(:migration) { described_class.new }
 
   before do
+    enable_current_plugin
     # temp drop unique constraints to allow testing duplicate entries
     ActiveRecord::Base.connection.execute(
       "DROP INDEX IF EXISTS index_discourse_solved_solved_topics_on_topic_id;",

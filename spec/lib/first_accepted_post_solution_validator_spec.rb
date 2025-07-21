@@ -3,6 +3,8 @@
 describe DiscourseSolved::FirstAcceptedPostSolutionValidator do
   fab!(:user_tl1) { Fabricate(:user, trust_level: TrustLevel[1], refresh_auto_groups: true) }
 
+  before { enable_current_plugin }
+
   context "when trust level is 'any'" do
     it "validates the post" do
       post = Fabricate(:post, user: user_tl1)

@@ -7,7 +7,10 @@ describe DiscourseSolved::TopicAnswerMixin do
   let(:post) { Fabricate(:post, topic: topic) }
   let(:guardian) { Guardian.new }
 
-  before { Fabricate(:solved_topic, topic: topic, answer_post: post) }
+  before do
+    enable_current_plugin
+    Fabricate(:solved_topic, topic: topic, answer_post: post)
+  end
 
   it "should have true for `has_accepted_answer` field in each serializer" do
     [

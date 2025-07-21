@@ -9,6 +9,8 @@ describe DiscourseSolved::SolvedTopicsController do
   fab!(:answer_post) { Fabricate(:post, topic:, user:) }
   fab!(:solved_topic) { Fabricate(:solved_topic, topic:, answer_post:) }
 
+  before { enable_current_plugin }
+
   describe "#by_user" do
     context "when accessing with username" do
       it "returns solved posts for the specified user" do

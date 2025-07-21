@@ -5,6 +5,8 @@ describe UserCardSerializer do
   let(:serializer) { described_class.new(user, scope: Guardian.new, root: false) }
   let(:json) { serializer.as_json }
 
+  before { enable_current_plugin }
+
   it "accepted_answers serializes number of accepted answers" do
     expect(serializer.as_json[:accepted_answers]).to eq(0)
 

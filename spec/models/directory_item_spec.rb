@@ -14,7 +14,7 @@ describe DirectoryItem, type: :model do
     fab!(:pm) { Fabricate(:topic, archetype: "private_message", user:, category_id: nil) }
     fab!(:pm_post) { Fabricate(:post, topic: pm, user:) }
 
-    before { SiteSetting.solved_enabled = true }
+    before { enable_current_plugin }
 
     it "excludes PM post solutions from solutions" do
       DiscourseSolved.accept_answer!(topic_post1, admin)

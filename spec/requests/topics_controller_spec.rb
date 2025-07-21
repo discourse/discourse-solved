@@ -7,6 +7,8 @@ RSpec.describe TopicsController do
   let(:topic) { p1.topic }
   let(:p2) { Fabricate(:post, like_count: 2, topic: topic, user: Fabricate(:user)) }
 
+  before { enable_current_plugin }
+
   def schema_json(answerCount)
     if answerCount > 0
       answer_json =

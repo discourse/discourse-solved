@@ -10,7 +10,10 @@ describe DiscourseSolved::GuardianExtensions do
 
   let(:guardian) { user.guardian }
 
-  before { SiteSetting.allow_solved_on_all_topics = true }
+  before do
+    enable_current_plugin
+    SiteSetting.allow_solved_on_all_topics = true
+  end
 
   describe ".can_accept_answer?" do
     it "returns false for anon users" do

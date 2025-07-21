@@ -5,6 +5,8 @@ require_relative "../../db/migrate/20250318024953_copy_solved_topic_custom_field
 RSpec.describe CopySolvedTopicCustomFieldToDiscourseSolvedSolvedTopics, type: :migration do
   let(:migration) { described_class.new }
 
+  before { enable_current_plugin }
+
   describe "handling duplicates" do
     it "ensures only unique topic_id and answer_post_id are inserted" do
       topic = Fabricate(:topic)

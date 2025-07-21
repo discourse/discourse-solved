@@ -13,6 +13,8 @@ describe PostRevisor do
     category
   end
 
+  before { enable_current_plugin }
+
   it "refreshes post stream when topic category changes to a solved category" do
     topic = Fabricate(:topic, category: Fabricate(:category_with_definition))
     post = Fabricate(:post, topic: topic)

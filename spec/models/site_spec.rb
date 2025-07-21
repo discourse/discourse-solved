@@ -7,7 +7,10 @@ describe Site do
   let(:category) { Fabricate(:category) }
   let(:guardian) { Guardian.new }
 
-  before { SiteSetting.show_filter_by_solved_status = true }
+  before do
+    enable_current_plugin
+    SiteSetting.show_filter_by_solved_status = true
+  end
 
   it "includes `enable_accepted_answers` custom field for categories" do
     category.custom_fields["enable_accepted_answers"] = true

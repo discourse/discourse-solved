@@ -9,7 +9,7 @@ describe "Solved", type: :system do
   let(:topic_page) { PageObjects::Pages::Topic.new }
 
   before do
-    SiteSetting.solved_enabled = true
+    enable_current_plugin
     SiteSetting.allow_solved_on_all_topics = true
     SiteSetting.accept_all_solutions_allowed_groups = Group::AUTO_GROUPS[:everyone]
     SiteSetting.show_who_marked_solved = true
