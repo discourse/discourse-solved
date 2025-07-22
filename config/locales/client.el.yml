@@ -10,6 +10,7 @@ el:
       alt:
         solved:
           accepted_notification: "αποδεκτό"
+    solutions: "Λύσεις"
     solved:
       title: "Λύθηκε"
       allow_accepted_answers: "Επιτρέψτε στον κάτοχο και το προσωπικό να επισημάνει μια απάντηση ως λύση"
@@ -29,6 +30,13 @@ el:
         all: "όλα"
         solved: "λύθηκε"
         unsolved: "άλυτο"
+      no_solved_topics_title: "Δεν έχετε λύσει κανένα θέμα ακόμα"
+      no_solved_topics_title_others: "Ο χρήστης %{username} δεν έχει λύσει κανένα θέμα ακόμα"
+      no_answer:
+        title: Έχει απαντηθεί η ερώτηση σας;
+        description: "Επισημάνετε την απάντηση και βοηθήστε άλλους χρησιμοποιώντας το κουμπί λύσης κάτω από τη σωστή απάντηση."
+      notification:
+        title: "η ανάρτηση σας επισημάνθηκε ως λύση"
     topic_statuses:
       solved:
         help: "Αυτό το θέμα έχει μια λύση"
@@ -36,13 +44,21 @@ el:
       advanced:
         statuses:
           solved: "έχουν επιλυθεί"
+          unsolved: "δεν έχουν επιλυθεί"
     admin:
       web_hooks:
         solved_event:
           group_name: "Επιλύθηκε γεγονός"
+      api:
+        scopes:
+          descriptions:
+            solved:
+              answer: Αποδοχή/Απόρριψη μίας λύσης.
     discourse_automation:
       triggerables:
         first_accepted_solution:
+          max_trust_level:
+            any: Οποιοδήποτε
           fields:
             maximum_trust_level:
               label: Επίπεδο Εμπιστοσύνης

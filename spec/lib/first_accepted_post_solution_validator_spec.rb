@@ -1,56 +1,43 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 describe DiscourseSolved::FirstAcceptedPostSolutionValidator do
   fab!(:user_tl1) { Fabricate(:user, trust_level: TrustLevel[1], refresh_auto_groups: true) }
 
-  context "when user is under max trust level" do
-    context "with no post accepted yet" do
-      it "validates the post" do
-        post_1 = create_post(user: user_tl1)
-        expect(described_class.check(post_1, trust_level: TrustLevel[2])).to eq(true)
-      end
-    end
-
-    context "with already had accepted posts" do
-      before do
-        accepted_post = create_post(user: user_tl1)
-        DiscourseSolved.accept_answer!(accepted_post, Discourse.system_user)
-      end
-
-      it "doesn’t validate the post" do
-        post_1 = create_post(user: user_tl1)
-        expect(described_class.check(post_1, trust_level: TrustLevel[2])).to eq(false)
-      end
-    end
-  end
-
-  context "when a user is above or equal max trust level" do
-    context "with no post accepted yet" do
-      it "doesn’t validate the post" do
-        post_1 = create_post(user: user_tl1)
-        expect(described_class.check(post_1, trust_level: TrustLevel[1])).to eq(false)
-      end
-    end
-
-    context "when a post is already accepted" do
-      before do
-        accepted_post = create_post(user: user_tl1)
-        DiscourseSolved.accept_answer!(accepted_post, Discourse.system_user)
-      end
-
-      it "doesn’t validate the post" do
-        post_1 = create_post(user: user_tl1)
-        expect(described_class.check(post_1, trust_level: TrustLevel[1])).to eq(false)
-      end
-    end
-  end
-
-  context "when using any trust level" do
+  context "when trust level is 'any'" do
     it "validates the post" do
-      post_1 = create_post(user: user_tl1)
-      expect(described_class.check(post_1, trust_level: "any")).to eq(true)
+      post = Fabricate(:post, user: user_tl1)
+      DiscourseSolved.accept_answer!(post, Discourse.system_user)
+
+      expect(described_class.check(post, trust_level: "any")).to eq(true)
+    end
+
+    it "invalidates if post user already has an accepted post" do
+      previously_accepted_post = Fabricate(:post, user: user_tl1)
+      DiscourseSolved.accept_answer!(previously_accepted_post, Discourse.system_user)
+
+      newly_accepted_post = Fabricate(:post, user: user_tl1)
+      DiscourseSolved.accept_answer!(newly_accepted_post, Discourse.system_user)
+
+      expect(described_class.check(newly_accepted_post, trust_level: "any")).to eq(false)
+    end
+  end
+
+  context "with specified trust level that is not 'any'" do
+    # the automation indicates "users under this Trust Level will trigger this automation"
+
+    it "invalidates if the user is higher than or equal to the specified trust level" do
+      post = Fabricate(:post, user: user_tl1)
+      DiscourseSolved.accept_answer!(post, Discourse.system_user)
+
+      expect(described_class.check(post, trust_level: TrustLevel[0])).to eq(false)
+      expect(described_class.check(post, trust_level: TrustLevel[1])).to eq(false)
+    end
+
+    it "validates the post when user is under specified trust level" do
+      post = Fabricate(:post, user: user_tl1)
+      DiscourseSolved.accept_answer!(post, Discourse.system_user)
+
+      expect(described_class.check(post, trust_level: TrustLevel[2])).to eq(true)
     end
   end
 

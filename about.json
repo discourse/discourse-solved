@@ -1,7 +1,7 @@
 {
   "tests": {
     "requiredPlugins": [
-     "https://github.com/discourse/discourse-assign"
+      "discourse-assign"
     ]
   }
 }

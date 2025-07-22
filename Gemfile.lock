@@ -35,7 +35,7 @@ GEM
     prettier_print (1.2.1)
     prism (1.4.0)
     racc (1.8.1)
-    rack (3.1.15)
+    rack (3.1.16)
     rainbow (3.1.1)
     regexp_parser (2.10.0)
     rubocop (1.75.8)
