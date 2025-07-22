@@ -64,6 +64,15 @@ aside.quote.accepted-answer {
     align-items: flex-start;
   }
 
+  &:not(.accepted-answer--has-excerpt) {
+    > .title {
+      padding: 0.8em;
+    }
+    > blockquote {
+      display: none;
+    }
+  }
+
   .accepted-answer--solver-accepter {
     display: flex;
     flex-wrap: wrap;

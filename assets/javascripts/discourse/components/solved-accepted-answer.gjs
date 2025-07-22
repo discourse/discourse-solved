@@ -29,7 +29,7 @@ export default class SolvedAcceptedAnswer extends Component {
 
   get collapsedContent() {
     if (!this.hasExcerpt) {
-      return null;
+      return "";
     }
 
     return htmlSafe(this.acceptedAnswer.excerpt);
@@ -89,6 +89,7 @@ export default class SolvedAcceptedAnswer extends Component {
       <PostQuotedContent
         class={{concatClass
           "accepted-answer"
+          (if this.hasExcerpt "accepted-answer--has-excerpt")
           (unless this.collapsedContent "title-only")
         }}
         @collapsedContent={{this.collapsedContent}}
