@@ -1,5 +1,8 @@
 ## Discourse Solved
 
+> [!IMPORTANT]
+> This plugin has now been bundled into Discourse core. See: https://meta.discourse.org/t/bundling-more-popular-plugins-with-discourse-core/373574
+
 Provides a solved button on designated categories
 
 ## How to Install this Plugin
@@ -8,7 +11,7 @@ To install Discourse Plugin - https://meta.discourse.org/t/install-a-plugin/1915
 
 ## How to Check if Plugin is installed
 
-Go to Admin > Plugins 
+Go to Admin > Plugins
 
 You should now see:
 
